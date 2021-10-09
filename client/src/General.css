@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.flex-ctr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-col-ctr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btn{
+    text-align: center;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: ease .1s;
+    cursor: pointer;
+}

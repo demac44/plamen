@@ -1,0 +1,104 @@
+/* LOGIN AND REGISTER USER FORMS */
+
+.entry-wrapper{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+.entry-left{
+    width: 50%;
+    height: 100vh;
+    background: url(./images/login-bckg.png);
+    background-size: cover;
+}
+.entry-right{
+    width: 50%;
+    height: 100vh;
+    background-color: #f7e69d;
+}
+
+.entry-form-box{
+    width:80%;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 2px 2px 20px;
+    padding: 50px 10px 20px 10px;
+}
+.entry-form-box h1{
+    color: #ffa600;
+    margin-left: 10px;
+}
+.entry-form-box p{
+    font-size: 14px;
+    color: #494949;
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+.entry-form{
+    width: 100%;
+}
+.entry-form a, .entry-link a{
+    font-size: 14px;
+    margin-left: 5px;
+    text-decoration: none;
+    color: #ff7b00;
+    align-self: flex-start;
+}
+.entry-form input, .birthdt-reg-box select{
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 30px;
+    border: 1px solid #b8b8b8;
+    font-size: 14px;
+    outline: none;
+    padding: 5px 10px;
+}
+.entry-btn{
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ec9a00;
+    color: white;
+    font-size: 18px;
+    box-shadow: 4px 4px 20px #ec9a00;
+    margin-top: 25px;
+}
+.entry-btn:hover{
+    background-color: #f3b645;
+}
+.entry-link{
+    width: 100%;
+    margin-top: 30px;
+}
+.entry-link h6{
+    font-size: 12px;
+    font-weight: lighter;
+    color: #494949;
+}
+.reg-names-box, .birthdt-reg-box {
+    width: 100%;
+    display: flex;
+}
+.reg-names-box input:nth-child(1){
+    margin-right: 5px;
+}
+.reg-names-box input:nth-child(2){
+    margin-left: 5px;
+}
+.birthdt-reg-box select{
+    margin-right: 5px;
+    background-color: white;
+}
+.error-msg{
+    width: 100%;
+    background-color: #ff5050;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 30px;
+}
+.error-msg p{
+    color: white;
+    font-size: 16px;
+}
