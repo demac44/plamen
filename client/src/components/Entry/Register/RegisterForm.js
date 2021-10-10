@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import gql from 'graphql-tag';
 import {useQuery, useMutation } from 'react-apollo';
@@ -97,6 +97,8 @@ const RegisterForm = () => {
                 birth_date: birth_date,
                 pfp_url: 'url'
             }})
+            setEmailErr(false)
+            setUsernameErr(false)
             window.location.href = '/login'
         }
     }
@@ -109,8 +111,8 @@ const RegisterForm = () => {
             {usernameErr && <div className='error-msg'><p>Username is already taken</p></div>}
             <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
                 <div className="reg-names-box">
-                    <input type="text" ref={value => first_name = value} id='first_name' placeholder="First name"></input>
-                    <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name"/>
+                    <input type="text" ref={value => first_name = value} id='first_name' placeholder="First name" required/>
+                    <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name" required/>
                 </div>
                 <div className="birthdt-reg-box">
                     <select id="year" ref={value => year = value} name="year">
@@ -141,12 +143,12 @@ const RegisterForm = () => {
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <input type="number" ref={value => day = value} id='day' name='day'/>
+                    <input type="number" ref={value => day = value} id='day' name='day' required/>
                 </div>
-                <input type="email" ref={value => email = value} id='email' placeholder="Email"/>
-                <input type="text" ref={value => tag_name = value} id='tag_name' placeholder="Create your username"/>
-                <input type="password" ref={value => password = value} id='password' placeholder="Password"/>
-                <input type="password" placeholder="Confirm your password"/>
+                <input type="email" ref={value => email = value} id='email' placeholder="Email" required/>
+                <input type="text" ref={value => tag_name = value} id='tag_name' placeholder="Create your username" required/>
+                <input type="password" ref={value => password = value} id='password' placeholder="Password" required/>
+                <input type="password" placeholder="Confirm your password" required/>
                 <button className="entry-btn btn" type="submit">REGISTER</button>
             </form>
             <div className="entry-link flex-ctr">

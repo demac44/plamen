@@ -4,13 +4,14 @@ import {
 } from "graphql";
 import { CREATE_USER } from "./Mutations/Users.js";
 
-import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
+import { GET_USER, GET_ALL_USERS, AUTH_USER } from "./Queries/Users.js";
 
 const RootQuery = new GraphQLObjectType({
     name:'RootQuery',
     fields:{
         user: GET_USER,
         users: GET_ALL_USERS,
+        auth: AUTH_USER,
     }
 })    
 
