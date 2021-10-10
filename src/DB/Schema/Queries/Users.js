@@ -34,28 +34,28 @@ export const GET_USER = {
     }    
 }    
 
-export const AUTH_USER = {
-    type: UserType,
-    args: {
-        tag_name: {type: GraphQLString},
-        email: {type: GraphQLString},
-        pass: {type: GraphQLString}
-    },
-    resolve(parent, args){
-        connection.query(`SELECT pass FROM users WHERE email="${args.email}"`, (err, result)=>{
-            if (err) throw err;
-            result = JSON.parse(JSON.stringify(result))
-            auth = result
-            bcrypt.compare(args.pass ,auth[0].pass, function(err, isMatch) {
-                if (err) {
-                  throw err
-                } else if (!isMatch) {
-                  console.log("Password doesn't match!")
-                } else {
-                  console.log("Password matches!")
-                }
-              })
-        })
-        return null
-    }
-}
+// export const AUTH_USER = {
+//     type: UserType,
+//     args: {
+//         tag_name: {type: GraphQLString},
+//         email: {type: GraphQLString},
+//         pass: {type: GraphQLString}
+//     },
+//     resolve(parent, args){
+//         connection.query(`SELECT pass FROM users WHERE email="${args.email}"`, (err, result)=>{
+//             if (err) throw err;
+//             result = JSON.parse(JSON.stringify(result))
+//             auth = result
+//             bcrypt.compare(args.pass ,auth[0].pass, function(err, isMatch) {
+//                 if (err) {
+//                   throw err
+//                 } else if (!isMatch) {
+//                   console.log("Password doesn't match!")
+//                 } else {
+//                   console.log("Password matches!")
+//                 }
+//               })
+//         })
+//         return null
+//     }
+// }
