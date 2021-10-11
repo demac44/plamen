@@ -18,13 +18,19 @@ const USER_QUERY = gql`
 
 const LoginForm = () => {
     let password, username;
+    const {data, loading, error} = useQuery(USER_QUERY)
     const [passErr, setPassErr] = useState(false)
     const [emailErr, setEmailErr] = useState(false)
     const [validationErr, setValidationErr] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(false)
 
 
-    const {data, loading, error} = useQuery(USER_QUERY)
-
+    const setErrorsFalse = () => {
+        setPassErr(false)
+        setEmailErr(false)
+        setValidationErr(false)
+        setErrorMsg('')
+    }
 
     if (loading) return 'loading'
     if (error) console.log(error);
@@ -38,25 +44,19 @@ const LoginForm = () => {
                     if (err) {
                         throw err
                     } else if (isMatch) {
-                        setEmailErr(false)
-                        setPassErr(false)
-                        setValidationErr(false)
-                        console.log('Logged in');
+                        window.location.href='/feed'
                         return
                     } else {
                         setPassErr(true)
-                        setEmailErr(false)
-                        setValidationErr(false)
-                        console.log('Password incorrect');
+                        setErrorMsg('Incorrect password!')
                         return
                     }
                 })
                 return
             }
             if (!user_found) {
-                setPassErr(false)
-                setValidationErr(false)
                 setEmailErr(true)
+                setErrorMsg("Username or email doesn't exist")
             }
             return
         })
@@ -66,8 +66,11 @@ const LoginForm = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
 
+        setErrorsFalse()
+
         if (username.value === '' || password.value === ''){
             setValidationErr(true)
+            setErrorMsg('Please fill in all fields')
         } else {
             auth(username.value, password.value)
         }
@@ -78,11 +81,9 @@ const LoginForm = () => {
         <div>
             <h1>Login</h1>
             <p>Enter your details below to continue</p>
-            {passErr && <ErrorMsg message='Password is incorrect'/>}
-            {emailErr && <ErrorMsg message="Username or email does not exist"/>}
-            {validationErr && <ErrorMsg message='Please fill in all fields'/>}
+            {(passErr || emailErr || validationErr) && <ErrorMsg message={errorMsg}/>}
             <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
-                <input type="text" ref={value => username = value} id='username' placeholder="Email"/>
+                <input type="text" ref={value => username = value} id='username' placeholder="Username or email"/>
                 <input type="password" ref={value => password = value} id='password' placeholder="Password"/>
                 <a href="#">Forgot your password?</a>
                 <button className="entry-btn btn" type="submit">LOGIN</button>
