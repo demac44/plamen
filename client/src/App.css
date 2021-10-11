@@ -90,15 +90,16 @@
     margin-right: 5px;
     background-color: white;
 }
-.error-msg{
+.error-msg-box{
     width: 100%;
     background-color: #ff5050;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
     border-radius: 30px;
+    min-height: 40px;
+    padding: 5px 20px;
 }
-.error-msg p{
+.error-msg{
     color: white;
     font-size: 14px;
+    text-align: center;
+    font-weight: lighter;
 }
