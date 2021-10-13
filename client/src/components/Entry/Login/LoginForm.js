@@ -28,10 +28,11 @@ const LoginForm = () => {
                     password: password
                 }
             }).then(res => {
-                res?.data.error ? setErrorMsg(res.data.error) : window.location.href = '/feed'
+                res?.data.error ? setErrorMsg(res.data.error)    
+                :localStorage.setItem('token', res?.data.token)
             })
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error);
         }
     }
 

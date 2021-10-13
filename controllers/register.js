@@ -6,15 +6,15 @@ const router = express.Router()
 
 
 router.post('/', (req, res) => {
-    let {username,password,fname,lname,email,birth_date} = req.body
+    let {username,password,fname,lname,email,birth_date,gender} = req.body
     let oldUser = `SELECT 
     (SELECT COUNT(email) 
     FROM users 
     WHERE email='${email}'
     ) AS countEmail,
-    (SELECT COUNT(tag_name) 
+    (SELECT COUNT(username) 
     FROM users 
-    WHERE tag_name='${username}'
+    WHERE username='${username}'
     ) AS countUsername `
     connection.query(oldUser, (err, result)=>{
         if (result[0].countEmail > 0){
@@ -26,9 +26,9 @@ router.post('/', (req, res) => {
                 bcrypt.hash(password, salt, (err, hash) => {
                     let newUser =
                     `INSERT INTO users 
-                    (user_id, tag_name, first_name, last_name, email, pass, birth_date, date_registered, pfp_url)
+                    (userID, username, first_name, last_name, email, pass, gender, birth_date, date_registered, profile_picture)
                     VALUES 
-                    (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}", STR_TO_DATE("${birth_date}", "%Y-%m-%d"), null, 'url')`
+                    (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}","${gender}", STR_TO_DATE("${birth_date}", '%Y-%m-%d'), null, 'url')`
                     connection.query(newUser, (err, result) => {
                         if (err) console.log(err)
                         else  {

@@ -6,7 +6,7 @@ import axios from 'axios'
 
     
 const RegisterForm = () => {
-    let tag_name, first_name, last_name, year, day,email, month, password, passconfirm;
+    let username, first_name, last_name, year, day,email, month, password, passconfirm, gender;
     
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
@@ -28,8 +28,12 @@ const RegisterForm = () => {
     }, [])
 
     const validateEmail = (email) => {
+        let valid_email = true
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return re.test(email.toLowerCase())
+        if(!re.test(email.toLowerCase()) || email > 255){
+            valid_email = false
+        }
+        return valid_email
     }
 
     const validateUsername = (username) => {
@@ -47,14 +51,20 @@ const RegisterForm = () => {
     const validateNames = (fname, lname) => {
         let error = false
         let chars = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=0123456789"
+        if (fname.length > 50 || lname.length > 50){
+            error = true
+            return
+        }
         for(let i = 0;i<fname.length;i++){
             if (chars.includes(fname[i]) || fname[i] === ' '){
                 error=true
+                return
             }
         }
         for(let i = 0;i<lname.length;i++){
             if (chars.includes(lname[i])){
                 error=true
+                return
             }
         }
         return error
@@ -91,18 +101,20 @@ const RegisterForm = () => {
         e.preventDefault()
         let birth_date = `${year.value+'-'+month.value+'-'+day.value}`
 
-        let username = tag_name.value
-        let fname = first_name.value
-        let lname = last_name.value
+        let fname = first_name.value.charAt(0).toUpperCase() + first_name.value.slice(1);
+        let lname = last_name.value.charAt(0).toUpperCase() + last_name.value.slice(1);
+        username = username.value
         email = email.value
         password = password.value
         passconfirm = passconfirm.value
+        gender = gender.value
 
         let empty = false
         let arr = [username, fname, lname, email, password, passconfirm]
         
         arr.forEach(field => {
-            if (field.trim() === '') {
+            let trimmed = field.trim()
+            if (trimmed === '') {
                 empty = true
                 return
             }
@@ -111,7 +123,7 @@ const RegisterForm = () => {
         if (empty){
             setErrorMsg('Please fill in all fields')
         } else if (validateNames(fname, lname)){
-            setErrorMsg('First name and last name can contain only letters, not numbers, whitespace or any other special characters!')
+            setErrorMsg('First name and last name can contain only letters, not numbers, whitespace or any other special characters and cannot be longer than 50 characters!')
         } else if (validateAge(birth_date) < 13) {
             setErrorMsg('You must be at least 13 years old to register')
         } else if (!validateEmail(email)) {
@@ -133,7 +145,8 @@ const RegisterForm = () => {
                         lname,
                         email,
                         password,
-                        birth_date
+                        birth_date,
+                        gender
                     }
                 }).then(res => {
                     res?.data.error ? setErrorMsg(res.data.error) : window.location.href = '/login'
@@ -155,6 +168,10 @@ const RegisterForm = () => {
                     <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name"/>
                 </div>
                 <div className="birthdt-reg-box">
+                    <select id='gender' ref={value => gender = value} name='gender'>
+                        <option value='male'>Male</option>
+                        <option value='female'>Female</option>
+                    </select>
                     <select id="year" ref={value => year = value} name="year">
                         {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
                     </select>
@@ -177,7 +194,7 @@ const RegisterForm = () => {
                     </select>
                 </div>
                 <input type="text" ref={value => email = value} id='email' placeholder="Email"/>
-                <input type="text" ref={value => tag_name = value} id='tag_name' placeholder="Create your username"/>
+                <input type="text" ref={value => username = value} id='username' placeholder="Create your username"/>
                 <input type="password" ref={value => password = value} id='password' placeholder="Password"/>
                 <input type="password" ref={value => passconfirm = value}  id='confirmpass' placeholder="Confirm your password"/>
                 <button className="entry-btn btn" type="submit">REGISTER</button>
