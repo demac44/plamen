@@ -7,7 +7,7 @@ import cors from 'cors'
 import session from 'express-session'
 import {join, resolve} from 'path'
 import { graphqlHTTP } from 'express-graphql';
-import {schema} from './src/DB/Schema/schema.js';
+import {schema} from './Schema/schema.js';
 
 const app = express()
 
@@ -29,7 +29,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { 
         secure: false,
-        maxAge: 360000,
+        maxAge: 3600000
      }
 }))
 
@@ -37,9 +37,11 @@ app.use('/api/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }))
-// app.use(passport.initialize());
-// app.use(passport.session())
 
+import login from './controllers/login.js'
+app.use('/api/login', login)
+import register from './controllers/register.js'
+app.use('/api/register', register)
 
 app.get('*', (req,res)=>{
     res.sendFile(join(__dirname, "client", "build", "index.html"))

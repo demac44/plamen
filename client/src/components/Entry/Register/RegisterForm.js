@@ -1,64 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import gql from 'graphql-tag';
-import {useQuery, useMutation } from 'react-apollo';
 import ErrorMsg from '../ErrorMsg'
+import axios from 'axios'
 
-const USER_QUERY = gql`
-    query {
-      users {
-        tag_name
-        email
-    }
-}`;
-
-const CREATE_USER = gql`
-    mutation new_user (
-        $tag_name: String!,
-        $first_name: String!
-        $last_name: String!,
-        $email: String!,
-        $pass: String!,
-        $birth_date: String!,
-        $pfp_url: String!
-        ){
-        new_user(
-            tag_name: $tag_name,
-            first_name: $first_name,
-            last_name: $last_name,
-            email: $email,
-            pass: $pass,
-            birth_date: $birth_date,
-            pfp_url: $pfp_url
-            )
-            { 
-            tag_name
-            first_name
-            last_name
-            email
-            pass
-            birth_date
-            pfp_url
-            }
-    }`
 
     
 const RegisterForm = () => {
-    let tag_name, first_name, last_name, year, day,email, month, password, confirmpass;
-    const [new_user] = useMutation(CREATE_USER)
-    const {data, loading, error} = useQuery(USER_QUERY)
+    let tag_name, first_name, last_name, year, day,email, month, password, passconfirm;
     
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
-    
-    const [usernameNotFound, setUsernameNotFound] = useState(false)
-    const [emailNotFound, setEmailNotFound] = useState(false)
-    const [emailNotValid, setEmailNotValid] = useState(false)
-    const [namesNotValid, setNamesNotValid] = useState(false)
-    const [usernameNotValid, setUsernameNotValid] = useState(false)
-    const [ageError, setAgeError] = useState(false)
-    const [passNotValid, setPassNotValid] = useState(false)
-    const [confirmErr, setConfirmErr] = useState(false)
+
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(()=>{
@@ -75,45 +27,9 @@ const RegisterForm = () => {
         setSelectDay(days)
     }, [])
 
-    const setErrorsFalse = () => {
-        setEmailNotFound(false)
-        setUsernameNotFound(false)
-        setEmailNotValid(false)
-        setUsernameNotValid(false)
-        setNamesNotValid(false)
-        setAgeError(false)
-        setPassNotValid(false)
-        setConfirmErr(false)
-        setErrorMsg('')
-    }
-
-    if (loading) return loading
-    if (error) console.log(error)
-
-    const checkEmail = (email) => {
-        let email_found = false
-        data.users.forEach(user => {
-            if(user.email === email.toLowerCase()){
-                email_found = true
-                return user
-            }
-        })
-        return email_found
-    }
     const validateEmail = (email) => {
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return re.test(email.toLowerCase())
-    }
-
-    const checkUsername = (username) => {
-        let username_found = false
-        data.users.forEach(user => {
-            if(user.tag_name === username){
-                username_found = true
-                return user
-            }
-        })
-        return username_found
     }
 
     const validateUsername = (username) => {
@@ -163,9 +79,9 @@ const RegisterForm = () => {
          return validPass
     }
 
-    const confirmPass = (password, confirmpass) => {
+    const confirmPass = (password, passconfirm) => {
         let confirm = true
-        if (password !== confirmpass){
+        if (password !== passconfirm){
             confirm = false
         }
         return confirm
@@ -174,44 +90,57 @@ const RegisterForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let birth_date = `${year.value+'-'+month.value+'-'+day.value}`
-        setErrorsFalse()
 
-        if (validateNames(first_name.value, last_name.value)){
-            setNamesNotValid(true)
+        let username = tag_name.value
+        let fname = first_name.value
+        let lname = last_name.value
+        email = email.value
+        password = password.value
+        passconfirm = passconfirm.value
+
+        let empty = false
+        let arr = [username, fname, lname, email, password, passconfirm]
+        
+        arr.forEach(field => {
+            if (field.trim() === '') {
+                empty = true
+                return
+            }
+        })
+
+        if (empty){
+            setErrorMsg('Please fill in all fields')
+        } else if (validateNames(fname, lname)){
             setErrorMsg('First name and last name can contain only letters, not numbers, whitespace or any other special characters!')
         } else if (validateAge(birth_date) < 13) {
-            setAgeError(true)
             setErrorMsg('You must be at least 13 years old to register')
-        } else if (!validateEmail(email.value)) {
-            setEmailNotValid(true)
+        } else if (!validateEmail(email)) {
             setErrorMsg('Email not valid')
-        } else if (!validateUsername(tag_name.value)){
-            setUsernameNotValid(true)
+        } else if (!validateUsername(username)){
             setErrorMsg('Username must contains only lowercase letters, numbers, underscores and dots and cannot be longer than 30 characters')
-        } else if (!validatePassword(password.value)){
-            setPassNotValid(true)
+        } else if (!validatePassword(password)){
             setErrorMsg('Password must be between 8 and 30 characters long and should not contain whitespace')
-        } else if (!confirmPass(password.value, confirmpass.value)) {
-            setConfirmErr(true)
+        } else if (!confirmPass(password, passconfirm)) {
             setErrorMsg('Passwords must match')
-        } else if (checkEmail(email.value)){
-            setEmailNotFound(true)
-            setErrorMsg('Email already exists') 
-        } else if (checkUsername(tag_name.value)){
-            setUsernameNotFound(true)
-            setErrorMsg('Username is already taken')
         } else {
-            new_user(
-            {variables: {
-                tag_name: tag_name.value,
-                first_name: first_name.value.toLowerCase(),
-                last_name: last_name.value.toLowerCase(),
-                email: email.value.toLowerCase(),
-                pass: password.value,
-                birth_date: birth_date,
-                pfp_url: 'url'
-            }})
-            window.location.href = '/login'
+            try {
+                axios({
+                    method:'POST',
+                    url: 'http://localhost:5000/api/register',
+                    data: {
+                        username,
+                        fname, 
+                        lname,
+                        email,
+                        password,
+                        birth_date
+                    }
+                }).then(res => {
+                    res?.data.error ? setErrorMsg(res.data.error) : window.location.href = '/login'
+                })
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
         
@@ -219,11 +148,11 @@ const RegisterForm = () => {
         <div>
             <h1>Register</h1>
             <p>Enter your details below to continue</p>
-            {(emailNotFound || emailNotValid || usernameNotFound || usernameNotValid || namesNotValid || ageError || passNotValid || confirmErr) && <ErrorMsg message={errorMsg}/>}
+            {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
             <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
                 <div className="reg-names-box">
-                    <input type="text" ref={value => first_name = value} id='first_name' placeholder="First name" required/>
-                    <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name" required/>
+                    <input type="text" ref={value => first_name = value} id='first_name' placeholder="First name"/>
+                    <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name"/>
                 </div>
                 <div className="birthdt-reg-box">
                     <select id="year" ref={value => year = value} name="year">
@@ -247,10 +176,10 @@ const RegisterForm = () => {
                         {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
                     </select>
                 </div>
-                <input type="text" ref={value => email = value} id='email' placeholder="Email" required/>
-                <input type="text" ref={value => tag_name = value} id='tag_name' placeholder="Create your username" required/>
-                <input type="password" ref={value => password = value} id='password' placeholder="Password" required/>
-                <input type="password" ref={value => confirmpass = value}  id='confirmpass' placeholder="Confirm your password" required/>
+                <input type="text" ref={value => email = value} id='email' placeholder="Email"/>
+                <input type="text" ref={value => tag_name = value} id='tag_name' placeholder="Create your username"/>
+                <input type="password" ref={value => password = value} id='password' placeholder="Password"/>
+                <input type="password" ref={value => passconfirm = value}  id='confirmpass' placeholder="Confirm your password"/>
                 <button className="entry-btn btn" type="submit">REGISTER</button>
             </form>
             <div className="entry-link flex-ctr">

@@ -15,7 +15,7 @@ const Entry = () => {
     return (
         <ApolloProvider client={client}>
             <Switch>
-                <Route exact path={['/login', '/register', '/register/emailerror']}>              
+                <Route exact path={['/login', '/register', '/messages']}>              
                     <div className='entry-wrapper'>
                         <div className='entry-left'></div>
                         <div className='entry-right flex-ctr'>
@@ -25,9 +25,6 @@ const Entry = () => {
                                 </Route>
                                 <Route exact path='/login'>
                                     <LoginForm/>
-                                </Route>
-                                <Route exact path='/register/emailerror'>
-                                    <RegisterForm errormsg='Email already exists!'/>   
                                 </Route>
                             </div>
                         </div>

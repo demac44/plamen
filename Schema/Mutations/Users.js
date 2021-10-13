@@ -1,5 +1,5 @@
 import { GraphQLString } from "graphql"
-import connection from "../../db.js"
+import connection from "../../middleware/db.js"
 import { UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 
