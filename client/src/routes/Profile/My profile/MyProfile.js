@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Navbar from '../../../components/Navbar/Navbar'
 
 import '../../../App.css'
 import '../../../General.css'
@@ -6,7 +7,8 @@ import '../../../General.css'
 const MyProfile = () => {
     return (
         <div>
-        </div>
+            <Navbar/>
+        </div> 
     )
 }
 

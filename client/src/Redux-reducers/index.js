@@ -1,10 +1,10 @@
-import loggedReducer from "./isLogged.js";
+import authReducer from "./isAuthenticated.js";
 import { combineReducers } from "redux";
 
 
 
 const rootReducer = combineReducers({
-    isLogged: loggedReducer
+    isAuth: authReducer
 })
 
 

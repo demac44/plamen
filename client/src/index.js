@@ -9,8 +9,10 @@ import Entry from './routes/Entry/Entry.js';
 import {createStore} from 'redux'
 import rootReducer from './Redux-reducers/index.js'
 import {Provider} from 'react-redux'
+import thunk from 'redux-thunk';
+import { applyMiddleware } from 'redux';
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 ReactDOM.render(
   <React.StrictMode>

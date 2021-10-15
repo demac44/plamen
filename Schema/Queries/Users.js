@@ -22,10 +22,10 @@ export const GET_ALL_USERS = {
 export const GET_USER = {
     type: UserType,
     args: {
-        user_id: {type: GraphQLInt}
+        userID: {type: GraphQLInt}
     },    
     resolve(parent, args) {
-        connection.query(`SELECT * FROM users WHERE user_id=${args.user_id}`, (err, result)=>{
+        connection.query(`SELECT * FROM users WHERE userID=${args.userID}`, (err, result)=>{
             result = JSON.parse(JSON.stringify(result))
             user = result
             return null;

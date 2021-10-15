@@ -28,8 +28,10 @@ const LoginForm = () => {
                     password: password
                 }
             }).then(res => {
-                res?.data.error ? setErrorMsg(res.data.error)    
-                :localStorage.setItem('token', res?.data.token)
+                if(res?.data.error) setErrorMsg(res.data.error)    
+                else {
+                    localStorage.setItem('token', res?.data.token)
+                    window.location.href = '/myprofile'}
             })
         } catch (error) {
             console.log(error);
