@@ -1,37 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import '../../App.css'
+import '../../General.css'
 import Avatar from '../UI/Avatar'
+import Logo from '../UI/Logo'
+import Dropdown from './Dropdown'
+import SearchBar from './SearchBar'
 
 const Navbar = () => {
+    const [dropdown, setDropdown] = useState(false)
+
+    const handleDropdown = () => {
+        setDropdown(!dropdown)
+    }
+
     return (
         <>
             <div className="top-navbar flex-ctr">
-                <div className="tn-left flex-ctr wh-100">
-                    <h1>SoMeApp<span>.com</span></h1>
+                <div className="tn-left">
+                    <Logo/>
                 </div>
-
-
-                <div className="tn-center flex-ctr wh-100">
-                    <div className="search-icon"><i className="fas fa-search"></i></div>
-                    <input type="text" className="tn-search-input" placeholder='Search'/>
-                </div>
-
-                
-                <div className="tn-right flex-ctr wh-100">
-                    <div className="tn-dropdown-menu">
-                        <ul>
-                            <a href="profile.html"><li>My profile</li></a>
-                            <a href="#"><li>Change accounts</li></a>
-                            <a href="#"><li>Settings</li></a>
-                            <a href="#"><li>Log out</li></a>
-                        </ul>
-                    </div>
+                <SearchBar/>
+                <div className="tn-right">
+                    {dropdown && <Dropdown/>}
                     <div className="tn-np-btn flex-ctr">
                         <a href="/index.html"><i className="fas fa-home"></i></a>
                         <a href="#"><i className="fas fa-plus"></i></a>
                     </div>
-                    <Avatar/>
+                    <div style={{height:'100%'}} onClick={handleDropdown}>
+                        <Avatar height='100%'/>
+                    </div>
                 </div>
             </div>
         </>

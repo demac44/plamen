@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {gql }from 'graphql-tag';
 import { useQuery } from 'react-apollo';
 import { useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ const PFP_QUERY = gql`
         }
     }
 `
-const Avatar = () => {
+const Avatar = ({height}) => {
     const user = useSelector(state => state.isAuth.user)
     
     const {data, loading, error} = useQuery(PFP_QUERY, {
@@ -23,8 +23,8 @@ const Avatar = () => {
     if (error) return error
 
     return (
-        <div className="tn-avatar">
-            <img src={data.user.profile_picture} alt="avatar" className="avatar-img"/>
+        <div className="current-user-avatar" style={{height: height}}>
+            <img src={data.user.profile_picture} alt="avatar" className="avatar-img" style={{height:'100%'}}/>
         </div>
     )
 }

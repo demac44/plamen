@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from './Redux-actions';
 import ApolloClient from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
+import Feed from './routes/Feed/Feed';
 
 
 const client = new ApolloClient({
@@ -17,7 +18,6 @@ const client = new ApolloClient({
 function App() {
   const [loading, setLoading] = useState(true)
   const isLogged = useSelector(state => state.isAuth.isAuth)
-  const user = useSelector(state => state.isAuth.user)
   const dispatch = useDispatch()
   
   useEffect(()=>{
@@ -35,6 +35,7 @@ function App() {
           <>
             <Route exact path='/'></Route>
             <Route exact path='/myprofile'><MyProfile/></Route>
+            <Route exact path='/feed'><Feed/></Route>
           </>
           ) : <Redirect to='/login'/>}
         </Switch>}

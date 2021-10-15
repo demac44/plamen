@@ -3,6 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
 .flex-ctr{
     display: flex;
     justify-content: center;
