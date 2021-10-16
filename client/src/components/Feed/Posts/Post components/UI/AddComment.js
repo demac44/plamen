@@ -1,7 +1,7 @@
 import React from 'react'
-import Avatar from '../../../UI/Avatar'
-import CommentBtn from './Functional components/CommentBtn'
-import CommentInput from './Functional components/CommentInput'
+import Avatar from '../../../../UI/Avatar'
+import CommentBtn from '../Functional components/CommentBtn'
+import CommentInput from '../Functional components/CommentInput'
 
 const AddComment = () => {
     return (

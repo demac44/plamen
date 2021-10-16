@@ -31,6 +31,7 @@ const LoginForm = () => {
                 if(res?.data.error) setErrorMsg(res.data.error)    
                 else {
                     localStorage.setItem('token', res?.data.token)
+                    localStorage.setItem('user', JSON.stringify(res?.data.user))
                     window.location.href = '/myprofile'}
             })
         } catch (error) {

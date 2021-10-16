@@ -1,30 +1,11 @@
 import React from 'react'
-import {gql }from 'graphql-tag';
-import { useQuery } from 'react-apollo';
-import { useSelector } from 'react-redux';
+import defaultImage from '../../images/pfp.jpg'
 
-
-
-const PFP_QUERY = gql`
-    query user($userID:Int!){
-        user(userID: $userID){
-            profile_picture
-        }
-    }
-`
 const Avatar = ({height}) => {
-    const user = useSelector(state => state.isAuth.user)
-    
-    const {data, loading, error} = useQuery(PFP_QUERY, {
-        variables: {userID: user.userID}
-    })
-
-    if (loading) return 'loading'
-    if (error) return error
-
+    let ls = JSON.parse(localStorage.getItem('user')) 
     return (
         <div className="current-user-avatar" style={{height: height}}>
-            <img src={data.user.profile_picture} alt="avatar" className="avatar-img" style={{height:'100%'}}/>
+            <img src={ls.pfp || defaultImage} alt="avatar" className="avatar-img" style={{height:'100%'}}/> 
         </div>
     )
 }

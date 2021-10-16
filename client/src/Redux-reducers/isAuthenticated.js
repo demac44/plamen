@@ -1,6 +1,3 @@
-
-
-
 const authReducer = (state=false, action) => {
     switch(action.type){
         case 'AUTH':
@@ -8,8 +5,8 @@ const authReducer = (state=false, action) => {
         case 'NOTAUTH':
             return {isAuth: false}
         default:
-            return {isAuth: true}
-    }
+            return {isAuth: false}
+        }
 }
 
 

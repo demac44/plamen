@@ -1,5 +1,5 @@
 import React from 'react'
-import postImg from '../../../../images/post.jpeg'
+import postImg from '../../../../../images/post.jpeg'
 
 const PostImage = () => {
     return (

@@ -2,7 +2,7 @@ import React from 'react'
 import ImagePost from '../../components/Feed/Posts/ImagePost'
 import TextPost from '../../components/Feed/Posts/TextPost'
 import Stories from '../../components/Feed/Stories/Stories'
-import AddPost from '../../components/Functional components/AddPost'
+import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Navbar from '../../components/Navbar/Navbar'
 import LeftNavbar from '../../components/UI/LeftNavbar'
 
@@ -14,8 +14,8 @@ const Feed = () => {
                 <LeftNavbar/>
                 <div className='posts-container-feed'>
                     <Stories/>
-                    <AddPost/>
-                    <TextPost/>
+                    <AddPost width='100%'/>
+                    {/* <TextPost/> */}
                     <ImagePost/>
                 </div>
             </div>
