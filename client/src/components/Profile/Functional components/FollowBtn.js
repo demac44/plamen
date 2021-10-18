@@ -30,8 +30,8 @@ const IF_FOLLOWING = gql`
 const FollowBtn = ({uID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [isFollowing, setIsFollowing] = useState(false) 
-    const [follow, {}] = useMutation(FOLLOW)
-    const [unfollow, {}] = useMutation(UNFOLLOW)
+    const [follow] = useMutation(FOLLOW)
+    const [unfollow] = useMutation(UNFOLLOW)
 
     
     const {id} = useParams()
@@ -46,7 +46,7 @@ const FollowBtn = ({uID}) => {
     useEffect(()=>{ 
         refetch()
         setIsFollowing(data?.ifFollowing) 
-    }, [data])
+    }, [data, refetch])
     
     
     if (loading) return <p>loading</p>

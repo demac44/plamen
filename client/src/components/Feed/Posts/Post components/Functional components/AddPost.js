@@ -26,7 +26,7 @@ const AddPost = ({width, user}) => {
     const [imageUpload, setImageUpload] = useState(false)
     let text;
 
-    const [new_post, {}] = useMutation(NEW_POST)
+    const [new_post] = useMutation(NEW_POST)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -72,7 +72,10 @@ const AddPost = ({width, user}) => {
                     <Avatar height='100%' pfp={user.profile_picture}/>
                     <textarea type="text" className="add-np-input" style={{border:err}} ref={value => text = value} placeholder="Add new post..."></textarea>
                 </div>
-                    {imageUpload && <Dropzone onSuccessBlob={ (img) => setImage(img) }/>}
+                {imageUpload && 
+                <div className='dropzone-box'>
+                    <Dropzone onSuccessBlob={ (img) => setImage(img) }/>
+                </div>}
                 <div className="add-np-tbtn">
                     <div className="add-np-types">
                         <i className="fas fa-images" onClick={() => setImageUpload(!imageUpload)}></i>

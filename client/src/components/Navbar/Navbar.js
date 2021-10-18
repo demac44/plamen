@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import '../../App.css'
 import '../../General.css'
@@ -25,8 +26,7 @@ const Navbar = () => {
                 <div className="tn-right">
                     {dropdown && <Dropdown/>}
                     <div className="tn-np-btn flex-ctr">
-                        <a href="/index.html"><i className="fas fa-home"></i></a>
-                        <a href="#"><i className="fas fa-plus"></i></a>
+                        <NavLink exact to="/feed"><i className="fas fa-home"></i></NavLink>
                     </div>
                     <div style={{height:'100%'}} onClick={handleDropdown}>
                         <Avatar height='100%' pfp={ls.profile_picture}/>

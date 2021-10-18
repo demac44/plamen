@@ -13,7 +13,7 @@ const DELETE_POST = gql`
 
 
 const PostOptionsMenu = ({postID}) => {
-    const [delete_post, {}] = useMutation(DELETE_POST)
+    const [delete_post] = useMutation(DELETE_POST)
 
 
     const handlePostDelete = () => {

@@ -10,9 +10,8 @@ import {ApolloProvider} from 'react-apollo'
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticate } from './Redux-actions';
 
-import MyProfile from './routes/Profile/My profile/MyProfile';
 import Feed from './routes/Feed/Feed';
-import Profile from './routes/Profile/Visited profile/Profile';
+import Profile from './routes/Profile/Profile';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/api/graphql',
@@ -30,7 +29,7 @@ function App() {
     if(!user) localStorage.removeItem('token')
     dispatch(authenticate());
     setIsLoading(false)
-  },[dispatch, isLogged])
+  },[dispatch, isLogged, user])
   
   
   return (

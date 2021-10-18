@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import Navbar from '../../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/Navbar'
 
-import '../../../App.css'
-import '../../../General.css'
-import LeftNavbar from '../../../components/UI/LeftNavbar'
-import ProfileInfoBox from '../../../components/Profile/ProfileInfoBox'
-import AddPost from '../../../components/Feed/Posts/Post components/Functional components/AddPost'
-import Post from '../../../components/Feed/Posts/Post'
+import '../../App.css'
+import '../../General.css'
+import LeftNavbar from '../../components/UI/LeftNavbar'
+import ProfileInfoBox from '../../components/Profile/ProfileInfoBox'
+import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
+import Post from '../../components/Feed/Posts/Post'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
@@ -84,7 +84,7 @@ const Profile = ({myprofile}) => {
     useEffect(()=>{
         if(userID === ls.userID) window.location.href = '/myprofile'
         refetch()
-    }, [data, refetch])
+    }, [data, refetch, userID, ls.userID])
     
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 

@@ -31,7 +31,7 @@ export const GET_FOLLOWERS = {
     },
     resolve(parent, args){
         const {followedID} = args
-        let sql = `SELECT userID,username,first_name,last_name FROM users WHERE userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
+        let sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
         connection.query(sql, (err, result)=>{
             if (err) throw err;
             followers = result
@@ -47,7 +47,7 @@ export const GET_FOLLOWING = {
     },
     resolve(parent, args){
         const {followerID} = args
-        let sql = `SELECT userID,username,first_name,last_name FROM users WHERE userID IN (SELECT followedID from followings WHERE followerID=${followerID})`
+        let sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followedID from followings WHERE followerID=${followerID})`
         connection.query(sql, (err, result)=>{
             if (err) throw err;
             following = result

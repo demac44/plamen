@@ -414,6 +414,10 @@
 .add-np-types i:hover{ 
     color: #f5ba6c;
 }    
+.dropzone-box{
+    border: 2px dashed rgb(54, 54, 54);
+    border-radius: 20px;
+}
 
 /* POSTS */
 
