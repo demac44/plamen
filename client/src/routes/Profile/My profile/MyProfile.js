@@ -20,11 +20,15 @@ const FETCH_INFO = gql`
             url
         }
         count_posts(userID: $userID)
+        getFollowers(followedID: $userID){
+            userID
+            first_name
+            last_name}
     }
 ` 
 
 const MyProfile = () => {
-    let ls = JSON.parse(localStorage.getItem('user')) 
+    const ls = JSON.parse(localStorage.getItem('user')) 
 
     const {loading, error, data, refetch} = useQuery(FETCH_INFO, {  
         variables: {userID: ls.userID} 
@@ -39,6 +43,7 @@ const MyProfile = () => {
 
     const posts = data.posts
     const count = data.count_posts
+    const followers = data.
 
     return (
         <>

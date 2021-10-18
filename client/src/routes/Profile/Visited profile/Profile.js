@@ -27,29 +27,63 @@ const FETCH_INFO= gql`
             userID
         }
         count_posts(userID: $userID)
+        getFollowers(followedID: $userID){
+            userID
+            first_name
+            last_name
+        }
+        getFollowing(followerID: $userID){userID, first_name, last_name}
     }`
 
+    const FETCH_INFO2 = gql`
+    query posts ($userID: Int!){
+        posts(userID: $userID){
+            postID
+            post_text
+            date_posted
+            url
+        }
+        count_posts(userID: $userID)
+        getFollowers(followedID: $userID){
+            userID
+            first_name
+            last_name
+        }
+        getFollowing(followerID: $userID){userID, first_name, last_name}
+    }
+` 
     
-const Profile = () => {
+const Profile = ({myprofile}) => {
+    const ls = JSON.parse(localStorage.getItem('user')) 
 
     const {id} = useParams()
 
     let userID = parseInt(id)
 
-    const {loading, error, data, refetch} = useQuery(FETCH_INFO, {
-        variables: {userID: userID}
+    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO2 : FETCH_INFO, {   
+        variables: {userID: myprofile ? ls.userID : userID}
     })
 
     useEffect(()=>{
-        refetch()
-    }, [data])
+        if(refetch) refetch()
+    }, [data, refetch])
     
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 
     
-    const user = data.user
+    const user = myprofile ? ls : data.user
     const posts = data.posts
     const count = data.count_posts
+    const followers = data.getFollowers
+    const following = data.getFollowing
+
+
+    const info = {
+        user: user,
+        count:count,
+        followers: followers,
+        following: following
+    }
     
     return (
         <>
@@ -58,7 +92,7 @@ const Profile = () => {
                 <div className='main'>
                     <LeftNavbar/>
                     <div className='profile-container'>
-                        <ProfileInfoBox user={user} count={count}/>
+                        <ProfileInfoBox user={user} count={count} info={info}/>
                         {posts.map(post => <Post width='70%' user={user} post={post} key={post.postID}/>)}       
                     </div>
                 </div>

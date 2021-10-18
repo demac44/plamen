@@ -42,9 +42,9 @@ function App() {
               (
                 <>
                 <Route exact path='/'></Route>
-                <Route exact path='/myprofile'><MyProfile/></Route>
+                <Route exact path='/myprofile'><Profile myprofile={true}/></Route>
                 <Route exact path='/feed'><Feed/></Route>
-                <Route exact path='/profile/:id'><Profile/></Route>
+                <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
               </>
               ) : <Redirect to='/login'/>}
           </Switch>

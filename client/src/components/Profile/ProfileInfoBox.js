@@ -4,12 +4,12 @@ import FollowBtn from './Functional components/FollowBtn'
 import ProfileEditBtn from './Functional components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
 
-const ProfileInfoBox = ({user, count}) => {
+const ProfileInfoBox = ({info}) => {
     return (
         <div className="profile-info-box">
-            <Avatar height='200px' pfp={user.profile_picture}/>
-            <ProfileInfo user={user} count={count}/>
-            {user.currentUser ? <ProfileEditBtn/> : <FollowBtn/>}
+            <Avatar height='200px' pfp={info.user.profile_picture}/>
+            <ProfileInfo info={info}/>
+            {info.user.currentUser ? <ProfileEditBtn/> : <FollowBtn/>} 
     </div>
     )
 }
