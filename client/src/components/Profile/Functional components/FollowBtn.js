@@ -27,7 +27,7 @@ const IF_FOLLOWING = gql`
     }
 `
 
-const FollowBtn = () => {
+const FollowBtn = ({uID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [isFollowing, setIsFollowing] = useState(false) 
     const [follow, {}] = useMutation(FOLLOW)
@@ -39,7 +39,7 @@ const FollowBtn = () => {
     let userID = parseInt(id)
 
     const {loading, data, refetch} = useQuery(IF_FOLLOWING,{
-        variables: {followerID: ls.userID, followedID: userID}
+        variables: {followerID: ls.userID, followedID: userID || uID}
     })
     
 
@@ -57,7 +57,7 @@ const FollowBtn = () => {
         follow({
             variables: {
                 followerID: ls.userID,
-                followedID: userID
+                followedID: userID || uID
             }
         }).then(()=>setIsFollowing(true))
     }
@@ -66,7 +66,7 @@ const FollowBtn = () => {
         unfollow({
             variables: {
                 followerID: ls.userID,
-                followedID: userID
+                followedID: userID || uID
             }
         }).then(()=>setIsFollowing(false))
     }

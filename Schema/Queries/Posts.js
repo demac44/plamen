@@ -36,3 +36,19 @@ export const COUNT_POSTS = {
         return count
     }   
 }
+
+export const GET_FEED_POSTS = {
+    type: new GraphQLList(PostType),
+    args: {
+        userID: {type: GraphQLInt},
+    },    
+    resolve(parent, args) {
+        const {userID} = args
+        connection.query(`SELECT * FROM posts WHERE userID`, (err, results)=>{
+            if(err) throw err
+            results = JSON.parse(JSON.stringify(results))
+            posts = results
+        }) 
+        return posts
+    }  
+}

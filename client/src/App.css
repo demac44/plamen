@@ -156,9 +156,11 @@
     color: white;
     margin-right: 20px;
 }
-.current-user-avatar, .avatar-img{
+.user-avatar, .avatar-img{
     border-radius: 50%;
     cursor: pointer;
+    border: 1px solid #df7e00;
+
 }
 .tn-dropdown-menu{
     position: fixed;
@@ -254,6 +256,10 @@
 }
 .pf-stats div{
     text-align: center;
+    cursor: pointer;
+}
+.pf-stats div:nth-child(3){
+    cursor:default;
 }
 .pf-stats div h6{
     font-size: 14px;
@@ -281,6 +287,72 @@
     background-color: #cccccc;
 }
 
+/* SHOW FOLLOWS */
+
+.follows-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0,0.5);
+    z-index: 1000000;
+}
+.follows-box{
+    width: 500px;
+    height: auto;
+    background-color: white;
+    overflow-y: scroll;
+    background-color: #ececec;
+}
+.foll-type{
+    width: 100%;
+    font-weight: lighter;
+    text-align: center;
+    padding: 5px;
+    background-color: #d3d3d3;
+}
+.foll-exit{
+    position: relative;
+    width: 500px;
+}
+.foll-exit .fas{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+.no-follows{
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+.foll-user-box{
+    position: relative;
+    display: flex;
+    height: 80px;
+    width: 100%;
+    padding: 5px 10px;
+}
+.foll-user-box a{
+    display: flex;
+}
+.foll-user-info{
+    height: 100%;
+    margin-left: 20px;
+    align-items: flex-start !important;
+}
+.foll-user-info p{
+    color: #1f1f1f;
+}
+.foll-user-info p:nth-child(1){
+    font-size: 18px;
+}
+.foll-user-info p:nth-child(2){
+    font-size: 14px;
+    text-align: left;
+}
 /* NEW POST BOX */
 .add-np-box{
     width: 100%;
@@ -379,10 +451,6 @@
 }
 .post-date{
     font-size: 2px; 
-}
-.fp-avatar{
-    height: 100%;
-    border-radius: 50%;
 }
 .fp-info p{
     color: rgb(46, 46, 46);

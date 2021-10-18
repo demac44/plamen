@@ -5,6 +5,7 @@ import '../../../App.css'
 import '../../../General.css'
 import LeftNavbar from '../../../components/UI/LeftNavbar'
 import ProfileInfoBox from '../../../components/Profile/ProfileInfoBox'
+import AddPost from '../../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Post from '../../../components/Feed/Posts/Post'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -29,10 +30,18 @@ const FETCH_INFO= gql`
         count_posts(userID: $userID)
         getFollowers(followedID: $userID){
             userID
+            username
             first_name
             last_name
+            profile_picture
         }
-        getFollowing(followerID: $userID){userID, first_name, last_name}
+        getFollowing(followerID: $userID){
+            userID
+            username
+            first_name
+            last_name
+            profile_picture
+        }
     }`
 
     const FETCH_INFO2 = gql`
@@ -46,10 +55,18 @@ const FETCH_INFO= gql`
         count_posts(userID: $userID)
         getFollowers(followedID: $userID){
             userID
+            username
             first_name
             last_name
+            profile_picture
         }
-        getFollowing(followerID: $userID){userID, first_name, last_name}
+        getFollowing(followerID: $userID){
+            userID
+            username
+            first_name
+            last_name
+            profile_picture
+        }
     }
 ` 
     
@@ -60,12 +77,13 @@ const Profile = ({myprofile}) => {
 
     let userID = parseInt(id)
 
-    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO2 : FETCH_INFO, {   
+    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO2 : FETCH_INFO, {
         variables: {userID: myprofile ? ls.userID : userID}
     })
 
     useEffect(()=>{
-        if(refetch) refetch()
+        if(userID === ls.userID) window.location.href = '/myprofile'
+        refetch()
     }, [data, refetch])
     
     if (loading) return <div>loading</div>
@@ -93,6 +111,7 @@ const Profile = ({myprofile}) => {
                     <LeftNavbar/>
                     <div className='profile-container'>
                         <ProfileInfoBox user={user} count={count} info={info}/>
+                        {myprofile && <AddPost width='70%' user={ls}/>}
                         {posts.map(post => <Post width='70%' user={user} post={post} key={post.postID}/>)}       
                     </div>
                 </div>
