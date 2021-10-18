@@ -1,14 +1,15 @@
 import React from 'react'
 import Avatar from '../UI/Avatar'
-import ProfileEditBtn from './ProfileEditBtn'
+import FollowBtn from './Functional components/FollowBtn'
+import ProfileEditBtn from './Functional components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
 
-const ProfileInfoBox = ({user}) => {
+const ProfileInfoBox = ({user, count}) => {
     return (
         <div className="profile-info-box">
-            <Avatar height='200px'/>
-            <ProfileInfo user={user}/>
-            <ProfileEditBtn/>
+            <Avatar height='200px' pfp={user.profile_picture}/>
+            <ProfileInfo user={user} count={count}/>
+            {user.currentUser ? <ProfileEditBtn/> : <FollowBtn/>}
     </div>
     )
 }

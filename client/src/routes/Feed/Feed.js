@@ -1,6 +1,5 @@
 import React from 'react'
-import ImagePost from '../../components/Feed/Posts/ImagePost'
-import TextPost from '../../components/Feed/Posts/TextPost'
+import Post from '../../components/Feed/Posts/Post'
 import Stories from '../../components/Feed/Stories/Stories'
 import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Navbar from '../../components/Navbar/Navbar'
@@ -15,8 +14,7 @@ const Feed = () => {
                 <div className='posts-container-feed'>
                     <Stories/>
                     <AddPost width='100%'/>
-                    {/* <TextPost/> */}
-                    <ImagePost/>
+                    <Post/>
                 </div>
             </div>
         </div>

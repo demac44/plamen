@@ -19,15 +19,16 @@ export const GET_ALL_USERS = {
 export const GET_USER = {
     type: UserType,
     args: {
-        userID: {type: GraphQLInt}
+        userID: {type: GraphQLInt},
+        username: {type: GraphQLString}
     },    
     resolve(parent, args) {
-        const {userID} = args
-        connection.query(`SELECT * FROM users WHERE userID=${userID}`, (err, result)=>{
+        const {userID, username} = args
+        connection.query(`SELECT * FROM users WHERE userID=${userID} OR username="${username}"`, (err, result)=>{
             if(err) throw err
             user = result[0]    
         }) 
         return user
     }    
 }    
-
+ 

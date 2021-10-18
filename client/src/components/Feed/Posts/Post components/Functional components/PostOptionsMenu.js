@@ -4,23 +4,26 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const DELETE_POST = gql`
-    mutation delete_post($tpostID: Int!){
-        delete_post(tpostID: $tpostID){
-            tpostID
+    mutation delete_post($postID: Int!){
+        delete_post(postID: $postID){
+            postID
         }
     }
 `
 
 
-const PostOptionsMenu = ({id}) => {
+const PostOptionsMenu = ({postID}) => {
     const [delete_post, {}] = useMutation(DELETE_POST)
 
 
     const handlePostDelete = () => {
-        delete_post({
-            variables: {tpostID: id}
+        try {delete_post({
+            variables: {postID: postID}
         })
-        window.location.reload()
+        window.location.reload()}
+        catch(error){
+            console.log(error);
+        }
     }
 
     return (

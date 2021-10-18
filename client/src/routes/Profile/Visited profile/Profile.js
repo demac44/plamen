@@ -5,41 +5,52 @@ import '../../../App.css'
 import '../../../General.css'
 import LeftNavbar from '../../../components/UI/LeftNavbar'
 import ProfileInfoBox from '../../../components/Profile/ProfileInfoBox'
-import AddPost from '../../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Post from '../../../components/Feed/Posts/Post'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import { useParams } from 'react-router'
 
 
-const FETCH_INFO = gql`
-    query posts ($userID: Int!){
+const FETCH_INFO= gql`
+    query ($userID: Int!){
         posts(userID: $userID){
             postID
             post_text
             date_posted
             url
         }
+        user(userID: $userID){
+            first_name
+            last_name
+            profile_picture
+            username
+            userID
+        }
         count_posts(userID: $userID)
-    }
-` 
+    }`
 
-const MyProfile = () => {
-    let ls = JSON.parse(localStorage.getItem('user')) 
+    
+const Profile = () => {
 
-    const {loading, error, data, refetch} = useQuery(FETCH_INFO, {  
-        variables: {userID: ls.userID} 
+    const {id} = useParams()
+
+    let userID = parseInt(id)
+
+    const {loading, error, data, refetch} = useQuery(FETCH_INFO, {
+        variables: {userID: userID}
     })
 
     useEffect(()=>{
         refetch()
-    }, [data, refetch])
-
+    }, [data])
+    
     if (loading) return <div>loading</div>
-    if(error) return <div>Something went wrong</div>
-
+    if(error) return <div>Something went wrong</div> 
+    
+    const user = data.user
     const posts = data.posts
     const count = data.count_posts
-
+    
     return (
         <>
             <Navbar/>
@@ -47,9 +58,8 @@ const MyProfile = () => {
                 <div className='main'>
                     <LeftNavbar/>
                     <div className='profile-container'>
-                        <ProfileInfoBox user={ls} count={count}/>
-                        <AddPost width='70%' user={ls}/>
-                        {posts.map(post => <Post width='70%' user={ls} post={post} key={post.postID}/>)}       
+                        <ProfileInfoBox user={user} count={count}/>
+                        {posts.map(post => <Post width='70%' user={user} post={post} key={post.postID}/>)}       
                     </div>
                 </div>
             </div>
@@ -57,6 +67,6 @@ const MyProfile = () => {
     )
 }
 
-export default MyProfile  
+export default Profile  
 
 

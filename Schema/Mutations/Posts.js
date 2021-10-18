@@ -1,17 +1,18 @@
-import { GraphQLString, GraphQLInt, GraphQLBoolean } from "graphql"
+import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
-import { TextPostType } from "../TypeDefs/Posts.js"
+import { PostType } from "../TypeDefs/Posts.js"
 
-export const CREATE_TEXT_POST = {
-    type: TextPostType,
+export const CREATE_POST = {
+    type: PostType,
     args: {
         userID: {type: GraphQLInt},
-        post_content: {type: GraphQLString},
+        post_text: {type: GraphQLString},
+        url: {type: GraphQLString}
     },
     resolve(parent, args) {
-        const {userID, post_content} = args
-        let sql = `INSERT INTO textposts (tpostID, userID, post_content, date_published, updated, date_updated)
-                    VALUES (null, ${userID}, "${post_content}", null, false, null)`
+        const {userID, post_text, url} = args
+        let sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url)
+                    VALUES (null, ${userID}, "${post_text}", null, "${url}")`
         connection.query(sql, (err, res)=>{
             if (err) throw err                
         })
@@ -21,13 +22,13 @@ export const CREATE_TEXT_POST = {
 
 
 export const DELETE_POST = {
-    type: TextPostType,
+    type: PostType,
     args: {
-        tpostID:{type: GraphQLInt}
+        postID:{type: GraphQLInt}
     },
     resolve(parent, args){
-        const {tpostID} = args
-        const sql = `DELETE FROM textposts WHERE tpostID=${tpostID}`
+        const {postID} = args
+        const sql = `DELETE FROM posts WHERE postID=${postID}`
         connection.query(sql, (err, res)=>{
             if (err) console.log(err);
         })

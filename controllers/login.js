@@ -18,10 +18,11 @@ router.post('/', async (req, res) => {
             const hashedPass = result[0].pass
             const obj = {
                 userID: userID,
-                fname: result[0].first_name,
-                lname: result[0].last_name,
+                first_name: result[0].first_name,
+                last_name: result[0].last_name,
                 username: result[0].username,
-                pfp: result[0].profile_picture
+                profile_picture: result[0].profile_picture,
+                currentUser: true
             }
             bcrypt.compare(password, hashedPass).then(response => {
                 if (!response) {

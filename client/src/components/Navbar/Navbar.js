@@ -8,6 +8,7 @@ import Dropdown from './Dropdown'
 import SearchBar from './SearchBar'
 
 const Navbar = () => {
+    let ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
 
     const handleDropdown = () => {
@@ -28,7 +29,7 @@ const Navbar = () => {
                         <a href="#"><i className="fas fa-plus"></i></a>
                     </div>
                     <div style={{height:'100%'}} onClick={handleDropdown}>
-                        <Avatar height='100%'/>
+                        <Avatar height='100%' pfp={ls.profile_picture}/>
                     </div>
                 </div>
             </div>
