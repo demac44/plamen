@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
-import { parse } from 'dotenv'
 import { useParams } from 'react-router'
 
 const FOLLOW = gql`
@@ -12,6 +11,16 @@ const FOLLOW = gql`
         }
     }
 `
+const UNFOLLOW = gql`
+    mutation ($followerID: Int!, $followedID: Int!){
+        unfollow(followerID: $followerID, followedID: $followedID){
+            followerID
+            followedID
+        }
+    }
+`
+
+
 const IF_FOLLOWING = gql`
     query ($followerID: Int!, $followedID: Int!){
         ifFollowing(followerID: $followerID, followedID: $followedID)
@@ -20,23 +29,28 @@ const IF_FOLLOWING = gql`
 
 const FollowBtn = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [ifFollowing, setIsFollowing] = useState(false) 
+    const [isFollowing, setIsFollowing] = useState(false) 
+    const [follow, {}] = useMutation(FOLLOW)
+    const [unfollow, {}] = useMutation(UNFOLLOW)
 
+    
     const {id} = useParams()
-
+    
     let userID = parseInt(id)
 
-    const [follow, {}] = useMutation(FOLLOW)
-
-    const {loading, error, data, refetch} = useQuery(IF_FOLLOWING,{
+    const {loading, data, refetch} = useQuery(IF_FOLLOWING,{
         variables: {followerID: ls.userID, followedID: userID}
     })
+    
 
     useEffect(()=>{ 
         refetch()
+        setIsFollowing(data?.ifFollowing) 
     }, [data])
     
+    
     if (loading) return <p>loading</p>
+
 
 
     const handleFollow = () => {
@@ -47,13 +61,22 @@ const FollowBtn = () => {
             }
         }).then(()=>setIsFollowing(true))
     }
+
+    const handleUnfollow = () => {
+        unfollow({
+            variables: {
+                followerID: ls.userID,
+                followedID: userID
+            }
+        }).then(()=>setIsFollowing(false))
+    }
     return (
         <div className="pf-edit-follow-btn" style={{
-            backgroundColor: data.ifFollowing ? '#df7e00' : 'white',
-            color: data.ifFollowing ? 'white' : '#df7e00',}} 
+            backgroundColor: isFollowing ? '#df7e00' : 'white',
+            color: isFollowing ? 'white' : '#df7e00',}} 
 
-            onClick={handleFollow}>
-            <p>{data.ifFollowing ? 'Unfollow' : 'Follow'}</p> 
+            onClick={isFollowing ? handleUnfollow : handleFollow}>
+            <p>{isFollowing ? 'Unfollow' : 'Follow'}</p> 
         </div>
     )
 }

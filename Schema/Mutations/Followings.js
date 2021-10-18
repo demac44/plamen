@@ -19,3 +19,18 @@ export const FOLLOW_USER = {
     }
 }
 
+export const UNFOLLOW_USER = {
+    type: FollowType,
+    args: {
+        followerID: {type: GraphQLInt},
+        followedID:{type:GraphQLInt},
+    },
+    resolve(parent, args) {
+        const {followerID, followedID} = args
+        let sql = `DELETE FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
+        connection.query(sql, (err, res)=>{
+            if (err) throw err
+        })
+        return args
+    }
+}

@@ -2,9 +2,9 @@ import {
     GraphQLObjectType,
     GraphQLSchema,
 } from "graphql";
-import { FOLLOW_USER } from "./Mutations/Followings.js";
 
 
+import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { AUTH_USER } from "./Queries/Authenticate.js";
@@ -30,7 +30,8 @@ const RootMutation = new GraphQLObjectType({
         new_user: CREATE_USER,
         new_post: CREATE_POST,
         delete_post: DELETE_POST,
-        follow: FOLLOW_USER
+        follow: FOLLOW_USER,
+        unfollow: UNFOLLOW_USER
     }
 })
 
