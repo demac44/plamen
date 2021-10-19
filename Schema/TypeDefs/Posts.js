@@ -14,3 +14,19 @@ export const PostType = new GraphQLObjectType({
         url: {type: GraphQLString}
     })
 })
+
+
+export const FeedPostType = new GraphQLObjectType({
+    name: 'FeedPost',
+    fields: ()=>({
+        postID: {type: GraphQLInt},
+        userID: {type: GraphQLInt},
+        post_text: {type: GraphQLString},
+        date_posted: {type: GraphQLString},
+        url: {type: GraphQLString},
+        username: {type: GraphQLString},
+        first_name:{type:GraphQLString},
+        last_name:{type:GraphQLString},
+        profile_picture: {type: GraphQLString}
+    })
+})

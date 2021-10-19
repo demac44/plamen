@@ -1,6 +1,8 @@
 import { GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
 import connection from '../../middleware/db.js'
 import {PostType} from '../TypeDefs/Posts.js'
+import {FeedPostType} from '../TypeDefs/Posts.js'
+
 
 let posts = []
 let count;
@@ -38,13 +40,14 @@ export const COUNT_POSTS = {
 }
 
 export const GET_FEED_POSTS = {
-    type: new GraphQLList(PostType),
+    type: new GraphQLList(FeedPostType),
     args: {
         userID: {type: GraphQLInt},
     },    
     resolve(parent, args) {
         const {userID} = args
-        connection.query(`SELECT * FROM posts WHERE userID`, (err, results)=>{
+        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE users.userID IN (SELECT followedID FROM followings WHERE followerID=${userID}) AND DATE(date_posted) > (NOW() - INTERVAL 5 DAY) ORDER BY date_posted DESC;`
+        connection.query(sql, (err, results)=>{
             if(err) throw err
             results = JSON.parse(JSON.stringify(results))
             posts = results
@@ -52,3 +55,4 @@ export const GET_FEED_POSTS = {
         return posts
     }  
 }
+

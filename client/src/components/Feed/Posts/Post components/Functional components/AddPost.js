@@ -20,7 +20,8 @@ const NEW_POST = gql`
     }
 `
 
-const AddPost = ({width, user}) => {
+const AddPost = ({width}) => {
+    const user = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('1px solid grey')
     const [image, setImage] = useState(null);
     const [imageUpload, setImageUpload] = useState(false)

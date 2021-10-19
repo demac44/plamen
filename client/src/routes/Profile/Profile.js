@@ -111,7 +111,7 @@ const Profile = ({myprofile}) => {
                     <LeftNavbar/>
                     <div className='profile-container'>
                         <ProfileInfoBox user={user} count={count} info={info}/>
-                        {myprofile && <AddPost width='70%' user={ls}/>}
+                        {myprofile && <AddPost width='70%'/>}
                         {posts.map(post => <Post width='70%' user={user} post={post} key={post.postID}/>)}       
                     </div>
                 </div>

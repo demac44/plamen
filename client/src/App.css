@@ -301,7 +301,8 @@
 .follows-box{
     width: 500px;
     height: auto;
-    background-color: white;
+    max-height: 60vh;
+    background-color: white; 
     overflow-y: scroll;
     background-color: #ececec;
 }
