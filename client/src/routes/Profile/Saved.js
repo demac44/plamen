@@ -1,17 +1,14 @@
+import gql from 'graphql-tag'
 import React, { useEffect } from 'react'
+import { useQuery } from 'react-apollo'
 import Post from '../../components/Feed/Posts/Post'
-import Stories from '../../components/Feed/Stories/Stories'
-import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Navbar from '../../components/Navbar/Navbar'
 import LeftNavbar from '../../components/UI/LeftNavbar'
 
-import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
 
-
-const FEED_POSTS = gql`
+const GET_SAVED = gql`
     query ($userID: Int!){
-        feed_posts (userID: $userID){
+        get_saves(userID:$userID){
             postID
             post_text
             date_posted
@@ -26,13 +23,11 @@ const FEED_POSTS = gql`
 `
 
 
-const Feed = () => {
+const Saved = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const {loading, data,error, refetch} = useQuery(FEED_POSTS, {
+    const {loading, data,error, refetch} = useQuery(GET_SAVED, {
         variables: {userID: ls.userID},
-        fetchPolicy: 'no-cache'
     })
-
 
     useEffect(()=>{
         refetch()
@@ -41,7 +36,7 @@ const Feed = () => {
     if(loading) return <p>Loading</p>
     if(error) console.log(error);
 
-    const posts = data.feed_posts
+    const posts = data.get_saves
 
     return (
         <>
@@ -49,8 +44,7 @@ const Feed = () => {
             <div className='main'>
                 <LeftNavbar/>
                 <div className='posts-container-feed'>
-                    <Stories/>
-                    <AddPost width='100%'/>
+                    <h2>Saved posts</h2>
                     {posts.map(post => <Post post={{
                         postID: post.postID,
                         post_text: post.post_text,
@@ -70,4 +64,4 @@ const Feed = () => {
     )
 }
 
-export default Feed
+export default Saved

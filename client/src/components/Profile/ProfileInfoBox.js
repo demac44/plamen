@@ -1,7 +1,7 @@
 import React from 'react'
 import Avatar from '../UI/Avatar'
 import FollowBtn from './Functional components/FollowBtn'
-import ProfileEditBtn from './Functional components/ProfileEditBtn'
+import ProfileEditBtn from './UI/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
 
 const ProfileInfoBox = ({info}) => {

@@ -1,10 +1,11 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const ProfileEditBtn = () => {
     return (
-        <div className="pf-edit-follow-btn">
+        <NavLink exact to='/editprofile' className="pf-edit-follow-btn">
             <p>Edit profile</p>
-        </div>
+        </NavLink>
     )
 }
 

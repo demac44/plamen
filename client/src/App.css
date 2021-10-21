@@ -160,7 +160,6 @@
     border-radius: 50%;
     cursor: pointer;
     border: 1px solid #df7e00;
-
 }
 .tn-dropdown-menu{
     position: fixed;
@@ -354,6 +353,63 @@
     font-size: 14px;
     text-align: left;
 }
+
+/* EDIT PROFILE */
+
+.edit-pf-box{
+    width: 100%;
+    height: 500px;
+    background-color: #d8d8d8;
+    border-radius: 30px;
+    border: 1px solid #1f1f1f;
+    margin-left: 100px;
+    display: flex;
+}
+.edit-pf-sidebar{
+    width: 20%;
+    height: 100%;
+    background-color: white;
+    border-radius: 30px 0 0 30px;
+    overflow: hidden;
+}
+.edit-box{
+    width: 80%;
+    height: 100%;
+    padding: 30px 100px;
+}
+.edit-pfp-container{
+    position: relative;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0,0.5);
+    z-index: 1000000;
+}
+.edit-pfp-menu{
+    width: 400px;
+    height: auto;
+    background-color: white;
+    border-radius: 30px;
+    border: 2px solid #464646;
+    overflow: hidden;
+}
+.edit-pfp-menu ul{
+    width: 100%;
+}
+.edit-pfp-menu ul li{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #757575;
+    text-align: center;
+    line-height: 50px;
+}
+.edit-pfp-menu ul li:hover{
+    background-color: #c2c2c2;
+    cursor: pointer;
+}
+
 /* NEW POST BOX */
 .add-np-box{
     width: 100%;
@@ -469,6 +525,10 @@
     cursor: pointer;
     -webkit-text-stroke:1px black;
 }
+.fp-like-btn{
+    margin-left: 5px;
+    margin-right: 10px;
+}
 .fp-options-btn{
     margin-right: 10px;
     margin-left: 5px;
@@ -514,12 +574,14 @@
     padding: 10px 10px 20px 10px;
 }
 
+.like-count{
+    font-size: 14px;
+}
 .fp-add-comment{
     width: 100%;
     height: 50px;
     background-color: #ffffff;
     padding: 5px;
-    display: flex;
     box-shadow:1px 1px 10px;
     border-radius: 0 0 10px 10px;
 }
@@ -530,8 +592,9 @@
     outline: none;
     background-color: #ffffff;
     color: rgb(49, 49, 49);
-    font-size: 100%;
-    padding-left: 1%;
+    font-size: 14px;
+    padding-left: 10px;
+    padding-top: 2px;
 }
 .fp-cmt-btn{
     height: 100%;

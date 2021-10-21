@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
 
-const Dropdown = () => {
+const Dropdown = ({cbDropdown}) => {
+    const [dropdown, setDropdown] = useState(true)
     const history = useHistory()
 
+    useEffect(()=>{
+        cbDropdown(dropdown)
+    },[cbDropdown, dropdown])
 
     const logout = () => {
         localStorage.removeItem('token')
@@ -12,7 +16,7 @@ const Dropdown = () => {
     }
 
     return (
-       <div className="tn-dropdown-menu">
+       <div className="tn-dropdown-menu" onClick={()=>setDropdown(false)}>
             <ul>
                 <NavLink to="/myprofile"><li>My profile</li></NavLink>
                 <NavLink to="/login"><li>Change accounts</li></NavLink>

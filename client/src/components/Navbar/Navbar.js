@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import '../../App.css'
@@ -16,6 +16,10 @@ const Navbar = () => {
         setDropdown(!dropdown)
     }
 
+    const callbackDropdown = useCallback(val => {
+        setDropdown(val)
+    }, [setDropdown])
+
     return (
         <>
             <div className="top-navbar flex-ctr">
@@ -24,7 +28,7 @@ const Navbar = () => {
                 </div>
                 <SearchBar/>
                 <div className="tn-right">
-                    {dropdown && <Dropdown/>}
+                    {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
                     <div className="tn-np-btn flex-ctr">
                         <NavLink exact to="/feed"><i className="fas fa-home"></i></NavLink>
                     </div>

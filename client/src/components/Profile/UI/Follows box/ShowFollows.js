@@ -4,8 +4,6 @@ import FollUserBox from './FollUserBox'
 const ShowFollows = ({follows, ft, CBShowFollows}) => {
     const [showFollows, setShowFollows] = useState(true)
 
-    console.log(follows);
-
     useEffect(()=>{
         CBShowFollows(showFollows)
     },[CBShowFollows, showFollows])

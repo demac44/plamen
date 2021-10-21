@@ -12,6 +12,9 @@ import { authenticate } from './Redux-actions';
 
 import Feed from './routes/Feed/Feed';
 import Profile from './routes/Profile/Profile';
+import EditProfile from './routes/Profile/EditProfile';
+import Saved from './routes/Profile/Saved';
+
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/api/graphql',
@@ -44,6 +47,8 @@ function App() {
                 <Route exact path='/myprofile'><Profile myprofile={true}/></Route>
                 <Route exact path='/feed'><Feed/></Route>
                 <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
+                <Route exact path='/editprofile'><EditProfile/></Route>
+                <Route exact path='/saved'><Saved/></Route>
               </>
               ) : <Redirect to='/login'/>}
           </Switch>

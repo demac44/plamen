@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
+import { GraphQLInt, GraphQLList} from 'graphql';
 import connection from '../../middleware/db.js'
 import {PostType} from '../TypeDefs/Posts.js'
 import {FeedPostType} from '../TypeDefs/Posts.js'

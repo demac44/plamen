@@ -17,6 +17,7 @@ router.post('/', (req, res) => {
     WHERE username='${username}'
     ) AS countUsername `
     connection.query(oldUser, (err, result)=>{
+        if(err) throw err;
         if (result[0].countEmail > 0){
             res.send({error: 'Email already exists'})
         } else if (result[0].countUsername > 0){

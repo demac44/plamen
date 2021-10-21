@@ -89,18 +89,13 @@ const Profile = ({myprofile}) => {
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 
     
-    const user = myprofile ? ls : data.user
     const posts = data.posts
-    const count = data.count_posts
-    const followers = data.getFollowers
-    const following = data.getFollowing
-
 
     const info = {
-        user: user,
-        count:count,
-        followers: followers,
-        following: following
+        user: myprofile ? ls : data.user,
+        count: data.count_posts,
+        followers: data.getFollowers,
+        following: data.getFollowing
     }
     
     return (
@@ -110,9 +105,9 @@ const Profile = ({myprofile}) => {
                 <div className='main'>
                     <LeftNavbar/>
                     <div className='profile-container'>
-                        <ProfileInfoBox user={user} count={count} info={info}/>
+                        <ProfileInfoBox info={info}/>
                         {myprofile && <AddPost width='70%'/>}
-                        {posts.map(post => <Post width='70%' user={user} post={post} key={post.postID}/>)}       
+                        {posts.map(post => <Post width='70%' user={info.user} post={post} key={post.postID}/>)}       
                     </div>
                 </div>
             </div>
