@@ -18,6 +18,14 @@ const GET_SAVED = gql`
             last_name
             username
             profile_picture
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+            }
         }
     }
 `
@@ -56,7 +64,7 @@ const Saved = () => {
                         last_name: post.last_name,
                         username: post.username,
                         profile_picture: post.profile_picture
-                    }}
+                    }} comments={post.comments}
                     key={post.postID}/>)}
                 </div>
             </div>

@@ -18,7 +18,7 @@ import Saved from './routes/Profile/Saved';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/api/graphql',
-  cache: new InMemoryCache()
+  // cache: new InMemoryCache({resultCaching: false})
 })
 
 

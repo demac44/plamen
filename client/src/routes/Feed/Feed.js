@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery,useLazyQuery } from 'react-apollo'
 
 
 const FEED_POSTS = gql`
@@ -21,16 +21,23 @@ const FEED_POSTS = gql`
             last_name
             username
             profile_picture
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+            }
         }
     }
 `
 
-
 const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
+
     const {loading, data,error, refetch} = useQuery(FEED_POSTS, {
         variables: {userID: ls.userID},
-        fetchPolicy: 'no-cache'
     })
 
 
@@ -40,6 +47,7 @@ const Feed = () => {
 
     if(loading) return <p>Loading</p>
     if(error) console.log(error);
+
 
     const posts = data.feed_posts
 
@@ -55,14 +63,14 @@ const Feed = () => {
                         postID: post.postID,
                         post_text: post.post_text,
                         date_posted: post.date_posted,
-                        url: post.url
+                        url: post.url,
                     }} user={{
                         userID: post.userID,
                         first_name:post.first_name,
                         last_name: post.last_name,
                         username: post.username,
                         profile_picture: post.profile_picture
-                    }}
+                    }} comments={post.comments}
                     key={post.postID}/>)}
                 </div>
             </div>

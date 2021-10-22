@@ -30,11 +30,16 @@ export const GET_SAVES = {
     },
     resolve(parent, args){
         const {userID} = args
-        let sql = `SELECT saves.postID,saves.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID}`
-        connection.query(sql, (err, result)=>{
-            if (err) throw err;
-            result = JSON.parse(JSON.stringify(result))
-            saved = result
+        let sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID}`
+        connection.query(sql, (err, resultp)=>{
+            resultp.forEach(r => {
+                const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID WHERE postID=${r.postID}`
+                connection.query(comm, (err, resultc)=>{
+                    if(err)throw err
+                    r.comments = resultc
+                })
+            })
+            saved = resultp
         })
         return saved
     }

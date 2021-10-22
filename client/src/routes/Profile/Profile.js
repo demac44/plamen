@@ -19,6 +19,14 @@ const FETCH_INFO= gql`
             post_text
             date_posted
             url
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+            }
         }
         user(userID: $userID){
             first_name
@@ -27,7 +35,6 @@ const FETCH_INFO= gql`
             username
             userID
         }
-        count_posts(userID: $userID)
         getFollowers(followedID: $userID){
             userID
             username
@@ -44,15 +51,22 @@ const FETCH_INFO= gql`
         }
     }`
 
-    const FETCH_INFO2 = gql`
+    const FETCH_INFO_MYPROFILE = gql`
     query posts ($userID: Int!){
         posts(userID: $userID){
             postID
             post_text
             date_posted
             url
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+            }
         }
-        count_posts(userID: $userID)
         getFollowers(followedID: $userID){
             userID
             username
@@ -77,7 +91,7 @@ const Profile = ({myprofile}) => {
 
     let userID = parseInt(id)
 
-    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO2 : FETCH_INFO, {
+    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
         variables: {userID: myprofile ? ls.userID : userID}
     })
 
@@ -89,16 +103,16 @@ const Profile = ({myprofile}) => {
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 
     
-    const posts = data.posts
+    const posts = data?.posts
 
     const info = {
         user: myprofile ? ls : data.user,
-        count: data.count_posts,
+        count: data.posts.length,
         followers: data.getFollowers,
         following: data.getFollowing
     }
     
-    return (
+    return ( 
         <>
             <Navbar/>
             <div className='wrapper'> 
@@ -107,7 +121,11 @@ const Profile = ({myprofile}) => {
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
                         {myprofile && <AddPost width='70%'/>}
-                        {posts.map(post => <Post width='70%' user={info.user} post={post} key={post.postID}/>)}       
+                        {posts.map(post => <Post width='70%' 
+                        user={info.user} 
+                        comments={post.comments} 
+                        post={post}
+                         key={post.postID}/>)}       
                     </div>
                 </div>
             </div>
