@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import AddCommLike from './Post components/UI/AddCommLike'
 import Comment from './Post components/UI/Comment'
 import InfoSave from './Post components/UI/InfoSave'
