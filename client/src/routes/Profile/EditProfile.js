@@ -8,7 +8,7 @@ import EditPfpChoice from '../../components/Profile/Functional components/Edit p
 import Avatar from '../../components/UI/Avatar'
 
 const EditProfile = () => {
-    let fname,lname,username;
+    // let fname,lname,username;
     const [pfpMenu, setPfpMenu] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
     return (

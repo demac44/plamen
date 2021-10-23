@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
-import { useQuery,useLazyQuery } from 'react-apollo'
+import { useQuery } from 'react-apollo'
 
 
 const FEED_POSTS = gql`
@@ -27,6 +27,15 @@ const FEED_POSTS = gql`
                 username
                 comment_text
                 date_commented
+                profile_picture
+            }
+            likes{
+                likeID
+                postID
+                userID
+                username
+                first_name
+                last_name
                 profile_picture
             }
         }
@@ -71,6 +80,7 @@ const Feed = () => {
                         username: post.username,
                         profile_picture: post.profile_picture
                     }} comments={post.comments}
+                    likes={post.likes}
                     key={post.postID}/>)}
                 </div>
             </div>

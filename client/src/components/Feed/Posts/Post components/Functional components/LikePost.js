@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback} from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery} from 'react-apollo'
+import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
 
 const LIKE_POST = gql`
     mutation like_post($postID: Int!, $userID: Int!){
@@ -17,39 +18,29 @@ const REMOVE_LIKE = gql`
     }
 `
 
-const IF_LIKED = gql`
-    query get_likes($userID: Int!){
-        if_liked(userID: $userID){
-            postID
-            likeID
-        }
-    }
-`
-
-
-const LikePost = ({postID}) => {
+const LikePost = ({postID, likes}) => {
     const [liked, setLiked] = useState(false)
+    const [count, setCount] = useState(likes.length)
+    const [showLikes, setShowLikes] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
     const [like_post] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
 
-    const {loading, error, data, refetch} = useQuery(IF_LIKED, {
-        variables:{
-            userID: user.userID,
-        }
-    })
-
     useEffect(()=>{
-        data?.if_liked.map(like => {
-            if(like.postID === postID) setLiked(true) 
-        })  
-        refetch()
-    }, [data])
-    
-    if(loading) return <p>Loading...</p>
-    if(error) throw error
-    
+        for (let el of likes){
+            if (el.userID === user.userID){
+                setLiked(true)
+                break
+            }
+        }
+    },[])
 
+
+    const callbackShowLikes = useCallback(val => {
+        setShowLikes(val)
+      }, [setShowLikes]);
+
+    
     const handleLike = () => {
         like_post({
             variables: {
@@ -57,7 +48,9 @@ const LikePost = ({postID}) => {
                 userID: user.userID
             }
         }).then(() => {
-            setLiked(true)})
+            setLiked(true)
+            setCount(count+1)
+        })
     }
 
     const handleRemove = () => {
@@ -66,14 +59,18 @@ const LikePost = ({postID}) => {
                 postID: postID,
                 userID: user.userID
             }
-        }).then(()=>setLiked(false))
+        }).then(()=>{
+            setLiked(false)
+            setCount(count-1)
+        })
     }
     return (
         <>
+            {showLikes && <ShowUsersList likes={likes} callback={callbackShowLikes}/>}
             <i className="fas fa-check-circle fp-like-btn" style={{
              color: liked ? 'green' : 'white'
             }} onClick={() => liked ? handleRemove() : handleLike()}></i> 
-            <p className='like-count'></p> 
+            <p className='like-count' style={{cursor:'pointer'}} onClick={()=>setShowLikes(true)}>{count}</p> 
         </>
     )
 }

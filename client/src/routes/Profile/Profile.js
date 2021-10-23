@@ -27,6 +27,15 @@ const FETCH_INFO= gql`
                 date_commented
                 profile_picture
             }
+            likes{
+                likeID
+                postID
+                userID
+                username
+                first_name
+                last_name
+                profile_picture
+            }
         }
         user(userID: $userID){
             first_name
@@ -64,6 +73,15 @@ const FETCH_INFO= gql`
                 username
                 comment_text
                 date_commented
+                profile_picture
+            }
+            likes{
+                likeID
+                postID
+                userID
+                username
+                first_name
+                last_name
                 profile_picture
             }
         }
@@ -121,9 +139,10 @@ const Profile = ({myprofile}) => {
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
                         {myprofile && <AddPost width='70%'/>}
-                        {posts.map(post => <Post width='70%' 
+                        {posts.map(post =><Post width='70%' 
                         user={info.user} 
                         comments={post.comments} 
+                        likes={post.likes}
                         post={post}
                          key={post.postID}/>)}       
                     </div>

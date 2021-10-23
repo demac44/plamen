@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import ShowFollows from './UI/Follows box/ShowFollows'
+import ShowUsersList from '../UI/Users list/ShowUsersList.js'
 
 const ProfileInfo = ({info}) => {  
     const [follows, setFollows] = useState([])
@@ -21,7 +21,7 @@ const ProfileInfo = ({info}) => {
 
     return (
         <>
-            {showFollows && <ShowFollows follows={follows} ft={follType} CBShowFollows={callbackShowFollows}/>}
+            {showFollows && <ShowUsersList follows={follows} ft={follType} callback={callbackShowFollows}/>}
             <div className="pf-info">
                 <h4 className="pf-name">{info.user.first_name+' '+info.user.last_name}</h4>    
                 <h5 className="pf-tagname">@{info.user.username}</h5>

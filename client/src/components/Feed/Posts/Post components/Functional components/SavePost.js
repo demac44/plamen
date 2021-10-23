@@ -42,7 +42,9 @@ const SavePost = ({postID}) => {
     useEffect(()=>{
         refetch()
         data?.if_saved.map(save => save.postID === postID && setSaved(true))
-    }, [data])
+    }, [data, postID, refetch])
+
+    if(loading) return <p>O</p>
 
     const handleSave = () => {
         save_post({

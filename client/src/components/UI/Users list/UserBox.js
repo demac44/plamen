@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import Avatar from '../../../UI/Avatar'
-import FollowBtn from '../../Functional components/FollowBtn';
+import Avatar from '../Avatar'
+import FollowBtn from '../../Profile/Functional components/FollowBtn';
 
-const FollUserBox = ({user}) => {
+const UserBox = ({user}) => {
     const ls =JSON.parse(localStorage.getItem('user'))
     return (
         <div className='foll-user-box'>
@@ -19,4 +19,4 @@ const FollUserBox = ({user}) => {
     )
 }
 
-export default FollUserBox
+export default UserBox

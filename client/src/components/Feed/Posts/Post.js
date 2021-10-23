@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import AddCommLike from './Post components/UI/AddCommLike'
 import Comment from './Post components/UI/Comment'
 import InfoSave from './Post components/UI/InfoSave'
@@ -6,7 +6,7 @@ import PostImg from './Post components/UI/PostImg'
 import PostText from './Post components/UI/PostText'
 
 
-const Post = ({width, post, user, comments}) => {
+const Post = ({width, post, user, comments, likes}) => {
     return (
         <>
             <div className="post" style={{width:width}}>
@@ -14,7 +14,7 @@ const Post = ({width, post, user, comments}) => {
                 <PostImg url={post.url}/>
                 <PostText content={post.post_text}/>
                 {comments.map(comment => <Comment comment={comment} key={comment.commentID}/>)}
-                <AddCommLike postID={post.postID}/>
+                <AddCommLike postID={post.postID} likes={likes}/>
             </div>
         </>
     )

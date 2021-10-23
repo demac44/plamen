@@ -5,6 +5,7 @@ import {
     GraphQLList,
  } from "graphql";
 import { GetCommentType } from "./Comments.js";
+import { LikesType } from "./Likes.js";
 
 export const PostType = new GraphQLObjectType({
     name: 'Post',
@@ -14,7 +15,8 @@ export const PostType = new GraphQLObjectType({
         post_text: {type: GraphQLString},
         date_posted: {type: GraphQLString},
         url: {type: GraphQLString},
-        comments: {type: new GraphQLList(GetCommentType)}
+        comments: {type: new GraphQLList(GetCommentType)},
+        likes: {type: new GraphQLList(LikesType)}
     })
 })
 
@@ -31,6 +33,7 @@ export const FeedPostType = new GraphQLObjectType({
         first_name:{type:GraphQLString},
         last_name:{type:GraphQLString},
         profile_picture: {type: GraphQLString},
-        comments: {type: new GraphQLList(GetCommentType)}
+        comments: {type: new GraphQLList(GetCommentType)},
+        likes: {type: new GraphQLList(LikesType)}
     })
 })

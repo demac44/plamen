@@ -9,24 +9,25 @@ import { NavLink } from 'react-router-dom'
 const Comment = ({comment}) => {
     const [time, setTime] = useState(null)
 
+    
     useEffect(()=>{
-        getTime()
-    }, [time])
-
-
-    const getTime = () => {
-        let utcSeconds = parseInt(comment.date_commented);
-        let d = Date.now() - utcSeconds
-        d = Math.floor((d/1000)/60)
-        if(d===0) setTime('Now')
-        else if(d<60) setTime(d+'m ago')
-        else if(d>60 && d<60*24) setTime(Math.floor(d/60)+'h ago')
-        else if(d>60*24 && d<60*24*30) setTime(Math.floor(d/(60*24))+' days ago')
-        else if(d>60*24*30) {
-            let d = new Date(utcSeconds)
-            setTime(d.toDateString())
+        const getTime = () => {
+            let utcSeconds = parseInt(comment.date_commented);
+            let d = Date.now() - utcSeconds
+            d = Math.floor((d/1000)/60)
+            if(d===0) setTime('Now')
+            else if(d<60) setTime(d+'m ago')
+            else if(d>60 && d<60*24) setTime(Math.floor(d/60)+'h ago')
+            else if(d>60*24 && d<60*24*30) setTime(Math.floor(d/(60*24))+'d ago')
+            else if(d>60*24*30) {
+                let d = new Date(utcSeconds)
+                setTime(d.toDateString())
+            }
         }
-    }
+        getTime()
+    }, [time, comment.date_commented])
+
+
 
     return (
         <div className='comment-cont'>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AddComment from '../Functional components/AddComment'
 import LikePost from '../Functional components/LikePost'
 
-const AddCommLike = ({postID}) => {        
+const AddCommLike = ({postID, likes}) => {        
     return (
         <div className="fp-add-comment flex-ctr">
-            <LikePost postID={postID}/> 
+            <LikePost postID={postID} likes={likes}/> 
             <AddComment postID={postID}/>
         </div>
     )

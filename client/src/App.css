@@ -286,9 +286,9 @@
     background-color: #cccccc;
 }
 
-/* SHOW FOLLOWS */
+/* USER LISTS */
 
-.follows-wrapper{
+.user-list-wrapper{
     position: fixed;
     top: 0;
     left: 0;
@@ -297,7 +297,7 @@
     background-color: rgba(0, 0, 0,0.5);
     z-index: 1000000;
 }
-.follows-box{
+.user-list-box{
     width: 500px;
     height: auto;
     max-height: 60vh;
@@ -305,25 +305,25 @@
     overflow-y: scroll;
     background-color: #ececec;
 }
-.foll-type{
+.list-type{
     width: 100%;
     font-weight: lighter;
     text-align: center;
     padding: 5px;
     background-color: #d3d3d3;
 }
-.foll-exit{
+.list-exit{
     position: relative;
     width: 500px;
 }
-.foll-exit .fas{
+.list-exit .fas{
     position: absolute;
     top: 5px;
     right: 10px;
     font-size: 30px;
     cursor: pointer;
 }
-.no-follows{
+.empty-list{
     width: 100%;
     padding: 20px;
     text-align: center;
