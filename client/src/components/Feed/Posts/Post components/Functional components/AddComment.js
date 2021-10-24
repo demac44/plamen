@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
@@ -11,11 +11,16 @@ const ADD_COMMENT = gql`
 `
 
 
-const AddComment = ({postID}) => {
+const AddComment = ({postID, callback}) => {
     let comment_text;
     const user = JSON.parse(localStorage.getItem('user'))
+    const [added, setAdded] = useState(false)
 
     const [add_comment] = useMutation(ADD_COMMENT) 
+
+    useEffect(()=>{
+        callback(added)
+    },[callback, added])
 
 
     const handleAddComment = (e) => {
@@ -31,7 +36,10 @@ const AddComment = ({postID}) => {
                     userID: user.userID,
                     comment_text: comment_text
                 }
-            }).then(()=>e.target.comment_text.value='')
+            }).then(()=>{
+                e.target.comment_text.value=''
+                setAdded(true)
+            })
         }
     }
 

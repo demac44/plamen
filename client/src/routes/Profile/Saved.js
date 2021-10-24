@@ -1,5 +1,5 @@
+import React, {useCallback, useState, useEffect} from 'react'
 import gql from 'graphql-tag'
-import React from 'react'
 import { useQuery } from 'react-apollo'
 import Post from '../../components/Feed/Posts/Post'
 import Navbar from '../../components/Navbar/Navbar'
@@ -41,10 +41,22 @@ const GET_SAVED = gql`
 
 
 const Saved = () => {
+    const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
-    const {loading, data, error} = useQuery(GET_SAVED, { 
+
+    const {loading, data, error, refetch} = useQuery(GET_SAVED, { 
         variables: {userID: ls.userID},
     })
+    const updatedCallback = useCallback(val => {
+        setUpdated(val)
+    }, [setUpdated])
+
+    useEffect(()=>{
+        if(updated){
+            refetch()
+            setUpdated(false)
+        }
+    }, [updated, refetch])
 
     if(loading) return <p>Loading</p>
     if(error) console.log(error);
@@ -71,6 +83,7 @@ const Saved = () => {
                         profile_picture: post.profile_picture
                     }} comments={post.comments}
                     likes={post.likes}
+                    callback={updatedCallback}
                     key={post.postID}/>)}
                 </div>
             </div>

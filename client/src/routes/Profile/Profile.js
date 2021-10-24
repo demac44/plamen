@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import '../../App.css'
@@ -104,18 +104,27 @@ const FETCH_INFO= gql`
     
 const Profile = ({myprofile}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
+    const [updated, setUpdated] = useState(false)
 
     const {id} = useParams()
 
     let userID = parseInt(id)
 
-    const {loading, error, data} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
+    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
         variables: {userID: myprofile ? ls.userID : userID}
     })
 
+    const updatedCallback = useCallback(val => {
+        setUpdated(val)
+    }, [setUpdated])
+
     useEffect(()=>{
         if(userID === ls.userID) window.location.href = '/myprofile'
-    }, [data, userID, ls.userID])
+        if(updated){
+            refetch()
+            setUpdated(false)
+        }
+    }, [data, userID, ls.userID, updated, refetch])
     
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 
@@ -143,6 +152,7 @@ const Profile = ({myprofile}) => {
                         comments={post.comments} 
                         likes={post.likes}
                         post={post}
+                        callback={updatedCallback}
                          key={post.postID}/>)}       
                     </div>
                 </div>

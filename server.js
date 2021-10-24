@@ -4,7 +4,6 @@ if (process.env.SESSION_SECRET !== 'production') {
 }
 import express from 'express';
 import cors from 'cors'
-// import session from 'express-session'
 import {join, resolve} from 'path'
 import { graphqlHTTP } from 'express-graphql';
 import {schema} from './Schema/schema.js';
@@ -22,16 +21,6 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { 
-//         secure: false,
-//         maxAge: 3600000
-//      }
-// }))
 
 app.use('/api/graphql', graphqlHTTP({
     schema,

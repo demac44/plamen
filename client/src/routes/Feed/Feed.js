@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Post from '../../components/Feed/Posts/Post'
 import Stories from '../../components/Feed/Stories/Stories'
 import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
@@ -44,14 +44,29 @@ const FEED_POSTS = gql`
 
 const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
+    const [updated, setUpdated] = useState(false)
 
-    const {loading, data, error} = useQuery(FEED_POSTS, {
+    const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
         variables: {userID: ls.userID},
     })
+
+    useEffect(()=>{
+        if(updated){
+            refetch()
+            setUpdated(false)
+        }
+    }, [updated, refetch])
+
+
+    const updatedCallback = useCallback(val => {
+        setUpdated(val)
+    }, [setUpdated])
 
     if(loading) return <p>Loading</p>
     if(error) console.log(error); 
 
+
+    console.log(data);
     const posts = data.feed_posts
 
     return (
@@ -75,6 +90,7 @@ const Feed = () => {
                         profile_picture: post.profile_picture
                     }} comments={post.comments}
                     likes={post.likes}
+                    callback={updatedCallback}
                     key={post.postID}/>)}
                 </div>
             </div>

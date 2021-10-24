@@ -13,7 +13,8 @@ const InfoSave = ({date, postID, user}) => {
 
     useEffect(()=>{
         const getTime = () => {
-            let utcSeconds = parseInt(date);
+            let utcSeconds = date;
+            utcSeconds = new Date(utcSeconds).getTime()
             let d = Date.now() - utcSeconds
             d = Math.floor((d/1000)/60)
             if(d===0) setTime('Now')

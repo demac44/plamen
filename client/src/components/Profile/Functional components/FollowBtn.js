@@ -38,15 +38,14 @@ const FollowBtn = ({uID}) => {
     
     let userID = parseInt(id)
 
-    const {loading, data, refetch} = useQuery(IF_FOLLOWING,{
+    const {loading, data} = useQuery(IF_FOLLOWING,{
         variables: {followerID: ls.userID, followedID: userID || uID}
     })
     
 
     useEffect(()=>{ 
-        refetch()
         setIsFollowing(data?.ifFollowing) 
-    }, [data, refetch])
+    }, [data])
     
     
     if (loading) return <p>loading</p>
@@ -75,7 +74,7 @@ const FollowBtn = ({uID}) => {
             backgroundColor: isFollowing ? '#df7e00' : 'white',
             color: isFollowing ? 'white' : '#df7e00',}} 
 
-            onClick={isFollowing ? handleUnfollow : handleFollow}>
+            onClick={() => isFollowing ? handleUnfollow() : handleFollow()}>
             <p>{isFollowing ? 'Unfollow' : 'Follow'}</p> 
         </div>
     )
