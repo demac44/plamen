@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback} from 'react'
 import {gql} from 'graphql-tag'
-import { useMutation, useQuery} from 'react-apollo'
+import { useMutation } from 'react-apollo'
 import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
 
 const LIKE_POST = gql`
@@ -33,7 +33,7 @@ const LikePost = ({postID, likes}) => {
                 break
             }
         }
-    },[])
+    },[likes, user.userID])
 
 
     const callbackShowLikes = useCallback(val => {

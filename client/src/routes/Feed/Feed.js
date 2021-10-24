@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Post from '../../components/Feed/Posts/Post'
 import Stories from '../../components/Feed/Stories/Stories'
 import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
@@ -45,18 +45,12 @@ const FEED_POSTS = gql`
 const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
 
-    const {loading, data,error, refetch} = useQuery(FEED_POSTS, {
+    const {loading, data, error} = useQuery(FEED_POSTS, {
         variables: {userID: ls.userID},
     })
 
-
-    useEffect(()=>{
-        refetch()
-    }, [data, refetch])
-
     if(loading) return <p>Loading</p>
-    if(error) console.log(error);
-
+    if(error) console.log(error); 
 
     const posts = data.feed_posts
 

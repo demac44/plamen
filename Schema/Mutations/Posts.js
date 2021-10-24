@@ -13,9 +13,7 @@ export const CREATE_POST = {
         const {userID, post_text, url} = args
         let sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url)
                     VALUES (null, ${userID}, "${post_text}", null, "${url}")`
-        connection.query(sql, (err, res)=>{
-            if (err) throw err                
-        })
+        connection.query(sql)
         return args
     }
 }
@@ -29,9 +27,7 @@ export const DELETE_POST = {
     resolve(parent, args){
         const {postID} = args
         const sql = `DELETE FROM posts WHERE postID=${postID}`
-        connection.query(sql, (err, res)=>{
-            if (err) console.log(err);
-        })
+        connection.query(sql)
         return args
     } 
 }

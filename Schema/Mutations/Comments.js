@@ -13,9 +13,7 @@ export const ADD_COMMENT = {
         const {userID, postID, comment_text} = args
         let sql = `INSERT INTO comments (commentID ,postID, userID, comment_text, date_commented)
                     VALUES (null,${postID} ,${userID}, "${comment_text}", null)`
-        connection.query(sql, (err, res)=>{
-            if (err) throw err                
-        })
+        connection.query(sql)
         return args
     }
 }

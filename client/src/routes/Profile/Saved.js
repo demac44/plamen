@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useQuery } from 'react-apollo'
 import Post from '../../components/Feed/Posts/Post'
 import Navbar from '../../components/Navbar/Navbar'
@@ -42,13 +42,9 @@ const GET_SAVED = gql`
 
 const Saved = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const {loading, data,error, refetch} = useQuery(GET_SAVED, {
+    const {loading, data, error} = useQuery(GET_SAVED, { 
         variables: {userID: ls.userID},
     })
-
-    useEffect(()=>{
-        refetch()
-    }, [data, refetch])
 
     if(loading) return <p>Loading</p>
     if(error) console.log(error);

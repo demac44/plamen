@@ -1,19 +1,11 @@
-import mysql from 'mysql'
+import Mysql from 'sync-mysql'
 
-
-let connection = mysql.createConnection({
+let connection = new Mysql({
     host: 'localhost',
     user: 'root',
     password: '12345',
     database: 'socialmediapp'
 });
-
-
-connection.connect((error)=>{
-    if (error) throw error;
-    console.log('DB Connected...'); 
-})
-
 
 
 export default connection

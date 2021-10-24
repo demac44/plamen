@@ -9,26 +9,20 @@ let user = {}
 export const GET_ALL_USERS = {
     type: new GraphQLList(UserType),
     resolve(){
-        connection.query('SELECT * FROM users', (err, results)=>{
-            if(err) throw err;
-            users = results
-        })    
-        return users
+        let result = connection.query('SELECT * FROM users')
+        return result[0]
     }    
 }    
+
 export const GET_USER = {
     type: UserType,
     args: {
         userID: {type: GraphQLInt},
         username: {type: GraphQLString}
     },    
-    resolve(parent, args) {
+    async resolve(parent, args) {
         const {userID, username} = args
-        connection.query(`SELECT * FROM users WHERE userID=${userID} OR username="${username}"`, (err, result)=>{
-            if(err) throw err
-            user = result[0]    
-        }) 
-        return user
+        let result = connection.query(`SELECT * FROM users WHERE userID=${userID} OR username="${username}"`)
+        return result[0]
     }    
-}    
- 
+}

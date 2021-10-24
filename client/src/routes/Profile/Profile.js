@@ -109,19 +109,18 @@ const Profile = ({myprofile}) => {
 
     let userID = parseInt(id)
 
-    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
+    const {loading, error, data} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
         variables: {userID: myprofile ? ls.userID : userID}
     })
 
     useEffect(()=>{
         if(userID === ls.userID) window.location.href = '/myprofile'
-        refetch()
-    }, [data, refetch, userID, ls.userID])
+    }, [data, userID, ls.userID])
     
     if (loading) return <div>loading</div>
     if(error) return <div>Something went wrong</div> 
     
-    const posts = data?.posts
+    const posts = data.posts
 
     const info = {
         user: myprofile ? ls : data.user,

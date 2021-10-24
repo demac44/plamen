@@ -15,11 +15,8 @@ export const IF_FOLLOWING = {
     },    
     resolve(parent, args) {
         const {followerID, followedID} = args
-        connection.query(`SELECT COUNT(*) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`, (err, result)=>{
-            if(err) throw err
-            count = result[0].ifFollowing
-        }) 
-        return count 
+        let result = connection.query(`SELECT COUNT(*) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`)
+        return result[0].ifFollowing
     }   
 }
  
@@ -31,12 +28,9 @@ export const GET_FOLLOWERS = {
     },
     resolve(parent, args){
         const {followedID} = args
-        let sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
-        connection.query(sql, (err, result)=>{
-            if (err) throw err;
-            followers = result
-        })
-        return followers
+        const sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
+        let result = connection.query(sql)
+        return result
     }
 }
 
@@ -48,10 +42,7 @@ export const GET_FOLLOWING = {
     resolve(parent, args){
         const {followerID} = args
         let sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followedID from followings WHERE followerID=${followerID})`
-        connection.query(sql, (err, result)=>{
-            if (err) throw err;
-            following = result
-        })
-        return following
+        let result = connection.query(sql)
+        return result
     }
 }

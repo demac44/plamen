@@ -3,8 +3,6 @@ import connection from '../../middleware/db.js'
 import { FeedPostType } from '../TypeDefs/Posts.js';
 import {SavesType} from '../TypeDefs/Saves.js'
 
-let saves = []
-let saved = []
 let temp=[]
 
 export const IF_SAVED = {
@@ -15,11 +13,8 @@ export const IF_SAVED = {
     resolve(parent, args){
         const {userID} = args
         const sql = `SELECT * FROM saves WHERE userID=${userID}`
-        connection.query(sql, (err, res) => {
-            if (err) throw err;
-            saves = res
-        })
-        return saves
+        let result = connection.query(sql)
+        return result
     }
 }
 
@@ -34,31 +29,26 @@ export const GET_SAVES = {
         let sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID}`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
         const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM postLikes JOIN users ON postLikes.userID=users.userID`
-        connection.query(sql, (err, resultp)=>{
-            if(err) throw err
-            connection.query(comm, (err, resultc)=>{
-                if(err)throw err
-                resultp.forEach(r => {
-                    temp = []
-                    resultc.forEach(c => {
-                        if(c.postID===r.postID) temp.push(c)
-                    })
-                    r.comments = temp
-                })
+        let r1 = connection.query(sql)
+        let r2 = connection.query(comm)
+        let r3 =  connection.query(like)
+        r1.forEach(r => {
+            temp = []
+            r2.forEach(c => {
+                if(c.postID===r.postID) temp.push(c)
             })
-            connection.query(like, (err, resultl)=>{
-                if(err) throw err
-                resultp.forEach(r => {
-                    temp = []
-                    resultl.forEach(l => {
-                        if(l.postID===r.postID) temp.push(l)
-                    })
-                    r.likes = temp
-                })
+            r.comments = temp
+        })
+        temp=[]
+        r1.forEach(r => {
+            temp = []
+            r3.forEach(l => {
+                if(l.postID===r.postID) temp.push(l)
             })
-            saved = resultp
-        }) 
-        return saved
+            r.likes = temp
+        })
+
+        return r1
     }
 }
 

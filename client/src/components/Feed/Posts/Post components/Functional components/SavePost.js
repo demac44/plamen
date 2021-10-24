@@ -34,15 +34,14 @@ const SavePost = ({postID}) => {
     const [remove_saved] = useMutation(REMOVE_SAVED)
 
 
-    const {loading, data, refetch} = useQuery(IF_SAVED, {
+    const {loading, data} = useQuery(IF_SAVED, {
         variables:{userID: user.userID}
     })
 
 
     useEffect(()=>{
-        refetch()
         data?.if_saved.map(save => save.postID === postID && setSaved(true))
-    }, [data, postID, refetch])
+    }, [data, postID])
 
     if(loading) return <p>O</p>
 
