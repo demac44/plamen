@@ -146,7 +146,7 @@ const Profile = ({myprofile}) => {
                     <LeftNavbar/>
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
-                        {myprofile && <AddPost width='70%'/>}
+                        {myprofile && <AddPost width='70%' callback={updatedCallback}/>}
                         {posts.map(post =><Post width='70%' 
                         user={info.user} 
                         comments={post.comments} 

@@ -12,8 +12,8 @@ const LoginForm = () => {
         e.preventDefault()
 
 
-        username = username.value
-        password = password.value
+        username = e.target.username.value
+        password = e.target.password.value
 
         if (username === '' || password === ''){
             setErrorMsg('Please fill in all fields')

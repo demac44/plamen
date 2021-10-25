@@ -46,8 +46,11 @@ const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
 
-    const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
-        variables: {userID: ls.userID},
+    const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
+        variables: {
+            userID: ls.userID,
+            
+        },
     })
 
     useEffect(()=>{
@@ -65,8 +68,6 @@ const Feed = () => {
     if(loading) return <p>Loading</p>
     if(error) console.log(error); 
 
-
-    console.log(data);
     const posts = data.feed_posts
 
     return (
@@ -76,7 +77,7 @@ const Feed = () => {
                 <LeftNavbar/>
                 <div className='posts-container-feed'>
                     <Stories/>
-                    <AddPost width='100%'/>
+                    <AddPost width='100%' callback={updatedCallback}/>
                     {posts.map(post => <Post post={{
                         postID: post.postID,
                         post_text: post.post_text,

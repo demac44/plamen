@@ -127,7 +127,7 @@ export const GET_FEED_POSTS = {
     },    
     resolve(parent, args) {
         const {userID} = args
-        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE users.userID IN (SELECT followedID FROM followings WHERE followerID=${userID}) AND DATE(date_posted) > (NOW() - INTERVAL 5 DAY) ORDER BY date_posted DESC;`
+        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE (users.userID =${userID} OR users.userID IN (SELECT followedID FROM followings WHERE followerID=${userID})) AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) ORDER BY date_posted DESC;`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
         const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM postLikes JOIN users ON postLikes.userID=users.userID`
         let r1 = connection.query(sql)

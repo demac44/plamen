@@ -5,9 +5,7 @@ import axios from 'axios'
 
 
     
-const RegisterForm = () => {
-    let username, first_name, last_name, year, day,email, month, password, passconfirm, gender;
-    
+const RegisterForm = () => {    
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
 
@@ -99,15 +97,15 @@ const RegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let birth_date = `${year.value+'-'+month.value+'-'+day.value}`
+        let birth_date = `${e.target.year.value+'-'+e.target.month.value+'-'+e.target.day.value}`
 
-        let fname = first_name.value.charAt(0).toUpperCase() + first_name.value.slice(1);
-        let lname = last_name.value.charAt(0).toUpperCase() + last_name.value.slice(1);
-        username = username.value
-        email = email.value
-        password = password.value
-        passconfirm = passconfirm.value
-        gender = gender.value
+        let fname = e.target.first_name.value.charAt(0).toUpperCase() + e.target.first_name.value.slice(1);
+        let lname = e.target.last_name.value.charAt(0).toUpperCase() + e.target.last_name.value.slice(1);
+        let username = e.target.username.value
+        let email = e.target.email.value
+        let password = e.target.password.value
+        let passconfirm = e.target.confirmpass.value
+        let gender = e.target.gender.value
 
         let empty = false
         let arr = [username, fname, lname, email, password, passconfirm]
@@ -164,18 +162,18 @@ const RegisterForm = () => {
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
             <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
                 <div className="reg-names-box">
-                    <input type="text" ref={value => first_name = value} id='first_name' placeholder="First name"/>
-                    <input type="text" ref={value => last_name = value} id='last_name' placeholder="Last name"/>
+                    <input type="text" id='first_name' name='first_name' placeholder="First name"/>
+                    <input type="text" id='last_name' name='last_name' placeholder="Last name"/>
                 </div>
                 <div className="birthdt-reg-box">
-                    <select id='gender' ref={value => gender = value} name='gender'>
+                    <select id='gender' name='gender'>
                         <option value='male'>Male</option>
                         <option value='female'>Female</option>
                     </select>
-                    <select id="year" ref={value => year = value} name="year">
+                    <select id="year" name="year">
                         {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
                     </select>
-                    <select ref={value => month = value} id='month' name="month">
+                    <select id='month' name="month">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -189,14 +187,14 @@ const RegisterForm = () => {
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select ref={value => day = value} id='day' name='day'>
+                    <select d='day' name='day'>
                         {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
                     </select>
                 </div>
-                <input type="text" ref={value => email = value} id='email' placeholder="Email"/>
-                <input type="text" ref={value => username = value} id='username' placeholder="Create your username"/>
-                <input type="password" ref={value => password = value} id='password' placeholder="Password"/>
-                <input type="password" ref={value => passconfirm = value}  id='confirmpass' placeholder="Confirm your password"/>
+                <input type="text"  id='email' name='email' placeholder="Email"/>
+                <input type="text" id='username' name='username' placeholder="Create your username"/>
+                <input type="password" id='password' name='password' placeholder="Password"/>
+                <input type="password" id='confirmpass' name='confirmpass' placeholder="Confirm your password"/>
                 <button className="entry-btn btn" type="submit">REGISTER</button>
             </form>
             <div className="entry-link flex-ctr">

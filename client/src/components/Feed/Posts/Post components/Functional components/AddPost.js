@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import Avatar from '../../../../UI/Avatar'
@@ -20,21 +20,26 @@ const NEW_POST = gql`
     }
 `
 
-const AddPost = ({width}) => {
+const AddPost = ({width, callback}) => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('1px solid grey')
     const [image, setImage] = useState(null);
+    const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)
-    let text;
+
+    useEffect(()=>{
+        callback(added)
+        setAdded(false)
+    },[callback, added])
 
     const [new_post] = useMutation(NEW_POST)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        text = text.value
+        let text = e.target.text.value
         
         if(text.trim().length < 1){
-            setErr('3px solid #E82c30')
+            setErr('2px solid #E82c30')
             return
         } else {
             if (imageUpload){
@@ -50,8 +55,12 @@ const AddPost = ({width}) => {
                             text: text,
                             url: res.data.url
                         }
-                    })
-                    window.location.reload()
+                    }).then(()=>{
+                        setAdded(true)
+                        e.target.text.value = ''
+                        setImageUpload(false)
+                    }
+                    )
                 })
             } else {
                 new_post({
@@ -60,8 +69,10 @@ const AddPost = ({width}) => {
                         text: text,
                         url: ''
                     }
+                }).then(()=>{
+                    setAdded(true)
+                    e.target.text.value = ''
                 })
-                window.location.reload()
             }
         }
     }
@@ -71,7 +82,7 @@ const AddPost = ({width}) => {
             <form className="add-np-box" style={{width:width}} onSubmit={handleSubmit}>
                 <div className="add-np-txt">
                     <Avatar height='100%' pfp={user.profile_picture}/>
-                    <textarea type="text" className="add-np-input" style={{border:err}} ref={value => text = value} placeholder="Add new post..."></textarea>
+                    <textarea type="text" className="add-np-input" name='text' style={{border:err}} placeholder="Add new post..."></textarea>
                 </div>
                 {imageUpload && 
                 <div className='dropzone-box'>
