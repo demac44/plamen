@@ -18,7 +18,7 @@ const Post = ({width, post, user, comments, likes, callback}) => {
             <div className="post" style={{width:width}}>
                 <InfoSave date={post.date_posted} user={user} postID={post.postID}/>
                 <PostImg url={post.url}/>
-                <PostText content={post.post_text}/>
+                <PostText post_text={post.post_text}/>
                 {comments.length > 0 &&
                 <div style={{height:showAll ? 'auto':'50px', overflow:'hidden'}}>
                     {comments.map(comment => <Comment comment={comment} key={comment.commentID}/>)}

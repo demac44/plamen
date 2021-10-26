@@ -147,13 +147,13 @@ const Profile = ({myprofile}) => {
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
                         {myprofile && <AddPost width='70%' callback={updatedCallback}/>}
-                        {posts.map(post =><Post width='70%' 
+                        {posts.length > 0 ? posts.map(post =><Post width='70%' 
                         user={info.user} 
                         comments={post.comments} 
                         likes={post.likes}
                         post={post}
                         callback={updatedCallback}
-                         key={post.postID}/>)}       
+                         key={post.postID}/>) : <p style={{marginTop:'60px', width:'70%', textAlign:'center'}}>No posts</p>}       
                     </div>
                 </div>
             </div>

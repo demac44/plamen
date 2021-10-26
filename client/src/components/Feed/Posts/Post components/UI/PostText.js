@@ -1,9 +1,21 @@
-import React from 'react'
+import React, {useEffect,useState} from 'react'
 
-const PostText = ({content}) => {
+const PostText = ({post_text}) => {
+    const [str, setStr] = useState([])
+
+
+    useEffect(()=>{
+        let arr = []
+        for(let i=0;i<post_text.length;i++){
+            arr.push(post_text[i])
+        }
+        setStr(arr)
+    }, [post_text])
+
+
     return (
         <div className="post-text">
-            <p>{content}</p>
+            {str.map(s => s==="\n" ? <br/> : <span>{s}</span> )}
         </div>
     )
 }

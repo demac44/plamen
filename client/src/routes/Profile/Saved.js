@@ -70,7 +70,7 @@ const Saved = () => {
                 <LeftNavbar/>
                 <div className='posts-container-feed'>
                     <h2>Saved posts</h2>
-                    {posts.map(post => <Post post={{
+                    {posts.length > 0 ? posts.map(post => <Post post={{
                         postID: post.postID,
                         post_text: post.post_text,
                         date_posted: post.date_posted,
@@ -84,7 +84,7 @@ const Saved = () => {
                     }} comments={post.comments}
                     likes={post.likes}
                     callback={updatedCallback}
-                    key={post.postID}/>)}
+                    key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
                 </div>
             </div>
         </>

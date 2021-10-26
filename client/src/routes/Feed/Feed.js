@@ -78,7 +78,7 @@ const Feed = () => {
                 <div className='posts-container-feed'>
                     <Stories/>
                     <AddPost width='100%' callback={updatedCallback}/>
-                    {posts.map(post => <Post post={{
+                    {posts.length > 0 ? posts.map(post => <Post post={{
                         postID: post.postID,
                         post_text: post.post_text,
                         date_posted: post.date_posted,
@@ -92,7 +92,7 @@ const Feed = () => {
                     }} comments={post.comments}
                     likes={post.likes}
                     callback={updatedCallback}
-                    key={post.postID}/>)}
+                    key={post.postID}/>) : <p style={{marginTop:'60px'}}>No new posts</p>}
                 </div>
             </div>
         </>
