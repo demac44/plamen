@@ -1,0 +1,66 @@
+import React, {useState, useEffect} from 'react'
+import { useParams } from 'react-router'
+
+import {gql} from 'graphql-tag'
+import { useQuery } from 'react-apollo'
+
+import Navbar from '../../components/Navbar/Navbar.js'
+import UserSearchBar from '../../components/Navbar/UserSearchBar'
+import Loader from '../../components/UI/Loader'
+import LeftNavbar from '../../components/UI/LeftNavbar.js'
+
+const SEARCH_USERS = gql`
+    query {
+         users{
+            userID
+            first_name
+            last_name
+            username
+            profile_picture
+    }
+}`
+
+
+const Search = () => {
+    const {query} = useParams()
+    const [regex, setRegex] = useState('')
+    const [users, setUsers] = useState([])
+
+
+    const {loading, data} = useQuery(SEARCH_USERS)
+    
+    useEffect(()=>{
+        setRegex(new RegExp(escape(query), 'gi'))
+        setusers()
+    }, [data, query])
+    
+    const setusers = () => {
+        let arr=[]
+        data?.users.map(user => 
+            (user.first_name.match(regex)
+            || user.last_name.match(regex)
+            || user.username.match(regex)
+            || (user.first_name+user.last_name).match(regex)
+            || (user.last_name+user.first_name).match(regex))
+            && arr.push(user) 
+            )
+        setUsers(arr)
+    }
+    if(loading) return <div className='wh-100'><Loader/></div>
+    
+
+    return (
+        <>
+            <Navbar/>
+            <div className='main'>
+                <LeftNavbar/>
+                <div className='posts-container-feed'>
+                    <p style={{marginBottom:'40px'}}>Search results</p>
+                    {users.length < 1 ? <p>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Search

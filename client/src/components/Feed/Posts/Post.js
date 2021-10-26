@@ -16,7 +16,7 @@ const Post = ({width, post, user, comments, likes, callback}) => {
     return (
         <>
             <div className="post" style={{width:width}}>
-                <InfoSave date={post.date_posted} user={user} postID={post.postID}/>
+                <InfoSave date={post.date_posted} user={user} postID={post.postID} callback={callback}/>
                 <PostImg url={post.url}/>
                 <PostText post_text={post.post_text}/>
                 {comments.length > 0 &&

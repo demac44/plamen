@@ -43,7 +43,7 @@ const SavePost = ({postID}) => {
         data?.if_saved.map(save => save.postID === postID && setSaved(true))
     }, [data, postID])
 
-    if(loading) return <p>O</p>
+    if(loading) return <i className="fas fa-bookmark fp-save-btn"></i>
 
     const handleSave = () => {
         save_post({

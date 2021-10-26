@@ -14,6 +14,7 @@ import Feed from './routes/Feed/Feed';
 import Profile from './routes/Profile/Profile';
 import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
+import Search from './routes/Search/Search';
 
 
 const client = new ApolloClient({
@@ -49,6 +50,7 @@ function App() {
                 <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
                 <Route exact path='/editprofile'><EditProfile/></Route>
                 <Route exact path='/saved'><Saved/></Route>
+                <Route exact path='/search/:query'><Search/></Route>
               </>
               ) : <Redirect to='/login'/>}
           </Switch>

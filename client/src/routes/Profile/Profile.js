@@ -10,7 +10,7 @@ import Post from '../../components/Feed/Posts/Post'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
-
+import Loader from '../../components/UI/Loader'
 
 const FETCH_INFO= gql`
     query ($userID: Int!){
@@ -126,7 +126,7 @@ const Profile = ({myprofile}) => {
         }
     }, [data, userID, ls.userID, updated, refetch])
     
-    if (loading) return <div>loading</div>
+    if (loading) return <div className='wh-100'><Loader/></div>
     if(error) return <div>Something went wrong</div> 
     
     const posts = data.posts

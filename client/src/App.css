@@ -198,8 +198,35 @@
 .search-user-box:hover{
     background-color: #dfdfdf;
 }
-/* PROFILE */
+.see-all-btn{
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1f1f1f;
+}
+.see-all-btn:hover{
+    background-color: #b8b8b8;
+}
 
+.search-wrapper{
+    width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.search-results{
+    width: 45%;
+    height: auto;
+    padding: 50px;
+    text-align: center;
+}
+
+
+/* PROFILE */
 
 .main{
     position: relative;
@@ -671,3 +698,42 @@
 }    
 
 
+
+
+
+
+.spinner-box{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.spinner{
+    width:120px;height:120px;
+    left:48%;top:40%;
+    border: 10px solid rgb(255, 217, 0);
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+    border-radius:50%;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+.inner-spinner{
+    width:100%;height:100%;
+    left:48%;top:40%;
+    border: 10px solid rgb(231, 139, 0);
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+    border-radius:50%;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s reverse infinite;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}

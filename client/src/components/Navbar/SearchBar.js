@@ -20,7 +20,7 @@ const SearchBar = () => {
     const [val, setVal] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS)
 
-    if(loading) return <p>o</p>
+    if(loading) return <div className='tn-center flex-ctr'><input className='tn-search-input' placeholder='search'/></div>
     if(error) return <p>Something went wrong.Try later.</p>
 
     const handleInput = (e) => {
@@ -29,11 +29,11 @@ const SearchBar = () => {
     
     return (
         <>
-            <div className="tn-center flex-ctr">
+            <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+val}}>
                 <div className="search-icon"><i className="fas fa-search"></i></div>
                 <input type="text" className="tn-search-input" value={val} onChange={handleInput} placeholder='Search'/>
                 {val.trim().length > 0 && <SearchDrop data={data} val={val.replace(/\s/g, '')}/>}
-            </div>
+            </form>
         </>
     )
 }

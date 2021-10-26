@@ -7,6 +7,7 @@ import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import Loader from '../../components/UI/Loader'
 
 
 const FEED_POSTS = gql`
@@ -46,7 +47,7 @@ const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
 
-    const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
+    const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
         variables: {
             userID: ls.userID,
             
@@ -65,7 +66,7 @@ const Feed = () => {
         setUpdated(val)
     }, [setUpdated])
 
-    if(loading) return <p>Loading</p>
+    if(loading) return <div className='wh-100'><Loader/></div>
     if(error) console.log(error); 
 
     const posts = data.feed_posts

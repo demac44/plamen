@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -12,15 +12,19 @@ const DELETE_POST = gql`
 `
 
 
-const PostOptionsMenu = ({postID}) => {
+const PostOptionsMenu = ({postID, callback}) => {
     const [delete_post] = useMutation(DELETE_POST)
+    const [deleted, setDeleted] = useState(false)
 
+    useEffect(()=>{
+        callback(deleted)
+    }, [deleted, callback])
 
     const handlePostDelete = () => {
         try {delete_post({
             variables: {postID: postID}
         })
-        window.location.reload()}
+        setDeleted(true)}
         catch(error){
             console.log(error);
         }

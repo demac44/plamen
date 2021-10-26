@@ -8,7 +8,7 @@ import { UserType } from '../TypeDefs/Users.js';
 export const GET_ALL_USERS = {
     type: new GraphQLList(UserType),
     resolve(){
-        let result = connection.query('SELECT * FROM users')
+        let result = connection.query(`SELECT * FROM users`)
         return result
     }    
 }    

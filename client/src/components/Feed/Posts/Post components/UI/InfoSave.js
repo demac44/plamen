@@ -6,7 +6,7 @@ import '../../../../../App.css'
 import PostOptBtn from '../Functional components/PostOptBtn'
 import { NavLink } from 'react-router-dom'
 
-const InfoSave = ({date, postID, user}) => {
+const InfoSave = ({date, postID, user, callback}) => {
 
 
     const [time, setTime] = useState(null)
@@ -43,7 +43,7 @@ const InfoSave = ({date, postID, user}) => {
             </div>
             <div className="fp-like-save">
                 <SavePost postID={postID}/>
-                {user.currentUser && <PostOptBtn postID={postID}/>}
+                {user.currentUser && <PostOptBtn postID={postID} callback={callback}/>}
             </div>
         </div>
     )

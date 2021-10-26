@@ -4,6 +4,7 @@ import { useQuery } from 'react-apollo'
 import Post from '../../components/Feed/Posts/Post'
 import Navbar from '../../components/Navbar/Navbar'
 import LeftNavbar from '../../components/UI/LeftNavbar'
+import Loader from '../../components/UI/Loader'
 
 
 const GET_SAVED = gql`
@@ -58,7 +59,7 @@ const Saved = () => {
         }
     }, [updated, refetch])
 
-    if(loading) return <p>Loading</p>
+    if(loading) return <div className='wh-100'><Loader/></div>
     if(error) console.log(error);
 
     const posts = data.get_saves

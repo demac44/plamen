@@ -28,3 +28,7 @@ li{
     transition: ease .1s;
     cursor: pointer;
 }
+.wh-100{
+    width: 100vw;
+    height: 100vh;
+}
