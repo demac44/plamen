@@ -159,6 +159,8 @@
 .user-avatar, .avatar-img{
     border-radius: 50%;
     cursor: pointer;
+}
+.avatar-img{
     border: 1px solid #df7e00;
 }
 .tn-dropdown-menu{
@@ -171,8 +173,33 @@
     border-top: none;
     box-shadow: -2px 2px 10px;
 }
-
+.tn-center{
+    position: relative;
+}
+.search-drop{
+    position: absolute;
+    top: 55px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid rgb(161, 161, 161);
+    border-top: none;
+}
+.search-user-box{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    padding: 2px;
+    border-bottom: 1px solid rgb(211, 211, 211);
+}
+.search-user-box p, .search-user-box h5{
+    color: #1f1f1f;
+}
+.search-user-box:hover{
+    background-color: #dfdfdf;
+}
 /* PROFILE */
+
 
 .main{
     position: relative;
