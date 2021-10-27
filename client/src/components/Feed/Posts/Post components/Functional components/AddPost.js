@@ -11,10 +11,12 @@ import { useMutation } from 'react-apollo'
 
 import Dropzone from 'react-simple-dropzone/dist';
 
+import { useSelector } from 'react-redux';
+
 
 const NEW_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!){
-        new_post(userID: $userID, post_text: $text, url: $url){
+    mutation ($userID: Int!, $text: String!, $url: String!, $token: String!){
+        new_post(userID: $userID, post_text: $text, url: $url, token: $token){
             userID
         }
     }
@@ -26,6 +28,11 @@ const AddPost = ({width, callback}) => {
     const [image, setImage] = useState(null);
     const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)
+
+    const isLogged = useSelector(state => state?.isAuth.isAuth)
+
+
+    console.log(isLogged);
 
     useEffect(()=>{
         callback(added)

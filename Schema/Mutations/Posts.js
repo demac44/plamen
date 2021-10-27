@@ -2,6 +2,8 @@ import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
 import { PostType } from "../TypeDefs/Posts.js"
 
+import auth from "../../middleware/auth.js"
+
 export const CREATE_POST = {
     type: PostType,
     args: {
@@ -9,7 +11,7 @@ export const CREATE_POST = {
         post_text: {type: GraphQLString},
         url: {type: GraphQLString}
     },
-    resolve(parent, args) {
+    resolve (parent, args){
         const {userID, post_text, url} = args
         let sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url)
                     VALUES (null, ${userID}, "${post_text}", null, "${url}")`

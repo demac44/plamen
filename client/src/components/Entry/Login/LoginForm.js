@@ -26,7 +26,8 @@ const LoginForm = () => {
                 data: {
                     username: username,
                     password: password
-                }
+                },
+                withCredentials: true
             }).then(res => {
                 if(res?.data.error) setErrorMsg(res.data.error)    
                 else {

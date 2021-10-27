@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
                 res.send({error: 'Incorrect password!'})
             } else {
                 const token = jwt.sign({userID: userID, username: username}, process.env.JWT_SECRET) 
+                res.cookie("x-auth-token", token)
                 res.json({
                     token: token,
                     user: obj

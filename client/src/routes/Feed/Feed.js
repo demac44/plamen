@@ -50,8 +50,8 @@ const Feed = () => {
     const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
         variables: {
             userID: ls.userID,
-            
         },
+        
     })
 
     useEffect(()=>{

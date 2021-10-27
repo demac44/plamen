@@ -18,8 +18,9 @@ import Search from './routes/Search/Search';
 
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/api/graphql',
-  cache: new InMemoryCache()
+  uri: 'http://localhost:5000/api/graphql', 
+  cache: new InMemoryCache(),
+  credentials:"include"
 })
 
 
@@ -27,10 +28,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const isLogged = useSelector(state => state?.isAuth.isAuth)
   let user = localStorage.getItem('user')
+  let token = localStorage.getItem('token')
   const dispatch = useDispatch()
   
   useEffect(()=>{
     if(!user) localStorage.removeItem('token')
+    if(!token) localStorage.removeItem('user')
     dispatch(authenticate());
     setIsLoading(false)
   },[dispatch, isLogged, user])

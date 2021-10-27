@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
+import axios from 'axios'
 
 const Dropdown = ({cbDropdown}) => {
     const [dropdown, setDropdown] = useState(true)
@@ -9,10 +10,16 @@ const Dropdown = ({cbDropdown}) => {
         cbDropdown(dropdown)
     },[cbDropdown, dropdown])
 
-    const logout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        history.push('/login')
+    const logout = async () => {
+        await axios({
+            method:'post',
+            url:'http://localhost:5000/api/logout',
+            withCredentials: true
+        }).then(()=>{
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            history.push('/login')
+        })
     }
 
     return (
