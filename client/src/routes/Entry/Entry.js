@@ -16,17 +16,14 @@ const Entry = () => {
         <ApolloProvider client={client}>
             <Switch>
                 <Route exact path={['/login', '/register', '/messages']}>              
-                    <div className='entry-wrapper'>
-                        <div className='entry-left'></div>
-                        <div className='entry-right flex-ctr'>
-                            <div className='entry-form-box'>
-                                <Route exact path='/register'>
-                                    <RegisterForm/>
-                                </Route>
-                                <Route exact path='/login'>
-                                    <LoginForm/>
-                                </Route>
-                            </div>
+                    <div className='entry-wrapper flex-ctr'>
+                        <div className='entry-form-box'>
+                            <Route exact path='/register'>
+                                <RegisterForm/>
+                            </Route>
+                            <Route exact path='/login'>
+                                <LoginForm/>
+                            </Route>
                         </div>
                     </div>
                 </Route>
