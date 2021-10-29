@@ -46,6 +46,7 @@ const FEED_POSTS = gql`
 const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
+    const [leftnav, setLeftnav] = useState(false)
 
     const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
         variables: {
@@ -53,6 +54,7 @@ const Feed = () => {
         },
         
     })
+
 
     useEffect(()=>{
         if(updated){
@@ -66,6 +68,10 @@ const Feed = () => {
         setUpdated(val)
     }, [setUpdated])
 
+    const leftNavCallback = useCallback(val =>{
+        setLeftnav(val)
+    }, [setLeftnav])
+
     if(loading) return <div className='wh-100'><Loader/></div>
     if(error) console.log(error); 
 
@@ -73,27 +79,29 @@ const Feed = () => {
 
     return (
         <>
-            <Navbar/>
-            <div className='main'>
-                <LeftNavbar/>
-                <div className='posts-container-feed'>
-                    <Stories/>
-                    <AddPost width='100%' callback={updatedCallback}/>
-                    {posts.length > 0 ? posts.map(post => <Post post={{
-                        postID: post.postID,
-                        post_text: post.post_text,
-                        date_posted: post.date_posted,
-                        url: post.url,
-                    }} user={{
-                        userID: post.userID,
-                        first_name:post.first_name,
-                        last_name: post.last_name,
-                        username: post.username,
-                        profile_picture: post.profile_picture
-                    }} comments={post.comments}
-                    likes={post.likes}
-                    callback={updatedCallback}
-                    key={post.postID}/>) : <p style={{marginTop:'60px'}}>No new posts</p>}
+            <Navbar callback={leftNavCallback}/>
+            <div className='wrapper'>
+                <div className='main'>
+                    <LeftNavbar show={leftnav}/>
+                    <div className='posts-container-feed'>
+                        <Stories/>
+                        <AddPost width='100%' callback={updatedCallback}/>
+                        {posts.length > 0 ? posts.map(post => <Post post={{
+                            postID: post.postID,
+                            post_text: post.post_text,
+                            date_posted: post.date_posted,
+                            url: post.url,
+                        }} user={{
+                            userID: post.userID,
+                            first_name:post.first_name,
+                            last_name: post.last_name,
+                            username: post.username,
+                            profile_picture: post.profile_picture
+                        }} comments={post.comments}
+                        likes={post.likes}
+                        callback={updatedCallback}
+                        key={post.postID}/>) : <p style={{marginTop:'60px'}}>No new posts</p>}
+                    </div>
                 </div>
             </div>
         </>

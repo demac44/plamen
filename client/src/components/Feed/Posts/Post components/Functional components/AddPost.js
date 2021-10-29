@@ -15,8 +15,8 @@ import { useSelector } from 'react-redux';
 
 
 const NEW_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!, $token: String!){
-        new_post(userID: $userID, post_text: $text, url: $url, token: $token){
+    mutation ($userID: Int!, $text: String!, $url: String!){
+        new_post(userID: $userID, post_text: $text, url: $url){
             userID
         }
     }
@@ -30,9 +30,6 @@ const AddPost = ({width, callback}) => {
     const [imageUpload, setImageUpload] = useState(false)
 
     const isLogged = useSelector(state => state?.isAuth.isAuth)
-
-
-    console.log(isLogged);
 
     useEffect(()=>{
         callback(added)

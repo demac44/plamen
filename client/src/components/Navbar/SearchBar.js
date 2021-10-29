@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import {useQuery} from 'react-apollo'
@@ -19,6 +19,7 @@ const SEARCH_USERS = gql`
 const SearchBar = () => {
     const [val, setVal] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS)
+
 
     if(loading) return <div className='tn-center flex-ctr'><input className='tn-search-input' placeholder='search'/></div>
     if(error) return <p>Something went wrong.Try later.</p>

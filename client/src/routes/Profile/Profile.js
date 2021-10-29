@@ -105,9 +105,10 @@ const FETCH_INFO= gql`
 const Profile = ({myprofile}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [updated, setUpdated] = useState(false)
-
+    const [leftnav, setLeftnav] = useState(false)
+    
     const {id} = useParams()
-
+    
     let userID = parseInt(id)
 
     const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
@@ -117,6 +118,10 @@ const Profile = ({myprofile}) => {
     const updatedCallback = useCallback(val => {
         setUpdated(val)
     }, [setUpdated])
+    
+    const leftNavCallback = useCallback(val =>{
+        setLeftnav(val)
+    }, [setLeftnav])
 
     useEffect(()=>{
         if(userID === ls.userID) window.location.href = '/myprofile'
@@ -140,10 +145,10 @@ const Profile = ({myprofile}) => {
     
     return ( 
         <>
-            <Navbar/>
+            <Navbar callback={leftNavCallback}/>
             <div className='wrapper'> 
                 <div className='main'>
-                    <LeftNavbar/>
+                    <LeftNavbar show={leftnav}/>
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
                         {myprofile && <AddPost width='70%' callback={updatedCallback}/>}

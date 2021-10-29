@@ -44,6 +44,7 @@ const GET_SAVED = gql`
 const Saved = () => {
     const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
+    const [leftnav, setLeftnav] = useState(false)
 
     const {loading, data, error, refetch} = useQuery(GET_SAVED, { 
         variables: {userID: ls.userID},
@@ -51,6 +52,11 @@ const Saved = () => {
     const updatedCallback = useCallback(val => {
         setUpdated(val)
     }, [setUpdated])
+
+    const leftNavCallback = useCallback(val =>{
+        setLeftnav(val)
+    }, [setLeftnav])
+
 
     useEffect(()=>{
         if(updated){
@@ -66,26 +72,28 @@ const Saved = () => {
 
     return (
         <>
-            <Navbar/>
-            <div className='main'>
-                <LeftNavbar/>
-                <div className='posts-container-feed'>
-                    <h2>Saved posts</h2>
-                    {posts.length > 0 ? posts.map(post => <Post post={{
-                        postID: post.postID,
-                        post_text: post.post_text,
-                        date_posted: post.date_posted,
-                        url: post.url
-                    }} user={{
-                        userID: post.userID,
-                        first_name:post.first_name,
-                        last_name: post.last_name,
-                        username: post.username,
-                        profile_picture: post.profile_picture
-                    }} comments={post.comments}
-                    likes={post.likes}
-                    callback={updatedCallback}
-                    key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
+            <Navbar callback={leftNavCallback}/>
+            <div className='wrapper'>
+                <div className='main'>
+                    <LeftNavbar show={leftnav}/>
+                    <div className='posts-container-feed'>
+                        <h2>Saved posts</h2>
+                        {posts.length > 0 ? posts.map(post => <Post post={{
+                            postID: post.postID,
+                            post_text: post.post_text,
+                            date_posted: post.date_posted,
+                            url: post.url
+                        }} user={{
+                            userID: post.userID,
+                            first_name:post.first_name,
+                            last_name: post.last_name,
+                            username: post.username,
+                            profile_picture: post.profile_picture
+                        }} comments={post.comments}
+                        likes={post.likes}
+                        callback={updatedCallback}
+                        key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
+                    </div>
                 </div>
             </div>
         </>

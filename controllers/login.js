@@ -5,7 +5,10 @@ import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 
-
+const options =  {
+    maxAge: 3600000*24*30*12,
+    httpOnly: true
+}
 router.post('/', async (req, res) => {
     const {username, password} = req.body
     let sql = `SELECT * FROM users WHERE username="${username}" OR email="${username}"` 
@@ -28,7 +31,7 @@ router.post('/', async (req, res) => {
                 res.send({error: 'Incorrect password!'})
             } else {
                 const token = jwt.sign({userID: userID, username: username}, process.env.JWT_SECRET) 
-                res.cookie("x-auth-token", token)
+                res.cookie("x-auth-token", token, options)
                 res.json({
                     token: token,
                     user: obj
