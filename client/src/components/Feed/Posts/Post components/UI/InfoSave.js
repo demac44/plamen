@@ -34,7 +34,7 @@ const InfoSave = ({date, postID, user, callback}) => {
         <div className="fp-info-save">
             <div className="fp-info">
                 <NavLink exact to={'/profile/'+user.userID} style={{height:'100%'}}>
-                    <Avatar height='100%' pfp={user.profile_picture}/>
+                    <Avatar height='100%' width='46px' pfp={user.profile_picture}/>
                 </NavLink>
                 <div>
                     <p>{user.first_name+' '+user.last_name}</p>

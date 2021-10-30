@@ -430,7 +430,7 @@
     width: 400px;
     height: auto;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 20px;
     border: 2px solid #464646;
     overflow: hidden;
 }
@@ -786,9 +786,11 @@
     }
     .profile-info-box .user-avatar{
         height: 150px !important;
+        width: 150px !important;
     }
     .foll-user-box .user-avatar{
-        height: 80% !important;
+        height: 100% !important;
+        width: 70px !important;
     }
     .foll-user-box .pf-edit-follow-btn{
         position: absolute;
@@ -869,6 +871,9 @@
         height: 30px;
         width: 80px;
         line-height: 30px;
+    }
+    .foll-user-box .user-avatar{
+        width: 50px !important;
     }
     /* POSTS */
     .posts-container-feed{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import '../../App.css'
@@ -7,14 +7,22 @@ import Sidebar from '../../components/Profile/Functional components/Edit profile
 import EditPfpChoice from '../../components/Profile/Functional components/Edit profile/Edit pfp/EditPfpChoice'
 import Avatar from '../../components/UI/Avatar'
 
+import Dropzone from 'react-simple-dropzone/dist';
+
 const EditProfile = () => {
     // let fname,lname,username;
     const [pfpMenu, setPfpMenu] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
+
+    const closeMenu = useCallback(val => {
+        setPfpMenu(val)
+    }, [setPfpMenu])
+
+
     return (
         <>
-            <Navbar/>
-            {pfpMenu && <EditPfpChoice/>}
+            <Navbar callback={()=>{return}}/>
+            {pfpMenu && <EditPfpChoice callback={closeMenu}/>}
             <div className='wrapper'> 
                 <div className='main'>
                     <div className='profile-container'>
@@ -23,14 +31,7 @@ const EditProfile = () => {
                             <div className='edit-box'>
                                 <div className='flex-ctr' style={{width: '300px'}}>
                                     <Avatar height='70px' width='70px' pfp={user.profile_picture}/>
-                                    <h4 style={
-                                        {marginLeft: '20px', 
-                                        color: 'white',
-                                        backgroundColor:'#',
-                                        borderRadius: '20px',
-                                        padding: '10px 30px',
-                                        cursor:'pointer',
-                                        }}>Change</h4>
+                                    <h4 style={styles.changeBtn} onClick={()=>setPfpMenu(true)}>Change</h4>
                                 </div>
                             </div>
                         </div>
@@ -42,3 +43,15 @@ const EditProfile = () => {
 }
 
 export default EditProfile
+
+
+const styles = {
+    changeBtn: {
+        marginLeft: '20px', 
+        color: 'white',
+        backgroundColor:'#7f7f7f',
+        borderRadius: '20px',
+        padding: '10px 30px',
+        cursor:'pointer',
+    }
+}

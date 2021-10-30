@@ -5,6 +5,7 @@ import {
 
 
 import { ADD_COMMENT } from "./Mutations/Comments.js";
+import { EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
@@ -42,7 +43,8 @@ const RootMutation = new GraphQLObjectType({
         remove_like: REMOVE_LIKE,
         save_post: SAVE_POST,
         remove_saved: REMOVE_SAVED,
-        add_comment: ADD_COMMENT
+        add_comment: ADD_COMMENT,
+        edit_pfp: EDIT_PFP
     }
 })
 

@@ -29,8 +29,6 @@ const AddPost = ({width, callback}) => {
     const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)
 
-    const isLogged = useSelector(state => state?.isAuth.isAuth)
-
     useEffect(()=>{
         callback(added)
         setAdded(false)
@@ -85,7 +83,7 @@ const AddPost = ({width, callback}) => {
         <>
             <form className="add-np-box" style={{width:width}} onSubmit={handleSubmit}>
                 <div className="add-np-txt">
-                    <Avatar height='100%' pfp={user.profile_picture}/>
+                    <Avatar height='100%' width='80px' pfp={user.profile_picture}/>
                     <textarea type="text" className="add-np-input" name='text' style={{border:err}} placeholder="Add new post..."></textarea>
                 </div>
                 {imageUpload && 

@@ -42,7 +42,7 @@ const Navbar = ({callback}) => {
                 <div className="tn-right">
                     {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
                     <div style={{height:'100%'}} onClick={handleDropdown}>
-                        <Avatar height='100%' pfp={ls.profile_picture}/>
+                        <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
                     </div>
                 </div>
             </div>
