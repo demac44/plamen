@@ -57,11 +57,13 @@ const Search = () => {
     return (
         <>
             <Navbar callback={leftNavCallback}/>
-            <div className='main'>
-                <LeftNavbar show={leftnav}/>
-                <div className='posts-container-feed'>
-                    <p style={{marginBottom:'40px'}}>Search results</p>
-                    {users.length < 1 ? <p>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+            <div className='wrapper'>
+                <div className='main'>
+                    <LeftNavbar show={leftnav}/>
+                    <div className='posts-container-feed'>
+                        <p style={{marginBottom:'40px'}}>Search results</p>
+                        {users.length < 1 ? <p>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+                    </div>
                 </div>
             </div>
         </>

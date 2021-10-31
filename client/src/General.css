@@ -9,6 +9,10 @@ a{
 li{
     list-style: none;
 }
+.flex-h{
+    display: flex;
+    align-items: center;
+}
 .flex-ctr{
     display: flex;
     justify-content: center;

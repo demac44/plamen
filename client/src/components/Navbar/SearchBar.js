@@ -17,9 +17,18 @@ const SEARCH_USERS = gql`
 }`
 
 const SearchBar = () => {
+    const [dropdown, setDropdown] = useState(false)
     const [val, setVal] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS)
 
+    const closeDropdown = () => {
+        document.querySelector('.wrapper').addEventListener('click', ()=>setVal(''))
+    }
+
+    useEffect(()=>{
+        closeDropdown()
+        val.trim().length > 0 ? setDropdown(true) : setDropdown(false)
+    }, [closeDropdown])
 
     if(loading) return <div className='tn-center flex-ctr'><input className='tn-search-input' placeholder='search'/></div>
     if(error) return <p>Something went wrong.Try later.</p>
@@ -28,12 +37,13 @@ const SearchBar = () => {
         setVal(e.target.value)
     }
     
+
     return (
         <>
             <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+val}}>
                 <div className="search-icon"><i className="fas fa-search"></i></div>
                 <input type="text" className="tn-search-input" value={val} onChange={handleInput} placeholder='Search'/>
-                {val.trim().length > 0 && <SearchDrop data={data} val={val.replace(/\s/g, '')}/>}
+                {dropdown && <SearchDrop data={data} val={val.replace(/\s/g, '')}/>}
             </form>
         </>
     )

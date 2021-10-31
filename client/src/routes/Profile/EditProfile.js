@@ -6,8 +6,9 @@ import '../../General.css'
 import Sidebar from '../../components/Profile/Functional components/Edit profile/Sidebar'
 import EditPfpChoice from '../../components/Profile/Functional components/Edit profile/Edit pfp/EditPfpChoice'
 import Avatar from '../../components/UI/Avatar'
+import EditForm from '../../components/Profile/Functional components/Edit profile/EditForm'
 
-import Dropzone from 'react-simple-dropzone/dist';
+// import RegisterForm from '../../components/Entry/Register/RegisterForm.js'
 
 const EditProfile = () => {
     // let fname,lname,username;
@@ -29,10 +30,11 @@ const EditProfile = () => {
                         <div className='edit-pf-box'>
                             <Sidebar/>
                             <div className='edit-box'>
-                                <div className='flex-ctr' style={{width: '300px'}}>
+                                <div className='flex-h' style={{width: '300px'}}>
                                     <Avatar height='70px' width='70px' pfp={user.profile_picture}/>
                                     <h4 style={styles.changeBtn} onClick={()=>setPfpMenu(true)}>Change</h4>
                                 </div>
+                                <EditForm/>
                             </div>
                         </div>
                     </div>

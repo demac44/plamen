@@ -24,77 +24,9 @@ const RegisterForm = () => {
         setSelectYear(years)
         setSelectDay(days)
     }, [])
-
-    const validateEmail = (email) => {
-        let valid_email = true
-        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        if(!re.test(email.toLowerCase()) || email > 255){
-            valid_email = false
-        }
-        return valid_email
-    }
-
-    const validateUsername = (username) => {
-        let username_valid = true
-        let chars = "._abcdefghijklmnopqrstuvwxyz0123456789"
-        for(let i=0;i<username.length;i++){
-            if (!chars.includes(username[i]) || username.length > 30){
-                username_valid = false
-                return
-            }
-        }
-        return username_valid
-    }
-
-    const validateNames = (fname, lname) => {
-        let error = false
-        let chars = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=0123456789"
-        if (fname.length > 50 || lname.length > 50){
-            error = true
-            return
-        }
-        for(let i = 0;i<fname.length;i++){
-            if (chars.includes(fname[i]) || fname[i] === ' '){
-                error=true
-                return
-            }
-        }
-        for(let i = 0;i<lname.length;i++){
-            if (chars.includes(lname[i])){
-                error=true
-                return
-            }
-        }
-        return error
-    }
-
-    const validateAge = (birth_date) => {
-        return Math.floor((new Date() - new Date(birth_date).getTime()) / 3.15576e+10)
-    }
-
-    const validatePassword = (password) => {
-         let validPass = true
-         if (password.length < 8 || password.length > 30){
-             validPass = false
-             return validPass
-         }
-         for(let i = 0;i<password.length;i++){
-             if(password[i] === ' '){
-                 validPass = false
-                 break
-             }
-         }
-         return validPass
-    }
-
-    const confirmPass = (password, passconfirm) => {
-        let confirm = true
-        if (password !== passconfirm){
-            confirm = false
-        }
-        return confirm
-    }
-
+    
+    
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         let birth_date = `${e.target.year.value+'-'+e.target.month.value+'-'+e.target.day.value}`
@@ -117,7 +49,7 @@ const RegisterForm = () => {
                 return
             }
         })
-
+        
         if (empty){
             setErrorMsg('Please fill in all fields')
         } else if (validateNames(fname, lname)){
@@ -154,9 +86,9 @@ const RegisterForm = () => {
             }
         }
     }
-        
+    
         return (
-        <div>
+            <>
             <h1>Register</h1>
             <p>Enter your details below to continue</p>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
@@ -201,8 +133,78 @@ const RegisterForm = () => {
                 <h6>Already have an account?</h6>                
                 <NavLink exact to="/login">Login</NavLink>
             </div>
-        </div>
+        </>
     )
 }
 
+export const validateEmail = (email) => {
+    let valid_email = true
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if(!re.test(email.toLowerCase()) || email > 255){
+        valid_email = false
+        return valid_email
+    }
+    return valid_email
+}
+export const validateUsername = (username) => {
+    let username_valid = true
+    let chars = "._abcdefghijklmnopqrstuvwxyz0123456789"
+    for(let i=0;i<username.length;i++){
+        if (!chars.includes(username[i]) || username.length > 30){
+            username_valid = false
+            break
+        }
+    }
+    return username_valid
+}
+
+export const validateNames = (fname, lname) => {
+    let error = false
+    let chars = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=0123456789"
+    if (fname.length > 50 || lname.length > 50){
+        error = true
+        return error
+    }
+    for(let i = 0;i<fname.length;i++){
+        if (chars.includes(fname[i]) || fname[i] === ' '){
+            error=true
+            return error
+        }
+    }
+    for(let i = 0;i<lname.length;i++){
+        if (chars.includes(lname[i])){
+            error=true
+            return error
+        }
+    }
+    return error
+}
+
+export const validateAge = (birth_date) => {
+    return Math.floor((new Date() - new Date(birth_date).getTime()) / 3.15576e+10)
+}
+
+export const validatePassword = (password) => {
+    let validPass = true
+     if (password.length < 8 || password.length > 30){
+         validPass = false
+         return validPass
+        }
+        for(let i = 0;i<password.length;i++){
+         if(password[i] === ' '){
+             validPass = false
+             break
+            }
+        }
+     return validPass
+    }
+    
+export const confirmPass = (password, passconfirm) => {
+    let confirm = true
+    if (password !== passconfirm){
+        confirm = false
+        return confirm
+    }
+    return confirm
+}
 export default RegisterForm
