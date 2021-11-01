@@ -65,7 +65,7 @@ const SavePost = ({postID}) => {
 
     return (
         <i className="fas fa-bookmark fp-save-btn" onClick={()=> saved ? handleRemove() : handleSave()} style={{
-            color: saved ? 'red' : 'white'
+            color: saved ? '#ffbb00' : 'rgb(27, 27, 27)'
         }}></i>
     )
 }

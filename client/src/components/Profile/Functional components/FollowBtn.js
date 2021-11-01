@@ -70,10 +70,7 @@ const FollowBtn = ({uID}) => {
         }).then(()=>setIsFollowing(false))
     }
     return (
-        <div className="pf-edit-follow-btn" style={{
-            backgroundColor: isFollowing ? '#df7e00' : 'white',
-            color: isFollowing ? 'white' : '#df7e00',}} 
-
+        <div className="pf-edit-follow-btn" 
             onClick={() => isFollowing ? handleUnfollow() : handleFollow()}>
             <p>{isFollowing ? 'Unfollow' : 'Follow'}</p> 
         </div>

@@ -4,8 +4,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    background: url(./images/teal2.jpg);
-    background-size: cover;
+    background-color: rgb(27, 27, 27);
 }
 .entry-form-box{
     width:40%;
@@ -13,9 +12,11 @@
     border-radius: 30px;
     box-shadow: 2px 2px 20px;
     padding: 50px 10px 20px 10px;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
 }
 .entry-form-box h1{
-    color: #ffa600;
+    color: #ffbb00;
     margin-left: 10px;
 }
 .entry-form-box p{
@@ -23,6 +24,7 @@
     color: #494949;
     margin-bottom: 30px;
     margin-left: 10px;
+    color: white;
 }
 .entry-form{
     width: 100%;
@@ -31,7 +33,7 @@
     font-size: 14px;
     margin-left: 5px;
     text-decoration: none;
-    color: #ff7b00;
+    color: #ffbb00;
     align-self: flex-start;
 }
 .entry-form input, .birthdt-reg-box select{
@@ -43,6 +45,9 @@
     font-size: 14px;
     outline: none;
     padding: 5px 10px;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
+    color: white;
 }
 .entry-btn{
     width: 200px;
@@ -69,6 +74,7 @@
 .reg-names-box, .birthdt-reg-box {
     width: 100%;
     display: flex;
+    
 }
 .reg-names-box input:nth-child(1){
     margin-right: 5px;
@@ -78,7 +84,8 @@
 }
 .birthdt-reg-box select{
     margin-right: 5px;
-    background-color: white;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
 }
 .error-msg-box{
     width: 100%;
@@ -116,7 +123,7 @@
     display: flex;
     align-items: center;
 }
-.tn-logo{
+.logo{
     height: 80%;
     width: auto;
     color: white;
@@ -129,14 +136,20 @@
     outline: none;
     padding: 5px 0;
     font-size: 15px;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
+    border-left: none;
+    color: white;
 }
 .search-icon{
     width: 35px;
     height: 80%;
-    background-color: white;
-    color: #6f6f6f;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
+    border-right: none;
+    color: #ffbb00;
     text-align: center;
-    line-height: 42px;
+    line-height: 36px;
     border-radius: 50px 0 0 50px;
 }
 .tn-right{
@@ -154,8 +167,9 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.avatar-img{
-    border: 1px solid #bebebe;
+.user-avatar{
+    background: linear-gradient(to bottom, #ffd900, #ff5100);
+    padding: 1px;
 }
 .tn-dropdown-menu{
     position: fixed;
@@ -175,8 +189,8 @@
     top: 55px;
     width: 100%;
     background-color: white;
-    border: 1px solid rgb(161, 161, 161);
-    border-top: none;
+    border: 1px solid #ffbb00;
+    background-color: rgb(27, 27, 27);
 }
 .search-user-box{
     display: flex;
@@ -184,13 +198,13 @@
     height: 60px;
     width: 100%;
     padding: 2px;
-    border-bottom: 1px solid rgb(211, 211, 211);
+    border-bottom: 1px solid #ffbb00;
 }
 .search-user-box p, .search-user-box h5{
-    color: #1f1f1f;
+    color: white;
 }
 .search-user-box:hover{
-    background-color: #dfdfdf;
+    background-color: #3f3f3f;
 }
 .see-all-btn{
     width: 100%;
@@ -198,7 +212,7 @@
     text-align: center;
     cursor: pointer;
     font-weight: bold;
-    color: #1f1f1f;
+    color: #ffbb00;
 }
 .see-all-btn:hover{
     background-color: #b8b8b8;
@@ -219,7 +233,18 @@
     text-align: center;
 }
 
-
+.logo h1{
+    background: linear-gradient(to right, #ffd900, #ff5100);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.like-clr{
+    background-color: #ffbb00;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 /* PROFILE */
 
 .main{
@@ -233,25 +258,25 @@
     height: fit-content;
     width: 20%;
     padding: 0 5px;
-    background-color: #ffffff;
     z-index: 999;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
-
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
 }
 .ln-list a li, .tn-dropdown-menu a li{
     width: 100%;
     height: 50px;
     text-align: left;
     line-height: 50px;
-    color: rgb(58, 58, 58);
+    color: #ffbb00;
     font-size: 16px;
     padding-left: 15px;
-    border-bottom: 1px solid #cccccc;
-    background-color: white;
+    border-bottom: 1px solid #ffbb00;
+    background-color: rgb(27, 27, 27);
 }
 .ln-list a li:hover, .tn-dropdown-menu a li:hover{
-    background-color: #e2e2e2;
+    background-color: #3f3f3f;
 }
 
 .profile-container{
@@ -266,9 +291,10 @@
     height: fit-content;
     border-radius: 30px;
     padding: 30px;
-    background: linear-gradient(to bottom right, #0e3d41, #001516);
     display: flex;
     align-items: flex-end;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
 }
 .pf-info{
     height: 170px;
@@ -299,7 +325,7 @@
 }
 .pf-stats div h6{
     font-size: 14px;
-    color: #eb8322;
+    color: #ffbb00;
 }
 .pf-stats div p{
     margin-top: 5px;
@@ -311,13 +337,14 @@
     right: 20px;
     width: 150px;
     height: 40px;
-    background-color: white;
-    color: #e26e01;
+    color: #ffbb00;
     text-align: center;
     line-height: 40px;
     border-radius: 40px;
     font-size: 16px;
     cursor: pointer;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
 }
 .pf-editpf-btn:hover{
     background-color: #cccccc;
@@ -342,13 +369,16 @@
     background-color: white; 
     overflow-y: scroll;
     background-color: #ececec;
+    background-color: rgb(27, 27, 27);
+    /* border: 1px solid #ffbb00; */
 }
 .list-type{
     width: 100%;
     font-weight: lighter;
     text-align: center;
     padding: 5px;
-    background-color: #d3d3d3;
+    background-color: rgb(17, 17, 17);
+    color: #ffbb00;
 }
 .list-exit{
     position: relative;
@@ -361,11 +391,13 @@
     right: 10px;
     font-size: 30px;
     cursor: pointer;
+    color: #ffbb00;
 }
 .empty-list{
     width: 100%;
     padding: 20px;
     text-align: center;
+    color: white;
 }
 .foll-user-box{
     position: relative;
@@ -383,7 +415,7 @@
     align-items: flex-start !important;
 }
 .foll-user-info p{
-    color: #1f1f1f;
+    color: white;
 }
 .foll-user-info p:nth-child(1){
     font-size: 18px;
@@ -456,10 +488,10 @@
 .add-np-box{
     width: 100%;
     margin-top: 30px;
-    padding: 5px;
+    padding: 10px;
     box-shadow: 2px 2px 20px;
     border-radius: 10px;
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(27, 27, 27);
 }
 .add-np-txt{
     width: 100%;
@@ -476,13 +508,12 @@
     width: 100%;
     height: 100%;
     resize: none;
-    margin-left: 10px;
-    border: 1px solid #c2c2c2;
     outline: none;
     padding: 5px;
     font-size: 16px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 10px;
+    background-color: rgb(27, 27, 27);
 }
 .add-np-tbtn{
     width: 100%;
@@ -501,19 +532,19 @@
 }
 .add-np-types i{
     font-size: 30px;
-    color: #e26e01;
+    color: #ffbb00;
     cursor: pointer;
 }    
 .add-np-types p{
     margin-left: 10px;
     font-size: 14px;
-    color: #363636;
+    color: #ffb833;
 }   
 .add-np-types i:hover{ 
     color: #f5ba6c;
 }    
 .dropzone-box{
-    border: 2px dashed rgb(54, 54, 54);
+    border: 2px dashed #ffbb00;
     border-radius: 20px;
 }
 
@@ -522,11 +553,11 @@
 .posts-container-feed{
     width: 60%;
     height: fit-content;
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 15px;
+    background-color: #161616;
 }
 .post{
     position: relative;
@@ -534,37 +565,36 @@
     margin-top: 40px;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
+    border: 1px solid #ffbb00;
 }
 .fp-info-save{
     width: 100%;
     height: 50px;
-    background-color: #ffffff;
     padding: 2px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #acacac;
+    border-bottom: 1px solid #ffbb00;
     border-radius: 10px 10px 0 0;
+    background-color: rgb(27, 27, 27);
 }
 .fp-info{
     height: 100%;
     display: flex;
     align-items: center;
 }
-.post-date{
-    font-size: 2px; 
-}
 .fp-info p{
     color: rgb(46, 46, 46);
     font-size: 16px;
     margin-left: 15px;
+    color: white;
 }
 .fp-like-btn, .fp-save-btn, .fp-options-btn{
+    color: rgb(27, 27, 27); 
     font-size: 30px;
-    color: rgb(255, 255, 255);
     margin-right: 15px;
     cursor: pointer;
-    -webkit-text-stroke:1px black;
+    -webkit-text-stroke:1px #ffbb00;
 }
 .fp-like-btn{
     margin-left: 5px;
@@ -579,18 +609,18 @@
     right: 0;
     top: 50px;
     width: 150px;
-    border: 1px solid rgb(122, 122, 122);
+    border: 1px solid #ffbb00;
 }
 .fp-options-menu li{
     width: 100%;
     height: 35px;
     text-align: left;
     line-height: 35px;
-    color: rgb(58, 58, 58);
-    font-size: 16px;
+    color: white;
+    font-size: 14px;
     padding-left: 15px;
-    border-bottom: 1px solid #cccccc;
-    background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid #ffbb00;
+    background-color: rgb(27, 27, 27);
     cursor: pointer;
 }
 .fp-options-menu li:hover{
@@ -603,7 +633,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(231, 231, 231);
+    background-color: rgb(27, 27, 27);
+
 }
 .feed-post-img img{
     max-width: 100%;
@@ -611,8 +642,9 @@
 .post-text{
     width: 100%;
     min-height: 40px;
-    background-color: rgb(255, 255, 255);
     padding: 10px 10px 20px 10px;
+    color: white;
+    background-color: rgb(27, 27, 27);
 }
 
 .like-count{
@@ -625,26 +657,29 @@
 .comment-cont{
     display: flex;
     align-items: center;
-    background-color: #dfdede;
+    background-color: rgb(39, 39, 39);
     min-height: 50px;
     width: 100%;
+    color: white;
+    padding-left: 5px;
 }
 
 .fp-add-comment{
     width: 100%;
     height: 50px;
-    background-color: #ffffff;
     padding: 5px;
-    box-shadow:1px 1px 10px;
     border-radius: 0 0 10px 10px;
+    background-color: rgb(27, 27, 27);
+    color: white;
+    border-top: 1px solid #ffbb00;
 }
 .fp-add-comment input{
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
-    background-color: #ffffff;
-    color: rgb(49, 49, 49);
+    background-color: rgb(27, 27, 27);
+    color: white;
     font-size: 14px;
     padding-left: 10px;
     padding-top: 2px;
@@ -652,18 +687,17 @@
 .fp-cmt-btn{
     height: 100%;
     width: 100px;
-    box-shadow: 2px 2px 10px;
     outline: none;
-    border: none;
-    background-color: #e26e01;
-    /* background-color:#013c44; */
-    color: rgb(255, 255, 255);
+    color: white;
     font-size: 14px;
     cursor: pointer;
     border-radius: 30px;
+    background-color: rgb(27, 27, 27);
+    border: 1px solid #ffbb00;
+    color: #ffbb00;
 }
 .fp-cmt-btn:hover {
-    background-color: #fcb636;
+    background-color: #3f3f3f;
 }
 
 /* STORIES */
@@ -671,9 +705,10 @@
 .stories-container{
     width: 100%;
     height: 80px;
-    background-color: #ffffff;
+    background-color: rgb(27, 27, 27);
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
+    border: 1px solid #ffbb00;
     display: flex;
     align-items: center;
     padding: 5px;
@@ -681,7 +716,6 @@
 .story{
     height: 100%;
     margin-left: 2%;
-    border: 2px solid #e26e01;
     border-radius: 50%;
 }    
 .story img{
@@ -691,17 +725,15 @@
     height: 100%;
     width: 70px;
     border-radius: 50%;
-    border: 1px solid #2e2e2e;
+    border: 1px solid #ffbb00;
     cursor: pointer;
-    background-color: #e6e6e6;
+    background-color: rgb(27, 27, 27);
     overflow: hidden;
 }
 .add-story-btn i{
     font-size: 30px;
-    color: #df7e00;
+    color: #ffbb00;
 }
-
-
 
 
 /* LOADER */
@@ -709,12 +741,12 @@
 .spinner-box{
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(27, 27, 27);
 }
 .spinner{
     width:120px;height:120px;
     left:48%;top:40%;
-    border: 10px solid rgb(13, 63, 83);
+    border: 10px solid #ff5e00;
     border-top-color:transparent;
     border-bottom-color:transparent;
     border-radius:50%;
@@ -724,7 +756,7 @@
 .inner-spinner{
     width:100%;height:100%;
     left:48%;top:40%;
-    border: 10px solid rgb(231, 139, 0);
+    border: 10px solid #ffbb00;
     border-top-color:transparent;
     border-bottom-color:transparent;
     border-radius:50%;
@@ -912,6 +944,7 @@
     /* STORIES */
     .stories-container{
         height: 70px;
+        border-radius: 0;
     }
     .stories-container .add-story-btn{
         width: 60px;

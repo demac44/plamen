@@ -24,7 +24,7 @@ const NEW_POST = gql`
 
 const AddPost = ({width, callback}) => {
     const user = JSON.parse(localStorage.getItem('user'))
-    const [err, setErr] = useState('1px solid grey')
+    const [err, setErr] = useState('1px solid #ffbb00')
     const [image, setImage] = useState(null);
     const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)
@@ -83,7 +83,6 @@ const AddPost = ({width, callback}) => {
         <>
             <form className="add-np-box" style={{width:width}} onSubmit={handleSubmit}>
                 <div className="add-np-txt">
-                    <Avatar height='100%' width='80px' pfp={user.profile_picture}/>
                     <textarea type="text" className="add-np-input" name='text' style={{border:err}} placeholder="Add new post..."></textarea>
                 </div>
                 {imageUpload && 

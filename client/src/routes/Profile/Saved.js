@@ -77,7 +77,7 @@ const Saved = () => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>
-                        <h2>Saved posts</h2>
+                        <h2 style={{color:'white'}}>Saved posts</h2>
                         {posts.length > 0 ? posts.map(post => <Post post={{
                             postID: post.postID,
                             post_text: post.post_text,

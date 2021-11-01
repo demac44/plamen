@@ -10,6 +10,7 @@ import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
+import { CREATE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_FEED_POSTS, GET_POSTS } from "./Queries/Posts.js";
@@ -45,7 +46,8 @@ const RootMutation = new GraphQLObjectType({
         remove_saved: REMOVE_SAVED,
         add_comment: ADD_COMMENT,
         edit_pfp: EDIT_PFP,
-        edit_info: EDIT_INFO
+        edit_info: EDIT_INFO,
+        create_story: CREATE_STORY
     }
 })
 

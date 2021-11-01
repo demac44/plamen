@@ -47,14 +47,13 @@ const Feed = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
     const [leftnav, setLeftnav] = useState(false)
-
     const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
         variables: {
             userID: ls.userID,
         },
         
     })
-
+    
 
     useEffect(()=>{
         if(updated){
@@ -63,15 +62,15 @@ const Feed = () => {
         }
     }, [updated, refetch])
 
-
+    
     const updatedCallback = useCallback(val => {
         setUpdated(val)
     }, [setUpdated])
-
+    
     const leftNavCallback = useCallback(val =>{
         setLeftnav(val)
     }, [setLeftnav])
-
+    
     if(loading) return <div className='wh-100'><Loader/></div>
     if(error) console.log(error); 
 
@@ -100,7 +99,7 @@ const Feed = () => {
                         }} comments={post.comments}
                         likes={post.likes}
                         callback={updatedCallback}
-                        key={post.postID}/>) : <p style={{marginTop:'60px'}}>No new posts</p>}
+                        key={post.postID}/>) : <p style={{marginTop:'60px', color:'whitesmoke'}}>No new posts</p>}
                     </div>
                 </div>
             </div>

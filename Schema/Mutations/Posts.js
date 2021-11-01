@@ -2,8 +2,6 @@ import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
 import { PostType } from "../TypeDefs/Posts.js"
 
-import auth from "../../middleware/auth.js"
-
 export const CREATE_POST = {
     type: PostType,
     args: {
