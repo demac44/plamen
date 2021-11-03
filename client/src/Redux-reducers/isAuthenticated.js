@@ -5,7 +5,7 @@ const authReducer = (state=false, action) => {
         case 'NOTAUTH':
             return {isAuth: false}
         default:
-            return {isAuth: false}
+            return {isAuth: state}
         }
 }
 

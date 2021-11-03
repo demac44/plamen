@@ -1,5 +1,5 @@
 import React from 'react'
-import Dropzone from 'react-simple-dropzone/dist';
+// import Dropzone from 'react-simple-dropzone/dist';
 
 
 

@@ -23,6 +23,7 @@
     "react-simple-dropzone": "^1.0.20",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
+    "subscriptions-transport-ws": "^0.11.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

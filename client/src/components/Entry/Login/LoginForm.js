@@ -7,7 +7,6 @@ const LoginForm = () => {
     let password, username;
     const [errorMsg, setErrorMsg] = useState('')
 
-
     const handleLogin = async (e) => {
         e.preventDefault()
 

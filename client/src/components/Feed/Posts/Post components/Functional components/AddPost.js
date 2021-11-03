@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import Avatar from '../../../../UI/Avatar'
-
 import '../../../../../App.css'
 import '../../../../../General.css'
 
@@ -10,8 +8,6 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 import Dropzone from 'react-simple-dropzone/dist';
-
-import { useSelector } from 'react-redux';
 
 
 const NEW_POST = gql`

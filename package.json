@@ -27,8 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.13",
-    "sync-mysql": "^3.0.1",
-    "sync-sql": "^1.0.2"
+    "sync-mysql": "^3.0.1"
   },
   "type": "module"
 }

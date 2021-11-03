@@ -6,9 +6,10 @@ import './General.css'
 
 import ApolloClient, {InMemoryCache} from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
+// import {WebSocketLink} from 'subscriptions-transport-ws'
 
+import { authenticate } from './Redux-actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from './Redux-actions';
 
 import Feed from './routes/Feed/Feed';
 import Profile from './routes/Profile/Profile';
@@ -25,36 +26,50 @@ const client = new ApolloClient({
 
 
 function App() {
+  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
   const isLogged = useSelector(state => state?.isAuth.isAuth)
-  let user = localStorage.getItem('user')
-  let token = localStorage.getItem('token')
-  const dispatch = useDispatch()
+  const uid = useSelector(state => state.isAuth.user?.userID)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const token = localStorage.getItem('token')
+
+
+  
   
   useEffect(()=>{
-    if(!user) localStorage.removeItem('token')
-    if(!token) localStorage.removeItem('user')
-    dispatch(authenticate());
+    const checkUser = () => {
+      if(!token) return true
+      else if(!user) return true
+      else if (uid && user.userID !== uid){
+        return true
+      }
+      return false
+    }
+    dispatch(authenticate())
+    if(checkUser()){
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+    }
     setIsLoading(false)
-  },[dispatch, isLogged, user])
+  },[isLogged, user, uid, dispatch, token])
   
   
   return (
     <>
-      {isLoading ? <h1>loading</h1> :
+    {isLoading ? <h1>loading</h1> :
         <ApolloProvider client={client}>
           <Switch>
               {isLogged ?
               (
                 <>
-                <Route exact path='/'></Route>
-                <Route exact path='/myprofile'><Profile myprofile={true}/></Route>
-                <Route exact path='/feed'><Feed/></Route>
-                <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
-                <Route exact path='/editprofile'><EditProfile/></Route>
-                <Route exact path='/saved'><Saved/></Route>
-                <Route exact path='/search/:query'><Search/></Route>
-              </>
+                  <Route exact path='/'></Route>
+                  <Route exact path='/myprofile'><Profile myprofile={true}/></Route>
+                  <Route exact path='/feed'><Feed/></Route>
+                  <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
+                  <Route exact path='/editprofile'><EditProfile/></Route>
+                  <Route exact path='/saved'><Saved/></Route>
+                  <Route exact path='/search/:query'><Search/></Route>
+                </>
               ) : <Redirect to='/login'/>}
           </Switch>
         </ApolloProvider>}
@@ -63,3 +78,4 @@ function App() {
 }
 
 export default App;
+

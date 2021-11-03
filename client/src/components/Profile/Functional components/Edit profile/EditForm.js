@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import axios from 'axios'
 import {  validateAge, validateNames, validateUsername} from '../../../Entry/Register/RegisterForm'
 import ErrorMsg from '../../../Entry/ErrorMsg'
 

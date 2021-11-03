@@ -8,22 +8,22 @@ const SearchDrop = ({data, val}) => {
 
 
     useEffect(()=>{
+        const setusers = () => {
+            let arr=[]
+            data.users.map(user => 
+                (user.first_name.match(regex)
+                || user.last_name.match(regex)
+                || user.username.match(regex)
+                || (user.first_name+user.last_name).match(regex)
+                || (user.last_name+user.first_name).match(regex))
+                && arr.push(user) 
+            )
+            setUsers(arr)
+        }
         setRegex(new RegExp(escape(val), 'gi'))
         setusers()
-    }, [val])
+    }, [val, data.users, regex])
 
-    const setusers = () => {
-        let arr=[]
-        data.users.map(user => 
-            (user.first_name.match(regex)
-            || user.last_name.match(regex)
-            || user.username.match(regex)
-            || (user.first_name+user.last_name).match(regex)
-            || (user.last_name+user.first_name).match(regex))
-            && arr.push(user) 
-        )
-        setUsers(arr)
-    }
 
     return (
         <div className='search-drop'>

@@ -24,8 +24,9 @@ router.post('/', async (req, res) => {
             last_name: result[0].last_name,
             username: result[0].username,
             profile_picture: result[0].profile_picture,
-            currentUser: true
+            currentUser: true,
         }
+        const theme = 'YELLOW'
         bcrypt.compare(password, hashedPass).then(response => {
             if (!response) {
                 res.send({error: 'Incorrect password!'})
@@ -33,8 +34,9 @@ router.post('/', async (req, res) => {
                 const token = jwt.sign({userID: userID, username: username}, process.env.JWT_SECRET) 
                 res.cookie("x-auth-token", token, options)
                 res.json({
-                    token: token,
-                    user: obj
+                    token,
+                    user: obj,
+                    theme
                 })
             }
         })

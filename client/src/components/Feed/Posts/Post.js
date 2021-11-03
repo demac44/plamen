@@ -5,14 +5,11 @@ import InfoSave from './Post components/UI/InfoSave'
 import PostImg from './Post components/UI/PostImg'
 import PostText from './Post components/UI/PostText'
 
-
 const Post = ({width, post, user, comments, likes, callback}) => {
     const [showAll, setShowAll] = useState(false)
-
     const handleShowComm = () => {
         setShowAll(!showAll)
     }
-
     return (
         <>
             <div className="post" style={{width:width}}>
@@ -29,8 +26,9 @@ const Post = ({width, post, user, comments, likes, callback}) => {
                     width:'100%', 
                     textAlign:'center', 
                     cursor:'pointer',
-                    backgroundColor:'#ccc',
-                    color:'#2f2f2f'
+                    backgroundColor:'rgb(22,22,22)',
+                    color: '#ffbb00',
+                    fontSize:'14px'
                 }}
                 onClick={handleShowComm}
                 >{showAll ? 'Show less' : 'Show more'}</p>}
@@ -41,3 +39,4 @@ const Post = ({width, post, user, comments, likes, callback}) => {
 }
 
 export default Post
+
