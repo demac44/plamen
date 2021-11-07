@@ -4,9 +4,11 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
 import './General.css'
 
-import ApolloClient, {InMemoryCache} from 'apollo-boost'
+import {InMemoryCache} from 'apollo-boost'
 import {ApolloProvider} from 'react-apollo'
-// import {WebSocketLink} from 'subscriptions-transport-ws'
+import {ApolloClient} from 'apollo-client'
+import { HttpLink } from 'apollo-link-http';
+
 
 import { authenticate } from './Redux-actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,12 +18,40 @@ import Profile from './routes/Profile/Profile';
 import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
+import Chat from './components/Chat/Chat';
 
+// import { WebSocketLink } from 'apollo-link-ws';
+
+// import { split } from 'apollo-link';
+// import { getMainDefinition } from 'apollo-utilities';
+
+const httpLink = new HttpLink({
+  uri:'http://localhost:5000/api/graphql'
+})
+
+// const wsLink = new WebSocketLink({
+//   uri: `ws://localhost:5000/subscriptions`,
+//   options: {
+//     reconnect: true
+//   }
+// });
+
+// const link = split(
+//   ({ query }) => {
+//     const definition = getMainDefinition(query);
+//     return (
+//       definition.kind === 'OperationDefinition' &&
+//       definition.operation === 'subscription'
+//     );
+//   },
+//   wsLink,
+//   httpLink,
+// );
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/api/graphql', 
   cache: new InMemoryCache(),
-  credentials:"include"
+  credentials:"include",
+  link: httpLink
 })
 
 
@@ -33,9 +63,6 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'))
   const token = localStorage.getItem('token')
 
-
-  
-  
   useEffect(()=>{
     const checkUser = () => {
       if(!token) return true
@@ -69,6 +96,8 @@ function App() {
                   <Route exact path='/editprofile'><EditProfile/></Route>
                   <Route exact path='/saved'><Saved/></Route>
                   <Route exact path='/search/:query'><Search/></Route>
+                  <Route exact path='/chats'><Chat/></Route>
+                  <Route exact path='/chat/:chatid'><Chat/></Route>
                 </>
               ) : <Redirect to='/login'/>}
           </Switch>

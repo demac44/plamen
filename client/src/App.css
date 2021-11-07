@@ -349,6 +349,9 @@
 .pf-editpf-btn:hover{
     background-color: #cccccc;
 }
+.send-msg-btn{
+    right: 180px;
+}
 
 /* USER LISTS */
 
@@ -764,6 +767,109 @@
     animation: spin 1.5s reverse infinite;
 }
 
+/* CHATS */
+
+.all-chats-box{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 350px;
+    overflow-y: scroll;
+    height: 100vh;
+    border-right: 1px solid #ffbb00;
+    z-index: 1000001;
+    background-color: #161616;
+}
+.chat-user-box{
+    position: relative;
+    height: 60px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ffbb00;
+    cursor: pointer;
+}
+.chat-user-box:hover{
+    background-color: #3f3f3f;
+}
+.chat-name-msg{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 20px;
+}
+.chat-name-msg p{
+    color: white;
+}
+
+.chat-box{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding:60px 0 0 350px;
+    background-color: #3f3f3f;
+}
+.msg-input-box{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 60px;
+    padding: 10px 20px 10px 370px;
+    width: 100%;
+    z-index: 1000000;
+    background-color: #161616;
+}
+.msg-input-box input{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+.chat-messages{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(173, 160, 134);
+    overflow-y: scroll;
+    padding-bottom: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.msg-wrapper-cu, .msg-wrapper-ou{
+    width: 100%;
+    display: flex;
+    min-height: 50px;
+    padding: 5px;
+}
+.msg-wrapper-cu{
+    justify-content: flex-end;
+}
+.msg-wrapper-ou{
+    justify-content: flex-start;
+}
+.msg{
+    width: fit-content;
+    min-height: 40px;
+    height: auto;
+    margin: 0 20px;
+    border-radius: 30px;
+    padding: 0 10px;
+}
+.msg-current-user{
+    background-color: #ffbb00;
+}
+.msg-other-user{
+    background-color: white;
+}
+
+
+
+
 
 /* MEDIA QUERIES */
 
@@ -825,6 +931,9 @@
         position: static;
         margin-top: 50px;
         width: 250px;
+    }
+    .send-msg-btn{
+        margin-top: 10px !important;
     }
     .profile-info-box .user-avatar{
         height: 150px !important;

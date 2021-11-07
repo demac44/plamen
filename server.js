@@ -8,10 +8,16 @@ import {join, resolve} from 'path'
 import { graphqlHTTP } from 'express-graphql';
 import {schema} from './Schema/schema.js';
 import cookieParser from 'cookie-parser'
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { PubSub } from 'graphql-subscriptions';
 
-import auth from './middleware/auth.js';
+// import auth from './middleware/auth.js';
 
 const app = express()
+
+const pubsub = new PubSub()
+const server = createServer(app)
 
 app.use(cookieParser())
 
@@ -26,9 +32,8 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use(auth)
 
-app.use('/api/graphql', auth,  graphqlHTTP({
+app.use('/api/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }))
@@ -39,6 +44,7 @@ app.use('/api/login', login)
 import register from './controllers/register.js'
 app.use('/api/register', register)
 import logout from './controllers/logout.js'
+import { createServer } from 'http';
 app.use('/api/logout', logout)
 
 
@@ -47,5 +53,17 @@ app.get('*', (req,res)=>{
 })
 
 
+
 const PORT = process.env.PORT || 8000
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`)) 
+// app.listen(PORT, () => console.log('Server started on port '+PORT))
+server.listen(PORT, ()=>{
+    new SubscriptionServer({
+        schema,
+        execute,
+        subscribe
+    }, {
+        server,
+        path:'/subscriptions'
+    })
+    console.log('Websocket started');
+}) 

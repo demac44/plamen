@@ -2,8 +2,11 @@ import {
     GraphQLObjectType,
     GraphQLSchema,
 } from "graphql";
+import { PubSub } from 'graphql-subscriptions';
 
+export const pubsub = new PubSub();
 
+import { CREATE_CHAT, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
@@ -12,6 +15,7 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
+import { CHAT_EXISTS, GET_CHAT_HEADS, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_FEED_POSTS, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
@@ -29,6 +33,9 @@ const RootQuery = new GraphQLObjectType({
         feed_posts: GET_FEED_POSTS,
         if_saved: IF_SAVED,
         get_saves: GET_SAVES,
+        chat_exists: CHAT_EXISTS,
+        get_chats: GET_CHAT_HEADS,
+        get_messages: GET_MESSAGES
     }
 })    
 
@@ -47,11 +54,21 @@ const RootMutation = new GraphQLObjectType({
         add_comment: ADD_COMMENT,
         edit_pfp: EDIT_PFP,
         edit_info: EDIT_INFO,
-        create_story: CREATE_STORY
+        create_story: CREATE_STORY,
+        create_chat: CREATE_CHAT,
+        send_message: SEND_MESSAGE
     }
 })
 
+// const RootSubscription = new GraphQLObjectType({
+//     name:'RootSubscription',
+//     fields: {
+//         get_messages: GET_MESSAGES
+//     }
+// })
+
 export const schema = new GraphQLSchema({
     query: RootQuery,
-    mutation: RootMutation
+    mutation: RootMutation,
+    // subscription: RootSubscription
 })

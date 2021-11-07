@@ -14,6 +14,7 @@
   "author": "Demir Umejr",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^3.5.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.1",
     "concurrently": "^6.3.0",
@@ -24,9 +25,11 @@
     "express-graphql": "^0.12.0",
     "express-session": "^1.17.2",
     "graphql": "^15.6.1",
+    "graphql-subscriptions": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.13",
+    "subscriptions-transport-ws": "^0.11.0",
     "sync-mysql": "^3.0.1"
   },
   "type": "module"
