@@ -6,23 +6,23 @@ const SearchDrop = ({data, val}) => {
     const [regex, setRegex] = useState('')
     const [users, setUsers] = useState([])
 
+    const setusers = () => {
+        let arr=[]
+        data.users.map(user => 
+            (user.first_name.match(regex)
+            || user.last_name.match(regex)
+            || user.username.match(regex)
+            || (user.first_name+user.last_name).match(regex)
+            || (user.last_name+user.first_name).match(regex))
+            && arr.push(user) 
+        )
+        setUsers(arr)
+    }
 
     useEffect(()=>{
-        const setusers = () => {
-            let arr=[]
-            data.users.map(user => 
-                (user.first_name.match(regex)
-                || user.last_name.match(regex)
-                || user.username.match(regex)
-                || (user.first_name+user.last_name).match(regex)
-                || (user.last_name+user.first_name).match(regex))
-                && arr.push(user) 
-            )
-            setUsers(arr)
-        }
         setRegex(new RegExp(escape(val), 'gi'))
-        setusers()
-    }, [val, data.users, regex])
+        setusers() 
+    }, [val, data.users])
 
 
     return (

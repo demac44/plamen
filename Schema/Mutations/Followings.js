@@ -10,8 +10,8 @@ export const FOLLOW_USER = {
     },
     resolve(parent, args) {
         const {followerID, followedID} = args
-        let sql = `INSERT INTO followings (follID, followerID, followedID)
-                    VALUES (null, ${followerID}, ${followedID})`
+        let sql = `INSERT INTO followings (followerID, followedID)
+                    VALUES (${followerID}, ${followedID})`
         connection.query(sql)
         return args
     }

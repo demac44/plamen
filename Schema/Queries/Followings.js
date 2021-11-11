@@ -2,10 +2,6 @@ import { GraphQLBoolean, GraphQLInt, GraphQLList} from 'graphql';
 import connection from '../../middleware/db.js'
 import { UserType } from '../TypeDefs/Users.js';
 
-let count;
-let followers = [];
-let following = [];
-   
 
 export const IF_FOLLOWING = {
     type: GraphQLBoolean,
@@ -24,7 +20,7 @@ export const IF_FOLLOWING = {
 export const GET_FOLLOWERS = {
     type: new GraphQLList(UserType),
     args: {
-        followedID: {type:GraphQLInt}
+        followedID: {type:GraphQLInt} 
     },
     resolve(parent, args){
         const {followedID} = args
@@ -37,7 +33,7 @@ export const GET_FOLLOWERS = {
 export const GET_FOLLOWING = {
     type: new GraphQLList(UserType),
     args: {
-        followerID: {type:GraphQLInt}
+        followerID: {type:GraphQLInt} 
     },
     resolve(parent, args){
         const {followerID} = args

@@ -32,26 +32,27 @@ const Search = () => {
     }, [setLeftnav])
 
 
-    const {loading, data} = useQuery(SEARCH_USERS)
+    const {loading, data, error} = useQuery(SEARCH_USERS)
     
+    const setusers = () => {
+        let arr=[]
+        data?.users.map(user => 
+            (user.first_name.match(regex)
+            || user.last_name.match(regex)
+            || user.username.match(regex)
+            || (user.first_name+user.last_name).match(regex)
+            || (user.last_name+user.first_name).match(regex))
+            && arr.push(user) 
+            )
+        setUsers(arr)
+    }
     useEffect(()=>{
-        const setusers = () => {
-            let arr=[]
-            data?.users.map(user => 
-                (user.first_name.match(regex)
-                || user.last_name.match(regex)
-                || user.username.match(regex)
-                || (user.first_name+user.last_name).match(regex)
-                || (user.last_name+user.first_name).match(regex))
-                && arr.push(user) 
-                )
-            setUsers(arr)
-        }
         setRegex(new RegExp(escape(query), 'gi'))
         setusers()
-    }, [data, query, regex])
+    }, [data, query])
     
     if(loading) return <div className='wh-100'><Loader/></div>
+    if(error) throw error 
     
 
     return (

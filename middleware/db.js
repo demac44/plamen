@@ -8,4 +8,4 @@ let connection = new Mysql({
 });
 
 
-export default connection
+export default connection 

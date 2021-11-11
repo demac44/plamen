@@ -22,12 +22,12 @@ const SearchBar = () => {
     const {loading, error, data} = useQuery(SEARCH_USERS)
 
     useEffect(()=>{
-        document.querySelector('.wrapper').addEventListener('click', ()=>setVal(''))
+        document.querySelector('.wrapper').addEventListener('click', ()=>setVal('')) 
         val.trim().length > 0 ? setDropdown(true) : setDropdown(false)
     }, [val])
 
     if(loading) return <div className='tn-center flex-ctr'><input className='tn-search-input' placeholder='search'/></div>
-    if(error) return <p>Something went wrong.Try later.</p>
+    if(error) throw error
 
     const handleInput = (e) => {
         setVal(e.target.value)

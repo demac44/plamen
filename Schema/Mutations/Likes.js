@@ -11,7 +11,7 @@ export const LIKE_POST = {
     },
     resolve(parent, args) {
         const {postID, userID} = args
-        let sql = `INSERT INTO postLikes (likeID, userID, postID) 
+        let sql = `INSERT INTO likes (likeID, userID, postID) 
                     VALUES (null, ${userID}, ${postID})`
         connection.query(sql)
         return args
@@ -26,7 +26,7 @@ export const REMOVE_LIKE = {
     }, 
     resolve(parent, args){
         const {postID, userID} = args
-        let sql = `DELETE FROM postLikes WHERE postID=${postID} AND userID=${userID}`
+        let sql = `DELETE FROM likes WHERE postID=${postID} AND userID=${userID}`
         connection.query(sql)
         return args
     }

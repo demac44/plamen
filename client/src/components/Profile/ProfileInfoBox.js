@@ -8,7 +8,7 @@ import SendMsgBtn from './Functional components/SendMsgBtn'
 const ProfileInfoBox = ({info}) => {
     return (
         <div className="profile-info-box">
-            <Avatar height='200px' pfp={info.user.profile_picture}/>
+            <Avatar height='200px' width='200px' pfp={info.user.profile_picture}/>
             <ProfileInfo info={info}/>
             {info.user.currentUser ? <ProfileEditBtn/> : (
             <>

@@ -155,7 +155,7 @@
     border-right: none;
     color: #ffbb00;
     text-align: center;
-    line-height: 36px;
+    line-height: 40px;
     border-radius: 50px 0 0 50px;
 }
 .tn-right{
@@ -169,13 +169,12 @@
     color: white;
     display: none;
 }
-.user-avatar, .avatar-img{
-    border-radius: 50%;
-    cursor: pointer;
-}
 .user-avatar{
+    border-radius: 50%;
     background: linear-gradient(to bottom, #ffd900, #ff5100);
-    padding: 1px;
+    overflow: hidden;
+    border: 1px solid #ffbb00;
+    cursor: pointer;
 }
 .tn-dropdown-menu{
     position: fixed;
@@ -517,6 +516,7 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 10px;
     background-color: rgb(27, 27, 27);
+    color: white;
 }
 .add-np-tbtn{
     width: 100%;

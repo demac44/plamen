@@ -3,19 +3,20 @@ import connection from '../../middleware/db.js'
 import { ChatHeadsType, ChatMessagesType } from '../TypeDefs/Chat.js';
 
 export const CHAT_EXISTS = {
-    type: GraphQLBoolean,
+    type: ChatHeadsType,
     args: {
-        chatID: {type: GraphQLString}
+        chatID: {type: GraphQLString},
+        chatID2: {type: GraphQLString}
     },    
     resolve(parent, args) {
-        const {chatID} = args
-        let sql = `SELECT COUNT(chatID) as chatExists FROM chats WHERE chatID="${chatID}"`
+        const {chatID, chatID2} = args
+        let sql = `SELECT chatID FROM chats WHERE chatID="${chatID}" OR chatID="${chatID2}"` 
         let result = connection.query(sql)
-        return result[0].chatExists
+        return result[0]
     }   
 }
  
-let arr = []
+let arr = [] 
 
 export const GET_CHAT_HEADS = {
     type: new GraphQLList(ChatHeadsType),

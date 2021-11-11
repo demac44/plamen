@@ -8,18 +8,42 @@ import {join, resolve} from 'path'
 import { graphqlHTTP } from 'express-graphql';
 import {schema} from './Schema/schema.js';
 import cookieParser from 'cookie-parser'
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { execute, subscribe } from 'graphql';
 import { PubSub } from 'graphql-subscriptions';
 
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+import { createServer } from 'http';
+import { ApolloServer } from 'apollo-server-express';
 // import auth from './middleware/auth.js';
 
 const app = express()
 
-const pubsub = new PubSub()
-const server = createServer(app)
-
 app.use(cookieParser())
+
+
+const httpServer = createServer(app)
+
+const server = new ApolloServer({
+    schema,
+    plugins: [{
+        async serverWillStart(){
+            return {
+                async drainServer(){
+                    subscriptionServer.close()
+                }
+            }
+        }
+    }]
+})
+
+const subscriptionServer = SubscriptionServer.create({
+    schema,
+    execute,
+    subscribe
+}, {
+    server: httpServer,
+    path: server.graphqlPath
+})
 
 const __dirname = resolve()
 app.use(express.static(join(__dirname, "client", "build")))
@@ -33,7 +57,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.use('/api/graphql', graphqlHTTP({
+app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }))
@@ -44,26 +68,16 @@ app.use('/api/login', login)
 import register from './controllers/register.js'
 app.use('/api/register', register)
 import logout from './controllers/logout.js'
-import { createServer } from 'http';
-app.use('/api/logout', logout)
+app.use('/api/logout', logout) 
 
 
 app.get('*', (req,res)=>{
     res.sendFile(join(__dirname, "client", "build", "index.html"))
 })
 
-
+await server.start()
+server.applyMiddleware({app})
 
 const PORT = process.env.PORT || 8000
-// app.listen(PORT, () => console.log('Server started on port '+PORT))
-server.listen(PORT, ()=>{
-    new SubscriptionServer({
-        schema,
-        execute,
-        subscribe
-    }, {
-        server,
-        path:'/subscriptions'
-    })
-    console.log('Websocket started');
-}) 
+
+httpServer.listen(PORT, ()=> console.log('Server is running')) 

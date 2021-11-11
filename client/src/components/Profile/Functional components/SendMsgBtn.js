@@ -13,8 +13,10 @@ const CREATE_CHAT = gql`
     }
 `
 const CHAT_EXISTS = gql`
-    query ($chatID: String!){
-        chat_exists (chatID: $chatID)
+    query ($chatID: String!, $chatID2: String!){
+        chat_exists (chatID: $chatID, chatID2: $chatID2){
+            chatID
+        }
     }
 `
 
@@ -24,17 +26,19 @@ const SendMsgBtn = ({userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const uid = ls.userID
     const chatID = userID+''+uid
-    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {chatID: chatID}})
+    const chatID2 = uid+''+userID
+    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {chatID, chatID2}}) 
     
     if(loading) return <p>loading</p>
 
     const createChat = () => {
-        if(data?.chat_exists){
+        if(data?.chat_exists?.chatID){
             console.log('exists');
         } else {
             create_chat({
                 variables: {
-                    chatID: chatID,
+                    chatID,
+                    chatID2,
                     userID: uid,
                     secondUser: userID
                 }
@@ -44,7 +48,7 @@ const SendMsgBtn = ({userID}) => {
 
 
     return (
-        <Link to={'/chat/'+chatID} className="pf-edit-follow-btn send-msg-btn" onClick={createChat}>
+        <Link to={'/chat/'+(data?.chat_exists?.chatID ? data?.chat_exists?.chatID : chatID)} className="pf-edit-follow-btn send-msg-btn" onClick={createChat}>
             <p>Send message</p> 
         </Link>
     )

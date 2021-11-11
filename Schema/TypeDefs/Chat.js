@@ -9,6 +9,7 @@ export const CreateChatType = new GraphQLObjectType({
     name: 'CreateChat',
     fields: ()=>({
         chatID: {type: GraphQLString},
+        chatID2: {type: GraphQLString},
         userID: {type: GraphQLInt},
         second_userID: {type: GraphQLInt}
     })

@@ -18,7 +18,7 @@ const Navbar = ({callback}) => {
 
     useEffect(()=>{
         callback(leftnav)
-        closeDropdown()
+        // closeDropdown()
     }, [callback, leftnav])
     
     const callbackDropdown = useCallback(val => {
@@ -27,6 +27,7 @@ const Navbar = ({callback}) => {
     
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
+        return
     }
     
     return (
@@ -41,7 +42,7 @@ const Navbar = ({callback}) => {
                 <SearchBar/>
                 <div className="tn-right">
                     {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
-                    <div style={{height:'100%'}} onClick={handleDropdown}>
+                    <div style={{height:'100%'}} onClick={handleDropdown}> 
                         <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
                     </div>
                 </div>
