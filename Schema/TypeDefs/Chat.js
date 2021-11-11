@@ -5,6 +5,14 @@ import {
  } from "graphql";
 
 
+export const ChatType = new GraphQLObjectType({
+    name: 'ChatType',
+    fields: () => ({
+        chatID:{type:GraphQLString},
+        date_created: {type:GraphQLString}
+    })
+})
+
 export const CreateChatType = new GraphQLObjectType({
     name: 'CreateChat',
     fields: ()=>({

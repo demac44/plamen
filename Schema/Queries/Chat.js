@@ -1,6 +1,7 @@
-import { GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
+import { GraphQLInt, GraphQLList, GraphQLString, subscribe} from 'graphql';
 import connection from '../../middleware/db.js'
-import { ChatHeadsType, ChatMessagesType } from '../TypeDefs/Chat.js';
+import { pubsub } from '../schema.js';
+import { ChatHeadsType, ChatMessagesType, ChatType } from '../TypeDefs/Chat.js';
 
 export const CHAT_EXISTS = {
     type: ChatHeadsType,
@@ -13,7 +14,7 @@ export const CHAT_EXISTS = {
         let sql = `SELECT chatID FROM chats WHERE chatID="${chatID}" OR chatID="${chatID2}"` 
         let result = connection.query(sql)
         return result[0]
-    }   
+    }    
 }
  
 let arr = [] 
@@ -50,4 +51,18 @@ export const GET_MESSAGES = {
         const result = connection.query(sql)
         return result
     }
+}
+
+export const GET_CHAT = {
+    type:ChatType,
+    args: {
+        chatID: {type: GraphQLString},
+    },
+    resolve(_, args){
+        const {chatID} = args
+        const sql = `SELECT * FROM chats WHERE chatID="${chatID}"`
+        const result = connection.query(sql)
+        return result[0]
+    }
+
 }

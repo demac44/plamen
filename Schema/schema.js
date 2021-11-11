@@ -15,11 +15,12 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
-import { CHAT_EXISTS, GET_CHAT_HEADS, GET_MESSAGES } from "./Queries/Chat.js";
+import { CHAT_EXISTS, GET_CHAT, GET_CHAT_HEADS, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_FEED_POSTS, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
 import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
+import { ChatMessagesType } from "./TypeDefs/Chat.js";
 
 const RootQuery = new GraphQLObjectType({
     name:'RootQuery',
@@ -35,7 +36,8 @@ const RootQuery = new GraphQLObjectType({
         get_saves: GET_SAVES,
         chat_exists: CHAT_EXISTS,
         get_chats: GET_CHAT_HEADS,
-        get_messages: GET_MESSAGES
+        get_messages: GET_MESSAGES,
+        get_chat: GET_CHAT
     }
 })    
 
@@ -60,15 +62,16 @@ const RootMutation = new GraphQLObjectType({
     }
 })
 
-// const RootSubscription = new GraphQLObjectType({
-//     name:'RootSubscription',
-//     fields: {
-//         get_messages: GET_MESSAGES
-//     }
-// })
+const RootSubscription = new GraphQLObjectType({
+    name:'RootSubscription',
+    fields: {
+        newMessage: {type: ChatMessagesType,
+        subscribe: () => pubsub.asyncIterator('NEW_MESSAGE')}
+    }
+})
 
 export const schema = new GraphQLSchema({
     query: RootQuery,
     mutation: RootMutation,
-    // subscription: RootSubscription
+    subscription: RootSubscription
 })

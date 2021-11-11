@@ -2,7 +2,6 @@ import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
 import { ChatMessagesType, CreateChatType } from "../TypeDefs/Chat.js"
 import { pubsub } from '../schema.js';
-import { GET_MESSAGES } from "../Queries/Chat.js";
 
 
 export const CREATE_CHAT = {
@@ -24,8 +23,6 @@ export const CREATE_CHAT = {
     }
 }
 
-// const NEW_MESSAGE = 'newMessage'
-
 export const SEND_MESSAGE = {
     type: ChatMessagesType,
     args: {
@@ -38,8 +35,8 @@ export const SEND_MESSAGE = {
         const {chatID, userID, msg_text, url} = args
         const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url)
                      VALUES (null, "${chatID}", ${userID}, null, "${msg_text}", "${url}")`
-        connection.query(sql)
-        // pubsub.publish(NEW_MESSAGE, {newMessage: args})
+        connection.query(sql) 
+        pubsub.publish('NEW_MESSAGE', {newMessage: args}) 
         return args
     }
 }
