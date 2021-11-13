@@ -30,7 +30,7 @@ const AllChats = () => {
 
     return (
         <div className='all-chats-box'>
-            {data.get_chats.map(chat => <ChatUserBox data={chat} key={chat.chatID}/>)}
+            {data?.get_chats?.map(chat => (chat.msg_text!=='' && chat.mid!=='') && <ChatUserBox data={chat} key={chat.chatID}/>)}
         </div>
     )
 }

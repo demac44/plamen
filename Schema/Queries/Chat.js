@@ -25,12 +25,16 @@ export const GET_CHAT_HEADS = {
     resolve(parent, args){
         const {userID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, msg_text, messages.userID as mid FROM users 
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID FROM users 
         JOIN chats ON IF (chats.user1_ID=${userID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
-        JOIN messages ON messages.chatID=chats.chatID
-        WHERE chats.user1_ID=${userID} OR chats.user2_ID=${userID}
-        ORDER BY time_sent DESC LIMIT 1`  
+        WHERE chats.user1_ID=${userID} OR chats.user2_ID=${userID}`
         const result = connection.query(sql)
+        result.forEach(res => {
+            const sql2 = `SELECT msg_text, userID as mid FROM messages WHERE chatID=${res.chatID} ORDER BY time_sent DESC LIMIT 1`
+            const msg = connection.query(sql2)
+            msg[0]?.msg_text ? (res.msg_text = msg[0].msg_text) : (res.msg_text = '')
+            msg[0]?.mid ? (res.mid = msg[0].mid) : (res.msg_text = '')
+        })
         return result    
     }  
   
@@ -62,4 +66,3 @@ export const GET_CHAT = {
     }
 
 }
-

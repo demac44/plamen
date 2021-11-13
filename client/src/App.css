@@ -1,5 +1,11 @@
 /* LOGIN AND REGISTER USER FORMS */
 
+.wrapper{
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
 .entry-wrapper{
     width: 100vw;
     height: 100vh;
@@ -171,9 +177,8 @@
 }
 .user-avatar{
     border-radius: 50%;
-    background: linear-gradient(to bottom, #ffd900, #ff5100);
     overflow: hidden;
-    border: 1px solid #ffbb00;
+    border: 1px solid #584343;
     cursor: pointer;
 }
 .tn-dropdown-menu{
@@ -262,6 +267,7 @@
     border-radius: 10px;
     background-color: rgb(27, 27, 27);
     border: 1px solid #ffbb00;
+    z-index: 100000000;
 }
 .ln-list a li, .tn-dropdown-menu a li{
     width: 100%;
@@ -811,7 +817,7 @@
     background-color: #3f3f3f;
 }
 .msg-input-box{
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     display: flex;
@@ -879,10 +885,45 @@
     color: #1f1f1f;
     font-size: 18px;
 }
-
-
-
-
+.chat-bar{
+    position: relative;
+    position: sticky;
+    top: 60px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    background-color: #1f1f1f;
+    padding: 5px;
+    z-index: 100000;
+}
+.chat-user-info{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+.chat-menu{
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #161616;
+}
+.chat-menu li{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    border-bottom: 1px solid #ffbb00;
+    cursor: pointer;
+}
+.chat-menu li:hover{
+    background-color: #4f4f4f;
+}
 
 /* MEDIA QUERIES */
 

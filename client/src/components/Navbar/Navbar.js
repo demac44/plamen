@@ -7,6 +7,8 @@ import Logo from '../UI/Logo'
 import Dropdown from './Dropdown'
 import SearchBar from './SearchBar'
 
+import {Link} from 'react-router-dom'
+
 const Navbar = ({callback}) => {
     let ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
@@ -18,7 +20,7 @@ const Navbar = ({callback}) => {
 
     useEffect(()=>{
         callback(leftnav)
-        // closeDropdown()
+        closeDropdown()
     }, [callback, leftnav])
     
     const callbackDropdown = useCallback(val => {
@@ -41,10 +43,13 @@ const Navbar = ({callback}) => {
                 </div>
                 <SearchBar/>
                 <div className="tn-right">
-                    {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
-                    <div style={{height:'100%'}} onClick={handleDropdown}> 
+                    <Link to='/chats'>
+                        <i className="fas fa-inbox" style={styles.inboxBtn}></i>
+                    </Link>
+                    <div style={styles.avatar} onClick={handleDropdown}> 
                         <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
                     </div>
+                    {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
                 </div>
             </div>
         </>
@@ -52,3 +57,16 @@ const Navbar = ({callback}) => {
 }
 
 export default Navbar
+
+
+const styles = {
+    inboxBtn: {
+        fontSize: '30px',
+        color:'#ffbb00',
+        marginRight: '20px',
+        cursor:'pointer'
+    },
+    avatar: {
+        height:'100%'
+    }
+}

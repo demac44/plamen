@@ -30,8 +30,8 @@ const server = new ApolloServer({
             return {
                 async drainServer(){
                     subscriptionServer.close()
-                }
-            }
+                } 
+            } 
         }
     }]
 })

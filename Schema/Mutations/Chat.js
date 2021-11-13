@@ -14,13 +14,25 @@ export const CREATE_CHAT = {
     resolve(parent, args) {
         let {user1, user2, chatID} = args
         const sql = `INSERT INTO chats (chatID, user1_ID, user2_ID, date_created)
-                        VALUES (null, ${user1}, ${user2}, null)`
+        VALUES (null, ${user1}, ${user2}, null)`
         const res = connection.query(sql)
         args.chatID=res.insertId
         return args
     }
 }
 
+export const DELETE_CHAT = {
+    type: CreateChatType,
+    args:{
+        chatID:{type:GraphQLInt}
+    },
+    resolve(parent , args){
+        const {chatID} = args
+        const sql = `DELETE FROM chats WHERE chatID=${chatID}`    
+        connection.query(sql)
+        return args
+    }
+}
 export const SEND_MESSAGE = {
     type: ChatMessagesType,
     args: {

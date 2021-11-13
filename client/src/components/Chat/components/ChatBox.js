@@ -5,11 +5,13 @@ import Message from './Message'
 
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import ChatBar from './ChatBar'
  
 
 const GET_MESSAGES = gql`
     query ($chatID: Int!){
         get_messages (chatID: $chatID){
+            chatID
             msgID
             msg_text
             userID
@@ -22,6 +24,7 @@ const GET_MESSAGES = gql`
 const NEW_MESSAGE = gql`
     subscription {
         newMessage {
+            chatID
             msgID
             msg_text
             userID
@@ -44,11 +47,12 @@ const ChatBox = ({chatid}) => {
                 if (!subscriptionData?.data) return prev;
                 const newMsg = subscriptionData.data.newMessage;
                 
+                if (newMsg.chatID === parseInt(chatid)){
                 return Object.assign({}, prev, {
                     get_messages: [...prev.get_messages, newMsg] 
                 });
             }
-        });
+        }});
     }
 
     const handleScroll = () => {
@@ -72,6 +76,7 @@ const ChatBox = ({chatid}) => {
 
     return (
         <div className='chat-box'> 
+            <ChatBar chatid={chatid}/>
             <div className='chat-messages'>
                 <div className='chat-date-created'><p>This chat started on {dateCreated}</p></div>
                 {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID}/>)}
