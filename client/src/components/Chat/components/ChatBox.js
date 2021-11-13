@@ -5,16 +5,16 @@ import Message from './Message'
 
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
+ 
 
 const GET_MESSAGES = gql`
-    query ($chatID: String!){
+    query ($chatID: Int!){
         get_messages (chatID: $chatID){
             msgID
             msg_text
             userID
         }
-        get_chat(chatID: $chatID){
+        get_chat (chatID: $chatID){
             date_created
         }
     }
@@ -33,7 +33,7 @@ const NEW_MESSAGE = gql`
 const ChatBox = ({chatid}) => {
     const [dateCreated, setDateCreated] = useState('') 
     const {data, loading, subscribeToMore} = useQuery(GET_MESSAGES, {
-        variables: {chatID: chatid},
+        variables: {chatID: parseInt(chatid)},
     })
 
 
@@ -64,15 +64,11 @@ const ChatBox = ({chatid}) => {
     useEffect(()=>{
         let date = Date.parse(data?.get_chat?.date_created)  
         date && (date = new Date(date).toDateString())  
-        console.log(date);
         setDateCreated(date)
         handleScroll()   
     }, [data])
       
     if(loading) return <p>loading</p>
-
-
-    console.log(data);
 
     return (
         <div className='chat-box'> 

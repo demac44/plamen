@@ -8,14 +8,17 @@ const GET_CHATS = gql`
     query ($userID: Int!){
         get_chats(userID: $userID){
             chatID
+            username
             first_name
             last_name
             profile_picture
             userID
+            msg_text
+            mid
         }
     }
 `
-
+  
 const AllChats = () => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const {data, loading} = useQuery(GET_CHATS, {

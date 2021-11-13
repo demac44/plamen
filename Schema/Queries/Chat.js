@@ -6,18 +6,16 @@ import { ChatHeadsType, ChatMessagesType, ChatType } from '../TypeDefs/Chat.js';
 export const CHAT_EXISTS = {
     type: ChatHeadsType,
     args: {
-        chatID: {type: GraphQLString},
-        chatID2: {type: GraphQLString}
+        user1: {type: GraphQLInt},
+        user2: {type: GraphQLInt}
     },    
     resolve(parent, args) {
-        const {chatID, chatID2} = args
-        let sql = `SELECT chatID FROM chats WHERE chatID="${chatID}" OR chatID="${chatID2}"` 
+        const {user1, user2} = args
+        let sql = `SELECT * FROM chats WHERE user1_ID=${user1} AND user2_ID=${user2} OR user1_ID=${user2} AND user2_ID=${user1}` 
         let result = connection.query(sql)
         return result[0]
     }    
 }
- 
-let arr = [] 
 
 export const GET_CHAT_HEADS = {
     type: new GraphQLList(ChatHeadsType),
@@ -26,28 +24,26 @@ export const GET_CHAT_HEADS = {
     },
     resolve(parent, args){
         const {userID} = args
-        arr = []
-        const sql = `SELECT chatID from participants WHERE userID=${userID}`
+        const sql = `
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, msg_text, messages.userID as mid FROM users 
+        JOIN chats ON IF (chats.user1_ID=${userID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
+        JOIN messages ON messages.chatID=chats.chatID
+        WHERE chats.user1_ID=${userID} OR chats.user2_ID=${userID}
+        ORDER BY time_sent DESC LIMIT 1`  
         const result = connection.query(sql)
-        result.forEach(res => {
-            let c = connection.query(`SELECT first_name, last_name, profile_picture, chatID, users.userID
-                                    FROM participants JOIN users ON participants.userID=users.userID
-                                    WHERE participants.chatID=${res.chatID} AND participants.userID NOT LIKE ${userID}`)
-            arr.push(c[0])
-        })
-        return arr
-    }
-
+        return result    
+    }  
+  
 }
-
+ 
 export const GET_MESSAGES = {
     type: new GraphQLList(ChatMessagesType),
     args: {
-        chatID: {type: GraphQLString}
+        chatID: {type: GraphQLInt}
     },
     resolve(parent, args) {
         const {chatID} = args
-        const sql = `SELECT * FROM messages WHERE chatID="${chatID}"`
+        const sql = `SELECT * FROM messages WHERE chatID=${chatID}`  
         const result = connection.query(sql)
         return result
     }
@@ -56,13 +52,14 @@ export const GET_MESSAGES = {
 export const GET_CHAT = {
     type:ChatType,
     args: {
-        chatID: {type: GraphQLString},
+        chatID: {type: GraphQLInt} 
     },
     resolve(_, args){
         const {chatID} = args
-        const sql = `SELECT * FROM chats WHERE chatID="${chatID}"`
+        const sql = `SELECT * FROM chats WHERE chatID=${chatID}`
         const result = connection.query(sql)
         return result[0]
     }
 
 }
+

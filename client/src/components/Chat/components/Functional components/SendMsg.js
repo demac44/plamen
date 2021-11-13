@@ -4,7 +4,7 @@ import { useMutation } from 'react-apollo'
 
 
 const SEND_MSG = gql`
-    mutation ($chatID: String!, $userID: Int!, $msg_text: String!, $url: String!){
+    mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String!){
         send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url){
             msgID
         }
@@ -23,7 +23,7 @@ const SendMsg = ({chatid}) => {
         send_msg({
             variables: {
                 userID: ls.userID,
-                chatID: chatid,
+                chatID: parseInt(chatid), 
                 msg_text: msg_text,
                 url: 'null'
             }

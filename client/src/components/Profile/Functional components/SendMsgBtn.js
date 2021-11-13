@@ -1,56 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import { Link } from 'react-router-dom'
-
-
 
 const CREATE_CHAT = gql`
-    mutation ($chatID: String!, $userID: Int!, $secondUser: Int!){
-        create_chat(chatID: $chatID, userID: $userID, second_userID: $secondUser){
+    mutation ($user1: Int!, $user2: Int!){
+        create_chat(user1: $user1, user2: $user2){
             chatID
         }
     }
 `
 const CHAT_EXISTS = gql`
-    query ($chatID: String!, $chatID2: String!){
-        chat_exists (chatID: $chatID, chatID2: $chatID2){
+    query ($user1:Int!,$user2:Int!){
+        chat_exists (user1:$user1, user2:$user2){ 
             chatID
         }
     }
 `
 
-
 const SendMsgBtn = ({userID}) => {
-    const [create_chat] = useMutation(CREATE_CHAT)
     const ls = JSON.parse(localStorage.getItem('user'))
-    const uid = ls.userID
-    const chatID = userID+''+uid
-    const chatID2 = uid+''+userID
-    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {chatID, chatID2}}) 
+    const [chatID, setChatID] = useState(0)
+    const [create_chat] = useMutation(CREATE_CHAT)
+    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:userID}}) 
     
     if(loading) return <p>loading</p>
 
     const createChat = () => {
         if(data?.chat_exists?.chatID){
-            console.log('exists');
+            window.location.href = '/chat/'+data.chat_exists.chatID
         } else {
             create_chat({
-                variables: {
-                    chatID,
-                    chatID2,
-                    userID: uid,
-                    secondUser: userID
+                variables: { 
+                    user1: ls.userID,
+                    user2: userID
                 }
-            })
+            }).then(res=>window.location.href = '/chat/'+res.data.create_chat.chatID)
         }
     } 
-
-
+    
     return (
-        <Link to={'/chat/'+(data?.chat_exists?.chatID ? data?.chat_exists?.chatID : chatID)} className="pf-edit-follow-btn send-msg-btn" onClick={createChat}>
+        <div className="pf-edit-follow-btn send-msg-btn" onClick={createChat}>
             <p>Send message</p> 
-        </Link>
+        </div>
     )
 }
 
