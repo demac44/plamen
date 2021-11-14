@@ -25,7 +25,7 @@ export const GET_CHAT_HEADS = {
     resolve(parent, args){
         const {userID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID FROM users 
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, date_created FROM users 
         JOIN chats ON IF (chats.user1_ID=${userID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
         WHERE chats.user1_ID=${userID} OR chats.user2_ID=${userID}`
         const result = connection.query(sql)

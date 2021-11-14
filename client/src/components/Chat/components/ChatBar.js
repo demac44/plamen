@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Avatar from '../../UI/Avatar'
 import ChatMenu from './Functional components/ChatMenu'
 
-const ChatBar = ({chatid}) => {
+const ChatBar = ({chatid, info}) => {
     const [showMenu, setShowMenu] = useState(false)
 
     const handleChatMenu = () => {
@@ -13,8 +13,8 @@ const ChatBar = ({chatid}) => {
         <>
             <div className='chat-bar'>
                 <div className='chat-user-info'>
-                    <Avatar height='100%' width='40px'/>
-                    <p>Ejjub Demir</p>
+                    <Avatar height='100%' width='40px' pfp={info.profile_picture}/>
+                    <p>{info.first_name+' '+info.last_name}</p>
                 </div>
                 <i 
                 className="fas fa-ellipsis-v fp-options-btn"

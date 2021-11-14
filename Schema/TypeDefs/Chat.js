@@ -48,6 +48,7 @@ export const ChatHeadsType = new GraphQLObjectType({
         profile_picture: {type:GraphQLString},
         userID: {type:GraphQLInt},
         msg_text: {type: GraphQLString},
-        mid: {type: GraphQLInt}
+        mid: {type: GraphQLInt},
+        date_created:{type: GraphQLString}
     })
 })

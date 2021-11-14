@@ -1,7 +1,7 @@
 import React from 'react'
 import Avatar from '../../UI/Avatar'
 
-const ChatUserBox = ({data}) => {
+const ChatListUser = ({data}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
 
     return (
@@ -19,4 +19,4 @@ const ChatUserBox = ({data}) => {
     )
 }
 
-export default ChatUserBox
+export default ChatListUser

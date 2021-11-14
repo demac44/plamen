@@ -115,7 +115,7 @@
     width: 100%;
     height: 60px;
     background-color: rgb(27, 27, 27);
-    z-index: 1000;
+    z-index: 10000001;
     padding: 5px 20px;
     display: flex;
     justify-content: space-between;
@@ -178,7 +178,7 @@
 .user-avatar{
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid #584343;
+    border: 1px solid #bb8900;
     cursor: pointer;
 }
 .tn-dropdown-menu{
@@ -201,6 +201,7 @@
     background-color: white;
     border: 1px solid #ffbb00;
     background-color: rgb(27, 27, 27);
+
 }
 .search-user-box{
     display: flex;
@@ -209,9 +210,11 @@
     width: 100%;
     padding: 2px;
     border-bottom: 1px solid #ffbb00;
+
 }
 .search-user-box p, .search-user-box h5{
     color: white;
+
 }
 .search-user-box:hover{
     background-color: #3f3f3f;
@@ -904,6 +907,9 @@
     display: flex;
     align-items: center;
     color: white;
+}
+.chat-user-info p{
+    margin-left: 10px;
 }
 .chat-menu{
     position: absolute;

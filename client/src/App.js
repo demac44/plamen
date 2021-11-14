@@ -18,12 +18,13 @@ import Profile from './routes/Profile/Profile';
 import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
-import Chat from './components/Chat/Chat';
+import ChatCont from './routes/Chat/ChatCont';
 
 import { WebSocketLink } from 'apollo-link-ws';
 
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
+import Loader from './components/UI/Loader';
 
 const httpLink = new HttpLink({
   uri:'http://localhost:5000/graphql'
@@ -83,7 +84,7 @@ function App() {
   
   return (
     <>
-    {isLoading ? <h1>loading</h1> :
+    {isLoading ? <Loader/> :
         <ApolloProvider client={client}>
           <Switch>
               {isLogged ?
@@ -96,8 +97,8 @@ function App() {
                   <Route exact path='/editprofile'><EditProfile/></Route>
                   <Route exact path='/saved'><Saved/></Route>
                   <Route exact path='/search/:query'><Search/></Route>
-                  <Route exact path='/chats'><Chat/></Route>
-                  <Route exact path='/chat/:chatid'><Chat/></Route>
+                  <Route exact path='/chats'><ChatCont/></Route>
+                  <Route exact path='/chat/:chatid'><ChatCont/></Route>
                 </>
               ) : <Redirect to='/login'/>}
           </Switch>
