@@ -5,7 +5,7 @@ const Avatar = ({height, width, pfp}) => {
 
     return (
         <div className="user-avatar flex-ctr" style={{height: height, width: width}}>
-            <img src={pfp || defaultImage} alt="avatar" className="avatar-img" style={{height:'100%' }}/> 
+            <img src={pfp || defaultImage} alt="avatar" className="avatar-img"/> 
         </div>
     )
 }

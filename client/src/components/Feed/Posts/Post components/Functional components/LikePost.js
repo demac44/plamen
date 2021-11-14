@@ -62,12 +62,13 @@ const LikePost = ({postID, likes}) => {
         }).then(()=>{
             setLiked(false)
             setCount(count-1)
-        })
+        })   
     }
     return (
         <>
             {showLikes && <ShowUsersList likes={likes} callback={callbackShowLikes}/>}
-            <i className={'fas fa-check-circle fp-like-btn '+(liked && 'like-clr')} 
+            <i className={'fas fa-heart fp-like-btn'} 
+            style={{color: liked ? '#a50202' : 'white'}}
             onClick={() => liked ? handleRemove() : handleLike()}></i> 
             <p className='like-count' style={{cursor:'pointer'}} onClick={()=>setShowLikes(true)}>{count}</p> 
         </>

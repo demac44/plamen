@@ -62,11 +62,11 @@ export default Navbar
 const styles = {
     inboxBtn: {
         fontSize: '30px',
-        color:'#ffbb00',
+        color:'white',
         marginRight: '20px',
         cursor:'pointer'
     },
     avatar: {
-        height:'100%'
+        height:'100%',
     }
 }

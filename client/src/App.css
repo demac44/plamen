@@ -114,7 +114,7 @@
     top: 0;
     width: 100%;
     height: 60px;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
     z-index: 10000001;
     padding: 5px 20px;
     display: flex;
@@ -134,12 +134,6 @@
     width: auto;
     color: white;
 }
-.logo h1{
-    background: linear-gradient(to right, #ffd900, #ff5100);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
 .tn-search-input{
     width: 100%;
     height: 80%;
@@ -148,18 +142,18 @@
     outline: none;
     padding: 5px 0;
     font-size: 15px;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
+    background-color: white;
+    border: 1px solid #ffffff;
     border-left: none;
-    color: white;
+    color: #1f1f1f;
 }
 .search-icon{
     width: 35px;
     height: 80%;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ffffff;
     border-right: none;
-    color: #ffbb00;
+    color: #111827;
     text-align: center;
     line-height: 40px;
     border-radius: 50px 0 0 50px;
@@ -178,8 +172,12 @@
 .user-avatar{
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid #bb8900;
     cursor: pointer;
+    border: 1px solid whitesmoke;
+}
+.avatar-img{
+    min-width: 100%;
+    min-height: 100%;
 }
 .tn-dropdown-menu{
     position: fixed;
@@ -199,8 +197,8 @@
     top: 55px;
     width: 100%;
     background-color: white;
-    border: 1px solid #ffbb00;
-    background-color: rgb(27, 27, 27);
+    border: 1px solid #111827;
+    background-color: white;
 
 }
 .search-user-box{
@@ -209,15 +207,13 @@
     height: 60px;
     width: 100%;
     padding: 2px;
-    border-bottom: 1px solid #ffbb00;
 
 }
 .search-user-box p, .search-user-box h5{
-    color: white;
-
+    color: #1f1f1f;
 }
 .search-user-box:hover{
-    background-color: #3f3f3f;
+    background-color: #b8b8b8;
 }
 .see-all-btn{
     width: 100%;
@@ -225,7 +221,7 @@
     text-align: center;
     cursor: pointer;
     font-weight: bold;
-    color: #ffbb00;
+    color: #111827;
 }
 .see-all-btn:hover{
     background-color: #b8b8b8;
@@ -245,13 +241,6 @@
     padding: 50px;
     text-align: center;
 }
-
-.like-clr{
-    background-color: #ffbb00;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
 /* PROFILE */
 
 .main{
@@ -259,7 +248,7 @@
     width: 100%;
     min-height: 100vh;
     display: flex;
-    padding: 120px 10%;
+    padding: 120px 100px;
 }
 .left-navbar{
     height: fit-content;
@@ -268,8 +257,7 @@
     z-index: 999;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
+    background-color: #111827;
     z-index: 100000000;
 }
 .ln-list a li, .tn-dropdown-menu a li{
@@ -277,14 +265,13 @@
     height: 50px;
     text-align: left;
     line-height: 50px;
-    color: #ffbb00;
+    color: white;
     font-size: 16px;
     padding-left: 15px;
-    border-bottom: 1px solid #ffbb00;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
 }
 .ln-list a li:hover, .tn-dropdown-menu a li:hover{
-    background-color: #3f3f3f;
+    background-color: #1c2433;
 }
 
 .profile-container{
@@ -301,11 +288,10 @@
     padding: 30px;
     display: flex;
     align-items: flex-end;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
+    background-color: #111827;
 }
 .pf-info{
-    height: 170px;
+    height: 180px;
     padding: 10px 30px;
     display: flex;
     flex-direction: column;
@@ -313,10 +299,10 @@
     color: white;
 }
 .pf-name{
-    font-size: 25px;
+    font-size: 30px;
 }
 .pf-tagname{
-    font-size: 14px;
+    font-size: 16px;
 }
 .pf-stats {
     display: flex;
@@ -333,7 +319,7 @@
 }
 .pf-stats div h6{
     font-size: 14px;
-    color: #ffbb00;
+    color: white;
 }
 .pf-stats div p{
     margin-top: 5px;
@@ -345,17 +331,16 @@
     right: 20px;
     width: 150px;
     height: 40px;
-    color: #ffbb00;
+    color: #111827;
     text-align: center;
     line-height: 40px;
     border-radius: 40px;
     font-size: 16px;
     cursor: pointer;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
+    background-color: whitesmoke;
 }
 .pf-editpf-btn:hover{
-    background-color: #cccccc;
+    background-color: #a8a8a8;
 }
 .send-msg-btn{
     right: 180px;
@@ -370,7 +355,7 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0,0.5);
-    z-index: 1000000;
+    z-index: 10000000000000;
 }
 .user-list-box{
     width: 50%;
@@ -379,17 +364,14 @@
     max-height: 60vh;
     background-color: white; 
     overflow-y: scroll;
-    background-color: #ececec;
-    background-color: rgb(27, 27, 27);
-    /* border: 1px solid #ffbb00; */
 }
 .list-type{
     width: 100%;
     font-weight: lighter;
     text-align: center;
     padding: 5px;
-    background-color: rgb(17, 17, 17);
-    color: #ffbb00;
+    background-color: #111827;
+    color: white;
 }
 .list-exit{
     position: relative;
@@ -402,7 +384,7 @@
     right: 10px;
     font-size: 30px;
     cursor: pointer;
-    color: #ffbb00;
+    color: white;
 }
 .empty-list{
     width: 100%;
@@ -425,8 +407,12 @@
     margin-left: 20px;
     align-items: flex-start !important;
 }
-.foll-user-info p{
+.user-list-box .pf-edit-follow-btn{
+    background-color: #111827;
     color: white;
+}
+.foll-user-info p{
+    color: #1f1f1f;
 }
 .foll-user-info p:nth-child(1){
     font-size: 18px;
@@ -502,7 +488,7 @@
     padding: 10px;
     box-shadow: 2px 2px 20px;
     border-radius: 10px;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
 }
 .add-np-txt{
     width: 100%;
@@ -522,10 +508,8 @@
     outline: none;
     padding: 5px;
     font-size: 16px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    border-radius: 10px;
-    background-color: rgb(27, 27, 27);
-    color: white;
+    background-color: white;
+    color: #1f1f1f;
 }
 .add-np-tbtn{
     width: 100%;
@@ -544,19 +528,19 @@
 }
 .add-np-types i{
     font-size: 30px;
-    color: #ffbb00;
+    color: whitesmoke;
     cursor: pointer;
 }    
 .add-np-types p{
     margin-left: 10px;
     font-size: 14px;
-    color: #ffb833;
+    color: whitesmoke;
 }   
 .add-np-types i:hover{ 
-    color: #f5ba6c;
+    color: #a8a8a8;
 }    
 .dropzone-box{
-    border: 2px dashed #ffbb00;
+    border: 2px dashed white;
     border-radius: 20px;
 }
 
@@ -569,7 +553,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0 15px;
-    background-color: #161616;
+    background-color: #dfdfdf;
 }
 .post{
     position: relative;
@@ -577,7 +561,6 @@
     margin-top: 40px;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
-    /* border: 1px solid #ffbb00; */
 }
 .fp-info-save{
     width: 100%;
@@ -586,9 +569,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #ffbb00;
+    border-bottom: 1px solid white;
     border-radius: 10px 10px 0 0;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
 }
 .fp-info{
     height: 100%;
@@ -602,11 +585,10 @@
     color: white;
 }
 .fp-like-btn, .fp-save-btn, .fp-options-btn{
-    color: rgb(27, 27, 27); 
+    color: white; 
     font-size: 30px;
     margin-right: 15px;
     cursor: pointer;
-    -webkit-text-stroke:1px #ffbb00;
 }
 .fp-like-btn{
     margin-left: 5px;
@@ -621,18 +603,17 @@
     right: 0;
     top: 50px;
     width: 150px;
-    border: 1px solid #ffbb00;
 }
 .fp-options-menu li{
     width: 100%;
     height: 35px;
     text-align: left;
     line-height: 35px;
-    color: white;
+    color: #1f1f1f;
     font-size: 14px;
     padding-left: 15px;
-    border-bottom: 1px solid #ffbb00;
-    background-color: rgb(27, 27, 27);
+    border-bottom: 1px solid #111827;
+    background-color: white;
     cursor: pointer;
 }
 .fp-options-menu li:hover{
@@ -645,7 +626,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
 
 }
 .feed-post-img img{
@@ -656,7 +637,8 @@
     min-height: 40px;
     padding: 10px 10px 20px 10px;
     color: white;
-    background-color: rgb(27, 27, 27);
+    background-color: white;
+    color: #1f1f1f;
 }
 
 .like-count{
@@ -673,7 +655,7 @@
     width: 100%;
     color: white;
     padding-left: 5px;
-    background-color: rgb(22,22,22);
+    background-color: #111827;
 }
 
 .fp-add-comment{
@@ -681,16 +663,16 @@
     height: 50px;
     padding: 5px;
     border-radius: 0 0 10px 10px;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
     color: white;
-    border-top: 1px solid #ffbb00;
+    border-top: 1px solid white;
 }
 .fp-add-comment input{
     width: 100%;
     height: 100%;
     border: none;
     outline: none;
-    background-color: rgb(27, 27, 27);
+    background-color: #111827;
     color: white;
     font-size: 14px;
     padding-left: 10px;
@@ -700,16 +682,16 @@
     height: 100%;
     width: 100px;
     outline: none;
+    border: none;
     color: white;
     font-size: 14px;
     cursor: pointer;
     border-radius: 30px;
-    background-color: rgb(27, 27, 27);
-    border: 1px solid #ffbb00;
-    color: #ffbb00;
+    background-color: white;
+    color: #1f1f1f;
 }
 .fp-cmt-btn:hover {
-    background-color: #3f3f3f;
+    background-color: #c2c2c2;
 }
 
 /* STORIES */
@@ -717,10 +699,10 @@
 .stories-container{
     width: 100%;
     height: 80px;
-    background-color: rgb(27, 27, 27);
+    background-color: white;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
-    border: 1px solid #ffbb00;
+    border: 2px solid #111827;
     display: flex;
     align-items: center;
     padding: 5px;
@@ -735,16 +717,16 @@
 }    
 .add-story-btn{
     height: 100%;
-    width: 70px;
+    width: 68px;
     border-radius: 50%;
-    border: 1px solid #ffbb00;
+    border: 2px solid #111827;
     cursor: pointer;
-    background-color: rgb(27, 27, 27);
+    background-color: white;
     overflow: hidden;
 }
 .add-story-btn i{
     font-size: 30px;
-    color: #ffbb00;
+    color: #111827;
 }
 
 
@@ -753,12 +735,12 @@
 .spinner-box{
     width: 100%;
     height: 100%;
-    background-color: rgb(27, 27, 27);
+    background-color: white;
 }
 .spinner{
     width:120px;height:120px;
     left:48%;top:40%;
-    border: 10px solid #ff5e00;
+    border: 10px solid #111827;
     border-top-color:transparent;
     border-bottom-color:transparent;
     border-radius:50%;
@@ -768,7 +750,7 @@
 .inner-spinner{
     width:100%;height:100%;
     left:48%;top:40%;
-    border: 10px solid #ffbb00;
+    border: 10px solid #111827;
     border-top-color:transparent;
     border-bottom-color:transparent;
     border-radius:50%;
@@ -785,9 +767,8 @@
     width: 350px;
     overflow:auto;
     height: 100vh;
-    border-right: 1px solid #ffbb00;
     z-index: 1000001;
-    background-color: #161616;
+    background-color: #182136;
 }
 .chat-user-box{
     position: relative;
@@ -795,11 +776,10 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ffbb00;
     cursor: pointer;
 }
 .chat-user-box:hover{
-    background-color: #3f3f3f;
+    background-color: #111827;
 }
 .chat-name-msg{
     height: 100%;
@@ -817,18 +797,18 @@
     width: 100%;
     height: 100vh;
     padding:60px 0 0 350px;
-    background-color: #3f3f3f;
+    background-color: white;
 }
 .msg-input-box{
     position: fixed;
     bottom: 0;
     left: 0;
     display: flex;
-    height: 60px;
-    padding: 10px 20px 10px 370px;
+    height: 50px;
+    padding: 5px 20px 5px 370px;
     width: 100%;
     z-index: 1000000;
-    background-color: #161616;
+    background-color: #111827;
 }
 .msg-input-box input{
     height: 100%;
@@ -842,7 +822,7 @@
 .chat-messages{
     width: 100%;
     height: 100%;
-    background-color: rgb(173, 160, 134);
+    background-color: white;
     overflow:auto;
     padding-bottom: 100px;
     display: flex;
@@ -851,8 +831,6 @@
 .msg-wrapper-cu, .msg-wrapper-ou{
     width: 100%;
     display: flex;
-    min-height: 50px;
-    padding: 5px;
 }
 .msg-wrapper-cu{
     justify-content: flex-end;
@@ -867,22 +845,24 @@
     margin: 0 20px;
     border-radius: 30px;
     padding: 0 10px;
+    color: white;
 }
 .msg:nth-child(1){
-    margin-top: 30px;
+    margin-top:10px;
 }
 .msg-current-user{
-    background-color: #ffbb00;
+    background-color: #182238;
 }
 .msg-other-user{
-    background-color: white;
+    background-color: #c2c2c2;
+    color: #1f1f1f;
 }
 .chat-date-created{
     width: 100%;
-    height: 70px;
-    background-color: rgb(139, 130, 109);
+    height: 50px;
+    background-color: rgb(228, 228, 228);
     text-align: center;
-    line-height: 70px;
+    line-height: 50px;
 }
 .chat-date-created p{
     color: #1f1f1f;
@@ -897,8 +877,8 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 50px;
-    background-color: #1f1f1f;
+    height: 60px;
+    background-color: #111827;
     padding: 5px;
     z-index: 100000;
 }
@@ -913,22 +893,21 @@
 }
 .chat-menu{
     position: absolute;
-    top: 50px;
+    top: 60px;
     right: 0;
     width: 250px;
     height: 100vh;
-    background-color: #161616;
+    background-color: #182136;
 }
 .chat-menu li{
     width: 100%;
     text-align: center;
     padding: 10px;
     color: white;
-    border-bottom: 1px solid #ffbb00;
     cursor: pointer;
 }
 .chat-menu li:hover{
-    background-color: #4f4f4f;
+    background-color: #111827;
 }
 
 /* MEDIA QUERIES */

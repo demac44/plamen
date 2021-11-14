@@ -20,7 +20,7 @@ const NEW_POST = gql`
 
 const AddPost = ({width, callback}) => {
     const user = JSON.parse(localStorage.getItem('user'))
-    const [err, setErr] = useState('1px solid #ffbb00')
+    const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)

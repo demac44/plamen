@@ -13,7 +13,7 @@ const ChatBar = ({chatid, info}) => {
         <>
             <div className='chat-bar'>
                 <div className='chat-user-info'>
-                    <Avatar height='100%' width='40px' pfp={info.profile_picture}/>
+                    <Avatar height='100%' width='50px' pfp={info.profile_picture}/>
                     <p>{info.first_name+' '+info.last_name}</p>
                 </div>
                 <i 

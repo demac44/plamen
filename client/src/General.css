@@ -1,10 +1,14 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
 }
 body{
     overflow-x: hidden;
+    background-color: #dfdfdf;
 }
 a{
     text-decoration: none;
@@ -38,7 +42,4 @@ li{
 .wh-100{
     width: 100vw;
     height: 100vh;
-}
-body{
-    background-color: #161616;
 }
