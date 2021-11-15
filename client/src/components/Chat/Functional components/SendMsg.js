@@ -33,11 +33,29 @@ const SendMsg = ({chatid}) => {
     }
 
     return (
-        <form className='msg-input-box' onSubmit={sendMessage}>
-            <input type='text' name='msg_text' placeholder='Send message...'></input>
-            <button type='submit' className="fp-cmt-btn">SEND</button>
-        </form>
+        <>
+            <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
+                <div>
+                    <label htmlFor='file-input'>
+                        <i className='fas fa-image' style={styles.imgIcon}></i>
+                    </label>
+                    <input type='file' id='file-input' style={{display:'none'}}></input>
+                </div>
+                <input type='text' name='msg_text' placeholder='Send message...'></input>
+                <button type='submit' className="fp-cmt-btn">SEND</button>
+            </form>
+        </>
     )
 }
 
 export default SendMsg
+
+
+const styles = {
+    imgIcon: { 
+        fontSize:'30px',
+        color:'white',
+        cursor:'pointer',
+        marginRight:'10px'
+    },
+}

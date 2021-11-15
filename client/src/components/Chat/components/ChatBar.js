@@ -13,10 +13,22 @@ const ChatBar = ({chatid, info}) => {
     return (
         <>
             <div className='chat-bar'>
-                <Link to={'/profile/'+info.userID} className='chat-user-info'>
-                    <Avatar height='100%' width='50px' pfp={info.profile_picture}/>
-                    <p>{info.first_name+' '+info.last_name}</p>
-                </Link>
+                <div className='flex-ctr'>
+                    <Link to='/chats'>
+                        <i className="fas fa-arrow-left chat-back-icon"
+                            style={{
+                                marginRight:'15px',
+                                marginLeft:'5px',
+                                fontSize:'25px',
+                                color:'white'
+                            }}
+                        ></i>
+                    </Link>
+                    <Link to={'/profile/'+info.userID} className='chat-user-info'>
+                        <Avatar height='100%' width='50px' pfp={info.profile_picture}/>
+                        <p>{info.first_name+' '+info.last_name}</p>
+                    </Link>
+                </div>
                 <i 
                 className="fas fa-ellipsis-v fp-options-btn"
                 onClick={handleChatMenu}

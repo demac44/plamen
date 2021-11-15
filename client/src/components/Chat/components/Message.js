@@ -31,7 +31,7 @@ const Message = ({msg}) => {
             onMouseLeave={()=>setDelete(false)}
         >
             {(msg.userID===ls.userID && deletei) && <i 
-                class="fas fa-trash-alt"
+                className="fas fa-trash-alt"
                 style={styles.deletebtn}
                 onClick={handleDelete}
             ></i>}

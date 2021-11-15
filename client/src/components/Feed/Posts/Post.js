@@ -21,15 +21,7 @@ const Post = ({width, post, user, comments, likes, callback}) => {
                     {comments.map(comment => <Comment comment={comment} key={comment.commentID}/>)}
                 </div>}
                 {comments.length > 1 && <p 
-                style={{
-                    padding:'5px',
-                    width:'100%', 
-                    textAlign:'center', 
-                    cursor:'pointer',
-                    backgroundColor:'rgb(22,22,22)',
-                    color: '#ffbb00',
-                    fontSize:'14px'
-                }}
+                style={styles.showMorebtn}
                 onClick={handleShowComm}
                 >{showAll ? 'Show less' : 'Show more'}</p>}
                 <AddCommLike postID={post.postID} likes={likes} callback={callback}/>
@@ -40,3 +32,14 @@ const Post = ({width, post, user, comments, likes, callback}) => {
 
 export default Post
 
+const styles = {
+    showMorebtn: {
+        padding:'5px',
+        width:'100%', 
+        textAlign:'center', 
+        cursor:'pointer',
+        backgroundColor:'#171f31',
+        color: 'white',
+        fontSize:'14px'
+    }
+}
