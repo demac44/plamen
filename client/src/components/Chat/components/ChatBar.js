@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Avatar from '../../UI/Avatar'
-import ChatMenu from './Functional components/ChatMenu'
+import ChatMenu from '../Functional components/ChatMenu'
 
 const ChatBar = ({chatid, info}) => {
     const [showMenu, setShowMenu] = useState(false)
@@ -12,10 +13,10 @@ const ChatBar = ({chatid, info}) => {
     return (
         <>
             <div className='chat-bar'>
-                <div className='chat-user-info'>
+                <Link to={'/profile/'+info.userID} className='chat-user-info'>
                     <Avatar height='100%' width='50px' pfp={info.profile_picture}/>
                     <p>{info.first_name+' '+info.last_name}</p>
-                </div>
+                </Link>
                 <i 
                 className="fas fa-ellipsis-v fp-options-btn"
                 onClick={handleChatMenu}

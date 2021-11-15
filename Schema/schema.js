@@ -6,7 +6,7 @@ import { PubSub } from 'graphql-subscriptions';
 
 export const pubsub = new PubSub();
 
-import { CREATE_CHAT, DELETE_CHAT, SEND_MESSAGE } from "./Mutations/Chat.js";
+import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
@@ -59,7 +59,8 @@ const RootMutation = new GraphQLObjectType({
         create_story: CREATE_STORY,
         create_chat: CREATE_CHAT,
         send_message: SEND_MESSAGE,
-        delete_chat: DELETE_CHAT
+        delete_chat: DELETE_CHAT,
+        delete_message: DELETE_MESSAGE
     }
 })
 

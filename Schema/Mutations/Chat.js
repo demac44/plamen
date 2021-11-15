@@ -50,3 +50,17 @@ export const SEND_MESSAGE = {
         return args
     }
 }
+
+
+export const DELETE_MESSAGE = {
+    type:ChatMessagesType,
+    args: {
+        msgID: {type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {msgID} = args
+        const sql = `DELETE FROM messages WHERE msgID=${msgID}`
+        connection.query(sql)
+        return args
+    }
+}

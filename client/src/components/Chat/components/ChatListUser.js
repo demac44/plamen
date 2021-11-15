@@ -12,7 +12,7 @@ const ChatListUser = ({data}) => {
                 <p style={{fontSize:'12px'}}>{
                     (data?.mid===ls.userID ? 
                         'You: ' :
-                        data.username+': ')+data?.msg_text
+                        data.username+': ')+(data?.msg_text.length>35 ? data?.msg_text.slice(0,35)+'...' : data?.msg_text)
                     }</p>
             </div>  
         </a>

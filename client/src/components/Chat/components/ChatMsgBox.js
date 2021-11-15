@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import SendMsg from './Functional components/SendMsg'
+import SendMsg from '../Functional components/SendMsg'
 import Message from './Message'
 
 
@@ -47,7 +47,7 @@ const ChatMsgBox = ({chatid, info}) => {
                 
                 if (newMsg.chatID === parseInt(chatid)){
                 return Object.assign({}, prev, {
-                    get_messages: [...prev.get_messages, newMsg] 
+                    get_messages: [...prev.get_messages, newMsg]
                 });
             }
         }});
@@ -61,7 +61,6 @@ const ChatMsgBox = ({chatid, info}) => {
     useLayoutEffect(()=>{ 
         subscribeNewMessage()
     }, [])           
-    
     
     useEffect(()=>{
         let date = Date.parse(info.date_created)  

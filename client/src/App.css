@@ -834,6 +834,7 @@
 }
 .msg-wrapper-cu{
     justify-content: flex-end;
+    align-items: center;
 }
 .msg-wrapper-ou{
     justify-content: flex-start;
@@ -841,14 +842,14 @@
 .msg{
     width: fit-content;
     min-height: 40px;
+    max-width: 60%;
     height: auto;
     margin: 0 20px;
     border-radius: 30px;
-    padding: 0 10px;
+    padding: 10px 15px;
     color: white;
-}
-.msg:nth-child(1){
-    margin-top:10px;
+    text-align: justify;
+    margin-top: 10px;
 }
 .msg-current-user{
     background-color: #182238;

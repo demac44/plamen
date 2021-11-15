@@ -4,7 +4,8 @@ import ChatListUser from './ChatListUser'
 const ChatList = ({data}) => {
     return (
         <div className='all-chats-box'>
-            {data.get_chats.map(chat => (chat.msg_text!=='' && chat.mid!=='') && <ChatListUser data={chat} key={chat.chatID}/>)}
+            {data.get_chats.map(chat => (chat.msg_text!=='' && chat.mid!=='') && 
+            <ChatListUser data={chat} key={chat.chatID}/>)}
 l        </div>
     )
 }
