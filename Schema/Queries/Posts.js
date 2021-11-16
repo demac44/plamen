@@ -10,7 +10,7 @@ export const GET_POSTS = {
     args: {
         userID: {type: GraphQLInt},
     },    
-    resolve(parent, args) {
+    resolve(_, args) {
         const {userID} = args
         const sql = `SELECT * FROM posts WHERE userID=${userID} ORDER BY date_posted DESC`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
@@ -45,7 +45,7 @@ export const GET_FEED_POSTS = {
     args: {
         userID: {type: GraphQLInt},
     },    
-    resolve(parent, args) {
+    resolve(_, args) {
         const {userID} = args
         const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE (users.userID =${userID} OR users.userID IN (SELECT followedID FROM followings WHERE followerID=${userID})) AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) ORDER BY date_posted DESC;`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
@@ -72,3 +72,32 @@ export const GET_FEED_POSTS = {
     }  
 }
 
+
+export const GET_POST = {
+    type: FeedPostType,
+    args: {
+        postID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {postID} = args
+        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE posts.postID=${postID}`
+        const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID WHERE comments.postID=${postID}`
+        const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID WHERE likes.postID=${postID}`
+        let r1 = connection.query(sql)
+        let r2 = connection.query(comm)
+        let r3 =  connection.query(like)
+        temp = []
+        r2.forEach(c => {
+            temp.push(c)
+        })
+        r1[0].comments = temp
+
+        temp = []
+        r3.forEach(l => {
+            temp.push(l)
+        })
+        r1[0].likes = temp
+        return r1[0]
+    }
+
+}

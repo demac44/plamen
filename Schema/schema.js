@@ -17,7 +17,7 @@ import { CREATE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, GET_CHAT, GET_CHAT_HEADS, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_FEED_POSTS, GET_POSTS } from "./Queries/Posts.js";
+import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
 import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
 import { ChatMessagesType } from "./TypeDefs/Chat.js";
@@ -28,6 +28,7 @@ const RootQuery = new GraphQLObjectType({
         user: GET_USER,
         users: GET_ALL_USERS,
         posts: GET_POSTS,
+        get_post: GET_POST,
         ifFollowing: IF_FOLLOWING,
         getFollowers: GET_FOLLOWERS,
         getFollowing: GET_FOLLOWING,

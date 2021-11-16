@@ -25,6 +25,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 import Loader from './components/UI/Loader';
+import Post from './routes/Post/Post';
 
 const httpLink = new HttpLink({
   uri:'http://localhost:5000/graphql'
@@ -99,6 +100,7 @@ function App() {
                   <Route exact path='/search/:query'><Search/></Route>
                   <Route exact path='/chats'><ChatCont/></Route>
                   <Route exact path='/chat/:chatid'><ChatCont/></Route>
+                  <Route exact path='/post/:postid'><Post/></Route>
                 </>
               ) : <Redirect to='/login'/>}
           </Switch>

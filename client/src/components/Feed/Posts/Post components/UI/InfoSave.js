@@ -43,7 +43,7 @@ const InfoSave = ({date, postID, user, callback}) => {
             </div>
             <div className="fp-like-save">
                 <SavePost postID={postID}/>
-                {user.currentUser && <PostOptBtn postID={postID} callback={callback}/>}
+                <PostOptBtn postID={postID} userID={user.userID} callback={callback}/>
             </div>
         </div>
     )

@@ -601,6 +601,7 @@
     right: 0;
     top: 50px;
     width: 150px;
+    border: 1px solid #1f1f1f;
 }
 .fp-options-menu li{
     width: 100%;
@@ -609,8 +610,8 @@
     line-height: 35px;
     color: #1f1f1f;
     font-size: 14px;
-    padding-left: 15px;
-    border-bottom: 1px solid #111827;
+    padding-left: 10px;
+    border-bottom: 1px solid #a1a1a1;
     background-color: white;
     cursor: pointer;
 }
