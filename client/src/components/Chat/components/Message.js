@@ -36,8 +36,13 @@ const Message = ({msg}) => {
                 onClick={handleDelete}
             ></i>}
             {msg.userID===ls.userID ?
-            <p className='msg msg-current-user flex-ctr'>{deleted ? 'This message is deleted!' : msg.msg_text}</p>
-            : <p className='msg msg-other-user flex-ctr'>{msg.msg_text}</p>}
+            <p className='msg msg-current-user flex-ctr'>{deleted ? 'This message is deleted!' :
+            (msg.msg_text.slice(0,8)==='https://' ? 
+                <a href={msg.msg_text} target='_blank' style={styles.link}>{msg.msg_text}</a> : msg.msg_text)
+        }</p>
+            : <p className='msg msg-other-user flex-ctr'>{msg.msg_text.slice(0,8)==='https://' ? 
+                <a href={msg.msg_text} target='_blank'>{msg.msg_text}</a> : msg.msg_text
+        }</p>}
         </div>
     )
 }
@@ -51,5 +56,9 @@ const styles = {
         cursor:'pointer',
         color:'#1f1f1f',
         marginTop:'10px'
+    },
+    link:{
+        color:'white',
+        textDecoration:'underline'
     }
 }

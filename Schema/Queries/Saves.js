@@ -26,7 +26,7 @@ export const GET_SAVES = {
     },
     resolve(parent, args){
         const {userID} = args
-        let sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID}`
+        let sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC;`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
         const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
         let r1 = connection.query(sql)

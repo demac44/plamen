@@ -27,7 +27,8 @@ const Chat = () => {
     const {chatid} = useParams()
 
     const {data, loading, error} = useQuery(GET_CHATS, {
-        variables:{userID: ls.userID}
+        variables:{userID: ls.userID},
+        pollInterval:10000
     })
 
     if(loading) return <div className='wh-100'><Loader/></div>

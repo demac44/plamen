@@ -28,7 +28,7 @@ const Navbar = ({callback}) => {
     }, [setDropdown])
     
     const closeDropdown = () => {
-        document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
+        // document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
         return
     }
     
@@ -41,7 +41,7 @@ const Navbar = ({callback}) => {
                 <div className="tn-left">
                     <Logo/>
                 </div>
-                <SearchBar/>
+                <SearchBar chat={false}/>
                 <div className="tn-right">
                     <Link to='/chats'>
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
@@ -19,7 +19,6 @@ const CHAT_EXISTS = gql`
 
 const SendMsgBtn = ({userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [chatID, setChatID] = useState(0)
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:userID}}) 
     

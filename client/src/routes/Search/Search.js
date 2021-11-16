@@ -62,7 +62,7 @@ const Search = () => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>
-                        <p style={{marginBottom:'40px', color:'whitesmoke'}}>Search results</p>
+                        <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
                     </div>
                 </div>
@@ -72,3 +72,16 @@ const Search = () => {
 }
 
 export default Search
+
+const styles = {
+    title:{
+        marginBottom:'20px',
+        color:'white',
+        width:'100%',
+        padding:'20px',
+        backgroundColor:'#111827',
+        textAlign:'center',
+        borderRadius:'10px'
+
+    }
+}

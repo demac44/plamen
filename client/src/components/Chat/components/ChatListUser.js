@@ -8,7 +8,7 @@ const ChatListUser = ({data}) => {
         <a href={'/chat/'+data.chatID} className='chat-user-box'>
             <Avatar height='100%' width='50px' pfp={data.profile_picture}/>
             <div className='chat-name-msg'>
-                <p>{data.first_name+' '+data.last_name}</p>
+                <p>{data.userID===ls.userID ? 'Me' : data.first_name+' '+data.last_name}</p>
                 <p style={{fontSize:'12px'}}>{
                     (data?.mid===ls.userID ? 
                         'You: ' :
