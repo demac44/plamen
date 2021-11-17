@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import ReportBox from '../../../../UI/ReportBox'
 
 const DELETE_POST = gql`
     mutation delete_post($postID: Int!){
@@ -17,6 +18,7 @@ const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
     const [delete_post] = useMutation(DELETE_POST)
     const [deleted, setDeleted] = useState(false)
     const [copied, setCopied] = useState(false)
+    const [reportMenu, setReportMenu] = useState(false)
 
     useEffect(()=>{
         callback(deleted)
@@ -41,6 +43,12 @@ const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
         }, 2000)
     }
 
+    const closeReportCallback = useCallback(val => {
+        setReportMenu(val)
+    }, [setReportMenu])
+
+
+
     return (
         <>
             <div className='fp-options-menu'>
@@ -48,10 +56,11 @@ const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
                     <li onClick={copyToClipboard}><i className='fas fa-share'></i> Share</li>
                     {ls.userID===userID && <li onClick={handlePostDelete}>
                         <i className='fas fa-trash-alt'></i> Delete</li>}
-                    <li><i className="fas fa-flag"></i> Report</li>
+                    {ls.userID!==userID && <li onClick={()=>setReportMenu(true)}><i className="fas fa-flag"></i> Report</li>}
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}
+            {reportMenu && <ReportBox postID={postID} userID={userID} callback={closeReportCallback}/>}
         </>
     )
 }
