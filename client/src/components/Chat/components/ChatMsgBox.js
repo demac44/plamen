@@ -38,41 +38,41 @@ const ChatMsgBox = ({chatid, info}) => {
     })
 
 
-    const subscribeNewMessage = () => {
-        return subscribeToMore && subscribeToMore({
-            document: NEW_MESSAGE,
-            updateQuery: (prev, { subscriptionData }) => {
-                if (!subscriptionData?.data) return prev;
-                const newMsg = subscriptionData.data.newMessage;
-                
-                if (newMsg.chatID === parseInt(chatid)){
-                return Object.assign({}, prev, {
-                    get_messages: [...prev.get_messages, newMsg]
-                });
-            }
-        }});
-    }
-
+    
     const handleScroll = () => {
         let a = document.querySelector('.chat-messages')
         a && (a.scrollTop = a?.scrollHeight)  
     }     
-
+    
     useLayoutEffect(()=>{ 
+        const subscribeNewMessage = () => {
+            return subscribeToMore && subscribeToMore({
+                document: NEW_MESSAGE,
+                updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData?.data) return prev;
+                    const newMsg = subscriptionData.data.newMessage;
+                    
+                    if (newMsg.chatID === parseInt(chatid)){
+                    return Object.assign({}, prev, {
+                        get_messages: [...prev.get_messages, newMsg]
+                    });
+                }
+            }});
+        }
         subscribeNewMessage()
-    }, [])           
+    }, [chatid, subscribeToMore])           
     
     useEffect(()=>{
         let date = Date.parse(info.date_created)  
         date && (date = new Date(date).toDateString())  
         setDateCreated(date)
         handleScroll()   
-    }, [data])
+    }, [data, info?.date_created])
       
     if(error) console.log(error); 
 
     return (
-        <div className='chat-box'> 
+        <div className='chat-msg-box'> 
         {loading ? <div style={{width:'100%', height:'100%'}}><Loader/></div> :
         <>
             <ChatBar chatid={chatid} info={info}/>

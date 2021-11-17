@@ -9,7 +9,7 @@ import SearchBar from './SearchBar'
 
 import {Link} from 'react-router-dom'
 
-const Navbar = ({callback}) => {
+const Navbar = ({callback, isLogged}) => {
     let ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
     const [leftnav, setLeftNav] = useState(false)
@@ -28,7 +28,7 @@ const Navbar = ({callback}) => {
     }, [setDropdown])
     
     const closeDropdown = () => {
-        // document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
+        document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
         return
     }
     
@@ -41,8 +41,10 @@ const Navbar = ({callback}) => {
                 <div className="tn-left">
                     <Logo/>
                 </div>
-                <SearchBar chat={false}/>
+                <SearchBar chat={false} isLogged={isLogged}/>
                 <div className="tn-right">
+                {isLogged ?
+                <>
                     <Link to='/chats'>
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>
                     </Link>
@@ -50,6 +52,8 @@ const Navbar = ({callback}) => {
                         <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
                     </div>
                     {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
+                </>
+                    : <Link to='/login'><button style={styles.loginBtn} className='btn'>LOGIN</button></Link>}
                 </div>
             </div>
         </>
@@ -68,5 +72,12 @@ const styles = {
     },
     avatar: {
         height:'100%',
+    },
+    loginBtn: {
+        backgroundColor:'#ffbb00',
+        padding:'10px 20px',
+        color:'#1f1f1f',
+        fontSize:'16px',
+        fontWeight:'bold'
     }
 }

@@ -41,7 +41,7 @@ const SendMsg = ({chatid}) => {
                     </label>
                     <input type='file' id='file-input' style={{display:'none'}}></input>
                 </div>
-                <input type='text' name='msg_text' placeholder='Send message...'></input>
+                <textarea name='msg_text' placeholder='Send message...'></textarea>
                 <button type='submit' className="fp-cmt-btn">SEND</button>
             </form>
         </>

@@ -8,9 +8,9 @@ export const FOLLOW_USER = {
         followerID: {type: GraphQLInt},
         followedID:{type:GraphQLInt},
     },
-    resolve(parent, args) {
+    resolve(_, args) {
         const {followerID, followedID} = args
-        let sql = `INSERT INTO followings (followerID, followedID)
+        const sql = `INSERT INTO followings (followerID, followedID)
                     VALUES (${followerID}, ${followedID})`
         connection.query(sql)
         return args
@@ -23,9 +23,9 @@ export const UNFOLLOW_USER = {
         followerID: {type: GraphQLInt},
         followedID:{type:GraphQLInt},
     },
-    resolve(parent, args) {
+    resolve(_, args) {
         const {followerID, followedID} = args
-        let sql = `DELETE FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
+        const sql = `DELETE FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
         connection.query(sql)
         return args
     }

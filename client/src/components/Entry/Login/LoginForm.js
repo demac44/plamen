@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import ErrorMsg from '../ErrorMsg';
 
-const LoginForm = () => {
+const LoginForm = ({popup}) => {
     let password, username;
     const [errorMsg, setErrorMsg] = useState('')
 
@@ -32,7 +32,7 @@ const LoginForm = () => {
                 else {
                     localStorage.setItem('token', res?.data.token)
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
-                    window.location.href = '/myprofile'}
+                    popup ? window.location.reload() : window.location.href = '/myprofile'}
             })
         } catch (error) {
             console.log(error);

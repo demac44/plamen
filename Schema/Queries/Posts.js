@@ -37,9 +37,6 @@ export const GET_POSTS = {
         return r1
     }    
 }    
-
-
-
 export const GET_FEED_POSTS = {
     type: new GraphQLList(FeedPostType),
     args: {
@@ -71,8 +68,6 @@ export const GET_FEED_POSTS = {
         return r1
     }  
 }
-
-
 export const GET_POST = {
     type: FeedPostType,
     args: {

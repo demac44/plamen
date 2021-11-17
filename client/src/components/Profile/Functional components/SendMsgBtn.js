@@ -4,14 +4,14 @@ import { useMutation, useQuery } from 'react-apollo'
 
 const CREATE_CHAT = gql`
     mutation ($user1: Int!, $user2: Int!){
-        create_chat(user1: $user1, user2: $user2){
+        create_chat(user1_ID: $user1, user2_ID: $user2){
             chatID
         }
     }
 `
 const CHAT_EXISTS = gql`
     query ($user1:Int!,$user2:Int!){
-        chat_exists (user1:$user1, user2:$user2){ 
+        chat_exists (user1_ID:$user1, user2_ID:$user2){ 
             chatID
         }
     }

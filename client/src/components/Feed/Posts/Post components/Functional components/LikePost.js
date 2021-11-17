@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback} from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
+import LoginPopUp from '../../../../Entry/Login/LoginPopUp.js'
 
 const LIKE_POST = gql`
     mutation like_post($postID: Int!, $userID: Int!){
@@ -18,23 +19,23 @@ const REMOVE_LIKE = gql`
     }
 `
 
-const LikePost = ({postID, likes}) => {
+const LikePost = ({postID, likes, isLogged}) => {
     const [liked, setLiked] = useState(false)
     const [count, setCount] = useState(likes.length)
     const [showLikes, setShowLikes] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
     const [like_post] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
+    const [loginPopUp, setLoginPopUp] = useState(false)
 
     useEffect(()=>{
         for (let el of likes){
-            if (el.userID === user.userID){
+            if (el.userID === user?.userID){
                 setLiked(true)
                 break
             }
         }
-    },[likes, user.userID])
-
+    },[likes, user?.userID])
 
     const callbackShowLikes = useCallback(val => {
         setShowLikes(val)
@@ -42,27 +43,31 @@ const LikePost = ({postID, likes}) => {
 
     
     const handleLike = () => {
+        isLogged ?
         like_post({
             variables: {
                 postID: postID,
-                userID: user.userID
+                userID: user?.userID
             }
         }).then(() => {
             setLiked(true)
             setCount(count+1)
         })
+        : setLoginPopUp(true)
     }
 
     const handleRemove = () => {
+        isLogged ?
         remove_like({
             variables: {
                 postID: postID,
-                userID: user.userID
+                userID: user?.userID
             }
         }).then(()=>{
             setLiked(false)
             setCount(count-1)
         })   
+        : setLoginPopUp(true)
     }
     return (
         <>
@@ -71,6 +76,7 @@ const LikePost = ({postID, likes}) => {
             style={{color: liked ? '#a50202' : 'white'}}
             onClick={() => liked ? handleRemove() : handleLike()}></i> 
             <p className='like-count' style={{cursor:'pointer'}} onClick={()=>setShowLikes(true)}>{count}</p> 
+            {loginPopUp && <LoginPopUp/>}
         </>
     )
 }

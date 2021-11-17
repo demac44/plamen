@@ -41,7 +41,7 @@ const GET_POST = gql`
     }
 `
 
-const Post = () => {
+const Post = ({isLogged}) => {
     const {postid} = useParams()
     const [leftnav, setLeftnav] = useState(false)
     const [updated, setUpdated] = useState(false)
@@ -62,7 +62,7 @@ const Post = () => {
             refetch()
             setUpdated(false)
         }
-    }, [updated])
+    }, [updated, refetch])
     
 
     if(loading) return <div className='wh-100'><Loader/></div>
@@ -71,10 +71,10 @@ const Post = () => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'> 
-                <div className='main' >
-                    <LeftNavbar show={leftnav}/>
+                <div className={isLogged ? 'main' : 'main flex-ctr'} >
+                    {isLogged && <LeftNavbar show={leftnav}/>}
                     <div className='posts-container-feed'>
                     <h2 style={styles.title}>Post by @{post.username}</h2>
                     <PostComp post={{

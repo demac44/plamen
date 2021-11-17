@@ -41,7 +41,7 @@ const GET_SAVED = gql`
 `
 
 
-const Saved = () => {
+const Saved = ({isLogged}) => {
     const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
     const [leftnav, setLeftnav] = useState(false)
@@ -72,7 +72,7 @@ const Saved = () => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>

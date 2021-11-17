@@ -6,14 +6,14 @@ import { useMutation, useQuery } from 'react-apollo'
 
 const CREATE_CHAT = gql`
     mutation ($user1: Int!, $user2: Int!){
-        create_chat(user1: $user1, user2: $user2){
+        create_chat(user1_ID: $user1, user2_ID: $user2){
             chatID
         }
     }
 `
 const CHAT_EXISTS = gql`
     query ($user1:Int!,$user2:Int!){
-        chat_exists (user1:$user1, user2:$user2){ 
+        chat_exists (user1_ID: $user1, user2_ID: $user2){ 
             chatID
         }
     }
@@ -23,13 +23,19 @@ const UserSearchBar = ({user, chat}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:user.userID}}) 
-    
-    if(loading) return <p>loading</p>
+
+    if(loading) return (
+        <div style={styles.loading}>
+            <div style={styles.loadAvatar}></div>
+            <div>
+                <div style={styles.loadName}></div>
+                <div style={styles.loadUsername}></div>
+            </div>
+        </div>)
 
     const createChat = () => {
         if(data?.chat_exists?.chatID){
             window.location.href = '/chat/'+data.chat_exists.chatID
-            console.log('da');
         } else {
             create_chat({
                 variables: { 
@@ -38,10 +44,8 @@ const UserSearchBar = ({user, chat}) => {
                 }
             }).then(res=>{
                 window.location.href = '/chat/'+res.data.create_chat.chatID
-                console.log('created');
             })
         }
-        console.log('asda');
     } 
     return (
         <>            
@@ -65,3 +69,35 @@ const UserSearchBar = ({user, chat}) => {
 }
 
 export default UserSearchBar
+
+
+const styles = {
+    loading:{
+        width:'100%',
+        height:'60px',
+        display:'flex',
+        padding:'5px'
+    },
+    loadAvatar:{
+        height:'95%',
+        width:'50px',
+        borderRadius:'50%',
+        backgroundColor:'#7f7f7f'
+    },
+    loadName:{
+        width:'100px',
+        height:'10px',
+        borderRadius:'10px',
+        backgroundColor:'#7f7f7f',
+        marginLeft:'10px',
+        marginTop:'5px'
+    },
+    loadUsername:{
+        width:'70px',
+        height:'10px',
+        borderRadius:'10px',
+        backgroundColor:'#7f7f7f',
+        marginLeft:'10px',
+        marginTop:'15px'
+    }
+}

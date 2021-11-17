@@ -6,7 +6,7 @@ import LeftNavbar from '../../components/UI/LeftNavbar'
 import Chat from './Chat'
  
  
-const ChatCont = () => {
+const ChatCont = (isLogged) => {
     const [leftnav, setLeftnav] = useState(false)
     const [displayLeftNav, setDisplayLeftNav] = useState(false)
 
@@ -20,7 +20,7 @@ const ChatCont = () => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'>
                 <div className='main-chat'>
                     {displayLeftNav && <LeftNavbar show={leftnav}/>}

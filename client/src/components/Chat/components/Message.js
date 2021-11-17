@@ -14,12 +14,12 @@ const DELETE_MESSAGE = gql`
 
 const Message = ({msg}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [deletei, setDelete] = useState(false)
+    const [deleteIcon, setDeleteIcon] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [delete_msg] = useMutation(DELETE_MESSAGE)
 
-    const handleDelete = () => {
-        delete_msg({
+    const handleDelete = async () => {
+        await delete_msg({
             variables:{msgID: msg.msgID}
         }).then(()=>setDeleted(true))
     }
@@ -27,22 +27,27 @@ const Message = ({msg}) => {
 
     return (
         <div className={msg.userID===ls.userID ? 'msg-wrapper-cu' : 'msg-wrapper-ou'}
-            onMouseOver={()=>setDelete(true)}
-            onMouseLeave={()=>setDelete(false)}
+            onMouseOver={()=>setDeleteIcon(true)}
+            onMouseLeave={()=>setDeleteIcon(false)}
+            onClick={()=>setDeleteIcon(!deleteIcon)}
         >
-            {(msg.userID===ls.userID && deletei) && <i 
+            {(msg.userID===ls.userID && deleteIcon) && <i 
                 className="fas fa-trash-alt"
                 style={styles.deletebtn}
                 onClick={handleDelete}
             ></i>}
             {msg.userID===ls.userID ?
-            <p className='msg msg-current-user flex-ctr'>{deleted ? 'This message is deleted!' :
-            (msg.msg_text.slice(0,8)==='https://' ? 
-                <a href={msg.msg_text} target='_blank' style={styles.link}>{msg.msg_text}</a> : msg.msg_text)
-        }</p>
-            : <p className='msg msg-other-user flex-ctr'>{msg.msg_text.slice(0,8)==='https://' ? 
-                <a href={msg.msg_text} target='_blank'>{msg.msg_text}</a> : msg.msg_text
-        }</p>}
+            <div className='msg msg-current-user'>
+                <p>{deleted ? 'This message is deleted!' :
+                (msg.msg_text.slice(0,8)==='https://' ? 
+                    <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text)
+            }</p>
+            </div>
+            : <div className='msg msg-other-user flex-ctr'>
+                    <p>{msg.msg_text.slice(0,8)==='https://' ? 
+                        <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text
+                }</p>
+            </div>}
         </div>
     )
 }
@@ -55,7 +60,6 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'#1f1f1f',
-        marginTop:'10px'
     },
     link:{
         color:'white',

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import UserBox from '../../../../UI/Users list/UserBox'
 
 const DELETE_POST = gql`
     mutation delete_post($postID: Int!){
@@ -13,7 +12,7 @@ const DELETE_POST = gql`
 `
 
 
-const PostOptionsMenu = ({postID, callback, userID}) => {
+const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_POST)
     const [deleted, setDeleted] = useState(false)
@@ -38,7 +37,8 @@ const PostOptionsMenu = ({postID, callback, userID}) => {
         setCopied(true)
         setTimeout(()=>{
             setCopied(false)
-        }, 3000)
+            menuCallback(false)
+        }, 2000)
     }
 
     return (

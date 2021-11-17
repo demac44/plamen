@@ -1,33 +1,32 @@
-import { GraphQLInt, GraphQLList, GraphQLString, subscribe} from 'graphql';
+import { GraphQLInt, GraphQLList } from 'graphql';
 import connection from '../../middleware/db.js'
-import { pubsub } from '../schema.js';
-import { ChatHeadsType, ChatMessagesType, ChatType } from '../TypeDefs/Chat.js';
+import { ChatListType, ChatMessagesType, ChatType } from '../TypeDefs/Chat.js';
 
 export const CHAT_EXISTS = {
-    type: ChatHeadsType,
+    type: ChatType,
     args: {
-        user1: {type: GraphQLInt},
-        user2: {type: GraphQLInt}
+        user1_ID: {type: GraphQLInt},
+        user2_ID: {type: GraphQLInt}
     },    
-    resolve(parent, args) {
-        const {user1, user2} = args
-        let sql = `SELECT * FROM chats WHERE user1_ID=${user1} AND user2_ID=${user2} OR user1_ID=${user2} AND user2_ID=${user1}` 
+    resolve(_, args) {
+        const {user1_ID, user2_ID} = args
+        let sql = `SELECT * FROM chats WHERE user1_ID=${user1_ID} AND user2_ID=${user2_ID} OR user1_ID=${user2_ID} AND user2_ID=${user1_ID}` 
         let result = connection.query(sql)
         return result[0]
     }    
 }
 
-export const GET_CHAT_HEADS = {
-    type: new GraphQLList(ChatHeadsType),
+export const GET_CHAT_LIST = {
+    type: new GraphQLList(ChatListType),
     args:{
-        userID: {type: GraphQLInt}
+        user1_ID: {type: GraphQLInt}
     },
-    resolve(parent, args){
-        const {userID} = args
+    resolve(_, args){
+        const {user1_ID} = args
         const sql = `
         SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, date_created FROM users 
-        JOIN chats ON IF (chats.user1_ID=${userID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
-        WHERE chats.user1_ID=${userID} OR chats.user2_ID=${userID}`
+        JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
+        WHERE chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}`
         const result = connection.query(sql)
         result.forEach(res => {
             const sql2 = `SELECT msg_text, userID as mid FROM messages WHERE chatID=${res.chatID} ORDER BY time_sent DESC LIMIT 1`

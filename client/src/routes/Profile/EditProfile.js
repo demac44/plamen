@@ -10,7 +10,7 @@ import EditForm from '../../components/Profile/Functional components/Edit profil
 
 // import RegisterForm from '../../components/Entry/Register/RegisterForm.js'
 
-const EditProfile = () => {
+const EditProfile = ({isLogged}) => {
     // let fname,lname,username;
     const [pfpMenu, setPfpMenu] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
@@ -22,7 +22,7 @@ const EditProfile = () => {
 
     return (
         <>
-            <Navbar callback={()=>{return}}/>
+            <Navbar callback={()=>{return}} isLogged={isLogged}/>
             {pfpMenu && <EditPfpChoice callback={closeMenu}/>}
             <div className='wrapper'> 
                 <div className='main'>

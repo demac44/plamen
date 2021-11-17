@@ -9,7 +9,7 @@ export const ADD_COMMENT = {
         userID: {type: GraphQLInt},
         comment_text: {type: GraphQLString},
     },
-    resolve(parent, args) {
+    resolve(_, args) {
         const {userID, postID, comment_text} = args
         let sql = `INSERT INTO comments (commentID ,postID, userID, comment_text, date_commented)
                     VALUES (null,${postID} ,${userID}, "${comment_text}", null)`
@@ -19,17 +19,15 @@ export const ADD_COMMENT = {
 }
 
 
-// export const DELETE_POST = {
-//     type: PostType,
-//     args: {
-//         postID:{type: GraphQLInt}
-//     },
-//     resolve(parent, args){
-//         const {postID} = args
-//         const sql = `DELETE FROM posts WHERE postID=${postID}`
-//         connection.query(sql, (err, res)=>{
-//             if (err) console.log(err);
-//         })
-//         return args
-//     } 
-// }
+export const DELETE_COMMENT = {
+    type: CommentType,
+    args: {
+        commentID:{type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {commentID} = args
+        const sql = `DELETE FROM comments WHERE commentID=${commentID}`
+        connection.query(sql)
+        return args
+    } 
+}

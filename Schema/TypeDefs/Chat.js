@@ -1,6 +1,5 @@
 import { 
     GraphQLInt,
-    GraphQLList,
     GraphQLObjectType,
     GraphQLString,
  } from "graphql";
@@ -16,16 +15,6 @@ export const ChatType = new GraphQLObjectType({
     })
 })
 
-export const CreateChatType = new GraphQLObjectType({
-    name: 'CreateChat',
-    fields: ()=>({
-        user1: {type: GraphQLInt},
-        user2: {type: GraphQLInt},
-        chatID: {type: GraphQLInt}
-    })
-})
-
-
 export const ChatMessagesType = new GraphQLObjectType({
     name:'ChatMessages',
     fields: ()=>({
@@ -38,8 +27,8 @@ export const ChatMessagesType = new GraphQLObjectType({
     })
 })
 
-export const ChatHeadsType = new GraphQLObjectType({
-    name: 'ChatHeads',
+export const ChatListType = new GraphQLObjectType({
+    name: 'ChatList',
     fields: ()=>({
         chatID: {type: GraphQLInt},
         first_name: {type:GraphQLString},

@@ -102,14 +102,14 @@ const FETCH_INFO= gql`
     }
 ` 
     
-const Profile = ({myprofile}) => {
+const Profile = ({myprofile, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [updated, setUpdated] = useState(false)
     const [leftnav, setLeftnav] = useState(false)
     
     const {id} = useParams()
     
-    let userID = parseInt(id)
+    const userID = parseInt(id)
 
     const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
         variables: {userID: myprofile ? ls.userID : userID}
@@ -145,7 +145,7 @@ const Profile = ({myprofile}) => {
     
     return ( 
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'> 
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>

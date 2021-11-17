@@ -43,7 +43,7 @@ const FEED_POSTS = gql`
     }
 `
 
-const Feed = () => {
+const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
     const [leftnav, setLeftnav] = useState(false)
@@ -78,7 +78,7 @@ const Feed = () => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>

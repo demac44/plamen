@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import LoginPopUp from '../../../../Entry/Login/LoginPopUp'
 
 const ADD_COMMENT = gql`
     mutation ($postID: Int!, $userID: Int!, $comment_text: String!){
@@ -11,10 +12,11 @@ const ADD_COMMENT = gql`
 `
 
 
-const AddComment = ({postID, callback}) => {
+const AddComment = ({postID, callback, isLogged}) => {
     let comment_text;
     const user = JSON.parse(localStorage.getItem('user'))
     const [added, setAdded] = useState(false)
+    const [loginPopUp, setLoginPopUp] = useState(false)
 
     const [add_comment] = useMutation(ADD_COMMENT) 
 
@@ -22,12 +24,15 @@ const AddComment = ({postID, callback}) => {
         callback(added)
     },[callback, added])
 
-
     const handleAddComment = (e) => {
         e.preventDefault()
         comment_text = e.target.comment_text.value
 
-        if(comment_text.trim()===''){
+        if(!isLogged) {
+            setLoginPopUp(true)
+            return
+        }
+        else if(comment_text.trim()===''){
             console.log('empty');
         } else{
             add_comment({
@@ -44,10 +49,13 @@ const AddComment = ({postID, callback}) => {
     }
 
     return (
+        <>
         <form style={{display: 'flex', width:'100%', height:'100%'}} onSubmit={handleAddComment}>
             <input id='comment_text' name='comment_text' type="text" placeholder="Add comment..."/>
             <button className="fp-cmt-btn">POST</button>
         </form>
+        {loginPopUp && <LoginPopUp/>}
+        </>
     )
 }
 

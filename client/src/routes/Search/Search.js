@@ -21,7 +21,7 @@ const SEARCH_USERS = gql`
 }`
 
 
-const Search = () => {
+const Search = ({isLogged}) => {
     const {query} = useParams()
     const [regex, setRegex] = useState('')
     const [users, setUsers] = useState([])
@@ -57,7 +57,7 @@ const Search = () => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
             <div className='wrapper'>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>

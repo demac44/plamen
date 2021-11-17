@@ -18,7 +18,7 @@ const SearchDrop = ({data, val, chat}) => {
         )
         setUsers(arr)
     }
-
+    
     useEffect(()=>{
         setRegex(new RegExp(escape(val), 'gi'))
         setusers() 

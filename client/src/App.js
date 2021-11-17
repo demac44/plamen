@@ -4,12 +4,6 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
 import './General.css'
 
-import {InMemoryCache} from 'apollo-boost'
-import {ApolloProvider} from 'react-apollo'
-import {ApolloClient} from 'apollo-client'
-import { HttpLink } from 'apollo-link-http';
-
-
 import { authenticate } from './Redux-actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,42 +13,9 @@ import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
 import ChatCont from './routes/Chat/ChatCont';
-
-import { WebSocketLink } from 'apollo-link-ws';
-
-import { split } from 'apollo-link';
-import { getMainDefinition } from 'apollo-utilities';
 import Loader from './components/UI/Loader';
 import Post from './routes/Post/Post';
 
-const httpLink = new HttpLink({
-  uri:'http://localhost:5000/graphql'
-})
-
-const wsLink = new WebSocketLink({
-  uri: `ws://localhost:5000/graphql`,
-  options: {
-    reconnect: true
-  }
-});
-
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
-);
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  credentials:"include",
-  link
-})
 
 
 function App() {
@@ -81,30 +42,25 @@ function App() {
     }
     setIsLoading(false)
   },[isLogged, user, uid, dispatch, token])
-  
+
   
   return (
     <>
     {isLoading ? <Loader/> :
-        <ApolloProvider client={client}>
           <Switch>
-              {isLogged ?
-              (
-                <>
-                  <Route exact path='/'></Route>
-                  <Route exact path='/myprofile'><Profile myprofile={true}/></Route>
-                  <Route exact path='/feed'><Feed/></Route>
-                  <Route exact path='/profile/:id'><Profile myprofile={false}/></Route>
-                  <Route exact path='/editprofile'><EditProfile/></Route>
-                  <Route exact path='/saved'><Saved/></Route>
-                  <Route exact path='/search/:query'><Search/></Route>
-                  <Route exact path='/chats'><ChatCont/></Route>
-                  <Route exact path='/chat/:chatid'><ChatCont/></Route>
-                  <Route exact path='/post/:postid'><Post/></Route>
-                </>
-              ) : <Redirect to='/login'/>}
-          </Switch>
-        </ApolloProvider>}
+            <>
+              <Route exact path='/'></Route>
+              <Route exact path='/myprofile'>{isLogged ? <Profile myprofile={true} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/profile/:id'>{isLogged ? <Profile myprofile={false} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/editprofile'>{isLogged ? <EditProfile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/chats'>{isLogged ? <ChatCont isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/chat/:chatid'>{isLogged ? <ChatCont isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/post/:postid'><Post isLogged={isLogged}/></Route>
+            </>
+          </Switch>}
     </>
   );
 }

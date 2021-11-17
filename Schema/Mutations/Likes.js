@@ -9,9 +9,9 @@ export const LIKE_POST = {
         userID: {type: GraphQLInt},
         postID: {type: GraphQLInt}
     },
-    resolve(parent, args) {
+    resolve(_, args) {
         const {postID, userID} = args
-        let sql = `INSERT INTO likes (likeID, userID, postID) 
+        const sql = `INSERT INTO likes (likeID, userID, postID) 
                     VALUES (null, ${userID}, ${postID})`
         connection.query(sql)
         return args
@@ -24,9 +24,9 @@ export const REMOVE_LIKE = {
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt}
     }, 
-    resolve(parent, args){
+    resolve(_, args){
         const {postID, userID} = args
-        let sql = `DELETE FROM likes WHERE postID=${postID} AND userID=${userID}`
+        const sql = `DELETE FROM likes WHERE postID=${postID} AND userID=${userID}`
         connection.query(sql)
         return args
     }

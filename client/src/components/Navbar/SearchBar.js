@@ -16,7 +16,7 @@ const SEARCH_USERS = gql`
     }
 }`
 
-const SearchBar = ({chat}) => {
+const SearchBar = ({chat, isLogged}) => {
     const [dropdown, setDropdown] = useState(false)
     const [val, setVal] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS)
@@ -24,7 +24,7 @@ const SearchBar = ({chat}) => {
     useEffect(()=>{
         !chat && document.querySelector('.wrapper').addEventListener('click', ()=>setVal('')) 
         val.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
-    }, [val])
+    }, [val, chat])
 
     if(loading) return (
         <div className='tn-center flex-ctr'><div className="search-icon">
@@ -48,7 +48,7 @@ const SearchBar = ({chat}) => {
                     value={val} 
                     onChange={handleInput} 
                     placeholder='Search' 
-                    style={{borderRadius: val.length<1 ? '0 50px 50px 0' : '0'}}/>
+                    style={{borderRadius: val.length < 1 ? '0 50px 50px 0' : '0'}} disabled={!isLogged && true}/>
                 {val.length>0 && <i className='fas fa-times' style={styles.closeIcon} onClick={()=>setVal('')}></i>}
                 {dropdown && <SearchDrop chat={chat} data={data} val={val.replace(/\s/g, '')}/>}
             </form>

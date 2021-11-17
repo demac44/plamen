@@ -10,23 +10,21 @@ export const IF_SAVED = {
     args: {
         userID: {type: GraphQLInt}
     },
-    resolve(parent, args){
+    resolve(_, args){
         const {userID} = args
         const sql = `SELECT * FROM saves WHERE userID=${userID}`
         let result = connection.query(sql)
         return result
     }
 }
-
-
 export const GET_SAVES = {
     type: new GraphQLList(FeedPostType),
     args: {
         userID: {type:GraphQLInt}
     },
-    resolve(parent, args){
+    resolve(_, args){
         const {userID} = args
-        let sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC;`
+        const sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC;`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
         const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
         let r1 = connection.query(sql)
@@ -47,7 +45,6 @@ export const GET_SAVES = {
             })
             r.likes = temp
         })
-
         return r1
     }
 }

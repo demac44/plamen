@@ -1,10 +1,6 @@
 import React from 'react'
-
-
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import { useHistory } from 'react-router-dom'
-
 
 const DELETE_CHAT = gql`
     mutation ($chatID:Int!){
@@ -15,7 +11,6 @@ const DELETE_CHAT = gql`
 `
  
 const ChatMenu = ({chatid}) => {
-    const history = useHistory()
     const [delete_chat] = useMutation(DELETE_CHAT)
  
     const handleChatDelete = () => {
