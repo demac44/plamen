@@ -4,11 +4,11 @@ import '../../App.css'
 import '../../General.css'
 
 
-const Loader = () => {
+const Loader = ({size}) => {
     return (
         <div className='spinner-box flex-ctr'>
-            <div className='spinner'>
-                <div className='inner-spinner'>
+            <div className={size ? 'small-spinner' : 'spinner'}>
+                <div className='inner-spinner' style={{display:size &&  'none'}}>
 
                 </div>
             </div>

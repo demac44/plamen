@@ -610,6 +610,7 @@
     top: 50px;
     width: 150px;
     border: 1px solid #1f1f1f;
+    z-index: 1;
 }
 .fp-options-menu li{
     width: 100%;
@@ -746,8 +747,9 @@
     height: 100%;
     background-color: white;
     z-index: 10000000000000000;
+    min-height: 120px;
 }
-.spinner{
+.spinner {
     width:120px;height:120px;
     left:48%;top:40%;
     border: 10px solid #111827;
@@ -766,6 +768,16 @@
     border-radius:50%;
     -webkit-animation: spin 1.5s linear infinite;
     animation: spin 1.5s reverse infinite;
+}
+.small-spinner{
+    width:60px;height:60px;
+    left:48%;top:40%;
+    border: 5px solid #111827;
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+    border-radius:50%;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
 }
 
 /* CHATS */
