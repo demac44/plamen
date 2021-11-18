@@ -38,14 +38,15 @@ export const SEND_MESSAGE = {
         chatID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
         msg_text: {type: GraphQLString},
-        url: {type: GraphQLString}
+        url: {type: GraphQLString},
+        type: {type:GraphQLString}
     },
     resolve(_, args){
-        const {chatID, userID, msg_text, url} = args
-        const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url)
-                     VALUES (null, ${chatID}, ${userID}, null, "${msg_text}", "${url}")`
-        connection.query(sql) 
-        pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, msgID:Math.floor(Math.random()*1000)}})  
+        const {chatID, userID, msg_text, url, type} = args
+        const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url, type)
+                     VALUES (null, ${chatID}, ${userID}, null, "${msg_text}", "${url}", "${type}")`
+        const msg = connection.query(sql) 
+        pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, type, msgID: msg.insertId}})  
         return args
     }
 }

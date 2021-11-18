@@ -29,14 +29,15 @@ export const GET_CHAT_LIST = {
         WHERE chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}`
         const result = connection.query(sql)
         result.forEach(res => {
-            const sql2 = `SELECT msg_text, userID as mid FROM messages WHERE chatID=${res.chatID} ORDER BY time_sent DESC LIMIT 1`
+            const sql2 = `SELECT msg_text, userID as mid, type FROM messages WHERE chatID=${res.chatID} ORDER BY time_sent DESC LIMIT 1`
             const msg = connection.query(sql2)
-            msg[0]?.msg_text ? (res.msg_text = msg[0].msg_text) : (res.msg_text = '')
-            msg[0]?.mid ? (res.mid = msg[0].mid) : (res.msg_text = '')
+            msg[0]?.msg_text ? (res.msg_text = msg[0].msg_text) : res.msg_text = null
+            msg[0]?.mid ? (res.mid = msg[0].mid) : res.mid = null
+            msg[0]?.type ?(res.type = msg[0].type) : res.type = null
         })
         return result    
     }  
-  
+
 }
  
 export const GET_MESSAGES = {
@@ -46,7 +47,7 @@ export const GET_MESSAGES = {
     },
     resolve(parent, args) {
         const {chatID} = args
-        const sql = `SELECT * FROM messages WHERE chatID=${chatID}`  
+        const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC`  
         const result = connection.query(sql)
         return result
     }

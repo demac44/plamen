@@ -23,7 +23,8 @@ export const ChatMessagesType = new GraphQLObjectType({
         userID: {type: GraphQLInt},
         time_sent: {type: GraphQLString},
         msg_text: {type: GraphQLString},
-        url: {type: GraphQLString}
+        url: {type: GraphQLString},
+        type: {type: GraphQLString}
     })
 })
 
@@ -38,6 +39,7 @@ export const ChatListType = new GraphQLObjectType({
         userID: {type:GraphQLInt},
         msg_text: {type: GraphQLString},
         mid: {type: GraphQLInt},
-        date_created:{type: GraphQLString}
+        date_created:{type: GraphQLString},
+        type: {type: GraphQLString}
     })
 })

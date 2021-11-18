@@ -18,11 +18,12 @@ const GET_CHATS = gql`
             msg_text
             mid
             date_created
+            type
         }
 }`
 
 
-const Chat = () => {
+const Chat = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const {chatid} = useParams()
 
@@ -39,7 +40,7 @@ const Chat = () => {
 
     return (
         <>
-            <ChatList data={data}/>
+            <ChatList data={data} isLogged={isLogged}/>
             {(data.get_chats.map(info => info.chatID===parseInt(chatid) &&
             <ChatMsgBox chatid={chatid} info={info} key={info.chatID}/>))}
         </>

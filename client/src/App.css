@@ -852,7 +852,7 @@
     overflow:auto;
     padding-bottom: 40px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
 }
 .msg-wrapper-cu, .msg-wrapper-ou{
     width: 100%;
@@ -871,7 +871,7 @@
     min-height: 40px;
     max-width: 60%;
     margin: 0 20px;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 10px 15px;
     color: white;
     text-align: justify;
@@ -955,6 +955,14 @@
     z-index: 10000000000000000000;
     margin: 0;
 }
+.message-image{
+    max-width: 100%;
+    max-height: 50vh;
+}
+.message-video{
+    max-height: 50vh;
+    max-width: 100%;
+}
 
 /* POST REPORT */
 
@@ -1007,6 +1015,7 @@
 .submit-report:hover{
     background-color: #a8a8a8;
 }
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1200px){

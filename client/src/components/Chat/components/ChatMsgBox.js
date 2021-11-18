@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
 import SendMsg from '../Functional components/SendMsg'
 import Message from './Message'
 
@@ -16,6 +16,8 @@ const GET_MESSAGES = gql`
             msgID
             msg_text
             userID
+            type
+            url
         }
     }
 `
@@ -26,6 +28,8 @@ const NEW_MESSAGE = gql`
             msgID
             msg_text
             userID
+            url
+            type
         }
     }
 `
@@ -33,17 +37,15 @@ const NEW_MESSAGE = gql`
 
 const ChatMsgBox = ({chatid, info}) => {
     const [dateCreated, setDateCreated] = useState('') 
+    const [loader, setLoader] = useState(false)
     const {data, loading, subscribeToMore, error} = useQuery(GET_MESSAGES, {
         variables: {chatID: parseInt(chatid)},
     })
 
+    const loaderCallback = useCallback(val => {
+        setLoader(val)
+    }, [setLoader])
 
-    
-    const handleScroll = () => {
-        let a = document.querySelector('.chat-messages')
-        a && (a.scrollTop = a?.scrollHeight)  
-    }     
-    
     useLayoutEffect(()=>{ 
         const subscribeNewMessage = () => {
             return subscribeToMore && subscribeToMore({
@@ -54,7 +56,11 @@ const ChatMsgBox = ({chatid, info}) => {
                     
                     if (newMsg.chatID === parseInt(chatid)){
                     return Object.assign({}, prev, {
-                        get_messages: [...prev.get_messages, newMsg]
+                        get_messages: [newMsg, ...prev.get_messages],
+                        scroll: ()=>{
+                            let box = document.querySelector('.chat-messages')
+                            box.scrollHeight = 0
+                        }
                     });
                 }
             }});
@@ -66,7 +72,6 @@ const ChatMsgBox = ({chatid, info}) => {
         let date = Date.parse(info.date_created)  
         date && (date = new Date(date).toDateString())  
         setDateCreated(date)
-        handleScroll()   
     }, [data, info?.date_created])
       
     if(error) console.log(error); 
@@ -77,13 +82,26 @@ const ChatMsgBox = ({chatid, info}) => {
         <>
             <ChatBar chatid={chatid} info={info}/>
             <div className='chat-messages'>
+                {loader && <div className='flex-ctr' style={styles.loader}><Loader size='small'/></div>}
+                {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 <div className='chat-date-created'><p>This chat started on {dateCreated}</p></div>
-                {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID}/>)}
             </div>
-            <SendMsg chatid={chatid}/> 
+            <SendMsg chatid={chatid} callback={loaderCallback}/> 
         </>}
         </div>
     )
 }
 
 export default ChatMsgBox  
+
+
+const styles = {
+    loader: {
+        width:'20%',
+        height:'100px',
+        backgroundColor:'black',
+        alignSelf:'flex-end',
+        marginTop:'20px',
+        zIndex:'1'
+    }
+}

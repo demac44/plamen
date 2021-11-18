@@ -24,7 +24,7 @@ const ChatCont = (isLogged) => {
             <div className='wrapper'>
                 <div className='main-chat'>
                     {displayLeftNav && <LeftNavbar show={leftnav}/>}
-                    <Chat/>
+                    <Chat isLogged={isLogged}/>
                 </div>
             </div>
         </>
