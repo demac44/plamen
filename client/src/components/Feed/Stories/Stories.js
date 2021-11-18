@@ -1,5 +1,5 @@
 import React from 'react'
-import AddStory from './AddStory'
+import AddStory from './Functional components/AddStory'
 import Story from './Story'
 
 const Stories = () => {

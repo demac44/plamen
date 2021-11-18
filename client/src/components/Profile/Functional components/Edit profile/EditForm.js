@@ -6,6 +6,7 @@ import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 
 
+
 const EDIT_INFO = gql`
     mutation ($userID: Int!, $fname: String!, $lname: String!, $username: String!, $bday: String!, $gender: String!){
         edit_info(userID: $userID, first_name: $fname, last_name: $lname, username: $username, birth_date: $bday, gender: $gender){
@@ -91,15 +92,15 @@ const EditForm = () => {
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
             <form className='entry-form flex-col-ctr' onSubmit={handleEdit}>
                 <div className="reg-names-box">
-                    <input type="text" id='first_name' name='first_name' placeholder="Change first name"/>
-                    <input type="text" id='last_name' name='last_name' placeholder="Change last name"/>
+                    <input type="text" id='first_name' name='first_name' placeholder="Change first name" defaultValue={user.first_name}/>
+                    <input type="text" id='last_name' name='last_name' placeholder="Change last name" defaultValue={user.last_name}/>
                 </div>
                 <div className="birthdt-reg-box">
-                        <select id='gender' name='gender'>
+                        {/* <select id='gender' name='gender'>
                             <option value='male'>Male</option>
                             <option value='female'>Female</option>
-                        </select>
-                        <select id="year" name="year">
+                        </select> */}
+                        {/* <select id="year" name="year">
                             {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
                         </select>
                         <select id='month' name="month">
@@ -118,9 +119,9 @@ const EditForm = () => {
                         </select>
                         <select d='day' name='day'>
                             {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
-                        </select>
+                        </select> */}
                     </div>
-                    <input type="text" id='username' name='username' placeholder="Change username"/>
+                    <input type="text" id='username' name='username' placeholder="Change username" defaultValue={user.username}/>
                     <button className="entry-btn btn" type="submit">EDIT</button>
 
             </form>

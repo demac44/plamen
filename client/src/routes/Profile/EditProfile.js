@@ -8,8 +8,6 @@ import EditPfpChoice from '../../components/Profile/Functional components/Edit p
 import Avatar from '../../components/UI/Avatar'
 import EditForm from '../../components/Profile/Functional components/Edit profile/EditForm'
 
-// import RegisterForm from '../../components/Entry/Register/RegisterForm.js'
-
 const EditProfile = ({isLogged}) => {
     // let fname,lname,username;
     const [pfpMenu, setPfpMenu] = useState(false)
