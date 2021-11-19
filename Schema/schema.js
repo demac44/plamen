@@ -20,6 +20,7 @@ import { CHAT_EXISTS, GET_CHAT, GET_CHAT_LIST, GET_MESSAGES } from "./Queries/Ch
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
+import { GET_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
 import { ChatMessagesType } from "./TypeDefs/Chat.js";
 
@@ -39,7 +40,8 @@ const RootQuery = new GraphQLObjectType({
         chat_exists: CHAT_EXISTS,
         get_chats: GET_CHAT_LIST,
         get_messages: GET_MESSAGES,
-        get_chat: GET_CHAT
+        get_chat: GET_CHAT,
+        get_stories: GET_STORIES
     }
 })    
 

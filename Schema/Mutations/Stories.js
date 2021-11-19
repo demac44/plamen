@@ -6,12 +6,13 @@ export const CREATE_STORY = {
     type: StoryType,
     args: {
         userID: {type: GraphQLInt},
-        url: {type: GraphQLString}
+        url: {type: GraphQLString},
+        type: {type:GraphQLString}
     },
-    resolve (parent, args){
-        const {userID, time_posted, url} = args
-        const sql = `INSERT INTO stories (id, userID, url, time_posted)
-                    VALUES (null, ${userID}, "${url}", null)`
+    resolve (_, args){
+        const {userID, url, type} = args
+        const sql = `INSERT INTO stories (storyID, userID, url, date_posted, type)
+                    VALUES (null, ${userID}, "${url}", null, "${type}")`
         connection.query(sql)
         return args
     }

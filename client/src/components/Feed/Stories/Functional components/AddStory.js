@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import StoryPreview from './StoryPreview'
 
 const AddStory = () => {
     const [media, setMedia] = useState(null)
-    const [path, setPath] = useState('')
+    const [preview, setPreview] = useState('')
 
-
-    const handleUpload = () => {
-
+    const clearInput = () => {
+        setMedia(null)
+        setPreview(null)
     }
+ 
+    const exitCallback = useCallback(()=>{
+        clearInput()
+    }, [clearInput])
 
 
     return (
-        <form onSubmit={handleUpload}>
+        <>
+        <div style={{height:'100%'}}>
             <label htmlFor='upload-story' className='add-story-btn flex-ctr'>
                 <div>
                     <i className='fas fa-plus'></i>
@@ -19,10 +25,11 @@ const AddStory = () => {
             </label>
             <input type='file' accept='video/*, image/*' id='upload-story' onChange={(e)=>{
                     setMedia(e.target.files[0])
-                    setPath(URL.createObjectURL(e.target.files[0]))
+                    setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
                 }} style={{display:'none'}}/>
-            {/* {path && <img src={path} onLoad={()=>URL.revokeObjectURL(path)}></img>} */}
-        </form>
+        </div>
+        {(preview && media) && <StoryPreview preview={preview} media={media} exitCallback={exitCallback}/>}
+        </>
     )
 }
 

@@ -2,16 +2,22 @@ import {
     GraphQLObjectType,
     GraphQLInt,
     GraphQLString,
-    GraphQLList,
+    GraphQLList
  } from "graphql";
 
 
 export const StoryType = new GraphQLObjectType({
     name: 'Story',
     fields: ()=>({
-        id: {type: GraphQLInt},
+        storyID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
         url: {type: GraphQLString},
-        time_posted: {type: GraphQLString}
+        date_posted: {type: GraphQLString},
+        type: {type: GraphQLString},
+        first_name: {type: GraphQLString},
+        last_name: {type: GraphQLString},
+        username: {type: GraphQLString},
+        profile_picture: {type:GraphQLString},
+        stories:{type: new GraphQLList(StoryType)}
     })
 })
