@@ -5,9 +5,6 @@
     min-height: 100vh;
     overflow: hidden;
 }
-body{
-    overflow: hidden;
-}
 
 .entry-wrapper{
     width: 100vw;
@@ -822,8 +819,9 @@ body{
     position: relative;
     width: auto;
     height: 100vh;
-    padding-bottom:175px;
-    margin: 60px 0 0 350px;
+    padding-bottom:110px;
+    padding-top: 60px;
+    margin:0 0 0 350px;
     background-color: white;
     z-index: 999;
 }
@@ -981,7 +979,7 @@ body{
     z-index: 10000000;
 }
 .open-chat-media{
-    background-color: rgba(0, 0, 0,0.8);
+    background-color: rgba(0, 0, 0,1);
 }
 .report-overlay h3, .report-overlay p{
     width:40%;
@@ -1125,8 +1123,7 @@ body{
         width: 250px;
     }
     .chat-msg-box{
-        padding-bottom: 140px;
-        margin: 60px 0 0 250px;
+        margin-left: 250px;
     }
     .msg-input-box{
         padding: 5px 20px 5px 270px;
@@ -1184,8 +1181,7 @@ body{
     .chat-msg-box{
         width: 100vw;
         height: 100vh;
-        padding: 0 0 170px 0;
-        margin: 60px 0 0 0 ;
+        margin: 0;
         position: fixed;
         top: 0;
         left: 0;
@@ -1230,7 +1226,6 @@ body{
     }
     .pf-stats{
         width: 90%;
-        /* padding: 5px 10px; */
     }
     .add-np-tbtn i {
         font-size: 20px;

@@ -6,7 +6,7 @@ import LeftNavbar from '../../components/UI/LeftNavbar'
 import Chat from './Chat'
  
  
-const ChatCont = (isLogged) => {
+const ChatCont = ({isLogged}) => {
     const [leftnav, setLeftnav] = useState(false)
     const [displayLeftNav, setDisplayLeftNav] = useState(false)
 

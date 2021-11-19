@@ -86,7 +86,7 @@ const ChatMsgBox = ({chatid, info}) => {
                 {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 <div className='chat-date-created'><p>This chat started on {dateCreated}</p></div>
             </div>
-            <SendMsg chatid={chatid} callback={loaderCallback}/> 
+            <SendMsg chatid={chatid} loaderCallback={loaderCallback}/> 
         </>}
         </div>
     )

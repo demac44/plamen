@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-// import Dropzone from 'react-simple-dropzone/dist';
-
-
 
 const AddStory = () => {
     const [media, setMedia] = useState(null)
+    const [path, setPath] = useState('')
 
 
     const handleUpload = () => {
@@ -19,7 +17,11 @@ const AddStory = () => {
                     <i className='fas fa-plus'></i>
                 </div>
             </label>
-            <input type='file' accept='video/*, image/*' id='upload-story' style={{display:'none'}}/>
+            <input type='file' accept='video/*, image/*' id='upload-story' onChange={(e)=>{
+                    setMedia(e.target.files[0])
+                    setPath(URL.createObjectURL(e.target.files[0]))
+                }} style={{display:'none'}}/>
+            {/* {path && <img src={path} onLoad={()=>URL.revokeObjectURL(path)}></img>} */}
         </form>
     )
 }
