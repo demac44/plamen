@@ -3,6 +3,7 @@ import AddStory from './Functional components/AddStory'
 import StoryHead from './Functional components/StoryHead'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import StoriesLoader from './components/StoriesLoader'
 
 const GET_STORIES = gql`
     query ($uid: Int!){
@@ -43,7 +44,7 @@ const Stories = () => {
         }
     }, [data])
 
-    if(loading) return <p>loading</p>
+    if(loading) return <StoriesLoader/>
 
     return (
         <div className="stories-container">

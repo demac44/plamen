@@ -43,18 +43,20 @@ const StoryPreview = ({preview, media, exitCallback}) => {
 
     return (
         <div className='story-preview flex-col-ctr'>
-            <StoryBar user={ls}/>
-            <div className='story-media flex-ctr'>
-                {media.type.slice(0,5)==='image' && 
-                    <img  src={preview} onLoad={()=>URL.revokeObjectURL(preview)}/>
-                }
-                {media.type.slice(0,5)==='video' && 
-                    <video src={preview} onLoad={()=>URL.revokeObjectURL(preview)} controls/>
-                }
-            </div>
-            <div className='story-bottom-wrap'>
-                <button className='story-btn btn' onClick={handleUpload}>UPLOAD</button>
-                <button className='story-btn btn' onClick={handleClose}>BACK</button>
+            <div className='story-box'>
+                <StoryBar user={ls}/>
+                <div className='story-media flex-ctr'>
+                    {media.type.slice(0,5)==='image' && 
+                        <img  src={preview} onLoad={()=>URL.revokeObjectURL(preview)}/>
+                    }
+                    {media.type.slice(0,5)==='video' && 
+                        <video src={preview} onLoad={()=>URL.revokeObjectURL(preview)} controls/>
+                    }
+                </div>
+                <div className='story-bottom-wrap'>
+                    <button className='story-btn btn' onClick={handleUpload}>UPLOAD</button>
+                    <button className='story-btn btn' onClick={handleClose}>BACK</button>
+                </div>
             </div>
         </div>
     )

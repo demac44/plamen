@@ -58,9 +58,19 @@ const FETCH_INFO= gql`
             last_name
             profile_picture
         }
+        get_user_stories (userID: $userID){
+            first_name
+            last_name
+            userID
+            profile_picture
+            storyID
+            type
+            url
+            date_posted
+        } 
     }`
 
-    const FETCH_INFO_MYPROFILE = gql`
+const FETCH_INFO_MYPROFILE = gql`
     query posts ($userID: Int!){
         posts(userID: $userID){
             postID
@@ -98,6 +108,12 @@ const FETCH_INFO= gql`
             first_name
             last_name
             profile_picture
+        }
+        get_user_stories (userID: $userID){
+            storyID
+            type
+            url
+            date_posted
         }
     }
 ` 
@@ -140,7 +156,8 @@ const Profile = ({myprofile, isLogged}) => {
         user: myprofile ? ls : data.user,
         count: data.posts.length,
         followers: data.getFollowers,
-        following: data.getFollowing
+        following: data.getFollowing,
+        stories: data.get_user_stories
     }
     
     return ( 
