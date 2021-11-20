@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Avatar from '../../../UI/Avatar'
+import {Link} from 'react-router-dom'
 
-const StoryBar = ({user, date}) => {
+
+const StoryBar = ({user, date, closeStoryCallback}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [time, setTime] = useState('')
 
     useEffect(()=>{
@@ -17,12 +20,15 @@ const StoryBar = ({user, date}) => {
 
     return (
         <div className='story-bar'>
-            <div className='flex-ctr' style={{height:'100%'}}>
+            <Link to={'/profile/'+user.userID} className='flex-ctr' style={{height:'100%', color:'white'}}>
                 <Avatar height='100%' width='50px' pfp={user.profile_picture}/>
                 <p style={{marginLeft:'10px'}}>{user.first_name+' '+user.last_name}</p>
-            </div>
+            </Link>
             <p>{time}</p>
-            <i className='fas fa-ellipsis-v fp-options-btn'></i>
+            <span>
+                <i className='fas fa-times fp-options-btn' onClick={()=>closeStoryCallback()}></i>
+                {user.userID===ls.userID && <i className='fas fa-ellipsis-v fp-options-btn'></i>}
+            </span>
         </div>
     )
 }

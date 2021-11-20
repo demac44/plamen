@@ -144,7 +144,6 @@
 .tn-search-input{
     width: 100%;
     height: 80%;
-    /* border-radius: 0 50px 50px 0; */
     border: none;
     outline: none;
     padding: 5px 0;
@@ -707,6 +706,7 @@
 /* STORIES */
 
 .stories-container{
+    position: relative;
     width: 100%;
     height: 80px;
     background-color: white;
@@ -716,7 +716,30 @@
     display: flex;
     align-items: center;
     padding: 5px;
-}    
+    overflow: hidden;
+}   
+.stories-btn-left, .stories-btn-right{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 30px;
+    background-color: #111827;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+.stories-btn-left{
+    left: 0;
+}
+.stories-btn-right{
+    right: 0;
+}
+.sc-inner{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    transition: ease 0.5s;
+}
 .story-head{
     height: 100%;
     margin-left: 5px;
@@ -740,37 +763,44 @@
     color: #111827;
     cursor: pointer;
 }
+.story-box{
+    width: 35%;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 .story-bar{
     position: relative;
-    width: 30%;
-    background-color: #111827;
+    width: 100%;
+    height: 60px;
+    background-color: black;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
     padding: 5px;
     color: white;
 }
 .story-media{
     position: relative;
-    width: 30%;
-    height: 70%;
-    background:linear-gradient(to bottom right, #5f5f5f, #1f1f1f);
+    width: 100%;
+    height: calc(100vh - 110px);
+    background-color: black;
 }
 .story-media img, .story-media video{
     max-width: 100%;
     max-height: 100%;
 }
 .story-bottom-wrap{
-    width: 30%;
-    padding: 10px;
-    background-color: #111827;
+    width: 100%;
+    height: 50px;
+    padding: 5px 10px;
+    background-color: black;
     text-align: center;
     display: flex;
     justify-content: space-around;
 }
 .story-btn{
-    width: 130px;
+    width: 120px;
     padding: 10px 0;
 }
 .nextBtn, .prevBtn{
@@ -790,28 +820,80 @@
     left: 0;
 }
 
-.load-bar{
+/* STORY VIDEO CONTROLS */
+.story-vid::-webkit-media-controls-panel {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+audio::-webkit-media-controls-mute-button, .story-vid::-webkit-media-controls-mute-button {
+    -webkit-appearance: media-mute-button;
+    display: none;
+}
+
+.story-vid::-webkit-media-controls-overlay-play-button {
+    -webkit-appearance: media-overlay-play-button;
+    display: none;
+}
+audio::-webkit-media-controls-play-button, .story-vid::-webkit-media-controls-play-button {
+    -webkit-appearance: media-play-button;
+    display: none;
+}
+audio::-webkit-media-controls-timeline-container, .story-vid::-webkit-media-controls-timeline-container {
+    -webkit-appearance: media-controls-background;
+    display: none;
+}
+audio::-webkit-media-controls-current-time-display, .story-vid::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display, .story-vid::-webkit-media-controls-time-remaining-display {
+    -webkit-appearance: media-current-time-display;
+    display: none;
+}
+audio::-webkit-media-controls-timeline, .story-vid::-webkit-media-controls-timeline {
+    -webkit-appearance: media-slider;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+audio::-webkit-media-controls-volume-slider, .story-vid::-webkit-media-controls-volume-slider {
+    -webkit-appearance: media-volume-slider;
+    display: none;
+}
+
+audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-controls-fullscreen-button {
+    -webkit-appearance: media-enter-fullscreen-button;  
+    display: none;
+}
+
+.story-count{
     position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 5px;
     width: 100%;
+    height: 8px;
+    display: flex;
+    bottom: 5px;
+}
+.story-count-bar{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    margin: 2px;
+    border-radius: 10px;
+}
+.load-bar{
+    width: 100%;
+    height: 100%;
     background-color: white;
     animation-name: load;
     animation-duration: 5s;
     animation-fill-mode: forwards;
-    animation-iteration-count: 1;
     animation-timing-function:linear;
+    background-color: white;
+    border-radius: 10px;
 }
-
-@-webkit-keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
+.bar{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
 }
-
-@keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
+.bar-vid{
+    background-color: white;
 }
 
 /* LOADER */
@@ -1105,16 +1187,6 @@
         width: 120%;
         margin-left: 30px;
     }
-    .story-bar{
-        width: 40%;
-    }
-    .story-media{
-        width: 40%;
-        height: 75%;
-    }
-    .story-bottom-wrap{
-        width: 40%;
-    }
 }
 
 @media screen and (max-width: 991px){
@@ -1226,14 +1298,7 @@
         width:60%;
     }
     /* STORIES */
-    .story-bar{
-        width: 50%;
-    }
-    .story-media{
-        width: 50%;
-        height: 80%;
-    }
-    .story-bottom-wrap{
+    .story-box{
         width: 50%;
     }
 }
@@ -1304,15 +1369,8 @@
         margin-top: 15px;
     }
     /* STORIES */
-    .story-bar{
-        width: 65%;
-    }
-    .story-media{
-        width: 65%;
-        height: 80%;
-    }
-    .story-bottom-wrap{
-        width: 65%;
+    .story-box{
+        width: 80%;
     }
 }
 @media screen and (max-width: 447px){
@@ -1378,20 +1436,13 @@
     }
     /* STORIES */
     .stories-container{
-        height: 70px;
+        height: 80px;
         border-radius: 0;
     }
     .stories-container .add-story-btn{
-        width: 60px;
+        width: 70px;
     }
-    .story-bar{
-        width: 100%;
-    }
-    .story-media{
-        width: 100%;
-        height: 100%;
-    }
-    .story-bottom-wrap{
+    .story-box{
         width: 100%;
     }
     /* SEARCH */
@@ -1448,4 +1499,16 @@
 @keyframes spin {
 	from {transform:rotate(0deg);}
 	to {transform:rotate(360deg);}
+}
+
+/* story load animation */
+
+@-webkit-keyframes load {
+    0% {width: 0%;}
+    100% {width: 100%;}
+}
+
+@keyframes load {
+    0% {width: 0%;}
+    100% {width: 100%;}
 }
