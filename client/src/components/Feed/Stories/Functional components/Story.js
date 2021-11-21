@@ -3,6 +3,7 @@ import StoryBar from '../components/StoryBar'
 
 const Story = ({data, i, closeStoryCallback, isProfile, info}) => {
     let timeout;
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [storyData, setStoryData] = useState([])
     const [index, setIndex] = useState(i)
     const [innerIndex, setInnerIndex] = useState(0)
@@ -85,10 +86,10 @@ const Story = ({data, i, closeStoryCallback, isProfile, info}) => {
                     </div> 
                 </div>
 
-                {!isProfile && <form className='story-bottom-wrap'>
-                    <input type='text' style={styles.msgInput} placeholder='Reply to story...'/>
-                    <button className='btn' style={styles.btn}>SEND</button>
-                </form>}
+                <form className='story-bottom-wrap'>
+                    <input type='text' style={styles.msgInput} disabled={info.userID===ls.userID} placeholder='Reply to story...'/>
+                    <button className='btn' disabled={info.userID===ls.userID} style={styles.btn}>SEND</button>
+                </form>
             </div>
         </div>
     )

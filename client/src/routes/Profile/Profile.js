@@ -168,14 +168,14 @@ const Profile = ({myprofile, isLogged}) => {
                     <LeftNavbar show={leftnav}/>
                     <div className='profile-container'>
                         <ProfileInfoBox info={info}/>
-                        {myprofile && <AddPost width='70%' callback={updatedCallback}/>}
-                        {posts.length > 0 ? posts.map(post =><Post width='70%' 
+                        {myprofile && <AddPost updatedCallback={updatedCallback}/>}
+                        {posts.length > 0 ? posts.map(post =><Post 
                         user={info.user} 
                         comments={post.comments} 
                         likes={post.likes}
                         post={post}
-                        callback={updatedCallback}
-                         key={post.postID}/>) : <p style={{marginTop:'60px', width:'70%', textAlign:'center'}}>No posts</p>}       
+                        updatedCallback={updatedCallback}
+                         key={post.postID}/>) : <p style={{marginTop:'60px', textAlign:'center'}}>No posts</p>}       
                     </div>
                 </div>
             </div>

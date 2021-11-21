@@ -84,7 +84,7 @@ const Feed = ({isLogged}) => {
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>
                         <Stories/>
-                        <AddPost width='100%' callback={updatedCallback}/>
+                        <AddPost updatedCallback={updatedCallback}/>
                         {posts.length > 0 ? posts.map(post => <Post post={{
                             postID: post.postID,
                             post_text: post.post_text,
@@ -98,8 +98,8 @@ const Feed = ({isLogged}) => {
                             profile_picture: post.profile_picture
                         }} comments={post.comments}
                         likes={post.likes}
-                        callback={updatedCallback}
-                        key={post.postID}/>) : <p style={{marginTop:'60px', color:'whitesmoke'}}>No new posts</p>}
+                        updatedCallback={updatedCallback}
+                        key={post.postID}/>) : <p style={{marginTop:'60px', color:'black', textAlign:'center', width:'70%'}}>No new posts</p>}
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import InfoSave from './Post components/UI/InfoSave'
 import PostImg from './Post components/UI/PostImg'
 import PostText from './Post components/UI/PostText'
 
-const Post = ({width, post, user, comments, likes, callback}) => {
+const Post = ({width, post, user, comments, likes, updatedCallback}) => {
     const isLogged = useSelector(state => state?.isAuth.isAuth)
     const [showAll, setShowAll] = useState(false)
     const handleShowComm = () => {
@@ -14,8 +14,8 @@ const Post = ({width, post, user, comments, likes, callback}) => {
     }
     return (
         <>
-            <div className="post" style={{width:width}}>
-                <InfoSave date={post.date_posted} user={user} postID={post.postID} callback={callback} isLogged={isLogged}/>
+            <div className="post">
+                <InfoSave date={post.date_posted} user={user} postID={post.postID} updatedCallback={updatedCallback} isLogged={isLogged}/>
                 <PostImg url={post.url}/>
                 <PostText post_text={post.post_text}/>
                 {comments.length > 0 &&
@@ -26,7 +26,7 @@ const Post = ({width, post, user, comments, likes, callback}) => {
                 style={styles.showMorebtn}
                 onClick={handleShowComm}
                 >{showAll ? 'Show less' : 'Show more'}</p>}
-                <AddCommLike postID={post.postID} likes={likes} callback={callback} isLogged={isLogged}/>
+                <AddCommLike postID={post.postID} likes={likes} updatedCallback={updatedCallback} isLogged={isLogged}/>
             </div>
         </>
     )

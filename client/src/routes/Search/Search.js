@@ -61,7 +61,7 @@ const Search = ({isLogged}) => {
             <div className='wrapper'>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
-                    <div className='posts-container-feed'>
+                    <div className='search-container'>
                         <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
                     </div>

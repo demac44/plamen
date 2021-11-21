@@ -18,7 +18,7 @@ const NEW_POST = gql`
     }
 `
 
-const AddPost = ({width, callback}) => {
+const AddPost = ({width, updatedCallback}) => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
@@ -28,9 +28,9 @@ const AddPost = ({width, callback}) => {
     const [loading, setLoading] = useState(false)
 
     useEffect(()=>{
-        callback(added)
+        updatedCallback(added)
         setAdded(false)
-    },[callback, added])
+    },[updatedCallback, added])
 
     const [new_post] = useMutation(NEW_POST)
 

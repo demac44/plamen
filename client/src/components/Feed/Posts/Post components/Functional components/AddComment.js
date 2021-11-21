@@ -12,7 +12,7 @@ const ADD_COMMENT = gql`
 `
 
 
-const AddComment = ({postID, callback, isLogged}) => {
+const AddComment = ({postID, updatedCallback, isLogged}) => {
     let comment_text;
     const user = JSON.parse(localStorage.getItem('user'))
     const [added, setAdded] = useState(false)
@@ -21,8 +21,8 @@ const AddComment = ({postID, callback, isLogged}) => {
     const [add_comment] = useMutation(ADD_COMMENT) 
 
     useEffect(()=>{
-        callback(added)
-    },[callback, added])
+        updatedCallback(added)
+    },[updatedCallback, added])
 
     const handleAddComment = (e) => {
         e.preventDefault()

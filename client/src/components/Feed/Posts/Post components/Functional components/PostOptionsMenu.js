@@ -13,7 +13,7 @@ const DELETE_POST = gql`
 `
 
 
-const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
+const PostOptionsMenu = ({postID, updatedCallback, userID, menuCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_POST)
     const [deleted, setDeleted] = useState(false)
@@ -21,8 +21,8 @@ const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
     const [reportMenu, setReportMenu] = useState(false)
 
     useEffect(()=>{
-        callback(deleted)
-    }, [deleted, callback])
+        updatedCallback(deleted)
+    }, [deleted, updatedCallback])
 
     const handlePostDelete = () => {
         try {delete_post({
@@ -60,7 +60,7 @@ const PostOptionsMenu = ({postID, callback, userID, menuCallback}) => {
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}
-            {reportMenu && <ReportBox postID={postID} userID={userID} callback={closeReportCallback}/>}
+            {reportMenu && <ReportBox postID={postID} userID={userID} closeReportCallback={closeReportCallback}/>}
         </>
     )
 }

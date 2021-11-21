@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import PostOptionsMenu from './PostOptionsMenu'
 
-const PostOptBtn = ({postID, callback, userID}) => {
+const PostOptBtn = ({postID, updatedCallback, userID}) => {
     const [menu, setMenu] = useState(false)
 
     const menuCallback = useCallback(val => {
@@ -14,7 +14,7 @@ const PostOptBtn = ({postID, callback, userID}) => {
     return (
         <>
             <i className="fas fa-ellipsis-v fp-options-btn" onClick={handleDropdown}></i>
-            {menu && <PostOptionsMenu postID={postID} callback={callback} userID={userID} menuCallback={menuCallback}/>}
+            {menu && <PostOptionsMenu postID={postID} updatedCallback={updatedCallback} userID={userID} menuCallback={menuCallback}/>}
         </>
     )
 }

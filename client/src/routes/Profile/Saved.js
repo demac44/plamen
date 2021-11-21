@@ -91,7 +91,7 @@ const Saved = ({isLogged}) => {
                             profile_picture: post.profile_picture
                         }} comments={post.comments}
                         likes={post.likes}
-                        callback={updatedCallback}
+                        updatedCallback={updatedCallback}
                         key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
                     </div>
                 </div>
