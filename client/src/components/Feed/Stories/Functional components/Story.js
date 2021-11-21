@@ -1,47 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import StoryBar from '../components/StoryBar'
+import StoryMediaBox from './StoryMediaBox';
+import StoryReply from './StoryReply';
 
-const Story = ({data, i, closeStoryCallback, isProfile, info}) => {
-    let timeout;
-    const ls = JSON.parse(localStorage.getItem('user'))
+const Story = ({data, i, closeStoryCallback, isProfile, info, updatedCallback}) => {
     const [storyData, setStoryData] = useState([])
     const [index, setIndex] = useState(i)
     const [innerIndex, setInnerIndex] = useState(0)
     const [type, setType] = useState('')
-    
+
+    const setIndexCallback = useCallback(val => {
+        setIndex(val)
+    }, [setIndex])
+
+    const setInnerIndexCallback = useCallback(val => {
+        setInnerIndex(val)
+    }, [setInnerIndex])
+
     useEffect(()=>{
-        setStoryData(isProfile ? data : data?.get_stories[index])
-        storyData?.stories && setType(storyData.stories[innerIndex].type)
+        setStoryData(isProfile ? data : data[index])
+        storyData?.stories && setType(storyData?.stories[innerIndex]?.type)
     }, [data, index, innerIndex, type, i, storyData?.stories])
-        
-    const nextStory = () => {
-        clearTimeout(timeout)
-        if(storyData?.stories){
-            if(index===(isProfile ? 0 : data?.get_stories?.length-1) && innerIndex===storyData?.stories?.length-1){
-                closeStoryCallback()
-                return
-            } else if (innerIndex===storyData.stories.length-1){
-                setInnerIndex(0)
-                setIndex(index+1)
-            } else setInnerIndex(innerIndex+1)
-        }
-    }
-    
-    const prevStory = () => {
-        clearTimeout(timeout)
-        if(storyData?.stories){
-            if(index===0 && innerIndex===0){
-                closeStoryCallback()
-                return
-            } else if (index>0 && innerIndex===0){
-                setInnerIndex(data?.get_stories[index-1].stories.length-1)
-                setIndex(index-1)
-            } else if (index>=0 && innerIndex>0){
-                setInnerIndex(innerIndex-1)
-            }
-        }
-    }
-    
+
     return (
         <div className='story-preview flex-col-ctr'>
             <div className='story-box'>
@@ -58,38 +38,23 @@ const Story = ({data, i, closeStoryCallback, isProfile, info}) => {
                     profile_picture: storyData?.profile_picture,
                     userID:storyData?.userID
                 }} 
-                date={(isProfile && storyData?.stories) ? storyData.stories[innerIndex]?.date_posted : (storyData?.stories && storyData?.stories[innerIndex]?.date_posted)}
-                closeStoryCallback={closeStoryCallback}
+                    date={(isProfile && storyData?.stories) ? storyData.stories[innerIndex]?.date_posted : 
+                    (storyData?.stories && storyData?.stories[innerIndex]?.date_posted)}
+                    closeStoryCallback={closeStoryCallback}
+                    storyID={storyData?.stories && storyData.stories[innerIndex]?.storyID}
+                    updatedCallback={updatedCallback}
                 />
-
-                <div className='story-media flex-ctr'>
-                    {type==='image' && 
-                        <img src={storyData?.stories && storyData?.stories[innerIndex]?.url} onLoad={()=>{
-                            timeout = setTimeout(()=>{
-                                nextStory()
-                            }, 5000)
-                            return
-                        }}/>
-                    }
-                    {type==='video' && 
-                    <>
-                        <video className='story-vid' src={storyData?.stories && storyData?.stories[innerIndex]?.url} autoPlay controls controlsList="nodownload" onEnded={nextStory}/>
-                    </>}
-                    <button className='nextBtn' onClick={nextStory}></button>
-                    <button className='prevBtn' onClick={prevStory}></button>
-                    <div className='story-count'>
-                        {storyData?.stories && storyData.stories.map(story => 
-                        <div className='story-count-bar' key={story.storyID}>
-                            {type==='image' && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'bar'}></div>}
-                            {type==='video' && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'bar bar-vid' : 'bar'}></div>}
-                        </div>)}
-                    </div> 
-                </div>
-
-                <form className='story-bottom-wrap'>
-                    <input type='text' style={styles.msgInput} disabled={info.userID===ls.userID} placeholder='Reply to story...'/>
-                    <button className='btn' disabled={info.userID===ls.userID} style={styles.btn}>SEND</button>
-                </form>
+                <StoryMediaBox 
+                    storyData={storyData} 
+                    index={index} 
+                    isProfile={isProfile} 
+                    data={data} 
+                    closeStoryCallback={closeStoryCallback}
+                    setIndexCallback={setIndexCallback}
+                    setInnerIndexCallback={setInnerIndexCallback}
+                    innerIndex={innerIndex}
+                    type={type}/>
+                <StoryReply userID={info.userID}/>
             </div>
         </div>
     )
@@ -97,17 +62,3 @@ const Story = ({data, i, closeStoryCallback, isProfile, info}) => {
 
 export default Story
 
-
-    const styles = {
-        msgInput:{
-            width:'100%',
-            height:'100%',
-            backgroundColor:'black',
-            color:'white',
-            border:'none',
-            outline:'none'
-        },
-        btn:{
-            padding:'5px 10px'
-        }
-    }

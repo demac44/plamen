@@ -14,7 +14,7 @@ import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
-import { CREATE_STORY } from "./Mutations/Stories.js";
+import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, GET_CHAT, GET_CHAT_LIST, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
@@ -63,6 +63,7 @@ const RootMutation = new GraphQLObjectType({
         edit_pfp: EDIT_PFP,
         edit_info: EDIT_INFO,
         create_story: CREATE_STORY,
+        delete_story: DELETE_STORY,
         create_chat: CREATE_CHAT,
         send_message: SEND_MESSAGE,
         delete_chat: DELETE_CHAT,

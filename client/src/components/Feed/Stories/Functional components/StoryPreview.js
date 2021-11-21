@@ -13,7 +13,7 @@ const ADD_STORY = gql`
 `
 
 
-const StoryPreview = ({preview, media, exitCallback}) => {
+const StoryPreview = ({preview, media, exitCallback, updatedCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [new_story] = useMutation(ADD_STORY)
 
@@ -32,6 +32,7 @@ const StoryPreview = ({preview, media, exitCallback}) => {
                     }
             }).then(()=>{
                 exitCallback()
+                updatedCallback(true)
             }
             )
         })

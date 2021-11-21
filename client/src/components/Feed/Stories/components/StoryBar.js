@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Avatar from '../../../UI/Avatar'
 import {Link} from 'react-router-dom'
+import StoryOptions from '../Functional components/StoryOptions'
 
 
-const StoryBar = ({user, date, closeStoryCallback}) => {
+const StoryBar = ({user, date, closeStoryCallback, storyID, updatedCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [time, setTime] = useState('')
+    const [storyOptions, setStoryOptions] = useState(false)
 
     useEffect(()=>{
         let utcSeconds = date;
@@ -27,8 +29,12 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
             <p>{time}</p>
             <span>
                 <i className='fas fa-times fp-options-btn' onClick={()=>closeStoryCallback()}></i>
-                {user.userID===ls.userID && <i className='fas fa-ellipsis-v fp-options-btn'></i>}
+                {user.userID===ls.userID && <i 
+                    className='fas fa-ellipsis-v fp-options-btn'
+                    onClick={()=>setStoryOptions(!storyOptions)}
+                ></i>}
             </span>
+            {storyOptions && <StoryOptions storyID={storyID} closeStoryCallback={closeStoryCallback} updatedCallback={updatedCallback}/>}
         </div>
     )
 }

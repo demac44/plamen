@@ -7,7 +7,7 @@ import SendMsgBtn from './Functional components/SendMsgBtn'
 import Story from '../Feed/Stories/Functional components/Story'
 
 
-const ProfileInfoBox = ({info}) => {
+const ProfileInfoBox = ({info, updatedCallback}) => {
     const [openStory, setOpenStory] = useState(false)
 
     const closeStoryCallback = useCallback(()=>{
@@ -31,7 +31,14 @@ const ProfileInfoBox = ({info}) => {
                 </>
                 )} 
             </div>
-            {openStory && <Story info={info.user} data={info} i={0} isProfile={true} closeStoryCallback={closeStoryCallback}/>}
+            {openStory && <Story 
+                info={info.user} 
+                data={info} 
+                i={0} 
+                isProfile={true}
+                closeStoryCallback={closeStoryCallback}
+                updatedCallback={updatedCallback}
+                />}
         </>
     )
 }

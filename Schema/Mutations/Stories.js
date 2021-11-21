@@ -17,3 +17,16 @@ export const CREATE_STORY = {
         return args
     }
 }
+
+export const DELETE_STORY = {
+    type: StoryType,
+    args: {
+        storyID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {storyID} = args
+        const sql = `DELETE FROM stories WHERE storyID=${storyID}`
+        connection.query(sql)
+        return args
+    }
+}

@@ -40,6 +40,20 @@ const FEED_POSTS = gql`
                 profile_picture
             }
         }
+        get_stories (userID: $userID){
+            storyID
+            profile_picture
+            first_name
+            last_name
+            userID
+            type
+            stories {
+                storyID
+                type
+                url
+                date_posted
+            }
+        }
     }
 `
 
@@ -75,6 +89,7 @@ const Feed = ({isLogged}) => {
     if(error) console.log(error); 
 
     const posts = data.feed_posts
+    const stories = data.get_stories
 
     return (
         <>
@@ -83,7 +98,7 @@ const Feed = ({isLogged}) => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>
-                        <Stories/>
+                        <Stories stories={stories} updatedCallback={updatedCallback}/>
                         <AddPost updatedCallback={updatedCallback}/>
                         {posts.length > 0 ? posts.map(post => <Post post={{
                             postID: post.postID,

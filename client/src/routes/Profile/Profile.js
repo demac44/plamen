@@ -167,7 +167,7 @@ const Profile = ({myprofile, isLogged}) => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='profile-container'>
-                        <ProfileInfoBox info={info}/>
+                        <ProfileInfoBox info={info} updatedCallback={updatedCallback}/>
                         {myprofile && <AddPost updatedCallback={updatedCallback}/>}
                         {posts.length > 0 ? posts.map(post =><Post 
                         user={info.user} 
