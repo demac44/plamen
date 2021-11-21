@@ -45,7 +45,7 @@ export const GET_MESSAGES = {
     args: {
         chatID: {type: GraphQLInt}
     },
-    resolve(parent, args) {
+    resolve(_, args) {
         const {chatID} = args
         const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC`  
         const result = connection.query(sql)
@@ -65,4 +65,18 @@ export const GET_CHAT = {
         return result[0]
     }
 
+}
+
+
+export const GET_CHAT_MEDIA = {
+    type: new GraphQLList(ChatMessagesType),
+    args:{
+        chatID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {chatID} = args
+        const sql = `SELECT msgID, userID, url, type FROM messages WHERE chatID=${chatID} AND type="image" OR type="video"`
+        const result = connection.query(sql)
+        return result
+    }
 }

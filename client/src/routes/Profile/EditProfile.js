@@ -7,6 +7,7 @@ import Sidebar from '../../components/Profile/Functional components/Edit profile
 import EditPfpChoice from '../../components/Profile/Functional components/Edit profile/Edit pfp/EditPfpChoice'
 import Avatar from '../../components/UI/Avatar'
 import EditForm from '../../components/Profile/Functional components/Edit profile/EditForm'
+import LeftNavbar from '../../components/UI/LeftNavbar'
 
 const EditProfile = ({isLogged}) => {
     // let fname,lname,username;
@@ -24,6 +25,7 @@ const EditProfile = ({isLogged}) => {
             {pfpMenu && <EditPfpChoice callback={closeMenu}/>}
             <div className='wrapper'> 
                 <div className='main'>
+                    <LeftNavbar/>
                     <div className='profile-container'>
                         <div className='edit-pf-box'>
                             <Sidebar/>

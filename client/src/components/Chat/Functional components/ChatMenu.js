@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import AllChatMedia from '../components/AllChatMedia'
 
 const DELETE_CHAT = gql`
     mutation ($chatID:Int!){
@@ -11,7 +12,13 @@ const DELETE_CHAT = gql`
 `
  
 const ChatMenu = ({chatid}) => {
+    const [chatMedia, setChatMedia] = useState(false)
     const [delete_chat] = useMutation(DELETE_CHAT)
+
+
+    const closeAllMediaCallback = useCallback(()=>{
+        setChatMedia(false)
+    }, [setChatMedia])
  
     const handleChatDelete = () => {
         delete_chat({
@@ -23,14 +30,18 @@ const ChatMenu = ({chatid}) => {
     }
 
     return (
-        <div className='chat-menu'>
-            <ul>
-                <li 
-                style={{color:'#940a00'}}
-                onClick={handleChatDelete}
-                >DELETE CHAT</li>
-            </ul>
-        </div>
+        <>
+            <div className='chat-menu'>
+                <ul>
+                    <li onClick={()=>setChatMedia(true)}>See media</li>
+                    <li 
+                    style={{color:'#940a00'}}
+                    onClick={handleChatDelete}
+                    >DELETE CHAT</li>
+                </ul>
+            </div>
+            {chatMedia && <AllChatMedia chatID={chatid} closeAllMediaCallback={closeAllMediaCallback}/>}
+        </>
     )
 }
 

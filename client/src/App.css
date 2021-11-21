@@ -437,7 +437,6 @@
     background-color: #111827;
     border-radius: 10px;
     border: 1px solid #1f1f1f;
-    margin-left: 100px;
     display: flex;
 }
 .edit-pf-sidebar{
@@ -1127,9 +1126,37 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     max-height: 95vh;
     max-width: 80vw;
 }
+
+/* CHAT MEDIA CONTAINER */
+
+.chat-all-media-container{
+    padding: 60px 0 0 350px;
+}
+
+.chat-all-media-box{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    padding: 0 5px 0 5px;
+}
+.chat-media-card{
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.chat-media-card img, .chat-media-card video{
+    min-width: 100%;
+    min-height: 100%;
+}
+
 /* POST REPORT */
 
-.report-overlay, .open-chat-media, .story-preview{
+.report-overlay, .open-chat-media, .story-preview, .chat-all-media-container{
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -1143,6 +1170,9 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
 }
 .story-preview{
     background-color: rgba(0, 0, 0,0.9);
+}
+.chat-all-media-container{
+    background-color: rgba(0, 0, 0,1);
 }
 .report-overlay h3, .report-overlay p{
     width:40%;
@@ -1321,6 +1351,13 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .stories-container{
         width: calc(100vw - 70px);
     }
+    /* ALL CHAT MEDIA */
+    .chat-all-media-container{
+        padding: 60px 0 0 250px;
+    }    
+    .chat-all-media-box{
+        grid-template-columns: 1fr 1fr 1fr;
+    }    
 }
 
 
@@ -1410,7 +1447,15 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .search-container{
         width: 100%;
     }
-}
+    /* CHAT ALL MEDIA  */
+    .chat-all-media-container{
+        padding: 60px 0;
+    }    
+    .chat-all-media-box{
+        grid-template-columns: 1fr 1fr 1fr;
+    }    
+}   
+
 @media screen and (max-width: 447px){
     /* ENTRY */
     .entry-wrapper{
@@ -1526,6 +1571,13 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .search-container{
         margin-top: 20px;
     }
+    .chat-all-media-container{
+        padding: 60px 0;
+    }    
+    .chat-all-media-box{
+        grid-template-columns: 1fr 1fr;
+        height: 150px;
+    }    
 }
 
 
