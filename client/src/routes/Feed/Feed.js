@@ -41,17 +41,18 @@ const FEED_POSTS = gql`
             }
         }
         get_stories (userID: $userID){
-            storyID
-            profile_picture
             first_name
             last_name
-            userID
+            storyID
             type
+            profile_picture
+            username
+            userID
             stories {
-                storyID
-                type
-                url
                 date_posted
+                storyID
+                url
+                type
             }
         }
     }

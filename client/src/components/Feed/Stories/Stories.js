@@ -23,8 +23,16 @@ const Stories = ({stories, updatedCallback}) => {
     return (
         <div className="stories-container">
             <div className='sc-inner' style={{marginLeft:-margin.toString()+'%'}}>
-                <AddStory updatedCallback={updatedCallback}/>
-                {stories.map(story => <StoryHead info={story} data={stories} index={index++} key={story.storyID} updatedCallback={updatedCallback}/>)}
+                <div className='flex-col-ctr'>
+                    <AddStory updatedCallback={updatedCallback}/>
+                    <p style={{fontSize:'14px'}}>Add story</p>
+                </div>
+                {stories.map(story => (
+                    <div className='flex-col-ctr' style={{marginLeft:'10px'}}  key={story?.storyID}>
+                        <StoryHead story={story} allData={stories} index={index++} updatedCallback={updatedCallback}/>
+                        <p style={{fontSize:'14px'}}>{story?.username}</p>
+                    </div>
+                ))}
             </div>
             {margin > 0 && <div className='stories-btn-left flex-ctr' onClick={()=>setMargin(margin > 0 ? margin-100 : 0)}><i className="fas fa-chevron-left"></i></div>}
             <div className='stories-btn-right flex-ctr' onClick={()=>setMargin(margin+100 > width ? margin :margin+100)}><i className="fas fa-chevron-right"></i></div>

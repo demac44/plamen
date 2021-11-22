@@ -8,8 +8,8 @@ import Loader from '../../components/UI/Loader'
 
 
 const GET_SAVED = gql`
-    query ($userID: Int!){
-        get_saves(userID:$userID){
+    query ($userID: Int!, $offset: Int, $limit: Int){
+        get_saves(userID:$userID, offset:$offset, limit:$limit){
             postID
             post_text
             date_posted
@@ -46,8 +46,12 @@ const Saved = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [leftnav, setLeftnav] = useState(false)
 
-    const {loading, data, error, refetch} = useQuery(GET_SAVED, { 
-        variables: {userID: ls.userID},
+    const {loading, data, error, refetch, fetchMore} = useQuery(GET_SAVED, { 
+        variables: {
+            userID: ls.userID,
+            offset:0,
+            limit:1
+        },
     })
     const updatedCallback = useCallback(val => {
         setUpdated(val)
@@ -93,6 +97,20 @@ const Saved = ({isLogged}) => {
                         likes={post.likes}
                         updatedCallback={updatedCallback}
                         key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
+                        <button onClick={
+                            ()=> fetchMore({
+                                variables:{
+                                    offset:posts.length,
+                                    limit:2,
+                                },
+                                updateQuery: (prev, { fetchMoreResult }) => {
+                                    if (!fetchMoreResult) return prev;
+                                    return Object.assign({}, prev, {
+                                      get_saves: [...posts, ...fetchMoreResult.get_saves]
+                                    });
+                                  }
+                            })
+                        }>FETCH MORE</button>
                     </div>
                 </div>
             </div>

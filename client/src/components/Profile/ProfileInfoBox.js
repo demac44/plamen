@@ -32,8 +32,8 @@ const ProfileInfoBox = ({info, updatedCallback}) => {
                 )} 
             </div>
             {openStory && <Story 
-                info={info.user} 
-                data={info} 
+                userInfo={info.user} 
+                allData={info} 
                 i={0} 
                 isProfile={true}
                 closeStoryCallback={closeStoryCallback}

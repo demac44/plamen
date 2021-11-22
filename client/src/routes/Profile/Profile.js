@@ -110,6 +110,7 @@ const FETCH_INFO_MYPROFILE = gql`
             profile_picture
         }
         get_user_stories (userID: $userID){
+            userID
             storyID
             type
             url

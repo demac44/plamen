@@ -73,9 +73,8 @@ const Post = ({isLogged}) => {
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'> 
-                <div className={isLogged ? 'main' : 'main flex-ctr'} >
+                <div className='single-post-main flex-col-ctr' >
                     {isLogged && <LeftNavbar show={leftnav}/>}
-                    <div className='posts-container-feed'>
                     <h2 style={styles.title}>Post by @{post.username}</h2>
                     <PostComp post={{
                             postID: post.postID,
@@ -89,10 +88,9 @@ const Post = ({isLogged}) => {
                             username: post.username,
                             profile_picture: post.profile_picture
                         }} comments={post.comments}
-                        callback={updatedCallback}
+                        updatedCallback={updatedCallback}
                         likes={post.likes}
                         key={post.postID}/>
-                    </div>
                 </div>
             </div>
         </> 
@@ -104,7 +102,7 @@ export default Post
 
 const styles = {
     title:{
-        width:'100%',
+        width:'60%',
         padding:'20px',
         backgroundColor:'#111827',
         color:'white',

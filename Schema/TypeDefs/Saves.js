@@ -9,5 +9,7 @@ export const SavesType = new GraphQLObjectType({
     fields: ()=>({
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
+        limit: {type:GraphQLInt},
+        offset: {type:GraphQLInt}
     })
 })

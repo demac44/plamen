@@ -34,6 +34,8 @@ export const FeedPostType = new GraphQLObjectType({
         last_name:{type:GraphQLString},
         profile_picture: {type: GraphQLString},
         comments: {type: new GraphQLList(GetCommentType)},
-        likes: {type: new GraphQLList(LikesType)}
+        likes: {type: new GraphQLList(LikesType)},
+        limit: {type:GraphQLInt},
+        offset: {type:GraphQLInt}
     })
 })
