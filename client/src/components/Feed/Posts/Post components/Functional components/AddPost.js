@@ -57,6 +57,8 @@ const AddPost = ({width, updatedCallback}) => {
                             url: res.data.url
                         }
                     }).then(()=>{
+                        setVideo(null)
+                        setImage(null )
                         setAdded(true)
                         setLoading(false)
                         setImageUpload(false)

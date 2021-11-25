@@ -50,7 +50,7 @@ const Saved = ({isLogged}) => {
         variables: {
             userID: ls.userID,
             offset:0,
-            limit:1
+            limit:20
         },
     })
     const updatedCallback = useCallback(val => {
@@ -77,7 +77,23 @@ const Saved = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper'>
+            <div className='wrapper' onLoad={()=>{
+                window.onscroll = ()=>{
+                    if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                        fetchMore({
+                            variables:{
+                                offset:posts.length,
+                            },
+                            updateQuery: (prev, { fetchMoreResult }) => {
+                                if (!fetchMoreResult) return prev;
+                                return Object.assign({}, prev, {
+                                  get_saves: [...posts, ...fetchMoreResult.get_saves]
+                                });
+                              }
+                        })
+                    }
+                }
+            }}>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>
@@ -97,20 +113,6 @@ const Saved = ({isLogged}) => {
                         likes={post.likes}
                         updatedCallback={updatedCallback}
                         key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
-                        <button onClick={
-                            ()=> fetchMore({
-                                variables:{
-                                    offset:posts.length,
-                                    limit:2,
-                                },
-                                updateQuery: (prev, { fetchMoreResult }) => {
-                                    if (!fetchMoreResult) return prev;
-                                    return Object.assign({}, prev, {
-                                      get_saves: [...posts, ...fetchMoreResult.get_saves]
-                                    });
-                                  }
-                            })
-                        }>FETCH MORE</button>
                     </div>
                 </div>
             </div>

@@ -11,8 +11,8 @@ import Loader from '../../components/UI/Loader'
 
 
 const FEED_POSTS = gql`
-    query ($userID: Int!){
-        feed_posts (userID: $userID){
+    query ($userID: Int!, $limit: Int, $offset: Int){
+        feed_posts (userID: $userID, limit: $limit, offset: $offset){
             postID
             post_text
             date_posted
@@ -62,9 +62,11 @@ const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
     const [leftnav, setLeftnav] = useState(false)
-    const {loading, data, error, refetch} = useQuery(FEED_POSTS, {
+    const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
             userID: ls.userID,
+            limit:20,
+            offset:0
         },
         
     })
@@ -95,7 +97,23 @@ const Feed = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper'>
+            <div className='wrapper' onLoad={()=>{
+                window.onscroll = ()=>{
+                 if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                     fetchMore({
+                         variables:{
+                             offset:posts.length,
+                         },
+                         updateQuery: (prev, { fetchMoreResult }) => {
+                             if (!fetchMoreResult) return prev;
+                             return Object.assign({}, prev, {
+                               feed_posts: [...posts, ...fetchMoreResult.feed_posts]
+                             });
+                           }
+                     })
+                 }
+                }
+            }}>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='posts-container-feed'>

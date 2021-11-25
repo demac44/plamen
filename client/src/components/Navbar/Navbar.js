@@ -9,19 +9,50 @@ import SearchBar from './SearchBar'
 
 import {Link} from 'react-router-dom'
 
+
+import { useSubscription, useQuery } from 'react-apollo'
+import { gql } from 'graphql-tag'
+
+const NEW_MESSAGE = gql`
+    subscription {
+        newMsgNotification {
+            chatID
+            sender_id
+            receiver_id
+            Nid
+        }
+    }
+`
+
+const COUNT_MSGS = gql`
+    query($rid:Int!){
+        count_newMsgs(receiver_id: $rid){
+            msgCount 
+        }
+    }
+`
+
 const Navbar = ({callback, isLogged}) => {
-    let ls = JSON.parse(localStorage.getItem('user')) 
+    const ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
     const [leftnav, setLeftNav] = useState(false)
+    const {data} = useSubscription(NEW_MESSAGE)
+    const [NotNo, setNotNo] = useState(0)
+    const count = useQuery(COUNT_MSGS, {
+        variables:{rid: ls.userID}
+    })
 
     const handleDropdown = () => {
         setDropdown(!dropdown)
     }
 
     useEffect(()=>{
+        count.refetch()
+        setNotNo(!count.loading && count?.data.count_newMsgs?.msgCount)
         callback(leftnav)
         closeDropdown()
-    }, [callback, leftnav])
+        // if(!count.data) count.refetch()
+    }, [callback, leftnav, count.data, data]) 
     
     const callbackDropdown = useCallback(val => {
         setDropdown(val)
@@ -45,7 +76,9 @@ const Navbar = ({callback, isLogged}) => {
                 <div className="tn-right">
                 {isLogged ?
                 <>
-                    <Link to='/chats'>
+                    <Link to='/chats' style={{position:'relative'}}>
+                        {(!count.loading && (count.data.count_newMsgs.msgCount > 0 && 
+                        <div style={styles.count}>{NotNo}</div>))}
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>
                     </Link>
                     <div style={styles.avatar} onClick={handleDropdown}> 
@@ -79,5 +112,15 @@ const styles = {
         color:'#1f1f1f',
         fontSize:'16px',
         fontWeight:'bold'
+    },
+    count:{
+        backgroundColor:'red',
+        color:'white',
+        padding:'2px 5px',
+        position:'absolute',
+        top:'-5px',
+        right:'10px',
+        borderRadius:'50%',
+        fontSize:'13px'
     }
 }

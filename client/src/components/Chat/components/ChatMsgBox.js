@@ -4,7 +4,7 @@ import Message from './Message'
 
 
 import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
 import Loader from '../../UI/Loader'
  
@@ -33,11 +33,20 @@ const NEW_MESSAGE = gql`
         }
     }
 `
+const SEEN = gql`
+    mutation($cid: Int!, $rid: Int!){
+        seen(chatID: $cid, receiver_id: $rid){
+            chatID
+        }
+    }
+`
 
 
 const ChatMsgBox = ({chatid, info}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [dateCreated, setDateCreated] = useState('') 
     const [loader, setLoader] = useState(false)
+    const [seen] = useMutation(SEEN)
     const {data, loading, subscribeToMore, error} = useQuery(GET_MESSAGES, {
         variables: {chatID: parseInt(chatid)},
     })
@@ -66,12 +75,22 @@ const ChatMsgBox = ({chatid, info}) => {
             }});
         }
         subscribeNewMessage()
-    }, [chatid, subscribeToMore])           
+    }, [chatid, subscribeToMore])        
+    
+    const handleSeen = () =>{
+        seen({
+            variables:{
+                cid: parseInt(chatid),
+                rid: ls.userID
+            }
+        })
+    }
     
     useEffect(()=>{
         let date = Date.parse(info.date_created)  
         date && (date = new Date(date).toDateString())  
         setDateCreated(date)
+        handleSeen()
     }, [data, info?.date_created])
       
     if(error) console.log(error); 
@@ -86,7 +105,7 @@ const ChatMsgBox = ({chatid, info}) => {
                 {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 <div className='chat-date-created'><p>This chat started on {dateCreated}</p></div>
             </div>
-            <SendMsg chatid={chatid} loaderCallback={loaderCallback}/> 
+            <SendMsg chatid={chatid} info={info} loaderCallback={loaderCallback}/> 
         </>}
         </div>
     )

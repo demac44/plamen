@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
-import { ChatMessagesType, ChatType } from "../TypeDefs/Chat.js"
+import { ChatMessagesType, ChatType, MsgNotificationType } from "../TypeDefs/Chat.js"
 import { pubsub } from '../schema.js';
 
 
@@ -60,6 +60,37 @@ export const DELETE_MESSAGE = {
     resolve(_, args){
         const {msgID} = args
         const sql = `DELETE FROM messages WHERE msgID=${msgID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const MSG_NOTIFICATION = {
+    type:MsgNotificationType,
+    args:{
+        sender_id: {type:GraphQLInt},
+        receiver_id: {type:GraphQLInt},
+        chatID: {type:GraphQLInt}      
+    },
+    resolve(_, args){
+        const {sender_id, receiver_id, chatID} = args
+        const sql = `INSERT INTO msg_notifications (Nid, sender_id, receiver_id, chatID)
+                        VALUES (null, ${sender_id}, ${receiver_id}, ${chatID})`
+        const result = connection.query(sql)
+        pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender_id, receiver_id, chatID, Nid:result.insertId}})
+        return args
+    }
+}
+
+export const SEEN = {
+    type:ChatMessagesType,
+    args: {
+        chatID:{type:GraphQLInt},
+        receiver_id:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {chatID, receiver_id} = args
+        const sql = `DELETE FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}`
         connection.query(sql)
         return args
     }

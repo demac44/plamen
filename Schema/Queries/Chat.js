@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLList } from 'graphql';
 import connection from '../../middleware/db.js'
-import { ChatListType, ChatMessagesType, ChatType } from '../TypeDefs/Chat.js';
+import { ChatListType, ChatMessagesType, ChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
 export const CHAT_EXISTS = {
     type: ChatType,
@@ -78,5 +78,32 @@ export const GET_CHAT_MEDIA = {
         const sql = `SELECT msgID, userID, url, type FROM messages WHERE chatID=${chatID} AND type="image" OR type="video"`
         const result = connection.query(sql)
         return result
+    }
+}
+
+export const COUNT_ALL_MSGS = {
+    type: MsgNotificationType,
+    args:{
+        receiver_id:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {receiver_id} = args
+        const sql = `SELECT COUNT(Nid) AS msgCount FROM msg_notifications WHERE receiver_id=${receiver_id}`
+        const result = connection.query(sql)
+        return result[0]
+    }
+}
+
+export const COUNT_MSGS = {
+    type:MsgNotificationType,
+    args: {
+        chatID:{type:GraphQLInt},
+        receiver_id:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {chatID, receiver_id} = args
+        const sql = `SELECT COUNT(Nid) as msgCount FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}`
+        const result = connection.query(sql)
+        return result[0]
     }
 }

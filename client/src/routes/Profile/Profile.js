@@ -13,8 +13,8 @@ import { useParams } from 'react-router'
 import Loader from '../../components/UI/Loader'
 
 const FETCH_INFO= gql`
-    query ($userID: Int!){
-        posts(userID: $userID){
+    query ($userID: Int!, $limit: Int, $offset: Int){
+        posts(userID: $userID, limit: $limit, offset: $offset){
             postID
             post_text
             date_posted
@@ -71,8 +71,8 @@ const FETCH_INFO= gql`
     }`
 
 const FETCH_INFO_MYPROFILE = gql`
-    query posts ($userID: Int!){
-        posts(userID: $userID){
+    query ($userID: Int!, $limit: Int, $offset: Int){
+        posts(userID: $userID, limit: $limit, offset: $offset){
             postID
             post_text
             date_posted
@@ -128,8 +128,12 @@ const Profile = ({myprofile, isLogged}) => {
     
     const userID = parseInt(id)
 
-    const {loading, error, data, refetch} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
-        variables: {userID: myprofile ? ls.userID : userID}
+    const {loading, error, data, refetch, fetchMore} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
+        variables: {
+            userID: myprofile ? ls.userID : userID,
+            limit:20,
+            offset:0
+        }
     })
 
     const updatedCallback = useCallback(val => {
@@ -164,7 +168,23 @@ const Profile = ({myprofile, isLogged}) => {
     return ( 
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper'> 
+            <div className='wrapper' onLoad={()=>{
+                window.onscroll = ()=>{
+                 if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                     fetchMore({
+                         variables:{
+                             offset:posts.length,
+                         },
+                         updateQuery: (prev, { fetchMoreResult }) => {
+                             if (!fetchMoreResult) return prev;
+                             return Object.assign({}, prev, {
+                               posts: [...posts, ...fetchMoreResult.posts]
+                             });
+                           }
+                     })
+                 }
+                }
+            }}> 
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='profile-container'>

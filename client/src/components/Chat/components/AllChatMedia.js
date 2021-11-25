@@ -47,6 +47,7 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
 
             <div className='chat-all-media-box'>
                 {data.get_chat_media.map(media => <div
+                        key={media.msgID}
                         className='chat-media-card flex-ctr'
                         onClick={()=>{setUrl(media.url)}}
                     ><img src={media.url}></img></div>)}

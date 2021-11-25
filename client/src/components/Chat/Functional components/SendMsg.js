@@ -11,10 +11,19 @@ const SEND_MSG = gql`
     }
 `
 
+const MSG_NOTIFICATION = gql`
+    mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
+        msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
+            chatID
+        }
+    }
+`
 
-const SendMsg = ({chatid, loaderCallback}) => {
+
+const SendMsg = ({chatid, loaderCallback, info}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [send_msg] = useMutation(SEND_MSG)
+    const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState(null)
 
@@ -41,12 +50,19 @@ const SendMsg = ({chatid, loaderCallback}) => {
                             type: media.type.slice(0,5),
                             url: res.data.url
                         }
-                }).then(()=>{
-                    setMedia(null)
-                    e.target.msg_text.value = ''
-                    loaderCallback(false)
-                }
-                )
+                        }).then(()=>{
+                            msg_notification({
+                                variables:{
+                                    sid: ls.userID,
+                                    rid: info.userID,
+                                    chatID: parseInt(chatid)
+                                }
+                            })
+                        }).then(()=>{
+                            setMedia(null)
+                            e.target.msg_text.value = ''
+                            loaderCallback(false)
+                        })
             })
         } else {
             send_msg({
@@ -57,9 +73,18 @@ const SendMsg = ({chatid, loaderCallback}) => {
                     type:'text',
                     url: 'null'
                 }
-        }).then(()=>{
-            e.target.msg_text.value = ''
-        })
+                }).then(()=>{
+                    msg_notification({
+                        variables:{
+                            sid: ls.userID,
+                            rid: info.userID,
+                            chatID: parseInt(chatid)
+                        },
+                        
+                    })
+                }).then(()=>{
+                    e.target.msg_text.value = ''
+                })
     }}
 
     const clearFiles = () => {

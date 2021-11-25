@@ -43,3 +43,14 @@ export const ChatListType = new GraphQLObjectType({
         type: {type: GraphQLString}
     })
 })
+
+export const MsgNotificationType = new GraphQLObjectType({
+    name:'MsgNotification',
+    fields:()=>({
+        Nid: {type: GraphQLInt},
+        chatID: {type: GraphQLInt},
+        sender_id: {type: GraphQLInt},
+        receiver_id: {type: GraphQLInt},
+        msgCount:{type:GraphQLInt}
+    })
+})
