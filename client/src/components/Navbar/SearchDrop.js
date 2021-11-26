@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import UserSearchBar from './UserSearchBar'
 
 const SearchDrop = ({data, val, chat}) => {
-    const [regex, setRegex] = useState('')
+    const [regex, setRegex] = useState(null)
     const [users, setUsers] = useState([])
 
     const setusers = () => {
         let arr=[]
-        data.users.map(user => 
+        regex && data.users.map(user => 
             (user.first_name.match(regex)
             || user.last_name.match(regex)
             || user.username.match(regex)
@@ -22,12 +22,12 @@ const SearchDrop = ({data, val, chat}) => {
     useEffect(()=>{
         setRegex(new RegExp(escape(val), 'gi'))
         setusers() 
-    }, [val, data.users])
+    }, [val])
 
 
     return (
         <div className='search-drop'>
-            {users.slice(0,10).map(user => <UserSearchBar chat={chat} user={user} key={user.userID}/>)}
+            {users.map(user => <UserSearchBar chat={chat} user={user} key={user.userID}/>)}
             {(users.length > 0 && !chat) && <Link to={'/search/'+val}><p className='see-all-btn'>See all</p></Link>}
         </div>
     )

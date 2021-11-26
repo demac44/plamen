@@ -6,8 +6,8 @@ import SearchDrop from './SearchDrop'
 
 
 const SEARCH_USERS = gql`
-    query {
-         users{
+    query ($limit: Int, $offset: Int) {
+         users (limit: $limit, offset: $offset){
             userID
             first_name
             last_name
@@ -19,7 +19,12 @@ const SEARCH_USERS = gql`
 const SearchBar = ({chat, isLogged}) => {
     const [dropdown, setDropdown] = useState(false)
     const [val, setVal] = useState('')
-    const {loading, error, data} = useQuery(SEARCH_USERS)
+    const {loading, error, data} = useQuery(SEARCH_USERS, {
+        variables:{
+            limit:10,
+            offset:0
+        }
+    })
 
     useEffect(()=>{
         !chat && document.querySelector('.wrapper').addEventListener('click', ()=>setVal('')) 

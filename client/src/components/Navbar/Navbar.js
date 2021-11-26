@@ -51,7 +51,6 @@ const Navbar = ({callback, isLogged}) => {
         setNotNo(!count.loading && count?.data.count_newMsgs?.msgCount)
         callback(leftnav)
         closeDropdown()
-        // if(!count.data) count.refetch()
     }, [callback, leftnav, count.data, data]) 
     
     const callbackDropdown = useCallback(val => {

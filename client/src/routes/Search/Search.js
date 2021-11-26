@@ -10,8 +10,8 @@ import Loader from '../../components/UI/Loader'
 import LeftNavbar from '../../components/UI/LeftNavbar.js'
 
 const SEARCH_USERS = gql`
-    query {
-         users{
+    query ($limit: Int, $offset: Int) {
+         users (limit: $limit, offset: $offset){
             userID
             first_name
             last_name
@@ -26,13 +26,19 @@ const Search = ({isLogged}) => {
     const [regex, setRegex] = useState('')
     const [users, setUsers] = useState([])
     const [leftnav, setLeftnav] = useState(false)
+    const [fetch, setFetch] = useState(true)
 
     const leftNavCallback = useCallback(val =>{
         setLeftnav(val)
     }, [setLeftnav])
 
 
-    const {loading, data, error} = useQuery(SEARCH_USERS)
+    const {loading, data, error, fetchMore} = useQuery(SEARCH_USERS, {
+        variables:{
+            limit:15,
+            offset:0
+        }
+    })
     
     const setusers = () => {
         let arr=[]
@@ -64,6 +70,23 @@ const Search = ({isLogged}) => {
                     <div className='search-container'>
                         <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+                        {fetch && <div style={styles.loadMore} onClick={()=>{
+                            fetchMore({
+                                variables:{
+                                    offset:users.length,
+                                },
+                                updateQuery: (prev, { fetchMoreResult }) => {
+                                    if (!fetchMoreResult) return prev;
+                                    if(fetchMoreResult.users.length < 1) {
+                                        setFetch(false)
+                                        return
+                                    }
+                                    return Object.assign({}, prev, {
+                                      users: [...users, ...fetchMoreResult.users]
+                                    });
+                                  }
+                            })
+                        }}>Load more</div>}
                     </div>
                 </div>
             </div>
@@ -82,6 +105,14 @@ const styles = {
         backgroundColor:'#111827',
         textAlign:'center',
         borderRadius:'10px'
-
+    },
+    loadMore:{
+        width:'100%',
+        padding:'5px',
+        textAlign:'center',
+        backgroundColor:'#aaa',
+        cursor:'pointer'
     }
 }
+
+

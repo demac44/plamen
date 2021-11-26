@@ -16,6 +16,8 @@ export const UserType = new GraphQLObjectType({
         gender: {type: GraphQLString},
         birth_date: {type: GraphQLString},
         date_registered: {type: GraphQLString},
-        profile_picture: {type: GraphQLString}
+        profile_picture: {type: GraphQLString},
+        limit: {type:GraphQLInt},
+        offset: {type:GraphQLInt},
     })
 })
