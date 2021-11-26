@@ -10,14 +10,15 @@ import Loader from '../../UI/Loader'
  
 
 const GET_MESSAGES = gql`
-    query ($chatID: Int!){
-        get_messages (chatID: $chatID){
+    query ($chatID: Int!, $limit: Int, $offset: Int){
+        get_messages (chatID: $chatID, limit: $limit, offset: $offset){
             chatID
             msgID
             msg_text
             userID
             type
             url
+            time_sent
         }
     }
 `
@@ -44,11 +45,15 @@ const SEEN = gql`
 
 const ChatMsgBox = ({chatid, info}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [dateCreated, setDateCreated] = useState('') 
     const [loader, setLoader] = useState(false)
+    const [fetchBtn, setFetchBtn] = useState(true)
     const [seen] = useMutation(SEEN)
-    const {data, loading, subscribeToMore, error} = useQuery(GET_MESSAGES, {
-        variables: {chatID: parseInt(chatid)},
+    const {data, loading, subscribeToMore, error, fetchMore} = useQuery(GET_MESSAGES, {
+        variables: {
+            chatID: parseInt(chatid),
+            limit:50,
+            offset:0
+        },
     })
 
     const loaderCallback = useCallback(val => {
@@ -87,11 +92,27 @@ const ChatMsgBox = ({chatid, info}) => {
     }
     
     useEffect(()=>{
-        let date = Date.parse(info.date_created)  
-        date && (date = new Date(date).toDateString())  
-        setDateCreated(date)
         handleSeen()
-    }, [data, info?.date_created])
+    }, [data])
+
+
+    const handleFetchMore = () => {
+        fetchMore({
+            variables:{
+                offset:data?.get_messages?.length,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if(fetchMoreResult.get_messages.length < 1) {
+                    setFetchBtn(false)
+                    return
+                }
+                return Object.assign({}, prev, {
+                  get_messages: [...data.get_messages, ...fetchMoreResult.get_messages]
+                });
+            }
+        })
+    }
       
     if(error) console.log(error); 
 
@@ -103,7 +124,7 @@ const ChatMsgBox = ({chatid, info}) => {
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr' style={styles.loader}><Loader size='small'/></div>}
                 {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
-                <div className='chat-date-created'><p>This chat started on {dateCreated}</p></div>
+                {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendMsg chatid={chatid} info={info} loaderCallback={loaderCallback}/> 
         </>}
@@ -122,5 +143,13 @@ const styles = {
         alignSelf:'flex-end',
         marginTop:'20px',
         zIndex:'1'
+    },
+    loadMore:{
+        width:'100%',
+        padding:'5px',
+        backgroundColor:'#aaa',
+        textAlign:'center',
+        cursor:'pointer',
+        fontWeight:'bold'
     }
 }

@@ -43,11 +43,13 @@ export const GET_CHAT_LIST = {
 export const GET_MESSAGES = {
     type: new GraphQLList(ChatMessagesType),
     args: {
-        chatID: {type: GraphQLInt}
+        chatID: {type: GraphQLInt},
+        limit: {type: GraphQLInt},
+        offset: {type: GraphQLInt},
     },
     resolve(_, args) {
-        const {chatID} = args
-        const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC`  
+        const {chatID, limit, offset} = args
+        const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT ${limit} OFFSET ${offset}`  
         const result = connection.query(sql)
         return result
     }

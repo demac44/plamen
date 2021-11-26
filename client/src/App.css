@@ -1032,6 +1032,7 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
 }
 .msg-wrapper-ou{
     justify-content: flex-start;
+    align-items: center;
 }
 .msg{
     width: fit-content;

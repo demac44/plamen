@@ -24,7 +24,9 @@ export const ChatMessagesType = new GraphQLObjectType({
         time_sent: {type: GraphQLString},
         msg_text: {type: GraphQLString},
         url: {type: GraphQLString},
-        type: {type: GraphQLString}
+        type: {type: GraphQLString},
+        limit: {type: GraphQLInt},
+        offset: {type: GraphQLInt}
     })
 })
 
