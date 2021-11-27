@@ -19,19 +19,26 @@ const UNFOLLOW = gql`
         }
     }
 `
-
-
 const IF_FOLLOWING = gql`
     query ($followerID: Int!, $followedID: Int!){
         ifFollowing(followerID: $followerID, followedID: $followedID)
     }
 `
+const FOLLOW_NOTIFICATION = gql`
+    mutation ($rid: Int!, $sid: Int!){
+        follow_notification(receiver_id: $rid, sender_id: $sid){
+            receiver_id
+        }
+    }
+`
 
-const FollowBtn = ({uID}) => {
+
+const FollowBtn = ({uID, notifications}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [isFollowing, setIsFollowing] = useState(false) 
     const [follow] = useMutation(FOLLOW)
     const [unfollow] = useMutation(UNFOLLOW)
+    const [follow_notification] = useMutation(FOLLOW_NOTIFICATION)
 
     
     const {id} = useParams()
@@ -58,7 +65,14 @@ const FollowBtn = ({uID}) => {
                 followerID: ls.userID,
                 followedID: userID || uID
             }
-        }).then(()=>setIsFollowing(true))
+        })
+        .then(()=>setIsFollowing(true))
+        .then(()=>follow_notification({
+            variables:{
+                rid: userID,
+                sid: ls.userID
+            }
+        }))
     }
 
     const handleUnfollow = () => {
@@ -70,7 +84,7 @@ const FollowBtn = ({uID}) => {
         }).then(()=>setIsFollowing(false))
     }
     return (
-        <div className="pf-edit-follow-btn" 
+        <div className={notifications ? "follow-btn-notifications" : "pf-edit-follow-btn"} 
             onClick={() => isFollowing ? handleUnfollow() : handleFollow()}>
             <p>{isFollowing ? 'Unfollow' : 'Follow'}</p> 
         </div>

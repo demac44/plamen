@@ -11,7 +11,7 @@ import { ADD_COMMENT, DELETE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
-import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, LIKE_NOTIFICATION } from "./Mutations/Notifications.js";
+import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
@@ -79,6 +79,7 @@ const RootMutation = new GraphQLObjectType({
         seen: SEEN,
         like_notification: LIKE_NOTIFICATION,
         comment_notification: COMM_NOTIFICATION,
+        follow_notification: FOLLOW_NOTIFICATION,
         clear_notifications: CLEAR_NOTIFICATIONS
     }
 })

@@ -36,7 +36,7 @@ const COUNT_MSGS = gql`
 const Navbar = ({callback, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
-    const [notifications, setNotificiations] = useState(true)
+    const [notifications, setNotificiations] = useState(false)
     const [leftnav, setLeftNav] = useState(false)
     const {data} = useSubscription(NEW_MESSAGE)
     const [NotNo, setNotNo] = useState(0)
@@ -46,6 +46,7 @@ const Navbar = ({callback, isLogged}) => {
 
     const handleDropdown = () => {
         setDropdown(!dropdown)
+        setNotificiations(false)
     }
 
     useEffect(()=>{
@@ -62,7 +63,9 @@ const Navbar = ({callback, isLogged}) => {
     }, [setDropdown])
 
     const closeDropdown = () => {
-        document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
+        document.querySelector('.wrapper').addEventListener('click', () => {
+            setNotificiations(false)
+            setDropdown(false)})
         return
     }
     
@@ -80,7 +83,7 @@ const Navbar = ({callback, isLogged}) => {
                 {isLogged ?
                 <>
                     <i style={{...styles.inboxBtn, marginTop:'-13px'}} 
-                        onClick={()=>setNotificiations(!notifications)} 
+                        onClick={()=>{setNotificiations(!notifications);setDropdown(false)}} 
                         className="fas fa-sort-down"></i>
                     <Link to='/chats' style={{position:'relative'}}>
                         {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 

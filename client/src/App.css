@@ -346,6 +346,18 @@
     cursor: pointer;
     background-color: whitesmoke;
 }
+.follow-btn-notifications{
+    padding: 4px 10px;
+    background-color: #c7c7c7;
+    text-align: center;
+    border-radius: 30px;
+    margin-left: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.follow-btn-notifications p{
+    margin: 0 !important;
+}
 .pf-editpf-btn:hover{
     background-color: #a8a8a8;
 }

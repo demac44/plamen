@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import Avatar from '../UI/Avatar'
-import {Link} from 'react-router-dom'
+import React from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -15,6 +13,7 @@ const GET_NOTIFICATIONS = gql`
             type
             postID
             time_sent
+            sender_id
         }
     }
 `
@@ -29,7 +28,7 @@ const CLEAR_NOTIFICATIONS = gql`
 
 const NotficationsMenu = ({visible}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [clear_notifications, l] = useMutation(CLEAR_NOTIFICATIONS)
+    const [clear_notifications] = useMutation(CLEAR_NOTIFICATIONS)
     const {data, loading, refetch} = useQuery(GET_NOTIFICATIONS, {
         variables:{
             uid: ls.userID

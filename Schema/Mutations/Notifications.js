@@ -10,7 +10,7 @@ export const LIKE_NOTIFICATION = {
         receiver_id: {type: GraphQLInt},
     },
     resolve(_, args) {
-        const {postID, sender_id, receiver_id, type} = args
+        const {postID, sender_id, receiver_id} = args
         const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
                         VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "like")`
         connection.query(sql)
@@ -26,9 +26,24 @@ export const COMM_NOTIFICATION = {
         receiver_id: {type: GraphQLInt},
     },
     resolve(_, args) {
-        const {postID, sender_id, receiver_id, type} = args
+        const {postID, sender_id, receiver_id} = args
         const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
                         VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const FOLLOW_NOTIFICATION = {
+    type: NotificationType,
+    args: {
+        sender_id: {type: GraphQLInt},
+        receiver_id: {type: GraphQLInt},
+    },
+    resolve(_, args) {
+        const {sender_id, receiver_id} = args
+        const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
+                        VALUES (null, ${sender_id}, ${receiver_id}, null, null, "follow")`
         connection.query(sql)
         return args
     }

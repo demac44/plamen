@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../UI/Avatar'
+import FollowBtn from '../Profile/Functional components/FollowBtn'
+
 
 const NotificationBox = ({n}) => {
     const [time, setTime] = useState(null)
@@ -25,18 +27,23 @@ const NotificationBox = ({n}) => {
 
 
     return (
-        <Link to={'/post/'+n.postID} className='notification-box' key={n.Nid}>
-            <span className='flex-ctr'>
+        <div className='notification-box' key={n.Nid}>
+            <Link to={n.type==='follow' ? '/profile/'+n.sender_id : '/post/'+n.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
                     <Avatar height='100%' width='50px' pfp={n.profile_picture}/>
                     {n.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
                     {n.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
+                    {n.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}
                 </span>
-                {n.type==='like' && <p>{'@'+n.username+' liked your post.'}</p>}
-                {n.type==='comment' && <p>{'@'+n.username+' commented on your post.'}</p>}
-            </span>
-            <h5>{time}</h5>
-        </Link>
+                {n.type==='like' && <p>{'@'+n.username+' liked your post'}</p>}
+                {n.type==='comment' && <p>{'@'+n.username+' commented on your post'}</p>}
+                {n.type==='follow' && <div className='flex-ctr'><p>{'@'+n.username+' followed you'}</p></div>}
+            </Link>
+            <div>
+                <h5>{time}</h5>
+                {n.type==='follow' && <FollowBtn uID={n.sender_id} notifications={true}/>}
+            </div>
+        </div>
     )
 }
 
@@ -57,5 +64,12 @@ const styles = {
         right:'-5px',
         fontSize:'20px',
         color:'#14578d'
+    },
+    typeIconFoll:{
+        position:'absolute',
+        top:'0',
+        right:'-5px',
+        fontSize:'20px',
+        color:'#008607'
     },
 }
