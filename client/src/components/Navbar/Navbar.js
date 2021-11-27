@@ -107,7 +107,7 @@ const styles = {
     inboxBtn: {
         fontSize: '30px',
         color:'white',
-        marginRight: '25px',
+        marginRight: '20px',
         cursor:'pointer'
     },
     avatar: {

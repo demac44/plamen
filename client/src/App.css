@@ -1242,14 +1242,19 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     border: 1px solid #111827;
     max-height: 70vh;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .notification-box{
+    position: relative;
     width: 100%;
     min-height: 60px;
     padding: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-right: 55px;
 }
 .notification-box:hover{
     background-color: #ececec;
@@ -1260,6 +1265,9 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     color: black;
 }
 .notification-box h5{
+    position: absolute;
+    top: 21px;
+    right: 10px;
     color: black;
 }
 
@@ -1275,6 +1283,10 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .edit-pf-box{
         width: 120%;
         margin-left: 30px;
+    }
+    /* NOTIFICATIONS */
+    .notifications-container{
+        width: 30vw;
     }
 }
 
@@ -1399,6 +1411,10 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .chat-all-media-box{
         grid-template-columns: 1fr 1fr 1fr;
     }    
+    /* NOTIFICATIONS */
+    .notifications-container{
+        width: 35vw;
+    }
 }
 
 
@@ -1495,7 +1511,19 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .chat-all-media-box{
         grid-template-columns: 1fr 1fr 1fr;
     }    
+    /* NOTIFICATIONS */
+    .notifications-container{
+        width: 55vw;
+    }
 }   
+
+@media screen and (max-width:580px){
+    .notifications-container{
+        right: 20px;
+        width: 80vw;
+        height: 100vh;
+    }
+}
 
 @media screen and (max-width: 447px){
     /* ENTRY */
@@ -1621,6 +1649,12 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
         grid-template-columns: 1fr 1fr;
         height: 150px;
     }    
+    /* NOTIFICATIONS */
+    .notifications-container{
+        right: 0;
+        width: 100vw;  
+        min-height: calc(100vh - 60px);
+    }
 }
 
 

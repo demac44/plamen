@@ -33,3 +33,16 @@ export const COMM_NOTIFICATION = {
         return args
     }
 }
+
+export const CLEAR_NOTIFICATIONS = {
+    type: NotificationType,
+    args:{
+        receiver_id:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {receiver_id} = args
+        const sql = `DELETE FROM notifications WHERE receiver_id=${receiver_id}`
+        connection.query(sql)
+        return args
+    }
+}
