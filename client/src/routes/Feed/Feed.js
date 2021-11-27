@@ -91,8 +91,8 @@ const Feed = ({isLogged}) => {
     if(loading) return <div className='wh-100'><Loader/></div>
     if(error) console.log(error); 
 
-    const posts = data.feed_posts
-    const stories = data.get_stories
+    const posts = data?.feed_posts
+    const stories = data?.get_stories
 
     return (
         <>
@@ -107,7 +107,7 @@ const Feed = ({isLogged}) => {
                          updateQuery: (prev, { fetchMoreResult }) => {
                              if (!fetchMoreResult) return prev;
                              return Object.assign({}, prev, {
-                               feed_posts: [...posts, ...fetchMoreResult.feed_posts]
+                               feed_posts: [...posts, ...fetchMoreResult?.feed_posts]
                              });
                            }
                      })
@@ -119,7 +119,7 @@ const Feed = ({isLogged}) => {
                     <div className='posts-container-feed'>
                         <Stories stories={stories} updatedCallback={updatedCallback}/>
                         <AddPost updatedCallback={updatedCallback}/>
-                        {posts.length > 0 ? posts.map(post => <Post post={{
+                        {posts?.length > 0 ? posts?.map(post => <Post post={{
                             postID: post.postID,
                             post_text: post.post_text,
                             date_posted: post.date_posted,

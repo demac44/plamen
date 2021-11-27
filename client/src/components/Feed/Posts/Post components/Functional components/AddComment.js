@@ -12,12 +12,21 @@ const ADD_COMMENT = gql`
 `
 
 
-const AddComment = ({postID, updatedCallback, isLogged}) => {
+const NOTIFICATION = gql`
+    mutation ($postID: Int!, $sid: Int!, $rid: Int!){
+        comment_notification (postID: $postID, sender_id: $sid, receiver_id: $rid){
+            postID
+        }
+    }
+`
+
+
+const AddComment = ({postID, updatedCallback, isLogged, uid}) => {
     let comment_text;
     const user = JSON.parse(localStorage.getItem('user'))
     const [added, setAdded] = useState(false)
     const [loginPopUp, setLoginPopUp] = useState(false)
-
+    const [notification] = useMutation(NOTIFICATION)
     const [add_comment] = useMutation(ADD_COMMENT) 
 
     useEffect(()=>{
@@ -44,6 +53,14 @@ const AddComment = ({postID, updatedCallback, isLogged}) => {
             }).then(()=>{
                 e.target.comment_text.value=''
                 setAdded(true)
+            }).then(()=>{
+                notification({
+                    variables:{
+                        postID,
+                        sid: user.userID,
+                        rid: uid
+                    }
+                })
             })
         }
     }

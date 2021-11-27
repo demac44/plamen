@@ -1229,6 +1229,40 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     margin: 10px;
 }
 
+
+/* NOTIFICATIONS */
+
+.notifications-container{
+    position: absolute;
+    top: 60px;
+    right: 130px;
+    width:25vw;
+    height: auto;
+    background-color: white;
+    border: 1px solid #111827;
+    max-height: 70vh;
+    overflow: auto;
+}
+.notification-box{
+    width: 100%;
+    min-height: 60px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.notification-box:hover{
+    background-color: #ececec;
+}
+.notification-box p{
+    margin-left: 10px;
+    font-size: 14px;
+    color: black;
+}
+.notification-box h5{
+    color: black;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1200px){

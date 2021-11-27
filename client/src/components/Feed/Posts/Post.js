@@ -6,7 +6,7 @@ import InfoSave from './Post components/UI/InfoSave'
 import PostImg from './Post components/UI/PostImg'
 import PostText from './Post components/UI/PostText'
 
-const Post = ({width, post, user, comments, likes, updatedCallback}) => {
+const Post = ({post, user, comments, likes, updatedCallback}) => {
     const isLogged = useSelector(state => state?.isAuth.isAuth)
     const [showAll, setShowAll] = useState(false)
     const handleShowComm = () => {
@@ -26,7 +26,7 @@ const Post = ({width, post, user, comments, likes, updatedCallback}) => {
                 style={styles.showMorebtn}
                 onClick={handleShowComm}
                 >{showAll ? 'Show less' : 'Show more'}</p>}
-                <AddCommLike postID={post.postID} likes={likes} updatedCallback={updatedCallback} isLogged={isLogged}/>
+                <AddCommLike postID={post.postID} uid={user.userID} likes={likes} updatedCallback={updatedCallback} isLogged={isLogged}/>
             </div>
         </>
     )

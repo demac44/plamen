@@ -11,6 +11,15 @@ const LIKE_POST = gql`
         }
     }
 `
+
+const NOTIFICATION = gql`
+    mutation ($postID: Int!, $sid: Int!, $rid: Int!){
+        like_notification (postID: $postID, sender_id: $sid, receiver_id: $rid){
+            postID
+        }
+    }
+`
+
 const REMOVE_LIKE = gql`
     mutation remove_like($postID: Int!, $userID: Int!){
         remove_like(postID: $postID, userID: $userID){
@@ -19,13 +28,14 @@ const REMOVE_LIKE = gql`
     }
 `
 
-const LikePost = ({postID, likes, isLogged}) => {
+const LikePost = ({postID, likes, isLogged, uid}) => {
     const [liked, setLiked] = useState(false)
     const [count, setCount] = useState(likes.length)
     const [showLikes, setShowLikes] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
     const [like_post] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
+    const [notification] = useMutation(NOTIFICATION)
     const [loginPopUp, setLoginPopUp] = useState(false)
 
     useEffect(()=>{
@@ -52,6 +62,14 @@ const LikePost = ({postID, likes, isLogged}) => {
         }).then(() => {
             setLiked(true)
             setCount(count+1)
+        }).then(()=>{
+            notification({
+                variables:{
+                    postID,
+                    sid: user.userID,
+                    rid: uid
+                }
+            })
         })
         : setLoginPopUp(true)
     }

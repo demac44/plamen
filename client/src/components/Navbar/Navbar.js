@@ -12,6 +12,7 @@ import {Link} from 'react-router-dom'
 
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
+import NotficationsMenu from './NotficationsMenu'
 
 const NEW_MESSAGE = gql`
     subscription {
@@ -35,6 +36,7 @@ const COUNT_MSGS = gql`
 const Navbar = ({callback, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
+    const [notifications, setNotificiations] = useState(true)
     const [leftnav, setLeftNav] = useState(false)
     const {data} = useSubscription(NEW_MESSAGE)
     const [NotNo, setNotNo] = useState(0)
@@ -47,16 +49,18 @@ const Navbar = ({callback, isLogged}) => {
     }
 
     useEffect(()=>{
-        count.refetch()
-        setNotNo(!count.loading && count?.data.count_newMsgs?.msgCount)
+        setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
         callback(leftnav)
         closeDropdown()
+        if(count){
+            count?.refetch()
+        }
     }, [callback, leftnav, count.data, data]) 
     
     const callbackDropdown = useCallback(val => {
         setDropdown(val)
     }, [setDropdown])
-    
+
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => setDropdown(false))
         return
@@ -75,15 +79,19 @@ const Navbar = ({callback, isLogged}) => {
                 <div className="tn-right">
                 {isLogged ?
                 <>
+                    <i style={{...styles.inboxBtn, marginTop:'-13px'}} 
+                        onClick={()=>setNotificiations(!notifications)} 
+                        className="fas fa-sort-down"></i>
                     <Link to='/chats' style={{position:'relative'}}>
-                        {(!count.loading && (count.data.count_newMsgs.msgCount > 0 && 
-                        <div style={styles.count}>{NotNo}</div>))}
+                        {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
+                        <div className='flex-ctr' style={styles.count}>{NotNo}</div>))}
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>
                     </Link>
                     <div style={styles.avatar} onClick={handleDropdown}> 
                         <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
                     </div>
                     {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
+                    <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
                 </>
                     : <Link to='/login'><button style={styles.loginBtn} className='btn'>LOGIN</button></Link>}
                 </div>
@@ -99,7 +107,7 @@ const styles = {
     inboxBtn: {
         fontSize: '30px',
         color:'white',
-        marginRight: '20px',
+        marginRight: '25px',
         cursor:'pointer'
     },
     avatar: {
@@ -115,10 +123,11 @@ const styles = {
     count:{
         backgroundColor:'red',
         color:'white',
-        padding:'2px 5px',
+        width:'20px',
+        height:'20px',
         position:'absolute',
         top:'-5px',
-        right:'10px',
+        right:'15px',
         borderRadius:'50%',
         fontSize:'13px'
     }

@@ -11,6 +11,7 @@ import { ADD_COMMENT, DELETE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
+import { COMM_NOTIFICATION, LIKE_NOTIFICATION } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
@@ -18,6 +19,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
+import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
@@ -46,6 +48,7 @@ const RootQuery = new GraphQLObjectType({
         get_user_stories: GET_USER_STORIES,
         count_newMsgs: COUNT_ALL_MSGS,
         count_msgs: COUNT_MSGS,
+        get_notifications: GET_NOTIFICATIONS
     }
 })    
 
@@ -73,7 +76,9 @@ const RootMutation = new GraphQLObjectType({
         delete_message: DELETE_MESSAGE,
         post_report: POST_REPORT,
         msg_notification: MSG_NOTIFICATION,
-        seen: SEEN
+        seen: SEEN,
+        like_notification: LIKE_NOTIFICATION,
+        comment_notification: COMM_NOTIFICATION
     }
 })
 
