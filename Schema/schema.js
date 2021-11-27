@@ -25,6 +25,7 @@ import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
+import { NotificationType } from "./TypeDefs/Notifications.js";
 
 const RootQuery = new GraphQLObjectType({
     name:'RootQuery',
@@ -92,6 +93,10 @@ const RootSubscription = new GraphQLObjectType({
         newMsgNotification: {
             type: MsgNotificationType,
             subscribe: () => pubsub.asyncIterator('MSG_NOTIFICATION')
+        },
+        newNotification: {
+            type: NotificationType,
+            subscribe: () => pubsub.asyncIterator("NOTIFICATION")
         }
     }
 })

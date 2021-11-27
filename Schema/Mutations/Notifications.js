@@ -1,6 +1,8 @@
-import { GraphQLInt, GraphQLString} from "graphql"
+import { GraphQLInt } from "graphql"
 import connection from "../../middleware/db.js"
 import {NotificationType} from "../TypeDefs/Notifications.js"
+
+import { pubsub } from "../schema.js"
 
 export const LIKE_NOTIFICATION = {
     type: NotificationType,
@@ -13,7 +15,19 @@ export const LIKE_NOTIFICATION = {
         const {postID, sender_id, receiver_id} = args
         const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
                         VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "like")`
-        connection.query(sql)
+        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+        const user = connection.query(usr)
+        const result = connection.query(sql)
+        pubsub.publish('NOTIFICATION', {newNotification: {
+            sender_id, 
+            receiver_id, 
+            postID, 
+            Nid:result.insertId, 
+            type:"like", 
+            username: user[0].username,
+            profile_picture: user[0].profile_picture,
+            time_sent: new Date().toUTCString()
+        }})
         return args
     }
 }
@@ -28,8 +42,20 @@ export const COMM_NOTIFICATION = {
     resolve(_, args) {
         const {postID, sender_id, receiver_id} = args
         const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                        VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`
-        connection.query(sql)
+                        VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`   
+        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+        const user = connection.query(usr)
+        const result = connection.query(sql)
+        pubsub.publish('NOTIFICATION', {newNotification: {
+            sender_id, 
+            receiver_id, 
+            postID, 
+            Nid:result.insertId, 
+            type:"comment", 
+            username: user[0].username,
+            profile_picture: user[0].profile_picture,
+            time_sent: new Date().toUTCString()
+        }})
         return args
     }
 }
@@ -44,7 +70,18 @@ export const FOLLOW_NOTIFICATION = {
         const {sender_id, receiver_id} = args
         const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
                         VALUES (null, ${sender_id}, ${receiver_id}, null, null, "follow")`
-        connection.query(sql)
+        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+        const user = connection.query(usr)
+        const result = connection.query(sql)
+        pubsub.publish('NOTIFICATION', {newNotification: {
+            sender_id, 
+            receiver_id, 
+            Nid:result.insertId, 
+            type:"follow", 
+            username: user[0].username,
+            profile_picture: user[0].profile_picture,
+            time_sent: new Date().toUTCString()
+        }})
         return args
     }
 }

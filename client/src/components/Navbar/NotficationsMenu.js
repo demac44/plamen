@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -17,7 +17,6 @@ const GET_NOTIFICATIONS = gql`
         }
     }
 `
-
 const CLEAR_NOTIFICATIONS = gql`
     mutation ($rid: Int!){
         clear_notifications (receiver_id: $rid){
@@ -25,15 +24,48 @@ const CLEAR_NOTIFICATIONS = gql`
         }
     }
 `
+const NOTIFICATION = gql`
+    subscription {
+        newNotification {
+            receiver_id
+            Nid
+            username
+            profile_picture
+            type
+            postID
+            time_sent
+            sender_id
+        }
+    }
+`
 
 const NotficationsMenu = ({visible}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [clear_notifications] = useMutation(CLEAR_NOTIFICATIONS)
-    const {data, loading, refetch} = useQuery(GET_NOTIFICATIONS, {
+    const {data, loading, refetch, subscribeToMore} = useQuery(GET_NOTIFICATIONS, {
         variables:{
             uid: ls.userID
         }
     })
+
+    useLayoutEffect(()=>{ 
+        const subscribeNewNotification = () => {
+            return subscribeToMore && subscribeToMore({
+                document: NOTIFICATION,
+                updateQuery: (prev, { subscriptionData }) => {
+                    if (!subscriptionData?.data) return prev;
+                    const newNotification = subscriptionData.data.newNotification;
+                    
+                    if (newNotification.receiver_id===ls.userID){
+                    return Object.assign({}, prev, {
+                        get_notifications: [newNotification, ...prev.get_notifications]
+                    });
+                }
+            }});
+        }
+        subscribeNewNotification()
+    }, [subscribeToMore]) 
+
 
     const handleClear = () => {
         clear_notifications({
