@@ -20,7 +20,7 @@ const Post = ({post, user, comments, likes, updatedCallback}) => {
                 <PostText post_text={post.post_text}/>
                 {comments.length > 0 &&
                 <div style={{height:showAll ? 'auto':'50px', overflow:'hidden'}}>
-                    {comments.map(comment => <Comment comment={comment} key={comment.commentID}/>)}
+                    {comments.map(comment => <Comment comment={comment} key={comment.commentID} uid={post.userID}/>)}
                 </div>}
                 {comments.length > 1 && <p 
                 style={styles.showMorebtn}

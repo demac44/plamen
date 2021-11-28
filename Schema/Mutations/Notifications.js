@@ -98,3 +98,43 @@ export const CLEAR_NOTIFICATIONS = {
         return args
     }
 }
+
+export const REMOVE_LIKE_NOTIF = {
+    type: NotificationType,
+    args:{
+        sender_id:{type:GraphQLInt},
+        postID:{type:GraphQLInt}
+    },
+    resolve(_, args) {
+        const {sender_id, postID} = args
+        const sql = `DELETE FROM notifications WHERE sender_id=${sender_id} AND postID=${postID} AND type="like"`
+        connection.query(sql)
+        return args
+    }
+}
+export const REMOVE_COMMENT_NOTIF = {
+    type: NotificationType,
+    args:{
+        sender_id:{type:GraphQLInt},
+        postID:{type:GraphQLInt}
+    },
+    resolve(_, args) {
+        const {sender_id, postID} = args
+        const sql = `DELETE FROM notifications WHERE sender_id=${sender_id} AND postID=${postID} AND type="comment"`
+        connection.query(sql)
+        return args
+    }
+}
+export const REMOVE_FOLLOW_NOTIF = {
+    type: NotificationType,
+    args:{
+        sender_id:{type:GraphQLInt},
+        receiver_id:{type:GraphQLInt}
+    },
+    resolve(_, args) {
+        const {sender_id, receiver_id} = args
+        const sql = `DELETE FROM notifications WHERE sender_id=${sender_id} AND receiver_id=${receiver_id} AND type="follow"`
+        connection.query(sql)
+        return args
+    }
+}

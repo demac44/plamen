@@ -27,6 +27,7 @@ const GET_POST = gql`
                 comment_text
                 date_commented
                 profile_picture
+                postID
             }
             likes{
                 likeID

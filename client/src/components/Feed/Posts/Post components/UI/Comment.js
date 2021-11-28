@@ -5,8 +5,11 @@ import Avatar from '../../../../UI/Avatar'
 import '../../../../../App.css'
 import '../../../../../General.css'
 import { NavLink } from 'react-router-dom'
+import CommentOpt from '../Functional components/CommentOpt'
 
-const Comment = ({comment}) => {
+const Comment = ({comment, uid}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
+    const [options, setOptions] = useState(false)
     const [time, setTime] = useState(null)
 
     
@@ -28,8 +31,6 @@ const Comment = ({comment}) => {
         getTime()
     }, [time, comment.date_commented])
 
-
-
     return (
         <div className='comment-cont'>
             <NavLink exact to={'/profile/'+comment.userID} style={{width:'40px',display: 'flex'}}>
@@ -42,8 +43,18 @@ const Comment = ({comment}) => {
             <div style={{marginLeft:'15px',padding:'5px'}}>
                 <p style={{fontSize:'15px'}}>{comment.comment_text}</p>
             </div>
+            {(comment.userID===ls.userID || uid===ls.userID) && <i onClick={()=>setOptions(!options)} style={styles.menuIcon} className="fas fa-ellipsis-v"></i>}
+            {(options && (comment.userID===ls.userID || uid===ls.userID)) && <CommentOpt cid={comment.commentID} postID={comment.postID}/>}
         </div>
     )
 }
 
 export default Comment
+
+const styles = {
+    menuIcon:{
+        position:'absolute',
+        right:'10px',
+        cursor:'pointer'
+    }
+}

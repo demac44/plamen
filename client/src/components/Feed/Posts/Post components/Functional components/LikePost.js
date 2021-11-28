@@ -25,6 +25,9 @@ const REMOVE_LIKE = gql`
         remove_like(postID: $postID, userID: $userID){
             postID
         }
+        remove_like_notif(postID: $postID, sender_id: $userID){
+            postID
+        }
     }
 `
 

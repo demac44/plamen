@@ -19,6 +19,7 @@ const FETCH_INFO= gql`
             post_text
             date_posted
             url
+            userID
             comments{
                 commentID
                 userID
@@ -26,6 +27,7 @@ const FETCH_INFO= gql`
                 comment_text
                 date_commented
                 profile_picture
+                postID 
             }
             likes{
                 likeID
@@ -77,6 +79,7 @@ const FETCH_INFO_MYPROFILE = gql`
             post_text
             date_posted
             url
+            userID
             comments{
                 commentID
                 userID
@@ -84,6 +87,7 @@ const FETCH_INFO_MYPROFILE = gql`
                 comment_text
                 date_commented
                 profile_picture
+                postID
             }
             likes{
                 likeID

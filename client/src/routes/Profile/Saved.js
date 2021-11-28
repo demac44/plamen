@@ -26,6 +26,7 @@ const GET_SAVED = gql`
                 comment_text
                 date_commented
                 profile_picture
+                postID
             }
             likes{
                 likeID

@@ -7,11 +7,11 @@ import { PubSub } from 'graphql-subscriptions';
 export const pubsub = new PubSub();
 
 import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_MESSAGE } from "./Mutations/Chat.js";
-import { ADD_COMMENT, DELETE_COMMENT } from "./Mutations/Comments.js";
+import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
-import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION } from "./Mutations/Notifications.js";
+import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
@@ -66,7 +66,7 @@ const RootMutation = new GraphQLObjectType({
         save_post: SAVE_POST,
         remove_saved: REMOVE_SAVED,
         add_comment: ADD_COMMENT,
-        delete_comment: DELETE_COMMENT,
+        remove_comment: REMOVE_COMMENT,
         edit_pfp: EDIT_PFP,
         edit_info: EDIT_INFO,
         create_story: CREATE_STORY,
@@ -81,7 +81,10 @@ const RootMutation = new GraphQLObjectType({
         like_notification: LIKE_NOTIFICATION,
         comment_notification: COMM_NOTIFICATION,
         follow_notification: FOLLOW_NOTIFICATION,
-        clear_notifications: CLEAR_NOTIFICATIONS
+        clear_notifications: CLEAR_NOTIFICATIONS,
+        remove_like_notif: REMOVE_LIKE_NOTIF,
+        remove_follow_notif: REMOVE_FOLLOW_NOTIF,
+        remove_comment_notif: REMOVE_COMMENT_NOTIF
     }
 })
 

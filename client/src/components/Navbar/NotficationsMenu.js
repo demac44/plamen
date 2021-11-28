@@ -85,20 +85,20 @@ const NotficationsMenu = ({visible}) => {
                 padding:'20px'
             }}>No new notifications</p>}
             
-            {data.get_notifications.length > 0 && <div
-                style={{
-                    width:'100%',
-                    padding:'5px 10px 0 0',
-                    textAlign:'end',
-                    cursor:'pointer',
-                    backgroundColor:'white',
-                    color:'teal',
-                    fontSize:'14px'
-                }}
-                onClick={handleClear}
-                >Clear all</div>}
 
             <span>
+                {data.get_notifications.length > 0 && <div
+                    style={{
+                        width:'100%',
+                        padding:'5px 10px 0 0',
+                        textAlign:'end',
+                        cursor:'pointer',
+                        backgroundColor:'white',
+                        color:'teal',
+                        fontSize:'14px'
+                    }}
+                    onClick={handleClear}
+                    >Clear all</div>}
                 {data?.get_notifications?.map(n => 
                     <NotificationBox n={n} key={n.Nid}/>
                     )}

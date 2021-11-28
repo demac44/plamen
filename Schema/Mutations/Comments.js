@@ -19,7 +19,7 @@ export const ADD_COMMENT = {
 }
 
 
-export const DELETE_COMMENT = {
+export const REMOVE_COMMENT = {
     type: CommentType,
     args: {
         commentID:{type: GraphQLInt}

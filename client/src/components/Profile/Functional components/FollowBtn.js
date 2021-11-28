@@ -17,6 +17,9 @@ const UNFOLLOW = gql`
             followerID
             followedID
         }
+        remove_follow_notif(sender_id: $followerID, receiver_id: $followedID) {
+            receiver_id
+        }
     }
 `
 const IF_FOLLOWING = gql`

@@ -351,8 +351,7 @@
     background-color: #c7c7c7;
     text-align: center;
     border-radius: 30px;
-    margin-left: 10px;
-    margin-right: 5px;
+    margin-right: 10px;
     cursor: pointer;
 }
 .follow-btn-notifications p{
@@ -677,6 +676,7 @@
 /* COMMENTS */
 
 .comment-cont{
+    position: relative;
     display: flex;
     align-items: center;
     min-height: 50px;
@@ -719,6 +719,20 @@
     color: #1f1f1f;
 }
 .fp-cmt-btn:hover {
+    background-color: #c2c2c2;
+}
+.cmt-opt-menu{
+    position: absolute;
+    right: 20px;
+}
+.cmt-opt-menu li{
+    font-size: 10px;
+    background-color: white;
+    color: #1f1f1f;
+    padding: 3px;
+    cursor: pointer;
+}
+.cmt-opt-menu li:hover{
     background-color: #c2c2c2;
 }
 
@@ -1265,7 +1279,7 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     padding: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding-right: 55px;
 }
 .notification-box:hover{
@@ -1276,10 +1290,10 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     font-size: 14px;
     color: black;
 }
-.notification-box h5{
+.nb-time{
     position: absolute;
     top: 21px;
-    right: 10px;
+    right: 5px;
     color: black;
 }
 
