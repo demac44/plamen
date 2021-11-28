@@ -74,6 +74,11 @@ const Feed = ({isLogged}) => {
     
 
     useEffect(()=>{
+        window.scrollTo({
+            top:0,
+            left:0,
+            behavior:'smooth'
+        })
         if(updated){
             refetch()
             setUpdated(false)
@@ -99,19 +104,21 @@ const Feed = ({isLogged}) => {
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper' onLoad={()=>{
-                window.onscroll = ()=>{
+                window.onscroll = async ()=>{
                  if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-                     fetchMore({
-                         variables:{
-                             offset:posts.length,
-                         },
-                         updateQuery: (prev, { fetchMoreResult }) => {
-                             if (!fetchMoreResult) return prev;
-                             return Object.assign({}, prev, {
-                               feed_posts: [...posts, ...fetchMoreResult?.feed_posts]
-                             });
-                           }
-                     })
+                     try {
+                         await fetchMore({
+                             variables:{
+                                 offset:posts.length,
+                             },
+                             updateQuery: (prev, { fetchMoreResult }) => {
+                                 if (!fetchMoreResult) return prev;
+                                 return Object.assign({}, prev, {
+                                   feed_posts: [...posts, ...fetchMoreResult?.feed_posts]
+                                 });
+                               }
+                         })
+                     } catch{}
                  }
                 }
             }}>

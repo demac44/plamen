@@ -150,11 +150,16 @@ const Profile = ({myprofile, isLogged}) => {
 
     useEffect(()=>{
         if(userID === ls.userID) window.location.href = '/myprofile'
+        window.scrollTo({
+            top:0,
+            left:0,
+            behavior:'smooth'
+        })
         if(updated){
             refetch()
             setUpdated(false)
         }
-    }, [data, userID, ls.userID, updated, refetch])
+    }, [userID, ls.userID, updated, refetch])
     
     if (loading) return <div className='wh-100'><Loader/></div>
     if(error) return <div>Something went wrong</div> 
@@ -173,19 +178,21 @@ const Profile = ({myprofile, isLogged}) => {
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper' onLoad={()=>{
-                window.onscroll = ()=>{
+                window.onscroll = async ()=>{
                  if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-                     fetchMore({
-                         variables:{
-                             offset:posts.length,
-                         },
-                         updateQuery: (prev, { fetchMoreResult }) => {
-                             if (!fetchMoreResult) return prev;
-                             return Object.assign({}, prev, {
-                               posts: [...posts, ...fetchMoreResult.posts]
-                             });
-                           }
-                     })
+                     try {
+                        await fetchMore({
+                             variables:{
+                                 offset:posts.length,
+                             },
+                             updateQuery: (prev, { fetchMoreResult }) => {
+                                 if (!fetchMoreResult) return prev;
+                                 return Object.assign({}, prev, {
+                                   posts: [...posts, ...fetchMoreResult.posts]
+                                 });
+                               }
+                         })                 
+                     } catch {}
                  }
                 }
             }}> 
