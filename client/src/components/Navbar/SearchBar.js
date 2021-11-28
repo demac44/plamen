@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import {useQuery} from 'react-apollo'
@@ -18,6 +18,7 @@ const SEARCH_USERS = gql`
 
 const SearchBar = ({chat, isLogged}) => {
     const [dropdown, setDropdown] = useState(false)
+    const [searchHistory, setSearchHistory] = useState([])
     const [val, setVal] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS, {
         variables:{
@@ -26,8 +27,12 @@ const SearchBar = ({chat, isLogged}) => {
         }
     })
 
+    const dropdownCallback = useCallback(()=>{
+        setDropdown(false)
+    }, [setDropdown])
+
     useEffect(()=>{
-        !chat && document.querySelector('.wrapper').addEventListener('click', ()=>setVal('')) 
+        !chat && document.querySelector('.wrapper').addEventListener('click', ()=>{setVal('');setDropdown(false)}) 
         val.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
     }, [val, chat])
 
@@ -53,9 +58,21 @@ const SearchBar = ({chat, isLogged}) => {
                     value={val} 
                     onChange={handleInput} 
                     placeholder='Search' 
-                    style={{borderRadius: val.length < 1 ? '0 50px 50px 0' : '0'}} disabled={!isLogged && true}/>
+                    style={{borderRadius: val.length < 1 ? '0 50px 50px 0' : '0'}} 
+                    disabled={!isLogged && true}
+                    onFocus={()=>{
+                        setDropdown(true)
+                        setSearchHistory(()=>{
+                            if(JSON.parse(localStorage.getItem('search-history'))){
+                                return JSON.parse(localStorage.getItem('search-history'))
+                            } else {
+                                localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
+                                return JSON.parse(localStorage.getItem('search-history'))
+                            }
+                        })
+                    }}/>
                 {val.length>0 && <i className='fas fa-times' style={styles.closeIcon} onClick={()=>setVal('')}></i>}
-                {dropdown && <SearchDrop chat={chat} data={data} val={val.replace(/\s/g, '')}/>}
+                {dropdown && <SearchDrop dropdownCallback={dropdownCallback} chat={chat} data={data} searchHistory={searchHistory} val={val.replace(/\s/g, '')}/>}
             </form>
         </>
     )

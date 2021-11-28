@@ -52,7 +52,18 @@ const Search = ({isLogged}) => {
             )
         setUsers(arr)
     }
+
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+
+    const handleSearchHistory = () => {
+        const sh = JSON.parse(localStorage.getItem('search-history'))
+        localStorage.setItem('search-history', JSON.stringify({search_history:[...sh.search_history, query].filter(onlyUnique)}))
+    }
+
     useEffect(()=>{
+        handleSearchHistory()
         setRegex(new RegExp(escape(query), 'gi'))
         setusers()
     }, [data, query])

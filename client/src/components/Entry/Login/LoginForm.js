@@ -32,6 +32,7 @@ const LoginForm = ({popup}) => {
                 else {
                     localStorage.setItem('token', res?.data.token)
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
+                    localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
                     popup ? window.location.reload() : window.location.href = '/myprofile'}
             })
         } catch (error) {

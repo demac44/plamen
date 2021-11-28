@@ -247,6 +247,17 @@
     padding: 50px;
     text-align: center;
 }
+.searchHis-drop{
+    width: 100%;
+}
+.sh-box{
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+.sh-box:hover{
+    background-color: #c2c2c2;
+}
 /* PROFILE */
 
 .main{
