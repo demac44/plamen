@@ -30,7 +30,7 @@ const NotificationBox = ({n}) => {
         <div className='notification-box' key={n.Nid}>
             <Link to={n.type==='follow' ? '/profile/'+n.sender_id : '/post/'+n.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
-                    <Avatar height='100%' width='50px' pfp={n.profile_picture}/>
+                    <Avatar height='50px' width='50px' pfp={n.profile_picture}/>
                     {n.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
                     {n.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
                     {n.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}

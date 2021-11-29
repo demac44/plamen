@@ -75,7 +75,7 @@ const NotficationsMenu = ({visible}) => {
         }).then(()=>refetch())
     }
 
-    if(loading) return <p>loading</p>
+    if(loading) return null
 
     return (
         <div className='notifications-container' style={{visibility:visible}}>
