@@ -16,7 +16,7 @@ export const GET_POSTS = {
         const {userID, limit, offset} = args
         const sql = `SELECT * FROM posts WHERE userID=${userID} ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset}`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
-        const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
+        const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
         let r1 = connection.query(sql)
         let r2 = connection.query(comm)
         let r3 =  connection.query(like)
@@ -54,7 +54,7 @@ export const GET_FEED_POSTS = {
                         AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                         ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID`
-        const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
+        const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID`
         let r1 = connection.query(sql)
         let r2 = connection.query(comm)
         let r3 =  connection.query(like)
@@ -85,7 +85,7 @@ export const GET_POST = {
         const {postID} = args
         const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE posts.postID=${postID}`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID WHERE comments.postID=${postID}`
-        const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID WHERE likes.postID=${postID}`
+        const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID WHERE likes.postID=${postID}`
         let r1 = connection.query(sql)
         let r2 = connection.query(comm)
         let r3 =  connection.query(like)

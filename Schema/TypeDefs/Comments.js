@@ -4,20 +4,9 @@ import {
     GraphQLString,
  } from "graphql";
 
-
+ 
 export const CommentType = new GraphQLObjectType({
-    name: 'CommentPost',
-    fields: ()=>({
-        commentID: {type:GraphQLInt},
-        postID: {type: GraphQLInt},
-        userID: {type: GraphQLInt},
-        comment_text: {type: GraphQLString},
-        date_commented: {type: GraphQLString}
-    })
-})
-
-export const GetCommentType = new GraphQLObjectType({
-    name: 'GetComment',
+    name: 'Comment',
     fields:()=>({
         commentID: {type:GraphQLInt},
         postID: {type: GraphQLInt},

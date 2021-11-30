@@ -11,8 +11,8 @@ export const LIKE_POST = {
     },
     resolve(_, args) {
         const {postID, userID} = args
-        const sql = `INSERT INTO likes (likeID, userID, postID) 
-                    VALUES (null, ${userID}, ${postID})`
+        const sql = `INSERT INTO likes (userID, postID) 
+                    VALUES (${userID}, ${postID})`
         connection.query(sql)
         return args
     }

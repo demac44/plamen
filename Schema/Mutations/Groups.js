@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLString, GraphQLBoolean} from "graphql"
 import connection from "../../middleware/db.js"
-import { GroupType } from "../TypeDefs/Groups.js"
+import { GroupPostType, GroupType } from "../TypeDefs/Groups.js"
 
 
 export const CREATE_GROUP = {
@@ -25,4 +25,33 @@ export const CREATE_GROUP = {
         connection.query(sql3)
         return args
     }
+}
+
+export const CREATE_GROUP_POST = {
+    type: GroupPostType,
+    args: {
+        userID: {type: GraphQLInt},
+        groupID:{type:GraphQLInt},
+        post_text: {type: GraphQLString},
+        url: {type: GraphQLString}
+    },
+    resolve (_, args){
+        const {userID, post_text, url, groupID} = args
+        const sql = `INSERT INTO group_posts (postID, groupID, userID, post_text, date_posted, url)
+                    VALUES (null, ${groupID}, ${userID}, "${post_text}", null, "${url}")`
+        connection.query(sql)
+        return args
+    }
+}
+export const DELETE_GROUP_POST = {
+    type: GroupPostType,
+    args: {
+        postID:{type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {postID} = args
+        const sql = `DELETE FROM group_posts WHERE postID=${postID}`
+        connection.query(sql)
+        return args
+    } 
 }

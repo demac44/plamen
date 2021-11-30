@@ -29,7 +29,6 @@ const GET_SAVED = gql`
                 postID
             }
             likes{
-                likeID
                 postID
                 userID
                 username

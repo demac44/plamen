@@ -8,7 +8,6 @@ import {
 export const LikesType = new GraphQLObjectType({
     name: 'LikePost',
     fields: ()=>({
-        likeID: {type: GraphQLInt},
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
         username: {type:GraphQLString},

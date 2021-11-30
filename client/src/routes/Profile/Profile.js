@@ -30,7 +30,6 @@ const FETCH_INFO= gql`
                 postID 
             }
             likes{
-                likeID
                 postID
                 userID
                 username
@@ -90,7 +89,6 @@ const FETCH_INFO_MYPROFILE = gql`
                 postID
             }
             likes{
-                likeID
                 postID
                 userID
                 username
@@ -162,7 +160,7 @@ const Profile = ({myprofile, isLogged}) => {
     }, [userID, ls.userID, updated, refetch])
     
     if (loading) return <div className='wh-100'><Loader/></div>
-    if(error) return <div>Something went wrong</div> 
+    if(error) throw error 
     
     const posts = data.posts
 

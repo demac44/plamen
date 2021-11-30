@@ -16,6 +16,7 @@ import ChatCont from './routes/Chat/ChatCont';
 import Loader from './components/UI/Loader';
 import Post from './routes/Post/Post';
 import Groups from './routes/Groups/Groups';
+import Group from './routes/Groups/Group';
 
 
 
@@ -61,6 +62,7 @@ function App() {
               <Route exact path='/chat/:chatid'>{isLogged ? <ChatCont isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/post/:postid'><Post isLogged={isLogged}/></Route>
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
     </>

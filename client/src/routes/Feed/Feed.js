@@ -32,7 +32,6 @@ const FEED_POSTS = gql`
                 postID
             }
             likes{
-                likeID
                 postID
                 userID
                 username

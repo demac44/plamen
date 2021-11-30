@@ -30,7 +30,7 @@ export const GET_SAVES = {
                         JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments 
                         JOIN users ON comments.userID=users.userID`
-        const like = `SELECT likeID,postID,username,first_name,last_name,profile_picture,users.userID FROM likes 
+        const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes 
                         JOIN users ON likes.userID=users.userID`
         let r1 = connection.query(sql)
         let r2 = connection.query(comm)
