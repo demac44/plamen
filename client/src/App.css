@@ -28,7 +28,7 @@
 .gcard_overlay:hover{
     background-color: rgba(0, 0, 0,0.7);
 }
-.group-card p{
+.gcard_overlay p{
     color: white;
     font-size: 20px;
     font-weight: bold;
@@ -38,8 +38,67 @@
     color: white;
 }
 
+.create-group-form{
+    position: relative;
+    width: 40%;
+    background-color: #111827;
+    padding: 30px 20px;
+    border-radius: 20px;
+}
 
-
+.create-group-form input{
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin: 10px;
+}
+.create-group-form select{
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+.create-group-form h3{
+    color: white;
+    background-color: transparent !important;
+    margin-top: 5px;
+}
+.create-group-form button{
+    padding: 10px 60px;
+    margin-top: 30px;    
+}
+.create-group-form button:hover{
+    background-color: #b8b8b8;
+}
+.tags-box{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    min-height: 50px;
+    background-color: white;
+    border-radius: 10px;
+    flex-flow: wrap;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    overflow: auto;
+    max-height: 100px;
+}
+.create-group-form textarea{
+    width: 100%;
+    resize: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    height: 70px;
+}
 
 
 /* LOGIN AND REGISTER USER FORMS */

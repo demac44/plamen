@@ -10,6 +10,7 @@ import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
+import { CREATE_GROUP } from "./Mutations/Groups.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
@@ -19,6 +20,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
+import { GET_GROUPS } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
@@ -49,7 +51,8 @@ const RootQuery = new GraphQLObjectType({
         get_user_stories: GET_USER_STORIES,
         count_newMsgs: COUNT_ALL_MSGS,
         count_msgs: COUNT_MSGS,
-        get_notifications: GET_NOTIFICATIONS
+        get_notifications: GET_NOTIFICATIONS,
+        get_groups:GET_GROUPS
     }
 })    
 
@@ -84,7 +87,8 @@ const RootMutation = new GraphQLObjectType({
         clear_notifications: CLEAR_NOTIFICATIONS,
         remove_like_notif: REMOVE_LIKE_NOTIF,
         remove_follow_notif: REMOVE_FOLLOW_NOTIF,
-        remove_comment_notif: REMOVE_COMMENT_NOTIF
+        remove_comment_notif: REMOVE_COMMENT_NOTIF,
+        create_group: CREATE_GROUP
     }
 })
 
