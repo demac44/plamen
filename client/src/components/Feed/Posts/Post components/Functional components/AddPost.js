@@ -11,8 +11,8 @@ import Dropzone from 'react-simple-dropzone/dist';
 import Loader from '../../../../UI/Loader'
 
 const NEW_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!){
-        new_post(userID: $userID, post_text: $text, url: $url){
+    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
+        new_post(userID: $userID, post_text: $text, url: $url, type: $type){
             userID
         }
     }
@@ -54,7 +54,8 @@ const AddPost = ({width, updatedCallback}) => {
                         variables: {
                             userID: user.userID,
                             text: text,
-                            url: res.data.url
+                            url: res.data.url,
+                            type:'image'
                         }
                     }).then(()=>{
                         setVideo(null)
@@ -78,7 +79,8 @@ const AddPost = ({width, updatedCallback}) => {
                         variables: {
                             userID: user.userID,
                             text: text,
-                            url: res.data.url
+                            url: res.data.url,
+                            type:'video'
                         }
                     }).then(()=>{
                         setAdded(true)
@@ -93,7 +95,8 @@ const AddPost = ({width, updatedCallback}) => {
                     variables: {
                         userID: user.userID,
                         text: text,
-                        url: ''
+                        url: '',
+                        type:'text'
                     }
                 }).then(()=>{
                     setAdded(true)

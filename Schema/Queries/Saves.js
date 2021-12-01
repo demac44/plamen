@@ -26,7 +26,7 @@ export const GET_SAVES = {
     },
     resolve(_, args){
         const {userID, limit, offset} = args
-        const sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM saves 
+        const sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type FROM saves 
                         JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments 
                         JOIN users ON comments.userID=users.userID`

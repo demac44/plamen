@@ -11,14 +11,14 @@ import Dropzone from 'react-simple-dropzone/dist';
 import Loader from '../../UI/Loader'
 
 const NEW_GROUP_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!){
-        new_post(userID: $userID, post_text: $text, url: $url){
+    mutation ($userID: Int!, $text: String!, $url: String!, $groupID:Int!, $type: String!){
+        create_group_post(userID: $userID, post_text: $text, url: $url, groupID: $groupID, type: $type){
             userID
         }
     }
 `
 
-const AddGroupPost = ({width, updatedCallback}) => {
+const AddGroupPost = ({width, updatedCallback, groupid}) => {
     const user = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
@@ -47,14 +47,16 @@ const AddGroupPost = ({width, updatedCallback}) => {
                 data.append("file", image)
                 data.append("upload_preset", "z8oybloj")
                 setLoading(true)  
-                data.append("folder", "Posts")
+                data.append("folder", "Group posts")
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
                 .then(res => {
                     new_group_post({
                         variables: {
                             userID: user.userID,
                             text: text,
-                            url: res.data.url
+                            url: res.data.url,
+                            groupID:parseInt(groupid),
+                            type:'image'
                         }
                     }).then(()=>{
                         setVideo(null)
@@ -70,7 +72,7 @@ const AddGroupPost = ({width, updatedCallback}) => {
                 const data = new FormData()
                 data.append("file", video)
                 data.append("upload_preset", "z8oybloj")
-                data.append("folder", "Video posts")
+                data.append("folder", "Group video posts")
                 setLoading(true) 
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/video/upload`, data)
                 .then(res => {
@@ -78,7 +80,9 @@ const AddGroupPost = ({width, updatedCallback}) => {
                         variables: {
                             userID: user.userID,
                             text: text,
-                            url: res.data.url
+                            url: res.data.url,
+                            groupID:parseInt(groupid),
+                            type:'video'
                         }
                     }).then(()=>{
                         setAdded(true)
@@ -93,7 +97,9 @@ const AddGroupPost = ({width, updatedCallback}) => {
                     variables: {
                         userID: user.userID,
                         text: text,
-                        url: ''
+                        url: '',
+                        groupID:parseInt(groupid),
+                        type:'text'
                     }
                 }).then(()=>{
                     setAdded(true)

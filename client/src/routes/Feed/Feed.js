@@ -22,6 +22,7 @@ const FEED_POSTS = gql`
             last_name
             username
             profile_picture
+            type
             comments{
                 commentID
                 userID
@@ -131,6 +132,7 @@ const Feed = ({isLogged}) => {
                             post_text: post.post_text,
                             date_posted: post.date_posted,
                             url: post.url,
+                            type: post.type
                         }} user={{
                             userID: post.userID,
                             first_name:post.first_name,

@@ -39,6 +39,7 @@ export const GroupPostType = new GraphQLObjectType({
         comments: {type: new GraphQLList(CommentType)},
         likes: {type: new GraphQLList(LikesType)}, 
         limit: {type:GraphQLInt},
-        offset: {type:GraphQLInt}
+        offset: {type:GraphQLInt},
+        type:{type:GraphQLString}
     })
 })

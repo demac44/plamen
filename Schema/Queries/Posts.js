@@ -48,7 +48,7 @@ export const GET_FEED_POSTS = {
     },    
     resolve(_, args) {
         const {userID, limit, offset} = args
-        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts 
+        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture, type FROM posts 
                         JOIN users ON posts.userID=users.userID WHERE (users.userID =${userID} OR users.userID IN 
                         (SELECT followedID FROM followings WHERE followerID=${userID})) 
                         AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
@@ -83,7 +83,7 @@ export const GET_POST = {
     },
     resolve(_, args){
         const {postID} = args
-        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM posts JOIN users ON posts.userID=users.userID WHERE posts.postID=${postID}`
+        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture, type FROM posts JOIN users ON posts.userID=users.userID WHERE posts.postID=${postID}`
         const comm = `SELECT commentID,comments.userID,postID,comment_text,username,profile_picture,date_commented FROM comments JOIN users ON comments.userID=users.userID WHERE comments.postID=${postID}`
         const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes JOIN users ON likes.userID=users.userID WHERE likes.postID=${postID}`
         let r1 = connection.query(sql)

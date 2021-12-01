@@ -1,15 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-const PostImg = ({url}) => {
-    const [type, setType] = useState('')
-
-
-    useEffect(()=>{
-        let t = url.slice(36, 41)
-        setType(t)
-    }, [url])
-
-
+const PostImg = ({url, type}) => {
     return (
         <div className='feed-post-img'>
             {type==='image' && <img src={url} alt=""/>}

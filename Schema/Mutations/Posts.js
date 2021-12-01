@@ -7,12 +7,13 @@ export const CREATE_POST = {
     args: {
         userID: {type: GraphQLInt},
         post_text: {type: GraphQLString},
-        url: {type: GraphQLString}
+        url: {type: GraphQLString},
+        type:{type:GraphQLString}
     },
     resolve (_, args){
-        const {userID, post_text, url} = args
-        const sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url)
-                    VALUES (null, ${userID}, "${post_text}", null, "${url}")`
+        const {userID, post_text, url, type} = args
+        const sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url, type)
+                    VALUES (null, ${userID}, "${post_text}", null, "${url}", "${type}")`
         connection.query(sql)
         return args
     }

@@ -20,6 +20,7 @@ const FETCH_INFO= gql`
             date_posted
             url
             userID
+            type
             comments{
                 commentID
                 userID
@@ -79,6 +80,7 @@ const FETCH_INFO_MYPROFILE = gql`
             date_posted
             url
             userID
+            type
             comments{
                 commentID
                 userID

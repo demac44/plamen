@@ -1,6 +1,8 @@
 import { GraphQLInt, GraphQLString, GraphQLBoolean} from "graphql"
 import connection from "../../middleware/db.js"
+import { CommentType } from "../TypeDefs/Comments.js"
 import { GroupPostType, GroupType } from "../TypeDefs/Groups.js"
+import { LikesType } from "../TypeDefs/Likes.js"
 
 
 export const CREATE_GROUP = {
@@ -33,12 +35,13 @@ export const CREATE_GROUP_POST = {
         userID: {type: GraphQLInt},
         groupID:{type:GraphQLInt},
         post_text: {type: GraphQLString},
-        url: {type: GraphQLString}
+        url: {type: GraphQLString},
+        type:{type:GraphQLString}
     },
     resolve (_, args){
-        const {userID, post_text, url, groupID} = args
-        const sql = `INSERT INTO group_posts (postID, groupID, userID, post_text, date_posted, url)
-                    VALUES (null, ${groupID}, ${userID}, "${post_text}", null, "${url}")`
+        const {userID, post_text, url, groupID, type} = args
+        const sql = `INSERT INTO group_posts (postID, groupID, userID, post_text, date_posted, url, type)
+                    VALUES (null, ${groupID}, ${userID}, "${post_text}", null, "${url}", "${type}")`
         connection.query(sql)
         return args
     }
@@ -54,4 +57,63 @@ export const DELETE_GROUP_POST = {
         connection.query(sql)
         return args
     } 
+}
+
+export const ADD_GP_COMMENT = {
+    type: CommentType,
+    args: {
+        postID:{type:GraphQLInt},
+        userID: {type: GraphQLInt},
+        comment_text: {type: GraphQLString},
+    },
+    resolve(_, args) {
+        const {userID, postID, comment_text} = args
+        const sql = `INSERT INTO group_posts_comments (commentID ,postID, userID, comment_text, date_commented)
+                    VALUES (null,${postID} ,${userID}, "${comment_text}", null)`
+        connection.query(sql)
+        return args
+    }
+}
+
+
+export const REMOVE_GP_COMMENT = {
+    type: CommentType,
+    args: {
+        commentID:{type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {commentID} = args
+        const sql = `DELETE FROM group_posts_comments WHERE commentID=${commentID}`
+        connection.query(sql)
+        return args
+    } 
+}
+
+export const LIKE_GP_POST = {
+    type: LikesType,
+    args: {
+        userID: {type: GraphQLInt},
+        postID: {type: GraphQLInt}
+    },
+    resolve(_, args) {
+        const {postID, userID} = args
+        const sql = `INSERT INTO group_posts_likes (userID, postID) 
+                    VALUES (${userID}, ${postID})`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const REMOVE_GP_LIKE = {
+    type: LikesType,
+    args: {
+        postID: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
+    }, 
+    resolve(_, args){
+        const {postID, userID} = args
+        const sql = `DELETE FROM group_posts_likes WHERE postID=${postID} AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
 }

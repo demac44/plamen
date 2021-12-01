@@ -16,7 +16,7 @@ const Post = ({post, user, comments, likes, updatedCallback}) => {
         <>
             <div className="post">
                 <InfoSave date={post.date_posted} user={user} postID={post.postID} updatedCallback={updatedCallback} isLogged={isLogged}/>
-                <PostImg url={post.url}/>
+                <PostImg url={post.url} type={post.type}/>
                 <PostText post_text={post.post_text}/>
                 {comments.length > 0 &&
                 <div style={{height:showAll ? 'auto':'50px', overflow:'hidden'}}>

@@ -16,7 +16,8 @@ export const PostType = new GraphQLObjectType({
         date_posted: {type: GraphQLString},
         url: {type: GraphQLString},
         comments: {type: new GraphQLList(CommentType)},
-        likes: {type: new GraphQLList(LikesType)}
+        likes: {type: new GraphQLList(LikesType)},
+        type:{type:GraphQLString}
     })
 })
 
@@ -36,6 +37,7 @@ export const FeedPostType = new GraphQLObjectType({
         comments: {type: new GraphQLList(CommentType)},
         likes: {type: new GraphQLList(LikesType)},
         limit: {type:GraphQLInt},
-        offset: {type:GraphQLInt}
+        offset: {type:GraphQLInt},
+        type:{type:GraphQLString}
     })
 })
