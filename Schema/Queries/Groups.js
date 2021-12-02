@@ -49,7 +49,7 @@ export const GET_GROUP_POSTS = {
     },    
     resolve(_, args) {
         const {groupID, limit, offset} = args
-        const sql = `SELECT postID,group_posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture FROM group_posts
+        const sql = `SELECT postID,group_posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture, type FROM group_posts
                         JOIN users ON group_posts.userID=users.userID
                         WHERE group_posts.groupID=${groupID}
                         ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`

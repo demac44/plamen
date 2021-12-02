@@ -40,7 +40,7 @@ const styles = {
         width:'100%', 
         textAlign:'center', 
         cursor:'pointer',
-        backgroundColor:'#171f31',
+        backgroundColor:'#1f1f1f',
         color: 'white',
         fontSize:'14px'
     }

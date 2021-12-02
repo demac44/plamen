@@ -25,12 +25,12 @@ const Stories = ({stories, updatedCallback}) => {
             <div className='sc-inner' style={{marginLeft:-margin.toString()+'%'}}>
                 <div className='flex-col-ctr'>
                     <AddStory updatedCallback={updatedCallback}/>
-                    <p style={{fontSize:'14px'}}>Add story</p>
+                    <p style={{fontSize:'14px',color:'white'}}>Add story</p>
                 </div>
                 {stories.map(story => (
                     <div className='flex-col-ctr' style={{marginLeft:'10px'}}  key={story?.storyID}>
                         <StoryHead story={story} allData={stories} index={index++} updatedCallback={updatedCallback}/>
-                        <p style={{fontSize:'14px'}}>{story?.username}</p>
+                        <p style={{fontSize:'14px', color:'white'}}>{story?.username}</p>
                     </div>
                 ))}
             </div>

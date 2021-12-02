@@ -12,7 +12,7 @@ const StoryHead = ({index, story, updatedCallback, allData}) => {
     return (
         <>
             <div className="story-head" onClick={()=>setOpenStory(true)}>
-                <Avatar height='100%' width='64px' pfp={story?.profile_picture}/>
+                <Avatar height='64px' width='64px' pfp={story?.profile_picture}/>
             </div>
             {openStory && <Story allData={allData} story={story} i={index} closeStoryCallback={closeStoryCallback} updatedCallback={updatedCallback}/>}
         </>

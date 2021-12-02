@@ -105,13 +105,14 @@ const Group = ({isLogged}) => {
                             >{tag}</div>)}
                         </div>
                         <div className='group-posts-info'>
-                            <div className='group-posts'>
+                            <div className='group-posts-container'>
                                 <AddGroupPost updatedCallback={updatedCallback} groupid={groupid}/>
                                 {posts?.length > 0 ? posts?.map(post => <Post post={{
                                     postID: post.postID,
                                     post_text: post.post_text,
                                     date_posted: post.date_posted,
                                     url: post.url,
+                                    type: post.type
                                 }} user={{
                                     userID: post.userID,
                                     first_name:post.first_name,
@@ -123,7 +124,20 @@ const Group = ({isLogged}) => {
                                 updatedCallback={updatedCallback}
                                 key={post.postID}/>) : <p style={{marginTop:'60px', color:'black', textAlign:'center', width:'70%'}}>No new posts</p>}
                             </div>
-                            <div className='group-info-box'></div>
+                            <div className='group-info-container'>
+                                <div className='group-info-box flex-col-ctr'>
+                                    <div style={styles.descTitle}><h2>Description</h2></div>
+                                    {data.get_group.group_description ? 
+                                    <div style={styles.textBoxDesc}>{data.get_group.group_description}</div>
+                                        : <div style={styles.addInfoBtn}><i className='fas fa-plus'></i> <h3> Add description</h3></div>}               
+                                </div>
+                                <div className='group-info-box flex-col-ctr'>
+                                    <div style={styles.descTitle}><h2>Community rules</h2></div>
+                                    {data.get_group.group_rules ? 
+                                    <div style={styles.textBoxDesc}><p>{data.get_group.group_rules}</p></div>
+                                        : <div className='flex-ctr' style={styles.addInfoBtn}><i className='fas fa-plus'></i> <h3> Add rules</h3></div>}       
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,12 +152,34 @@ export default Group
 const styles = {
     tag:{
         padding:'5px 10px',
-        backgroundColor:'#13306e',
+        backgroundColor:'teal',
         fontSize:'14px',
         color:'white',
         height:'fit-content',
         borderRadius:'20px',
         marginTop:'5px',
         marginLeft:'5px'
+    },
+    descTitle:{
+        width:'100%',
+        padding:'5px',
+        textAlign:'center',
+        color:'white'
+    },
+    textBoxDesc:{
+        width:'100%',
+        height:'fit-content',
+        backgroundColor:'white',
+        padding:'5px',
+        wordWrap:'break-word'
+    },
+    addInfoBtn:{
+        width:'100%',
+        padding:'10px',
+        borderRadius:'10px',
+        backgroundColor:'#2f2f2f',
+        textAlign:'center',
+        color:'white',
+        cursor:'pointer'
     }
 }
