@@ -4,12 +4,12 @@ import Avatar from '../UI/Avatar'
 import FollowBtn from '../Profile/Functional components/FollowBtn'
 
 
-const NotificationBox = ({n}) => {
+const NotificationBox = ({notif}) => {
     const [time, setTime] = useState(null)
 
     useEffect(()=>{
         const getTime = () => {
-            let utcSeconds = n?.time_sent;
+            let utcSeconds = parseInt(notif?.time_sent);
             utcSeconds = new Date(utcSeconds).getTime()
             let d = Date.now() - utcSeconds
             d = Math.floor((d/1000)/60)
@@ -23,24 +23,24 @@ const NotificationBox = ({n}) => {
             }
         }
         getTime()
-    }, [n])
+    }, [notif])
 
 
     return (
-        <div className='notification-box' key={n.Nid}>
-            <Link to={n.type==='follow' ? '/profile/'+n.sender_id : '/post/'+n.postID} className='flex-ctr'>
+        <div className='notification-box' key={notif.Nid}>
+            <Link to={notif.type==='follow' ? '/profile/'+notif.sender_id : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
-                    <Avatar height='50px' width='50px' pfp={n.profile_picture}/>
-                    {n.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
-                    {n.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
-                    {n.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}
+                    <Avatar height='50px' width='50px' pfp={notif.profile_picture}/>
+                    {notif.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
+                    {notif.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
+                    {notif.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}
                 </span>
-                {n.type==='like' && <p>{'@'+n.username+' liked your post'}</p>}
-                {n.type==='comment' && <p>{'@'+n.username+' commented on your post'}</p>}
-                {n.type==='follow' && <div className='flex-ctr'><p>{'@'+n.username+' followed you'}</p></div>}
+                {notif.type==='like' && <p>{'@'+notif.username+' liked your post'}</p>}
+                {notif.type==='comment' && <p>{'@'+notif.username+' commented on your post'}</p>}
+                {notif.type==='follow' && <div className='flex-ctr'><p>{'@'+notif.username+' followed you'}</p></div>}
             </Link>
             <div className='nb-time flex-ctr'>
-                {n.type==='follow' && <FollowBtn uID={n.sender_id} notifications={true}/>}
+                {notif.type==='follow' && <FollowBtn uID={notif.sender_id} notifications={true}/>}
                 <h5>{time}</h5>
             </div>
         </div>

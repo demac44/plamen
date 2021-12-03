@@ -25,7 +25,7 @@ const Message = ({msg}) => {
     
     useEffect(()=>{
         const getTime = () => {
-            let utcSeconds = msg.time_sent;
+            let utcSeconds = parseInt(msg.time_sent);
             utcSeconds = new Date(utcSeconds).getTime()
             let d = Date.now() - utcSeconds
             d = Math.floor((d/1000)/60)
@@ -98,7 +98,7 @@ const styles = {
     deletebtn:{
         fontSize:'20px',
         cursor:'pointer',
-        color:'#1f1f1f',
+        color:'#aaa',
         marginTop:'10px'
     },
     link:{
@@ -108,11 +108,13 @@ const styles = {
     timeCU:{
         fontSize:'14px',
         marginRight:'30px',
-        marginTop:'7px'
+        marginTop:'7px',
+        color:'#aaa'
     },
     timeOU:{
         fontSize:'14px',
         marginLeft:'30px',
-        marginTop:'7px'
+        marginTop:'7px',
+        color:'#aaa'
     }
 }

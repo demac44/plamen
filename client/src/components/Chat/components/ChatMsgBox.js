@@ -31,6 +31,7 @@ const NEW_MESSAGE = gql`
             userID
             url
             type
+            time_sent
         }
     }
 `
@@ -68,12 +69,13 @@ const ChatMsgBox = ({chatid, info}) => {
                     if (!subscriptionData?.data) return prev;
                     const newMsg = subscriptionData.data.newMessage;
                     
-                    if (newMsg.chatID === parseInt(chatid)){
+                    if (newMsg?.chatID === parseInt(chatid)){
                     return Object.assign({}, prev, {
                         get_messages: [newMsg, ...prev.get_messages],
                         scroll: ()=>{
                             let box = document.querySelector('.chat-messages')
                             box.scrollHeight = 0
+                            console.log(newMsg);
                         }
                     });
                 }
@@ -103,12 +105,12 @@ const ChatMsgBox = ({chatid, info}) => {
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                if(fetchMoreResult.get_messages.length < 1) {
+                if(fetchMoreResult?.get_messages?.length < 1) {
                     setFetchBtn(false)
                     return
                 }
                 return Object.assign({}, prev, {
-                  get_messages: [...data.get_messages, ...fetchMoreResult.get_messages]
+                  get_messages: [...data?.get_messages, ...fetchMoreResult?.get_messages]
                 });
             }
         })
@@ -147,9 +149,9 @@ const styles = {
     loadMore:{
         width:'100%',
         padding:'5px',
-        backgroundColor:'#aaa',
+        backgroundColor:'#1f1f1f',
         textAlign:'center',
         cursor:'pointer',
-        fontWeight:'bold'
+        color:'white'
     }
 }

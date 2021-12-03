@@ -19,13 +19,12 @@ import Groups from './routes/Groups/Groups';
 import Group from './routes/Groups/Group';
 
 
-
 function App() {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
   const isLogged = useSelector(state => state?.isAuth.isAuth)
   const uid = useSelector(state => state.isAuth.user?.userID)
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
 
   useEffect(()=>{
@@ -47,8 +46,8 @@ function App() {
 
   
   return (
-    <>
-    {isLoading ? <Loader/> :
+      <>
+        {isLoading ? <Loader/> :
           <Switch>
             <>
               <Route exact path='/'></Route>
@@ -65,7 +64,7 @@ function App() {
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
-    </>
+      </>
   );
 }
 

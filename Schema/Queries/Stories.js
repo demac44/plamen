@@ -8,7 +8,7 @@ export const GET_STORIES = {
     args: {
         userID: {type:GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID} = args
         const sql = `SELECT storyID, users.userID, first_name, last_name, profile_picture, username, type
                     FROM stories JOIN users ON stories.userID=users.userID 
@@ -17,13 +17,13 @@ export const GET_STORIES = {
                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
                         GROUP BY (users.userID)
                         ORDER BY date_posted DESC;`
-        const result = connection.query(sql)
-        result.forEach(res => {
+        let result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        await result.forEach( res => {
             const sql2 = `SELECT storyID, url, type, date_posted FROM stories 
-                        JOIN users ON stories.userID=users.userID WHERE stories.userID=${res.userID} 
+            JOIN users ON stories.userID=users.userID WHERE stories.userID=${res.userID} 
                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY date_posted ASC;`
-            const r = connection.query(sql2)
-            res.stories = r
+            const r = connection.promise().query(sql2).then((res)=>{return res[0]})
+            Object.assign(res, {stories: r})
         })
         return result
     }
@@ -34,11 +34,11 @@ export const GET_USER_STORIES = {
     args: {
         userID: {type:GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID} = args
         const sql = `SELECT storyID, url, type, users.userID, first_name, last_name, profile_picture, username, date_posted FROM stories
                         JOIN users ON stories.userID=users.userID WHERE stories.userID=${userID} AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)`
-        const result = connection.query(sql)
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
 } 

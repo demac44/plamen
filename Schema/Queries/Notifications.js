@@ -16,7 +16,7 @@ export const GET_NOTIFICATIONS = {
                     WHERE receiver_id=${receiver_id}
                     AND DATE(time_sent) > (NOW() - INTERVAL 2 DAY)
                     ORDER BY time_sent DESC`
-        const result = connection.query(sql)
+        const result = connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
 }  

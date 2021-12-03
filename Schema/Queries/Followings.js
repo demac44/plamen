@@ -9,9 +9,10 @@ export const IF_FOLLOWING = {
         followerID: {type: GraphQLInt},
         followedID: {type:GraphQLInt}
     },    
-    resolve(_, args) {
+    async resolve(_, args) {
         const {followerID, followedID} = args
-        const result = connection.query(`SELECT COUNT(*) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`)
+        const sql = `SELECT COUNT(*) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0].ifFollowing
     }   
 }
@@ -20,10 +21,10 @@ export const GET_FOLLOWERS = {
     args: {
         followedID: {type:GraphQLInt} 
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {followedID} = args
         const sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
-        const result = connection.query(sql)
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
 }
@@ -32,10 +33,10 @@ export const GET_FOLLOWING = {
     args: {
         followerID: {type:GraphQLInt} 
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {followerID} = args
         const sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE userID IN (SELECT followedID from followings WHERE followerID=${followerID})`
-        const result = connection.query(sql)
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
 }

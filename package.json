@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client": "npm start --prefix client",
-    "server": "nodemon server.js",
+    "server": "nodemon server.js client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "start": "node server.js",
@@ -26,11 +26,14 @@
     "express-session": "^1.17.2",
     "graphql": "^15.6.1",
     "graphql-subscriptions": "^2.0.0",
+    "graphql-ws": "^5.5.5",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
     "nodemon": "^2.0.13",
     "subscriptions-transport-ws": "^0.11.0",
-    "sync-mysql": "^3.0.1"
+    "sync-mysql": "^3.0.1",
+    "ws": "^8.3.0"
   },
   "type": "module"
 }

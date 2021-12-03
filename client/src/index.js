@@ -23,22 +23,22 @@ import { applyMiddleware } from 'redux';
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const httpLink = new HttpLink({
-  uri:'http://localhost:5000/graphql'
+  uri:'http://localhost:8000/graphql'
 })
 
 const wsLink = new WebSocketLink({
-  uri:`ws://127.0.0.1:5000/graphql`,
+  uri:`ws://127.0.0.1:8000/graphql`,
   options: {
-    reconnect: true
+    reconnect: true,
   }
-});
+})
 
 const link = split(
   ({ query }) => {
-    const definition = getMainDefinition(query);
+    const {kind, operation} = getMainDefinition(query);
     return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+      kind === 'OperationDefinition' &&
+      operation === 'subscription'
     );
   },
   wsLink,

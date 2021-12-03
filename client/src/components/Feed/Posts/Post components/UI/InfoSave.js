@@ -11,7 +11,7 @@ const InfoSave = ({date, postID, user, updatedCallback, isLogged}) => {
 
     useEffect(()=>{
         const getTime = () => {
-            let utcSeconds = date;
+            let utcSeconds = parseInt(date);
             utcSeconds = new Date(utcSeconds).getTime()
             let d = Date.now() - utcSeconds
             d = Math.floor((d/1000)/60)

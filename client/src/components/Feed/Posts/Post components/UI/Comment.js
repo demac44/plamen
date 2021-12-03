@@ -15,7 +15,7 @@ const Comment = ({comment, uid}) => {
     
     useEffect(()=>{
         const getTime = () => {
-            let utcSeconds = comment.date_commented;
+            let utcSeconds = parseInt(comment.date_commented);
             utcSeconds = new Date(utcSeconds).getTime()
             let d = Date.now() - utcSeconds
             d = Math.floor((d/1000)/60)

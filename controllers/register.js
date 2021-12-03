@@ -4,7 +4,7 @@ import connection from '../middleware/db.js'
 
 const router = express.Router()
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const {username,password,fname,lname,email,birth_date,gender} = req.body
     const oldUser = `SELECT 
     (SELECT COUNT(email) 
@@ -15,24 +15,26 @@ router.post('/', (req, res) => {
     FROM users 
     WHERE username='${username}'
     ) AS countUsername `
-    const result = connection.query(oldUser)
+    const result = await connection.promise().query(oldUser).then(res=>{return res[0]})
+    console.log(result);
     if (result[0].countEmail > 0){
         res.send({error: 'Email already exists'})
     } else if (result[0].countUsername > 0){
         res.send({error: 'Username is already taken'})
     } else {
         bcrypt.genSalt(10, (_, salt) => {
-            bcrypt.hash(password, salt, (err, hash) => {
+            bcrypt.hash(password, salt, async (err, hash) => {
                 const newUser =
                 `INSERT INTO users 
                 (userID, username, first_name, last_name, email, pass, gender, birth_date, date_registered, profile_picture)
                 VALUES 
-                (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}","${gender}", STR_TO_DATE("${birth_date}", '%Y-%m-%d'), null, 'url')`
-                connection.query(newUser)
-                if (err) console.log(err)
-                else  {
-                    res.sendStatus(200)
-                }
+                (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}","${gender}", STR_TO_DATE("${birth_date}", '%Y-%m-%d'), null, null)`
+                await connection.promise().query(newUser).then(()=>{
+                    if (err) console.log(err)
+                    else  {
+                        res.sendStatus(200)
+                    }
+                })
             })
         })
     }

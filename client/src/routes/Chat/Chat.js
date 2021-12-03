@@ -15,10 +15,7 @@ const GET_CHATS = gql`
             last_name
             profile_picture
             userID
-            msg_text
-            mid
             date_created
-            type
         }
 }`
 

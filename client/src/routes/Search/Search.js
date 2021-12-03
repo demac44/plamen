@@ -113,7 +113,7 @@ const styles = {
         color:'white',
         width:'100%',
         padding:'20px',
-        backgroundColor:'#111827',
+        backgroundColor:'#1b1b1b',
         textAlign:'center',
         borderRadius:'10px'
     },
@@ -121,8 +121,11 @@ const styles = {
         width:'100%',
         padding:'5px',
         textAlign:'center',
-        backgroundColor:'#aaa',
-        cursor:'pointer'
+        backgroundColor:'#1b1b1b',
+        color:'white',
+        cursor:'pointer',
+        marginTop:'10px',
+        borderRadius:'10px'
     }
 }
 

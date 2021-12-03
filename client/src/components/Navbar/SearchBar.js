@@ -41,7 +41,8 @@ const SearchBar = ({chat, isLogged}) => {
             <i className="fas fa-search"></i></div>
             <input className='tn-search-input' style={{borderRadius:'0 50px 50px 0'}} placeholder='search'/>
         </div>)
-    if(error) throw error
+
+    if (error) console.log(error.message);
 
     const handleInput = (e) => {
         setVal(e.target.value)

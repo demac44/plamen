@@ -10,10 +10,10 @@ export const IF_SAVED = {
     args: {
         userID: {type: GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID} = args
         const sql = `SELECT * FROM saves WHERE userID=${userID}`
-        let result = connection.query(sql)
+        let result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
 }
@@ -24,7 +24,7 @@ export const GET_SAVES = {
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID, limit, offset} = args
         const sql = `SELECT saves.postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type FROM saves 
                         JOIN posts ON posts.postID=saves.postID JOIN users ON users.userID=posts.userID WHERE saves.userID=${userID} ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
@@ -32,9 +32,9 @@ export const GET_SAVES = {
                         JOIN users ON comments.userID=users.userID`
         const like = `SELECT postID,username,first_name,last_name,profile_picture,users.userID FROM likes 
                         JOIN users ON likes.userID=users.userID`
-        let r1 = connection.query(sql)
-        let r2 = connection.query(comm)
-        let r3 =  connection.query(like)
+        let r1 = await connection.promise().query(sql).then((res)=>{return res[0]})
+        let r2 = await connection.promise().query(comm).then((res)=>{return res[0]})
+        let r3 = await connection.promise().query(like).then((res)=>{return res[0]})
         r1.forEach(r => {
             temp = []
             r2.forEach(c => {

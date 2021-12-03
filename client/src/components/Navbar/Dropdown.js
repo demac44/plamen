@@ -13,11 +13,10 @@ const Dropdown = ({cbDropdown}) => {
     const logout = async () => {
         await axios({
             method:'post',
-            url:'http://localhost:5000/api/logout',
+            url:'http://localhost:8000/api/logout',
             withCredentials: true
         }).then(()=>{
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
+            localStorage.clear()
             history.push('/login')
         })
     }

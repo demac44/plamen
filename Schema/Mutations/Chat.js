@@ -1,8 +1,8 @@
 import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
 import { ChatMessagesType, ChatType, MsgNotificationType } from "../TypeDefs/Chat.js"
-import { pubsub } from '../schema.js';
 
+import { pubsub } from '../schema.js'
 
 export const CREATE_CHAT = {
     type: ChatType,
@@ -41,12 +41,12 @@ export const SEND_MESSAGE = {
         url: {type: GraphQLString},
         type: {type:GraphQLString}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {chatID, userID, msg_text, url, type} = args
         const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url, type)
                      VALUES (null, ${chatID}, ${userID}, null, "${msg_text}", "${url}", "${type}")`
-        const msg = connection.query(sql) 
-        pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, type, msgID: msg.insertId}})  
+        const msg = await connection.promise().query(sql).then(res=>{return res[0]})
+        pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, type, msgID: msg.insertId, time_sent: new Date().getTime()}})  
         return args
     }
 }

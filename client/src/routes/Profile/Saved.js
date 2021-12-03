@@ -134,7 +134,7 @@ export default Saved
 const styles = {
     title: {
         color:'white',
-        backgroundColor:'#111827',
+        backgroundColor:'#1b1b1b',
         width:'100%',
         padding:'20px',
         borderRadius:'10px',

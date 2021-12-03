@@ -18,7 +18,7 @@ const GET_NOTIFICATIONS = gql`
     }
 `
 const CLEAR_NOTIFICATIONS = gql`
-    mutation ($rid: Int!){
+    mutation ($rid: Int){
         clear_notifications (receiver_id: $rid){
             receiver_id
         }
@@ -56,14 +56,14 @@ const NotficationsMenu = ({visible}) => {
                     if (!subscriptionData?.data) return prev;
                     const newNotification = subscriptionData.data.newNotification;
                     
-                    if (newNotification.receiver_id===ls.userID){
+                    if (newNotification?.receiver_id===ls.userID){
                     return Object.assign({}, prev, {
                         get_notifications: [newNotification, ...prev.get_notifications]
                     });
                 }
             }});
         }
-        subscribeNewNotification()
+        return subscribeNewNotification()
     }, [subscribeToMore]) 
 
 
@@ -99,8 +99,8 @@ const NotficationsMenu = ({visible}) => {
                     }}
                     onClick={handleClear}
                     >Clear all</div>}
-                {data?.get_notifications?.map(n => 
-                    <NotificationBox n={n} key={n.Nid}/>
+                {data?.get_notifications?.map(notif => 
+                    <NotificationBox notif={notif} key={notif.Nid}/>
                     )}
             </span>
 

@@ -8,9 +8,10 @@ export const GET_ALL_USERS = {
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {limit, offset} = args
-        const result = connection.query(`SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`)
+        const sql = `SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }    
 }    
@@ -22,7 +23,8 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const result = connection.query(`SELECT * FROM users WHERE userID=${userID} OR username="${username}"`)
+        const sql = `SELECT * FROM users WHERE userID=${userID} OR username="${username}"`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }    
 }

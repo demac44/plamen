@@ -12,7 +12,7 @@ const options =  {
 router.post('/', async (req, res) => {
     const {username, password} = req.body
     let sql = `SELECT * FROM users WHERE username="${username}" OR email="${username}"` 
-    let result = await connection.query(sql)
+    let result = await connection.promise().query(sql).then(res=>{return res[0]})
     if (result.length === 0) {
         res.send({error: 'User not found'})
     } else {

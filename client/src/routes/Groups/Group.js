@@ -10,7 +10,7 @@ import AddGroupPost from '../../components/Groups/Functional components/AddGroup
 import Post from '../../components/Feed/Posts/Post'
 
 const GET_GROUP = gql`
-    query($gid: Int!, $limit: Int, $offset: Int){
+    query($gid: Int!, $limit: Int, $offset: Int, $uid: Int!){
         get_group(groupID: $gid){
             group_name
             group_creator_id
@@ -50,6 +50,10 @@ const GET_GROUP = gql`
                 profile_picture
             }
         }
+        get_group_user (groupID: $gid, userID: $uid){
+            role
+            permissions
+        }
     }
 `
 
@@ -63,7 +67,8 @@ const Group = ({isLogged}) => {
         variables:{
             gid: parseInt(groupid),
             limit:20,
-            offset:0
+            offset:0,
+            uid: ls.userID
         }
     })
 
@@ -89,10 +94,10 @@ const Group = ({isLogged}) => {
     if(loading) return <p>loading</p>
 
     const posts = data?.get_group_posts
-    
+
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
             <div className='wrapper'>
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
@@ -104,6 +109,7 @@ const Group = ({isLogged}) => {
                                 key={tag}
                             >{tag}</div>)}
                         </div>
+                        {(data.get_group_user && !data.get_group.closed) &&
                         <div className='group-posts-info'>
                             <div className='group-posts-container'>
                                 <AddGroupPost updatedCallback={updatedCallback} groupid={groupid}/>
@@ -129,16 +135,16 @@ const Group = ({isLogged}) => {
                                     <div style={styles.descTitle}><h2>Description</h2></div>
                                     {data.get_group.group_description ? 
                                     <div style={styles.textBoxDesc}>{data.get_group.group_description}</div>
-                                        : <div style={styles.addInfoBtn}><i className='fas fa-plus'></i> <h3> Add description</h3></div>}               
+                                        : <div style={styles.addInfoBtn}><i className='fas fa-plus' style={{marginRight:'10px'}}></i><h3> Add description</h3></div>}               
                                 </div>
                                 <div className='group-info-box flex-col-ctr'>
                                     <div style={styles.descTitle}><h2>Community rules</h2></div>
                                     {data.get_group.group_rules ? 
                                     <div style={styles.textBoxDesc}><p>{data.get_group.group_rules}</p></div>
-                                        : <div className='flex-ctr' style={styles.addInfoBtn}><i className='fas fa-plus'></i> <h3> Add rules</h3></div>}       
+                                        : <div className='flex-ctr' style={styles.addInfoBtn}><i style={{marginRight:'5px'}} className='fas fa-plus'></i> <h3> Add rules</h3></div>}       
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
