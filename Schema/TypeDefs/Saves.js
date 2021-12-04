@@ -10,6 +10,7 @@ export const SavesType = new GraphQLObjectType({
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
         limit: {type:GraphQLInt},
-        offset: {type:GraphQLInt}
+        offset: {type:GraphQLInt},
+        groupID:{type: GraphQLInt}
     })
 })

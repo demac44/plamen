@@ -3,6 +3,7 @@ import connection from "../../middleware/db.js"
 import { CommentType } from "../TypeDefs/Comments.js"
 import { GroupPostType, GroupType } from "../TypeDefs/Groups.js"
 import { LikesType } from "../TypeDefs/Likes.js"
+import { SavesType } from "../TypeDefs/Saves.js"
 
 
 export const CREATE_GROUP = {
@@ -69,7 +70,7 @@ export const ADD_GP_COMMENT = {
     resolve(_, args) {
         const {userID, postID, comment_text} = args
         const sql = `INSERT INTO group_posts_comments (commentID ,postID, userID, comment_text, date_commented)
-                    VALUES (null,${postID} ,${userID}, "${comment_text}", null)`
+                    VALUES (null, ${postID} ,${userID}, "${comment_text}", null)`
         connection.query(sql)
         return args
     }
@@ -113,6 +114,36 @@ export const REMOVE_GP_LIKE = {
     resolve(_, args){
         const {postID, userID} = args
         const sql = `DELETE FROM group_posts_likes WHERE postID=${postID} AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const SAVE_GP = {
+    type: SavesType,
+    args: {
+        userID: {type: GraphQLInt},
+        postID: {type: GraphQLInt},
+        groupID:{type: GraphQLInt}
+    },
+    resolve(_, args) {
+        const {postID, userID, groupID} = args
+        const sql = `INSERT INTO group_posts_saved (userID, postID, groupID) 
+                    VALUES (${userID}, ${postID}, ${groupID})`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const REMOVE_SAVED_GP = {
+    type: SavesType,
+    args: {
+        postID: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
+    }, 
+    resolve(_, args){
+        const {postID, userID} = args
+        const sql = `DELETE FROM group_posts_saved WHERE postID=${postID} AND userID=${userID}`
         connection.query(sql)
         return args
     }

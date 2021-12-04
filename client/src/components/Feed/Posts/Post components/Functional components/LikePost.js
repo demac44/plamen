@@ -5,21 +5,22 @@ import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
 import LoginPopUp from '../../../../Entry/Login/LoginPopUp.js'
 
 const LIKE_POST = gql`
-    mutation like_post($postID: Int!, $userID: Int!){
+    mutation ($postID: Int!, $userID: Int!, $rid: Int!){
         like_post(postID: $postID, userID: $userID){
             postID
         }
-    }
-`
-
-const NOTIFICATION = gql`
-    mutation ($postID: Int!, $sid: Int!, $rid: Int!){
-        like_notification (postID: $postID, sender_id: $sid, receiver_id: $rid){
+        like_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
             postID
         }
     }
 `
-
+const LIKE_GP = gql`
+    mutation ($postID: Int!, $userID: Int!){
+        like_gp (postID: $postID, userID: $userID){
+            postID
+        }
+    }
+`
 const REMOVE_LIKE = gql`
     mutation remove_like($postID: Int!, $userID: Int!){
         remove_like(postID: $postID, userID: $userID){
@@ -30,15 +31,21 @@ const REMOVE_LIKE = gql`
         }
     }
 `
+const REMOVE_GP_LIKE = gql`
+    mutation ($postID: Int!, $userID: Int!){
+        remove_gp_like (postID: $postID, userID: $userID){
+            postID
+        }
+    }
+`
 
-const LikePost = ({postID, likes, isLogged, uid}) => {
+const LikePost = ({postID, likes, isLogged, uid, groupPost}) => {
     const [liked, setLiked] = useState(false)
     const [count, setCount] = useState(likes.length)
     const [showLikes, setShowLikes] = useState(false)
     const user = JSON.parse(localStorage.getItem('user'))
-    const [like_post] = useMutation(LIKE_POST)
-    const [remove_like] = useMutation(REMOVE_LIKE)
-    const [notification] = useMutation(NOTIFICATION)
+    const [like_post] = useMutation(groupPost ? LIKE_GP : LIKE_POST)
+    const [remove_like] = useMutation(groupPost ? REMOVE_GP_LIKE : REMOVE_LIKE)
     const [loginPopUp, setLoginPopUp] = useState(false)
 
     useEffect(()=>{
@@ -60,19 +67,12 @@ const LikePost = ({postID, likes, isLogged, uid}) => {
         like_post({
             variables: {
                 postID: postID,
-                userID: user?.userID
+                userID: user?.userID,
+                rid: uid
             }
         }).then(() => {
             setLiked(true)
             setCount(count+1)
-        }).then(()=>{
-            notification({
-                variables:{
-                    postID,
-                    sid: user.userID,
-                    rid: uid
-                }
-            })
         })
         : setLoginPopUp(true)
     }

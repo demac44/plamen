@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
+import { GraphQLInt, GraphQLList } from 'graphql';
 import connection from '../../middleware/db.js'
 import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 
@@ -27,12 +27,10 @@ export const GET_GROUP = {
         const sql = `SELECT * FROM groups 
                      JOIN group_info ON groups.groupID=group_info.groupID
                      WHERE groups.groupID=${groupID}`
-        const posts_sql = `SELECT * FROM group_posts WHERE groupID=${groupID} ORDER BY date_posted DESC`
         const users_sql = `SELECT * FROM group_users
                             JOIN group_roles ON group_users.roleID=group_roles.roleID
                             WHERE groupID=${groupID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        // const posts = connection.query(posts_sql)
         // const users = connection.query(users_sql)
         // result.posts = posts
         // result.users = users 

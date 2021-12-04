@@ -11,11 +11,18 @@ const DELETE_POST = gql`
         }
     }
 `
+const DELETE_GP = gql`
+    mutation ($postID: Int!){
+        delete_group_post (postID: $postID){
+            postID
+        }
+    }
+`
 
 
-const PostOptionsMenu = ({postID, updatedCallback, userID, menuCallback}) => {
+const PostOptionsMenu = ({postID, updatedCallback, userID, menuCallback, groupPost}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [delete_post] = useMutation(DELETE_POST)
+    const [delete_post] = useMutation(groupPost ? DELETE_GP : DELETE_POST)
     const [deleted, setDeleted] = useState(false)
     const [copied, setCopied] = useState(false)
     const [reportMenu, setReportMenu] = useState(false)
@@ -35,7 +42,11 @@ const PostOptionsMenu = ({postID, updatedCallback, userID, menuCallback}) => {
     }
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(window.location.origin+'/post/'+postID)
+        navigator.clipboard.writeText(
+            groupPost ?
+            window.location.origin+'/community/post/'+postID
+            : window.location.origin+'/post/'+postID
+            )
         setCopied(true)
         setTimeout(()=>{
             setCopied(false)

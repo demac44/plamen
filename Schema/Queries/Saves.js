@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLInt, GraphQLList} from 'graphql';
+import { GraphQLInt, GraphQLList} from 'graphql';
 import connection from '../../middleware/db.js'
 import { FeedPostType } from '../TypeDefs/Posts.js';
 import {SavesType} from '../TypeDefs/Saves.js'
@@ -6,17 +6,33 @@ import {SavesType} from '../TypeDefs/Saves.js'
 let temp=[]
 
 export const IF_SAVED = {
-    type: new GraphQLList(SavesType),
+    type: SavesType,
     args: {
-        userID: {type: GraphQLInt}
+        userID: {type: GraphQLInt},
+        postID: {type: GraphQLInt}
     },
     async resolve(_, args){
-        const {userID} = args
-        const sql = `SELECT * FROM saves WHERE userID=${userID}`
-        let result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        const {userID, postID} = args
+        const sql = `SELECT * FROM saves WHERE userID=${userID} AND postID=${postID}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        return result[0]
     }
 }
+
+export const IF_SAVED_GP = {
+    type: SavesType,
+    args: {
+        userID: {type: GraphQLInt},
+        postID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID, postID} = args
+        const sql = `SELECT * FROM group_posts_saved WHERE userID=${userID} AND postID=${postID}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        return result[0]
+    }
+}
+
 export const GET_SAVES = {
     type: new GraphQLList(FeedPostType),
     args: {

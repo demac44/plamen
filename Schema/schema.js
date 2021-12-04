@@ -10,7 +10,7 @@ import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
-import { ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE } from "./Mutations/Groups.js";
+import { ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
@@ -23,7 +23,7 @@ import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings
 import { GET_GROUP, GET_GROUPS, GET_GROUP_POSTS, GET_GROUP_USER } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
-import { GET_SAVES, IF_SAVED } from "./Queries/Saves.js";
+import { GET_SAVES, IF_SAVED, IF_SAVED_GP } from "./Queries/Saves.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
@@ -56,7 +56,8 @@ const RootQuery = new GraphQLObjectType({
         get_groups:GET_GROUPS,
         get_group: GET_GROUP,
         get_group_posts: GET_GROUP_POSTS,
-        get_group_user: GET_GROUP_USER
+        get_group_user: GET_GROUP_USER,
+        if_saved_gp: IF_SAVED_GP
     }
 })    
 
@@ -95,10 +96,12 @@ const RootMutation = new GraphQLObjectType({
         create_group: CREATE_GROUP,
         create_group_post: CREATE_GROUP_POST,
         delete_group_post: DELETE_GROUP_POST,
-        like_gp_post: LIKE_GP_POST,
+        like_gp: LIKE_GP_POST,
         remove_gp_like:REMOVE_GP_LIKE,
-        comment_gp_post: ADD_GP_COMMENT,
-        remove_gp_comment: REMOVE_GP_COMMENT
+        comment_gp: ADD_GP_COMMENT,
+        remove_gp_cmt: REMOVE_GP_COMMENT,
+        save_gp: SAVE_GP,
+        remove_saved_gp: REMOVE_SAVED_GP
     }
 })
 

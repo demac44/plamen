@@ -7,41 +7,6 @@ import LeftNavbar from '../../components/UI/LeftNavbar'
 import Loader from '../../components/UI/Loader'
 
 
-const GET_SAVED = gql`
-    query ($userID: Int!, $offset: Int, $limit: Int){
-        get_saves(userID:$userID, offset:$offset, limit:$limit){
-            postID
-            post_text
-            date_posted
-            url
-            userID
-            first_name
-            last_name
-            username
-            profile_picture
-            type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
-        }
-    }
-`
-
-
 const Saved = ({isLogged}) => {
     const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -64,11 +29,7 @@ const Saved = ({isLogged}) => {
 
 
     useEffect(()=>{
-        window.scrollTo({
-            top:0,
-            left:0,
-            behavior:'smooth'
-        })
+        window.scrollTo(0,0)
         if(updated){
             refetch()
             setUpdated(false)
@@ -141,3 +102,37 @@ const styles = {
         textAlign:'center'
     }
 }
+
+const GET_SAVED = gql`
+    query ($userID: Int!, $offset: Int, $limit: Int){
+        get_saves(userID:$userID, offset:$offset, limit:$limit){
+            postID
+            post_text
+            date_posted
+            url
+            userID
+            first_name
+            last_name
+            username
+            profile_picture
+            type
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+                postID
+            }
+            likes{
+                postID
+                userID
+                username
+                first_name
+                last_name
+                profile_picture
+            }
+        }
+    }
+`

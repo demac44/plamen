@@ -4,30 +4,29 @@ import { useMutation } from 'react-apollo'
 import LoginPopUp from '../../../../Entry/Login/LoginPopUp'
 
 const ADD_COMMENT = gql`
-    mutation ($postID: Int!, $userID: Int!, $comment_text: String!){
+    mutation ($postID: Int!, $userID: Int!, $comment_text: String!, $rid: Int!){
         add_comment(postID: $postID, userID: $userID, comment_text: $comment_text){
-            commentID
+            postID
+        }
+        comment_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+            postID
         }
     }
 `
-
-
-const NOTIFICATION = gql`
-    mutation ($postID: Int!, $sid: Int!, $rid: Int!){
-        comment_notification (postID: $postID, sender_id: $sid, receiver_id: $rid){
+const ADD_GP_COMMENT = gql`
+    mutation ($postID: Int!, $userID: Int!, $comment_text: String!){
+        comment_gp (postID: $postID, userID: $userID, comment_text: $comment_text){
             postID
         }
     }
 `
 
-
-const AddComment = ({postID, updatedCallback, isLogged, uid}) => {
+const AddComment = ({postID, updatedCallback, isLogged, uid, groupPost}) => {
     let comment_text;
     const user = JSON.parse(localStorage.getItem('user'))
     const [added, setAdded] = useState(false)
     const [loginPopUp, setLoginPopUp] = useState(false)
-    const [notification] = useMutation(NOTIFICATION)
-    const [add_comment] = useMutation(ADD_COMMENT) 
+    const [add_comment] = useMutation(groupPost ? ADD_GP_COMMENT : ADD_COMMENT) 
 
     useEffect(()=>{
         updatedCallback(added)
@@ -48,19 +47,12 @@ const AddComment = ({postID, updatedCallback, isLogged, uid}) => {
                 variables:{
                     postID: postID,
                     userID: user.userID,
-                    comment_text: comment_text
+                    comment_text: comment_text,
+                    rid: uid
                 }
             }).then(()=>{
                 e.target.comment_text.value=''
                 setAdded(true)
-            }).then(()=>{
-                notification({
-                    variables:{
-                        postID,
-                        sid: user.userID,
-                        rid: uid
-                    }
-                })
             })
         }
     }

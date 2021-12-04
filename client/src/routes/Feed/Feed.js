@@ -10,55 +10,6 @@ import { useQuery } from 'react-apollo'
 import Loader from '../../components/UI/Loader'
 
 
-const FEED_POSTS = gql`
-    query ($userID: Int!, $limit: Int, $offset: Int){
-        feed_posts (userID: $userID, limit: $limit, offset: $offset){
-            postID
-            post_text
-            date_posted
-            url
-            userID
-            first_name
-            last_name
-            username
-            profile_picture
-            type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
-        }
-        get_stories (userID: $userID){
-            first_name
-            last_name
-            storyID
-            type
-            profile_picture
-            username
-            userID
-            stories {
-                date_posted
-                storyID
-                url
-                type
-            }
-        }
-    }
-`
-
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
@@ -74,11 +25,7 @@ const Feed = ({isLogged}) => {
     
 
     useEffect(()=>{
-        window.scrollTo({
-            top:0,
-            left:0,
-            behavior:'smooth'
-        })
+        window.scrollTo(0,0)
         if(updated){
             refetch()
             setUpdated(false)
@@ -151,3 +98,53 @@ const Feed = ({isLogged}) => {
 }
 
 export default Feed
+
+
+const FEED_POSTS = gql`
+    query ($userID: Int!, $limit: Int, $offset: Int){
+        feed_posts (userID: $userID, limit: $limit, offset: $offset){
+            postID
+            post_text
+            date_posted
+            url
+            userID
+            first_name
+            last_name
+            username
+            profile_picture
+            type
+            comments{
+                commentID
+                userID
+                username
+                comment_text
+                date_commented
+                profile_picture
+                postID
+            }
+            likes{
+                postID
+                userID
+                username
+                first_name
+                last_name
+                profile_picture
+            }
+        }
+        get_stories (userID: $userID){
+            first_name
+            last_name
+            storyID
+            type
+            profile_picture
+            username
+            userID
+            stories {
+                date_posted
+                storyID
+                url
+                type
+            }
+        }
+    }
+`

@@ -12,6 +12,99 @@ import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
 import Loader from '../../components/UI/Loader'
 
+    
+const Profile = ({myprofile, isLogged}) => {
+    const ls = JSON.parse(localStorage.getItem('user')) 
+    const [updated, setUpdated] = useState(false)
+    const [leftnav, setLeftnav] = useState(false)
+    
+    const {id} = useParams()
+    
+    const userID = parseInt(id)
+
+    const {loading, error, data, refetch, fetchMore} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
+        variables: {
+            userID: myprofile ? ls.userID : userID,
+            limit:20,
+            offset:0
+        }
+    })
+
+    const updatedCallback = useCallback(val => {
+        setUpdated(val)
+    }, [setUpdated])
+    
+    const leftNavCallback = useCallback(val =>{
+        setLeftnav(val)
+    }, [setLeftnav])
+
+    useEffect(()=>{
+        if(userID === ls.userID) window.location.href = '/myprofile'
+        window.scrollTo(0,0)
+        if(updated){
+            refetch()
+            setUpdated(false)
+        }
+    }, [userID, ls.userID, updated, refetch])
+    
+    if (loading) return <div className='wh-100'><Loader/></div>
+    if(error) throw error 
+    
+    const posts = data.posts
+
+    const info = {
+        user: myprofile ? ls : data.user,
+        count: data.posts.length,
+        followers: data.getFollowers,
+        following: data.getFollowing,
+        stories: data.get_user_stories
+    }
+    
+    return ( 
+        <>
+            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <div className='wrapper' onLoad={()=>{
+                window.onscroll = async ()=>{
+                 if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                     try {
+                        await fetchMore({
+                             variables:{
+                                 offset:posts.length,
+                             },
+                             updateQuery: (prev, { fetchMoreResult }) => {
+                                 if (!fetchMoreResult) return prev;
+                                 return Object.assign({}, prev, {
+                                   posts: [...posts, ...fetchMoreResult.posts]
+                                 });
+                               }
+                         })                 
+                     } catch {}
+                 }
+                }
+            }}> 
+                <div className='main'>
+                    <LeftNavbar show={leftnav}/>
+                    <div className='profile-container'>
+                        <ProfileInfoBox info={info} updatedCallback={updatedCallback}/>
+                        {myprofile && <AddPost updatedCallback={updatedCallback}/>}
+                        {posts.length > 0 ? posts.map(post =><Post 
+                        user={info.user} 
+                        comments={post.comments} 
+                        likes={post.likes}
+                        post={post}
+                        updatedCallback={updatedCallback}
+                         key={post.postID}/>) : <p style={{marginTop:'60px', textAlign:'center'}}>No posts</p>}       
+                    </div>
+                </div>
+            </div>
+        </> 
+    )
+}
+
+export default Profile  
+
+
+
 const FETCH_INFO= gql`
     query ($userID: Int!, $limit: Int, $offset: Int){
         posts(userID: $userID, limit: $limit, offset: $offset){
@@ -122,99 +215,3 @@ const FETCH_INFO_MYPROFILE = gql`
         }
     }
 ` 
-    
-const Profile = ({myprofile, isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user')) 
-    const [updated, setUpdated] = useState(false)
-    const [leftnav, setLeftnav] = useState(false)
-    
-    const {id} = useParams()
-    
-    const userID = parseInt(id)
-
-    const {loading, error, data, refetch, fetchMore} = useQuery(myprofile ? FETCH_INFO_MYPROFILE : FETCH_INFO, {
-        variables: {
-            userID: myprofile ? ls.userID : userID,
-            limit:20,
-            offset:0
-        }
-    })
-
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
-    
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
-
-    useEffect(()=>{
-        if(userID === ls.userID) window.location.href = '/myprofile'
-        window.scrollTo({
-            top:0,
-            left:0,
-            behavior:'smooth'
-        })
-        if(updated){
-            refetch()
-            setUpdated(false)
-        }
-    }, [userID, ls.userID, updated, refetch])
-    
-    if (loading) return <div className='wh-100'><Loader/></div>
-    if(error) throw error 
-    
-    const posts = data.posts
-
-    const info = {
-        user: myprofile ? ls : data.user,
-        count: data.posts.length,
-        followers: data.getFollowers,
-        following: data.getFollowing,
-        stories: data.get_user_stories
-    }
-    
-    return ( 
-        <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper' onLoad={()=>{
-                window.onscroll = async ()=>{
-                 if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-                     try {
-                        await fetchMore({
-                             variables:{
-                                 offset:posts.length,
-                             },
-                             updateQuery: (prev, { fetchMoreResult }) => {
-                                 if (!fetchMoreResult) return prev;
-                                 return Object.assign({}, prev, {
-                                   posts: [...posts, ...fetchMoreResult.posts]
-                                 });
-                               }
-                         })                 
-                     } catch {}
-                 }
-                }
-            }}> 
-                <div className='main'>
-                    <LeftNavbar show={leftnav}/>
-                    <div className='profile-container'>
-                        <ProfileInfoBox info={info} updatedCallback={updatedCallback}/>
-                        {myprofile && <AddPost updatedCallback={updatedCallback}/>}
-                        {posts.length > 0 ? posts.map(post =><Post 
-                        user={info.user} 
-                        comments={post.comments} 
-                        likes={post.likes}
-                        post={post}
-                        updatedCallback={updatedCallback}
-                         key={post.postID}/>) : <p style={{marginTop:'60px', textAlign:'center'}}>No posts</p>}       
-                    </div>
-                </div>
-            </div>
-        </> 
-    )
-}
-
-export default Profile  
-
-

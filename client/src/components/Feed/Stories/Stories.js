@@ -30,7 +30,7 @@ const Stories = ({stories, updatedCallback}) => {
                 {stories.map(story => (
                     <div className='flex-col-ctr' style={{marginLeft:'10px'}}  key={story?.storyID}>
                         <StoryHead story={story} allData={stories} index={index++} updatedCallback={updatedCallback}/>
-                        <p style={{fontSize:'14px', color:'white'}}>{story?.username}</p>
+                        <p style={{fontSize:'14px', color:'white', marginTop:'8px'}}>{story?.username}</p>
                     </div>
                 ))}
             </div>

@@ -167,9 +167,7 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    background-color: rgb(170, 170, 170);
-    background: url(./images/teal2.jpg);
-    background-size: cover;
+    background-color: #2f2f2f;
 }
 .entry-form-box{
     width:40%;
@@ -177,8 +175,7 @@
     border-radius: 30px;
     box-shadow: 2px 2px 20px;
     padding: 50px 10px 20px 10px;
-    background-color: #111827;
-    /* border: 1px solid #ffbb00; */
+    background-color: #1b1b1b;
 }
 .entry-form-box h1{
     color: #ffbb00;
@@ -336,7 +333,6 @@
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid whitesmoke;
 }
 .avatar-img{
     min-width: 100%;
@@ -678,7 +674,7 @@
 
 /* NEW POST BOX */
 .add-np-box{
-    width: 65%;
+    width: 60%;
     margin-top: 30px;
     padding: 10px;
     box-shadow: 2px 2px 20px;
@@ -758,7 +754,7 @@
 }
 .post{
     position: relative;
-    width: 65% !important;
+    width: 60% !important;
     margin-top: 40px;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
@@ -928,6 +924,9 @@
     padding: 5px 15px;
     overflow: hidden;
 }   
+.stories-container .user-avatar{
+    border: 2px solid #ffbb00;
+}
 .stories-btn-left, .stories-btn-right{
     position: absolute;
     top: 0;
@@ -954,8 +953,9 @@
     transition: ease 0.5s;
 }
 .story-head{
-    height: 80%;
+    height:64px;
     border-radius: 50%;
+    background-color: #ffbb00;
 }    
 .story img{
     border-radius: 50%;
@@ -967,6 +967,7 @@
     cursor: pointer;
     background-color: #4f4f4f;
     overflow: hidden;
+    border: 2px solid greenyellow;
 }
 .add-story-btn i{
     font-size: 30px;
@@ -1623,6 +1624,10 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .notifications-container{
         width:40vw;
     }
+    /* GROUPS */
+    .group-container{
+        margin: 0;
+    }
 }
 
 
@@ -1724,9 +1729,6 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
         width: 60vw;
     }
     /* GROUPS */
-    .group-container{
-        margin: 0;
-    }
     .group-info-container{
         padding: 10px;
     }
@@ -1891,6 +1893,18 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     }
     .group-posts-container{
         width: 100%;
+    }
+    .group-banner{
+        border-radius: 0;
+        margin-top: 10px;
+    }
+    .group-banner h1{
+        font-size: 20px;
+    }
+    .group-join-btn{
+        bottom: 6px;
+        padding: 4px 15px;
+        min-width: 110px;
     }
 }
 

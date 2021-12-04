@@ -6,7 +6,7 @@ import '../../../../../App.css'
 import PostOptBtn from '../Functional components/PostOptBtn'
 import { NavLink } from 'react-router-dom'
 
-const InfoSave = ({date, postID, user, updatedCallback, isLogged}) => {
+const InfoSave = ({date, postID, user, updatedCallback, isLogged, groupPost, gid}) => {
     const [time, setTime] = useState(null)
 
     useEffect(()=>{
@@ -40,8 +40,12 @@ const InfoSave = ({date, postID, user, updatedCallback, isLogged}) => {
                 </div>
             </div>
             <div className="fp-like-save">
-                <SavePost postID={postID} isLogged={isLogged}/>
-                {isLogged && <PostOptBtn postID={postID} userID={user.userID} updatedCallback={updatedCallback}/>}
+                <SavePost postID={postID} isLogged={isLogged} groupPost={groupPost} gid={gid}/>
+                {isLogged && <PostOptBtn 
+                                postID={postID} 
+                                userID={user.userID} 
+                                updatedCallback={updatedCallback}
+                                groupPost={groupPost}/>}
             </div>
         </div>
     )
