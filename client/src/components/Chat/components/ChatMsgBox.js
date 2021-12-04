@@ -6,8 +6,8 @@ import Message from './Message'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
-import Loader from '../../UI/Loader'
- 
+import MsgsLoader from '../../UI/Loaders/MsgsLoader'
+import Loader from '../../UI/Loaders/Loader'
 
 const GET_MESSAGES = gql`
     query ($chatID: Int!, $limit: Int, $offset: Int){
@@ -84,18 +84,15 @@ const ChatMsgBox = ({chatid, info}) => {
         subscribeNewMessage()
     }, [chatid, subscribeToMore])        
     
-    const handleSeen = () =>{
+    
+    useEffect(()=>{
         seen({
             variables:{
                 cid: parseInt(chatid),
                 rid: ls.userID
             }
         })
-    }
-    
-    useEffect(()=>{
-        handleSeen()
-    }, [data])
+    }, [data, chatid, ls.userID, seen])
 
 
     const handleFetchMore = () => {
@@ -120,7 +117,7 @@ const ChatMsgBox = ({chatid, info}) => {
 
     return (
         <div className='chat-msg-box'> 
-        {loading ? <div style={{width:'100%', height:'100%'}}><Loader/></div> :
+        {loading ? <MsgsLoader/> :
         <>
             <ChatBar chatid={chatid} info={info}/>
             <div className='chat-messages'>

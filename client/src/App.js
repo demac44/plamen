@@ -13,7 +13,6 @@ import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
 import ChatCont from './routes/Chat/ChatCont';
-import Loader from './components/UI/Loader';
 import Post from './routes/Post/Post';
 import Groups from './routes/Groups/Groups';
 import Group from './routes/Groups/Group';
@@ -47,7 +46,7 @@ function App() {
   
   return (
       <>
-        {isLoading ? <Loader/> :
+        {isLoading ? 'p' :
           <Switch>
             <>
               <Route exact path='/'></Route>

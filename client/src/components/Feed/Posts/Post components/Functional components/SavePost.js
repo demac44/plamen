@@ -23,7 +23,7 @@ const SavePost = ({postID, isLogged, groupPost, gid}) => {
     useEffect(()=>{
         if(groupPost) data?.if_saved_gp?.postID===postID && setSaved(true)
         else data?.if_saved?.postID===postID && setSaved(true)
-    }, [data, postID])
+    }, [data, postID, groupPost])
     
     if(loading) return <i className="fas fa-bookmark fp-save-btn"></i>
     

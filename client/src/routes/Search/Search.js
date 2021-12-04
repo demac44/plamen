@@ -6,7 +6,6 @@ import { useQuery } from 'react-apollo'
 
 import Navbar from '../../components/Navbar/Navbar.js'
 import UserSearchBar from '../../components/Navbar/UserSearchBar'
-import Loader from '../../components/UI/Loader'
 import LeftNavbar from '../../components/UI/LeftNavbar.js'
 
 const SEARCH_USERS = gql`
@@ -68,7 +67,7 @@ const Search = ({isLogged}) => {
         setusers()
     }, [data, query])
     
-    if(loading) return <div className='wh-100'><Loader/></div>
+    if(loading) return <div className='wh-100'>sta ima</div>
     if(error) throw error 
     
 
@@ -80,7 +79,8 @@ const Search = ({isLogged}) => {
                     <LeftNavbar show={leftnav}/>
                     <div className='search-container'>
                         <p style={styles.title}>Search results</p>
-                        {users.length < 1 ? <p style={{color:'white'}}>No results</p> : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+                        {users.length < 1 ? <p style={{color:'white'}}>No results</p>
+                        : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
                         {fetch && <div style={styles.loadMore} onClick={()=>{
                             fetchMore({
                                 variables:{

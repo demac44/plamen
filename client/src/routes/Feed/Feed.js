@@ -7,7 +7,7 @@ import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import Loader from '../../components/UI/Loader'
+import FeedLoader from '../../components/UI/Loaders/FeedLoader'
 
 
 const Feed = ({isLogged}) => {
@@ -40,8 +40,8 @@ const Feed = ({isLogged}) => {
     const leftNavCallback = useCallback(val =>{
         setLeftnav(val)
     }, [setLeftnav])
-    
-    if(loading) return <div className='wh-100'><Loader/></div>
+
+    if(loading) return <FeedLoader/>
     if(error) console.log(error); 
 
     const posts = data?.feed_posts

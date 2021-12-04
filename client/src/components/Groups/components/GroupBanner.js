@@ -3,7 +3,7 @@ import React from 'react'
 const GroupBanner = ({info}) => {
     return (
         <div className='group-banner'>
-            <img style={styles.bannerImage} src={info.banner_image}/>
+            <img style={styles.bannerImage} src={info.banner_image} alt=''/>
             <span style={styles.nameBar}>
                 <h1>{info.group_name}</h1>
             </span>

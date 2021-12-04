@@ -64,7 +64,7 @@ const NotficationsMenu = ({visible}) => {
             }});
         }
         return subscribeNewNotification()
-    }, [subscribeToMore]) 
+    }, [subscribeToMore, ls.userID]) 
 
 
     const handleClear = () => {

@@ -3,6 +3,7 @@ import  Avatar from '../UI/Avatar'
 import {NavLink} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
+import UserLoader from '../UI/Loaders/UserLoader'
 
 const CREATE_CHAT = gql`
     mutation ($user1: Int!, $user2: Int!){
@@ -24,14 +25,7 @@ const UserSearchBar = ({user, chat}) => {
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:user.userID}}) 
 
-    if(loading) return (
-        <div style={styles.loading}>
-            <div style={styles.loadAvatar}></div>
-            <div>
-                <div style={styles.loadName}></div>
-                <div style={styles.loadUsername}></div>
-            </div>
-        </div>)
+    if(loading) return <UserLoader/>
 
     const createChat = () => {
         if(data?.chat_exists?.chatID){
@@ -70,34 +64,3 @@ const UserSearchBar = ({user, chat}) => {
 
 export default UserSearchBar
 
-
-const styles = {
-    loading:{
-        width:'100%',
-        height:'60px',
-        display:'flex',
-        padding:'5px'
-    },
-    loadAvatar:{
-        height:'95%',
-        width:'50px',
-        borderRadius:'50%',
-        backgroundColor:'#7f7f7f'
-    },
-    loadName:{
-        width:'100px',
-        height:'10px',
-        borderRadius:'10px',
-        backgroundColor:'#7f7f7f',
-        marginLeft:'10px',
-        marginTop:'5px'
-    },
-    loadUsername:{
-        width:'70px',
-        height:'10px',
-        borderRadius:'10px',
-        backgroundColor:'#7f7f7f',
-        marginLeft:'10px',
-        marginTop:'15px'
-    }
-}

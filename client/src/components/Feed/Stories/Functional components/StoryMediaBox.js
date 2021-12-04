@@ -38,7 +38,7 @@ const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setInde
                         nextStory()
                     }, 5000)
                     return
-                }}/>
+                }} alt=''/>
             }
             {type==='video' && 
             <>

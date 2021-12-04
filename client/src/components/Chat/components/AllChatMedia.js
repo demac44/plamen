@@ -50,7 +50,7 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
                         key={media.msgID}
                         className='chat-media-card flex-ctr'
                         onClick={()=>{setUrl(media.url)}}
-                    ><img src={media.url}></img></div>)}
+                    ><img src={media.url} alt=''/></div>)}
             </div>
 
         </div>
@@ -65,7 +65,6 @@ export default AllChatMedia
 const styles = {
     title:{
         width:'100%',
-        padding:'10px',
         color:'white',
         padding:'10px 30px',
         display:'flex',

@@ -71,14 +71,14 @@ const Message = ({msg}) => {
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
                     <>
-                        {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url}/>}
+                        {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' src={msg.url} controls/>}
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
                     </>}
                 </div>
                 : <div className='msg msg-other-user'>
-                        {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url}/>}
+                        {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text

@@ -8,7 +8,6 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 import Dropzone from 'react-simple-dropzone/dist';
-import Loader from '../../../../UI/Loader'
 
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
@@ -109,7 +108,6 @@ const AddPost = ({width, updatedCallback}) => {
     return (
         <>
             <form className="add-np-box" style={{width:width}} onSubmit={handleSubmit}>
-                {loading && <Loader size='small'/>}
                 {!loading && <div className="add-np-txt">
                     <textarea type="text" className="add-np-input" name='text' style={{border:err}} placeholder="Add new post..."></textarea>
                 </div>}

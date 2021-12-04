@@ -4,7 +4,7 @@ import ChatMsgBox from '../../components/Chat/components/ChatMsgBox'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
-import Loader from '../../components/UI/Loader'
+import ChatLoader from '../../components/UI/Loaders/ChatLoader'
 
 const GET_CHATS = gql`
     query ($userID: Int!){
@@ -32,13 +32,13 @@ const Chat = ({isLogged}) => {
         refetch()
     },[refetch])
   
-    if(loading) return <div className='wh-100'><Loader/></div>
+    if(loading) return <ChatLoader/>
     if(error) console.log(error); 
 
     return (
         <>
             <ChatList data={data} isLogged={isLogged}/>
-            {(data.get_chats.map(info => info.chatID===parseInt(chatid) &&
+            {(data?.get_chats?.map(info => info.chatID===parseInt(chatid) &&
             <ChatMsgBox chatid={chatid} info={info} key={info.chatID}/>))}
         </>
     )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AddStory from './Functional components/AddStory'
 import StoryHead from './Functional components/StoryHead'
-import StoriesLoader from './components/StoriesLoader'
+// import StoriesLoader from './components/StoriesLoader'
 
 const Stories = ({stories, updatedCallback}) => {
     const [width, setWidth] = useState(0)
@@ -10,12 +10,8 @@ const Stories = ({stories, updatedCallback}) => {
 
     useEffect(()=>{
         if(stories){
-            let i = 0
-            stories.map(s => {
-                i++
-            })
             // each story head is 64px wide
-            setWidth(i*64)
+            setWidth(stories?.length*64)
         }
     }, [stories])
 

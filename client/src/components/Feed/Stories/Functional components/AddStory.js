@@ -5,15 +5,10 @@ const AddStory = ({updatedCallback}) => {
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState('')
 
-    const clearInput = () => {
+    const exitCallback = useCallback(()=>{
         setMedia(null)
         setPreview(null)
-    }
- 
-    const exitCallback = useCallback(()=>{
-        clearInput()
-    }, [clearInput])
-
+    }, [setMedia, setPreview])
 
     return (
         <>

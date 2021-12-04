@@ -99,7 +99,7 @@ const SendMsg = ({chatid, loaderCallback, info}) => {
 
                     {media.type.slice(0,5)==='image' &&
                     <img style={styles.previewMedia} src={preview} 
-                        onLoad={()=>URL.revokeObjectURL(preview)}/>}
+                        onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>}
 
                     {media.type.slice(0,5)==='video' &&
                         <video style={styles.previewMedia} src={preview}

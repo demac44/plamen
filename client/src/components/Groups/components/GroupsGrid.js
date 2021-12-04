@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CreateGroupCard from './CreateGroupCard'
 import GroupCard from './GroupCard'
-
-import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
 
 
 const GroupsGrid = ({groups}) => {

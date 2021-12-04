@@ -17,7 +17,6 @@ const GET_GROUPS = gql`
 
 const Groups = ({isLogged}) => {
     const [leftnav, setLeftnav] = useState(false)
-    const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
 
     const {data, loading} = useQuery(GET_GROUPS, {
@@ -29,10 +28,6 @@ const Groups = ({isLogged}) => {
     const leftNavCallback = useCallback(val =>{
         setLeftnav(val)
     }, [setLeftnav])
-
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
 
     if(loading) return <p>loading</p>
 

@@ -56,7 +56,7 @@ const Navbar = ({callback, isLogged}) => {
         if(count){
             count?.refetch()
         }
-    }, [callback, leftnav, count.data, data]) 
+    }, [callback, leftnav, count, data]) 
     
     const callbackDropdown = useCallback(val => {
         setDropdown(val)

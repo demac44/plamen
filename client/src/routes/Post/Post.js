@@ -3,7 +3,6 @@ import { useParams } from 'react-router'
 
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import Loader from '../../components/UI/Loader'
 import LeftNavbar from '../../components/UI/LeftNavbar'
 import Navbar from '../../components/Navbar/Navbar'
 import PostComp from '../../components/Feed/Posts/Post'
@@ -66,7 +65,7 @@ const Post = ({isLogged}) => {
     }, [updated, refetch])
     
 
-    if(loading) return <div className='wh-100'><Loader/></div>
+    if(loading) return <div className='wh-100'>p</div>
 
     const post = data.get_post
 

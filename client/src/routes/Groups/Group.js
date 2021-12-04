@@ -10,6 +10,7 @@ import AddGroupPost from '../../components/Groups/Functional components/AddGroup
 import Post from '../../components/Feed/Posts/Post'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
+import GroupLoader from '../../components/UI/Loaders/GroupLoader'
 
 
 const Group = ({isLogged}) => {
@@ -46,7 +47,7 @@ const Group = ({isLogged}) => {
     }, [setUpdated])
 
 
-    if(loading) return <p>loading</p>
+    if(loading) return <GroupLoader/>
 
     const posts = data?.get_group_posts
 

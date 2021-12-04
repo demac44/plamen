@@ -48,7 +48,7 @@ const StoryPreview = ({preview, media, exitCallback, updatedCallback}) => {
                 <StoryBar user={ls}/>
                 <div className='story-media flex-ctr'>
                     {media.type.slice(0,5)==='image' && 
-                        <img  src={preview} onLoad={()=>URL.revokeObjectURL(preview)}/>
+                        <img  src={preview} onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
                     }
                     {media.type.slice(0,5)==='video' && 
                         <video src={preview} onLoad={()=>URL.revokeObjectURL(preview)} controls/>
