@@ -10,7 +10,7 @@ import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
-import { ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
+import { ACCEPT_REQUEST, ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_REQUEST, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
@@ -20,7 +20,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_GROUP, GET_GROUPS, GET_GROUP_POSTS, GET_GROUP_USER } from "./Queries/Groups.js";
+import { GET_GROUP, GET_GROUPS, GET_GROUP_POSTS, GET_GROUP_USER, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED, IF_SAVED_GP } from "./Queries/Saves.js";
@@ -57,7 +57,8 @@ const RootQuery = new GraphQLObjectType({
         get_group: GET_GROUP,
         get_group_posts: GET_GROUP_POSTS,
         get_group_user: GET_GROUP_USER,
-        if_saved_gp: IF_SAVED_GP
+        if_saved_gp: IF_SAVED_GP,
+        if_requested: IF_REQUESTED
     }
 })    
 
@@ -101,7 +102,13 @@ const RootMutation = new GraphQLObjectType({
         comment_gp: ADD_GP_COMMENT,
         remove_gp_cmt: REMOVE_GP_COMMENT,
         save_gp: SAVE_GP,
-        remove_saved_gp: REMOVE_SAVED_GP
+        remove_saved_gp: REMOVE_SAVED_GP,
+        join_group: JOIN_GROUP,
+        leave_group: LEAVE_GROUP,
+        join_request: JOIN_REQUEST,
+        remove_request: REMOVE_REQUEST,
+        accept_request: ACCEPT_REQUEST,
+        deny_request: DENY_REQUEST
     }
 })
 

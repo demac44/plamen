@@ -29,6 +29,7 @@ export const GroupPostType = new GraphQLObjectType({
     fields: ()=>({
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
+        groupID: {type: GraphQLInt},
         post_text: {type: GraphQLString},
         date_posted: {type: GraphQLString},
         url: {type: GraphQLString},
@@ -48,6 +49,7 @@ export const GroupUserType = new GraphQLObjectType({
     name: 'GroupUser',
     fields: ()=>({
         userID: {type: GraphQLInt},
+        groupID: {type: GraphQLInt},
         username: {type: GraphQLString},
         first_name:{type:GraphQLString},
         last_name:{type:GraphQLString},

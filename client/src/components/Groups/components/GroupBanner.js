@@ -1,13 +1,14 @@
 import React from 'react'
+import JoinBtn from '../Functional components/JoinBtn'
 
-const GroupBanner = ({info}) => {
+const GroupBanner = ({info, user, updatedCallback}) => {
     return (
         <div className='group-banner'>
             <img style={styles.bannerImage} src={info.banner_image} alt=''/>
             <span style={styles.nameBar}>
                 <h1>{info.group_name}</h1>
             </span>
-            <button className='group-join-btn btn'>JOIN</button>
+            <JoinBtn info={info} user={user} updatedCallback={updatedCallback}/>
         </div>
     )
 }

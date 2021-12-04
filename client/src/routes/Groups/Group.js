@@ -32,6 +32,7 @@ const Group = ({isLogged}) => {
     useEffect(()=>{
         if(updated){
             refetch()
+            setUpdated(false)
         }
         if(data){
             setTags(data.get_group.group_tags.split(','))
@@ -58,7 +59,7 @@ const Group = ({isLogged}) => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='group-container'>
-                        <GroupBanner info={data?.get_group}/>
+                        <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
                         <TagsBox tags={tags}/>                        
                         <div className='group-posts-info'>
                             <div className='group-posts-container'>
@@ -99,6 +100,7 @@ export default Group
 const GET_GROUP = gql`
     query($gid: Int!, $limit: Int, $offset: Int, $uid: Int!){
         get_group(groupID: $gid){
+            groupID
             group_name
             group_creator_id
             date_created

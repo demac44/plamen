@@ -99,4 +99,17 @@ export const GET_GROUP_USER = {
     }
 }
 
+export const IF_REQUESTED = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `SELECT * FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result[0]
+    }
+}
 

@@ -1,7 +1,7 @@
 import { GraphQLInt, GraphQLString, GraphQLBoolean} from "graphql"
 import connection from "../../middleware/db.js"
 import { CommentType } from "../TypeDefs/Comments.js"
-import { GroupPostType, GroupType } from "../TypeDefs/Groups.js"
+import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from "../TypeDefs/Likes.js"
 import { SavesType } from "../TypeDefs/Saves.js"
 
@@ -144,6 +144,95 @@ export const REMOVE_SAVED_GP = {
     resolve(_, args){
         const {postID, userID} = args
         const sql = `DELETE FROM group_posts_saved WHERE postID=${postID} AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const JOIN_GROUP = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
+                    VALUES (${groupID}, ${userID}, 4, null)`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const LEAVE_GROUP = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `DELETE FROM group_users WHERE userID=${userID} AND groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const JOIN_REQUEST = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `INSERT INTO group_join_requests (userID, groupID)
+                     VALUES (${userID}, ${groupID})`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const REMOVE_REQUEST = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const ACCEPT_REQUEST = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        const sql2 = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
+                        VALUES (${groupID}, ${userID}, 4, null)`
+        connection.query(sql)
+        connection.query(sql2)
+        return args
+    }
+}
+
+export const DENY_REQUEST = {
+    type: GroupUserType,
+    args:{
+        userID:{type:GraphQLInt},
+        groupID:{type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
         connection.query(sql)
         return args
     }
