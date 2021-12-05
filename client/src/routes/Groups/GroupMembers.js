@@ -6,15 +6,13 @@ import { useParams } from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
-import AddGroupPost from '../../components/Groups/Functional components/AddGroupPost'
-import Post from '../../components/Feed/Posts/Post'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
 import GroupLoader from '../../components/UI/Loaders/GroupLoader'
 import MembersBox from '../../components/Groups/components/MembersBox'
 
 
-const Group = ({isLogged}) => {
+const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
     const [leftnav, setLeftnav] = useState(false)
     const [updated, setUpdated] = useState(false)
@@ -23,8 +21,6 @@ const Group = ({isLogged}) => {
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
-            limit:20,
-            offset:0,
             uid: ls.userID
         }
     })
@@ -51,7 +47,7 @@ const Group = ({isLogged}) => {
 
     if(loading) return <GroupLoader/>
 
-    const posts = data?.get_group_posts
+    console.log(groupid);
 
     return (
         <>
@@ -60,32 +56,13 @@ const Group = ({isLogged}) => {
                 <div className='main'>
                     <LeftNavbar show={leftnav}/>
                     <div className='group-container'>
-                        <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
+                        <GroupBanner info={data?.get_group} user={data?.get_group_user} updatedCallback={updatedCallback}/>
                         <TagsBox tags={tags}/>                        
                         <div className='group-posts-info'>
                             <div className='group-posts-container'>
-                                {data.get_group_user && <AddGroupPost updatedCallback={updatedCallback} groupid={groupid}/>}
-                                
-                                {(!data.get_group.closed || data.get_group_user) ? (posts?.length > 0 ? posts?.map(post => 
-                                    <Post post={{
-                                        postID: post.postID,
-                                        post_text: post.post_text,
-                                        date_posted: post.date_posted,
-                                        url: post.url,
-                                        type: post.type
-                                    }} user={{
-                                        userID: post.userID,
-                                        first_name:post.first_name,
-                                        last_name: post.last_name,
-                                        username: post.username,
-                                        profile_picture: post.profile_picture
-                                    }} comments={post.comments}
-                                    likes={post.likes}
-                                    updatedCallback={updatedCallback}
-                                    groupPost={true}
-                                    gid={groupid}
-                                    key={post.postID}/>) : <p style={styles.p}>No new posts</p>)
-                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community posts</p>}
+                                {(!data.get_group.closed || data.get_group_user) ?
+                                <MembersBox members={data.get_group_members}/>
+                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>}
                             </div>
                             <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
                         </div>
@@ -96,10 +73,10 @@ const Group = ({isLogged}) => {
     )
 }
 
-export default Group
+export default GroupMembers
 
 const GET_GROUP = gql`
-    query($gid: Int!, $limit: Int, $offset: Int, $uid: Int!){
+    query($gid: Int!, $uid: Int!){
         get_group(groupID: $gid){
             groupID
             group_name
@@ -110,35 +87,6 @@ const GET_GROUP = gql`
             group_rules
             group_description
             banner_image
-        }
-        get_group_posts (groupID: $gid, limit: $limit, offset: $offset){
-            postID
-            post_text
-            date_posted
-            url
-            userID
-            first_name
-            last_name
-            username
-            profile_picture
-            type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
         }
         get_group_user (groupID: $gid, userID: $uid){
             role

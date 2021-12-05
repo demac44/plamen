@@ -23,6 +23,10 @@ CHAT:
 - see all chat media
 - messages pagination
 
+COMMUNITIES
+- join,leave and request to join
+- creator,admin,moderator and member roles
+
 EDIT PROFILE:
 - change profile picture
 - edit user info
@@ -34,6 +38,7 @@ SEARCH USERS:
 USER ACTIONS:
 - follow and unfollow user
 - block user
+
 
 TECHNOLOGIES USED:
 - React

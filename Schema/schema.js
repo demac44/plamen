@@ -20,7 +20,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_GROUP, GET_GROUPS, GET_GROUP_POSTS, GET_GROUP_USER, IF_REQUESTED } from "./Queries/Groups.js";
+import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_USER, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POSTS } from "./Queries/Posts.js";
 import { GET_SAVES, IF_SAVED, IF_SAVED_GP } from "./Queries/Saves.js";
@@ -55,6 +55,7 @@ const RootQuery = new GraphQLObjectType({
         get_notifications: GET_NOTIFICATIONS,
         get_groups:GET_GROUPS,
         get_group: GET_GROUP,
+        get_group_members: GET_GROUP_MEMBERS,
         get_group_posts: GET_GROUP_POSTS,
         get_group_user: GET_GROUP_USER,
         if_saved_gp: IF_SAVED_GP,

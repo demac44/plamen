@@ -57,7 +57,7 @@ export const GroupUserType = new GraphQLObjectType({
         pass:{type:GraphQLString},
         gender: {type: GraphQLString},
         birth_date: {type: GraphQLString},
-        date_registered: {type: GraphQLString},
+        date_joined: {type: GraphQLString},
         profile_picture: {type: GraphQLString},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},

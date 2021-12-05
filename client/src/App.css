@@ -151,8 +151,30 @@
     height: fit-content;
     background-color: #1b1b1b;
     border-radius: 10px;
-    padding: 10px;
+    padding: 10px 15px;
     margin-top: 20px;
+}
+
+.group-members-box{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #1b1b1b;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+.group-member-box{
+    position: relative;
+    width: 100%;
+    height: 80px;
+    padding: 5px;
+    background-color: #1b1b1b;
+
+}
+.group-member-box:hover{
+    background-color: #2f2f2f;
+    transition: ease .3s;
 }
 
 /* LOGIN AND REGISTER USER FORMS */
@@ -1496,6 +1518,10 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     .notifications-container{
         width: 35vw;
     }
+    /* GROUPS */
+    .group-members-box{ 
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (max-width: 991px){
@@ -1747,6 +1773,33 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
         width: 100vw;  
         min-height: calc(100vh - 60px);
     }
+    /* GROUPS */
+    .group-posts-info{
+        flex-direction: column-reverse;
+    }
+    .group-info-container{
+        width: 100%;
+        padding: 0;
+    }
+    .group-info-box{
+        border-radius: 0;
+        margin-top: 5px;
+    }
+    .group-posts-container{
+        width: 100%;
+    }
+    .group-banner{
+        border-radius: 0;
+        margin-top: 10px;
+    }
+    .group-banner h1{
+        font-size: 20px;
+    }
+    .group-join-btn{
+        bottom: 6px;
+        padding: 4px 15px;
+        min-width: 110px;
+    }
 }
 
 @media screen and (max-width: 447px){
@@ -1880,31 +1933,9 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
     }    
     /* NOTIFICATIONS */
     /* GROUPS */
-    .group-posts-info{
-        flex-direction: column-reverse;
-    }
-    .group-info-container{
-        width: 100%;
-        padding: 0;
-    }
-    .group-info-box{
-        border-radius: 0;
-        margin-top: 5px;
-    }
-    .group-posts-container{
-        width: 100%;
-    }
-    .group-banner{
+    .group-members-box{
         border-radius: 0;
         margin-top: 10px;
-    }
-    .group-banner h1{
-        font-size: 20px;
-    }
-    .group-join-btn{
-        bottom: 6px;
-        padding: 4px 15px;
-        min-width: 110px;
     }
 }
 

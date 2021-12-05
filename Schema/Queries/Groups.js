@@ -99,6 +99,23 @@ export const GET_GROUP_USER = {
     }
 }
 
+export const GET_GROUP_MEMBERS = {
+    type: new GraphQLList(GroupUserType),
+    args:{
+        groupID:{type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupID} = args
+        const sql = `SELECT username,first_name,last_name,group_users.userID, profile_picture, date_joined, role
+                     FROM group_users
+                     JOIN users ON group_users.userID=users.userID
+                     JOIN group_roles ON group_roles.roleID=group_users.roleID
+                     WHERE group_users.groupID=${groupID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}
+
 export const IF_REQUESTED = {
     type: GroupUserType,
     args:{
