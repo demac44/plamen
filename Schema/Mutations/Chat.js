@@ -2,7 +2,7 @@ import { GraphQLString, GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
 import { ChatMessagesType, ChatType, MsgNotificationType } from "../TypeDefs/Chat.js"
 
-import { pubsub } from '../schema.js'
+import { pubsub } from '../../server.js'
 
 export const CREATE_CHAT = {
     type: ChatType,
@@ -72,11 +72,11 @@ export const MSG_NOTIFICATION = {
         receiver_id: {type:GraphQLInt},
         chatID: {type:GraphQLInt}      
     },
-    resolve(_, args){
+    async resolve(_, args){ 
         const {sender_id, receiver_id, chatID} = args
         const sql = `INSERT INTO msg_notifications (Nid, sender_id, receiver_id, chatID)
                         VALUES (null, ${sender_id}, ${receiver_id}, ${chatID})`
-        const result = connection.query(sql)
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender_id, receiver_id, chatID, Nid:result.insertId}})
         return args
     }
@@ -90,7 +90,7 @@ export const SEEN = {
     },
     resolve(_, args){
         const {chatID, receiver_id} = args
-        const sql = `DELETE FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}`
+        const sql = `DELETE FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}` 
         connection.query(sql)
         return args
     }

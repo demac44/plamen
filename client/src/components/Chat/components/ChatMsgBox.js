@@ -75,7 +75,6 @@ const ChatMsgBox = ({chatid, info}) => {
                         scroll: ()=>{
                             let box = document.querySelector('.chat-messages')
                             box.scrollHeight = 0
-                            console.log(newMsg);
                         }
                     });
                 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Avatar from '../../UI/Avatar'
+import {Link} from 'react-router-dom'
 
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'
@@ -52,7 +53,7 @@ const ChatListUser = ({data}) => {
     if(info.loading) return <p>loading</p>
     
     return (
-        <a href={'/chat/'+data.chatID} className='chat-user-box'>
+        <Link to={'/chat/'+data.chatID} className='chat-user-box'>
             <Avatar height='100%' width='50px' pfp={data.profile_picture}/>
             <div className='chat-name-msg'>
                 <p>{data?.userID===ls?.userID ? 'Me' : data?.first_name+' '+data?.last_name}</p>
@@ -70,11 +71,11 @@ const ChatListUser = ({data}) => {
                 </p>    
 
             </div>  
-            {((count > 0 || newMsg?.data?.newMessage?.userID!==ls.userID) 
-                && (newMsg?.data?.newMessage?.chatID===data?.chatID))
+            {((count > 0 || (newMsg?.data?.newMessage?.userID!==ls.userID)
+                && newMsg?.data?.newMessage?.chatID===data?.chatID))
                 && <div style={styles.count}></div>}
 
-        </a>
+        </Link>
     )
 }
 

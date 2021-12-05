@@ -13,6 +13,15 @@ import { execute, subscribe } from 'graphql';
 import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
 // import auth from './middleware/auth.js';
+import {EventEmitter} from 'events'
+
+import { PubSub } from 'graphql-subscriptions';
+
+const biggerEventEmitter = new EventEmitter();
+biggerEventEmitter.setMaxListeners(30);
+export const pubsub = new PubSub({eventEmitter: biggerEventEmitter});
+
+// export const pubsub = new PubSub();
 
 
 import login from './controllers/login.js'
@@ -86,3 +95,4 @@ import logout from './controllers/logout.js'
     httpServer.listen(PORT, ()=> console.log('Server is running')) 
     
 })()
+

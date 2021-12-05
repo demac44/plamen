@@ -3,8 +3,8 @@ import {
     GraphQLSchema,
 } from "graphql";
 
-import { PubSub } from 'graphql-subscriptions';
-export const pubsub = new PubSub();
+import { pubsub } from "../server.js";
+import { withFilter } from "graphql-subscriptions";
 
 import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
@@ -118,15 +118,15 @@ const RootSubscription = new GraphQLObjectType({
     fields: {
         newMessage: {
             type: ChatMessagesType,
-            subscribe: () => pubsub.asyncIterator('NEW_MESSAGE')
+            subscribe: () => pubsub.asyncIterator(["NEW_MESSAGE"])
         },
         newMsgNotification: {
             type: MsgNotificationType,
-            subscribe: () => pubsub.asyncIterator('MSG_NOTIFICATION')
+            subscribe: () => pubsub.asyncIterator(["MSG_NOTIFICATION"])
         },
         newNotification: {
             type: NotificationType,
-            subscribe: () => pubsub.asyncIterator("NOTIFICATION")
+            subscribe: () => pubsub.asyncIterator(["NOTIFICATION"]) 
         }
     }
 })

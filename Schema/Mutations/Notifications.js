@@ -2,7 +2,7 @@ import { GraphQLInt } from "graphql"
 import connection from "../../middleware/db.js"
 import {NotificationType} from "../TypeDefs/Notifications.js"
 
-import { pubsub } from "../schema.js"
+import { pubsub } from "../../server.js"
 
 export const LIKE_NOTIFICATION = {
     type: NotificationType,
