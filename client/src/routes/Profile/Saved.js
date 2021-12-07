@@ -1,11 +1,13 @@
 import React, {useCallback, useState, useEffect} from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import Post from '../../components/Feed/Posts/Post'
 import Navbar from '../../components/Navbar/Navbar'
-import LeftNavbar from '../../components/UI/LeftNavbar'
-import SavedLoader from '../../components/UI/Loaders/SavedLoader'
+import SavedLoader from '../../components/General components/Loaders/SavedLoader'
+import MyGroupsList from '../../components/General components/MyGroupsList'
 
+import Posts from '../../components/Post/Posts'
+import Sidebar from '../../components/General components/Sidebar'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const Saved = ({isLogged}) => {
     const [updated, setUpdated] = useState(false)
@@ -19,9 +21,6 @@ const Saved = ({isLogged}) => {
             limit:20
         },
     })
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
 
     const leftNavCallback = useCallback(val =>{
         setLeftnav(val)
@@ -39,50 +38,39 @@ const Saved = ({isLogged}) => {
     if(loading) return <SavedLoader/>
     if(error) console.log(error);
 
-    const posts = data.get_saves
+    const scrollPagination = () => {
+        window.onscroll = async ()=>{
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                try {
+                    await fetchMore({
+                        variables:{
+                            offset:data.get_saved_posts.length,
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return Object.assign({}, prev, {
+                              get_saves: [...data.get_saved_posts, ...fetchMoreResult.get_saved_posts]
+                            });
+                          }
+                    })
+                } catch {}
+            }
+        }
+    }
 
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper' onLoad={()=>{
-                window.onscroll = async ()=>{
-                    if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-                        try {
-                            await fetchMore({
-                                variables:{
-                                    offset:posts.length,
-                                },
-                                updateQuery: (prev, { fetchMoreResult }) => {
-                                    if (!fetchMoreResult) return prev;
-                                    return Object.assign({}, prev, {
-                                      get_saves: [...posts, ...fetchMoreResult.get_saves]
-                                    });
-                                  }
-                            })
-                        } catch {}
-                    }
-                }
-            }}>
-                <div className='main'>
-                    <LeftNavbar show={leftnav}/>
-                    <div className='posts-container-feed'>
+            <AlternativeNavbar/>
+            <div className='wrapper' onLoad={scrollPagination}>
+                <div className='container-main'>
+                    <Sidebar show={leftnav}/>
+                    <div className='container-left'>
                         <h2 style={styles.title}>Saved posts</h2>
-                        {posts.length > 0 ? posts.map(post => <Post post={{
-                            postID: post.postID,
-                            post_text: post.post_text,
-                            date_posted: post.date_posted,
-                            url: post.url,
-                            type: post.type
-                        }} user={{
-                            userID: post.userID,
-                            first_name:post.first_name,
-                            last_name: post.last_name,
-                            username: post.username,
-                            profile_picture: post.profile_picture
-                        }} comments={post.comments}
-                        likes={post.likes}
-                        updatedCallback={updatedCallback}
-                        key={post.postID}/>) : <p style={{marginTop:'30px'}}>No saved posts</p>}
+                        <Posts posts={data.get_saved_posts}/>
+                    </div>
+                    <div className='container-right'>
+                        <MyGroupsList/>
                     </div>
                 </div>
             </div>
@@ -105,7 +93,7 @@ const styles = {
 
 const GET_SAVED = gql`
     query ($userID: Int!, $offset: Int, $limit: Int){
-        get_saves(userID:$userID, offset:$offset, limit:$limit){
+        get_saved_posts(userID:$userID, offset:$offset, limit:$limit){
             postID
             post_text
             date_posted
@@ -116,23 +104,6 @@ const GET_SAVED = gql`
             username
             profile_picture
             type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
         }
     }
 `

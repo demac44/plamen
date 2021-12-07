@@ -1,0 +1,183 @@
+/* STORIES */
+
+.container-stories{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background-color: #1f1f1f;
+    box-shadow: 2px 2px 10px;
+    border-radius: 10px;
+    border-right: none;
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    overflow: hidden;
+}   
+.inner-container-stories{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    transition: ease 0.5s;
+}
+.story-overlay{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #1b1b1b;
+    z-index: 1000000000000000000000000;
+}
+.story-box{
+    position: relative;
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.story-media{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #1b1b1b;
+}
+.story-top-bar{
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 10;
+}
+.story-bottom-bar{
+    width: 100%;
+    height: 50px;
+    padding: 10px 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+}   
+.story-media img, .story-media video{
+    min-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+}
+.story-upload-btn{
+    width: 130px;
+    padding: 5px 0;
+}
+.nextBtn, .prevBtn{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.nextBtn{
+    right: 0;
+}
+.prevBtn{
+    left: 0;
+}
+
+/* STORY VIDEO CONTROLS */
+.story-vid::-webkit-media-controls-panel {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+audio::-webkit-media-controls-mute-button, .story-vid::-webkit-media-controls-mute-button {
+    -webkit-appearance: media-mute-button;
+    display: none;
+}
+
+.story-vid::-webkit-media-controls-overlay-play-button {
+    -webkit-appearance: media-overlay-play-button;
+    display: none;
+}
+audio::-webkit-media-controls-play-button, .story-vid::-webkit-media-controls-play-button {
+    -webkit-appearance: media-play-button;
+    display: none;
+}
+audio::-webkit-media-controls-timeline-container, .story-vid::-webkit-media-controls-timeline-container {
+    -webkit-appearance: media-controls-background;
+    display: none;
+}
+audio::-webkit-media-controls-current-time-display, .story-vid::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display, .story-vid::-webkit-media-controls-time-remaining-display {
+    -webkit-appearance: media-current-time-display;
+    display: none;
+}
+audio::-webkit-media-controls-timeline, .story-vid::-webkit-media-controls-timeline {
+    -webkit-appearance: media-slider;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+audio::-webkit-media-controls-volume-slider, .story-vid::-webkit-media-controls-volume-slider {
+    -webkit-appearance: media-volume-slider;
+    display: none;
+}
+
+audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-controls-fullscreen-button {
+    -webkit-appearance: media-enter-fullscreen-button;  
+    display: none;
+}
+
+.story-count-bars{
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    display: flex;
+    bottom: 5px;
+}
+.story-count-bar{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    margin: 2px;
+    border-radius: 10px;
+}
+.load-bar{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    animation-name: load;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+    animation-timing-function:linear;
+    background-color: white;
+    border-radius: 10px;
+}
+.bar{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.bar-vid{
+    background-color: white;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 991px){
+    .story-box{
+        width: 50%;
+    }
+}
+@media screen and (max-width: 768px){
+    .story-box{
+        width: 80%;
+    }
+}   
+@media screen and (max-width:580px){
+    /* STORIES */
+    .container-stories{
+        border-radius: 0;
+    }
+    .story-box{
+        width: 100%;
+    }
+}

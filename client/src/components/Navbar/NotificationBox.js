@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../UI/Avatar'
-import FollowBtn from '../Profile/Functional components/FollowBtn'
-
+import FollowBtn from '../Profile/components/FollowBtn'
+import Avatar from '../General components/Avatar'
 
 const NotificationBox = ({notif}) => {
     const [time, setTime] = useState(null)
@@ -30,7 +29,7 @@ const NotificationBox = ({notif}) => {
         <div className='notification-box' key={notif.Nid}>
             <Link to={notif.type==='follow' ? '/profile/'+notif.sender_id : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
-                    <Avatar height='50px' width='50px' pfp={notif.profile_picture}/>
+                    <Avatar size='50px' image={notif.profile_picture}/>
                     {notif.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
                     {notif.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
                     {notif.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}

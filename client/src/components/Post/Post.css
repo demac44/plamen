@@ -1,0 +1,116 @@
+.post{
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    box-shadow: 2px 2px 10px;
+    border-radius: 10px;
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #2f2f2f;
+}
+/* top bar */
+.post-top-bar{
+    width: 100%;
+    height: 50px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.post-options-menu{
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 150px;
+    border-bottom-left-radius: 10px;
+    background-color: #1f1f1f;
+    border: 1px solid #3f3f3f;
+    z-index: 100;
+}
+.post-options-menu ul{width:100%; cursor: pointer;}
+.post-options-menu ul li{
+    width: 100%;
+    padding: 8px 20px;
+    color: white;
+}
+.post-options-menu ul li:hover{
+    background-color: #3f3f3f;
+}
+/* bottom bar */
+
+.post-bottom-bar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+}
+.post-button{
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: white;
+    color: #1f1f1f;
+    padding: 5px 15px;
+}
+.post-button:hover{
+    background-color: #aaa;
+}
+/* post text bar */
+.post-text-bar{
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 10px 20px 10px;
+}
+.post-text-bar p{
+    color: white;
+    white-space: pre-wrap;
+}
+/* post media */
+.post-media-box{
+    width: 100%;
+}
+
+/* comments */
+.post-comments-box{
+    width: 100%;
+}
+.comment{
+    padding: 5px;
+    min-height: 50px;
+}
+
+/* create post */
+
+.create-post-box{
+    width: 100%;
+    background-color: #1b1b1b;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 2px 2px 10px;
+}
+
+.create-post-box i{
+    font-size: 25px;
+    color: white;
+}
+.create-post-box p{
+    font-size: 14px;
+    color: white;
+    margin-left: 10px;
+}
+
+@media screen and (max-width:447px){
+    .post{
+        margin-top: 10px;
+        border-radius: 0;
+    }
+    .create-post-box{
+        margin-top: 0;
+        border-radius: 0;
+    }
+}

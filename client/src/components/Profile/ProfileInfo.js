@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import ShowUsersList from '../UI/Users list/ShowUsersList.js'
+import ShowUsersList from '../General components/Users list/ShowUsersList.js'
 
 const ProfileInfo = ({info}) => {  
     const [follows, setFollows] = useState([])

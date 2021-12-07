@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import LeftNavbar from '../../components/UI/LeftNavbar'
 import { useParams } from 'react-router-dom'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
-import AddGroupPost from '../../components/Groups/Functional components/AddGroupPost'
-import Post from '../../components/Feed/Posts/Post'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
-import GroupLoader from '../../components/UI/Loaders/GroupLoader'
-import MembersBox from '../../components/Groups/components/MembersBox'
+import CreatePost from '../../components/Post/Create post/CreatePost'
+import Sidebar from '../../components/General components/Sidebar'
+
+import GroupLoader from '../../components/General components/Loaders/GroupLoader'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 
 const Group = ({isLogged}) => {
@@ -31,10 +31,6 @@ const Group = ({isLogged}) => {
 
 
     useEffect(()=>{
-        if(updated){
-            refetch()
-            setUpdated(false)
-        }
         if(data){
             setTags(data.get_group.group_tags.split(','))
         }
@@ -56,36 +52,16 @@ const Group = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <LeftNavbar show={leftnav}/>
+                    <Sidebar show={leftnav}/>
                     <div className='group-container'>
                         <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
                         <TagsBox tags={tags}/>                        
-                        <div className='group-posts-info'>
-                            <div className='group-posts-container'>
-                                {data.get_group_user && <AddGroupPost updatedCallback={updatedCallback} groupid={groupid}/>}
-                                
-                                {(!data.get_group.closed || data.get_group_user) ? (posts?.length > 0 ? posts?.map(post => 
-                                    <Post post={{
-                                        postID: post.postID,
-                                        post_text: post.post_text,
-                                        date_posted: post.date_posted,
-                                        url: post.url,
-                                        type: post.type
-                                    }} user={{
-                                        userID: post.userID,
-                                        first_name:post.first_name,
-                                        last_name: post.last_name,
-                                        username: post.username,
-                                        profile_picture: post.profile_picture
-                                    }} comments={post.comments}
-                                    likes={post.likes}
-                                    updatedCallback={updatedCallback}
-                                    groupPost={true}
-                                    gid={groupid}
-                                    key={post.postID}/>) : <p style={styles.p}>No new posts</p>)
-                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community posts</p>}
+                        <div className='feed-container'>
+                            <div className='posts-container'>
+                                {data.get_group_user && <CreatePost/>}
                             </div>
                             <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
                         </div>
@@ -122,23 +98,6 @@ const GET_GROUP = gql`
             username
             profile_picture
             type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
         }
         get_group_user (groupID: $gid, userID: $uid){
             role

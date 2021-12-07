@@ -2,13 +2,15 @@ import React, { useState, useCallback, useEffect } from 'react'
 
 import '../../App.css'
 import '../../General.css'
-import Avatar from '../UI/Avatar'
-import Logo from '../UI/Logo'
+import Logo from '../General components/Logo'
 import Dropdown from './Dropdown'
 import SearchBar from './SearchBar'
 
+import Avatar from '../General components/Avatar'
+
 import {Link} from 'react-router-dom'
 
+import './navbar.css'
 
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
@@ -72,9 +74,6 @@ const Navbar = ({callback, isLogged}) => {
     return (
         <>
             <div className="top-navbar">
-                <div className='tn-menu-btn'>
-                    <i className="fas fa-bars" onClick={()=>setLeftNav(!leftnav)}></i>
-                </div>
                 <div className="tn-left">
                     <Logo/>
                 </div>
@@ -91,7 +90,7 @@ const Navbar = ({callback, isLogged}) => {
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>
                     </Link>
                     <div style={styles.avatar} onClick={handleDropdown}> 
-                        <Avatar height='100%' width='50px' pfp={ls.profile_picture}/>
+                        <Avatar size='50px' pfp={ls.profile_picture}/>
                     </div>
                     {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>

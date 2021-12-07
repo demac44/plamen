@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import SendMsg from '../Functional components/SendMsg'
+import SendMsg from './SendMsg'
 import Message from './Message'
 
 
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
-import MsgsLoader from '../../UI/Loaders/MsgsLoader'
-import Loader from '../../UI/Loaders/Loader'
+import MsgsLoader from '../../General components/Loaders/MsgsLoader'
+import Loader from '../../General components/Loaders/Loader'
 
 const GET_MESSAGES = gql`
     query ($chatID: Int!, $limit: Int, $offset: Int){

@@ -3,9 +3,8 @@ import { useParams } from 'react-router'
 
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import LeftNavbar from '../../components/UI/LeftNavbar'
 import Navbar from '../../components/Navbar/Navbar'
-import PostComp from '../../components/Feed/Posts/Post'
+import Sidebar from '../../components/General components/Sidebar'
 
 const GET_POST = gql`
     query ($postID: Int!){
@@ -19,24 +18,6 @@ const GET_POST = gql`
             last_name
             username
             profile_picture
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                likeID
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
         }
     }
 `
@@ -74,23 +55,8 @@ const Post = ({isLogged}) => {
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <div className='wrapper'> 
                 <div className='single-post-main flex-col-ctr' >
-                    {isLogged && <LeftNavbar show={leftnav}/>}
+                    {isLogged && <Sidebar show={leftnav}/>}
                     <h2 style={styles.title}>Post by @{post.username}</h2>
-                    <PostComp post={{
-                            postID: post.postID,
-                            post_text: post.post_text,
-                            date_posted: post.date_posted,
-                            url: post.url,
-                        }} user={{ 
-                            userID: post.userID,
-                            first_name:post.first_name,
-                            last_name: post.last_name,
-                            username: post.username,
-                            profile_picture: post.profile_picture
-                        }} comments={post.comments}
-                        updatedCallback={updatedCallback}
-                        likes={post.likes}
-                        key={post.postID}/>
                 </div>
             </div>
         </> 

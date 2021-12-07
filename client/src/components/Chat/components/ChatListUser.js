@@ -1,37 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Avatar from '../../UI/Avatar'
 import {Link} from 'react-router-dom'
+import Avatar from '../../General components/Avatar'
 
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'
-
-
-const GET_INFO = gql`
-    query($cid: Int!, $rid: Int){
-        count_msgs(chatID: $cid, receiver_id: $rid){
-            msgCount
-        }
-        last_message(chatID: $cid){
-            msg_text
-            type
-            userID
-        }
-    }
-`
-
-const NEW_MESSAGE = gql`
-    subscription {
-        newMessage {
-            chatID
-            msgID
-            msg_text
-            userID
-            url
-            type
-            time_sent
-        }
-    }
-`
 
 const ChatListUser = ({data}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -54,7 +26,7 @@ const ChatListUser = ({data}) => {
     
     return (
         <Link to={'/chat/'+data.chatID} className='chat-user-box'>
-            <Avatar height='100%' width='50px' pfp={data.profile_picture}/>
+            <Avatar size='50px' image={data.profile_picture}/>
             <div className='chat-name-msg'>
                 <p>{data?.userID===ls?.userID ? 'Me' : data?.first_name+' '+data?.last_name}</p>
 
@@ -93,3 +65,31 @@ const styles = {
         borderRadius:'50%',
     }
 }
+
+
+const GET_INFO = gql`
+    query($cid: Int!, $rid: Int){
+        count_msgs(chatID: $cid, receiver_id: $rid){
+            msgCount
+        }
+        last_message(chatID: $cid){
+            msg_text
+            type
+            userID
+        }
+    }
+`
+
+const NEW_MESSAGE = gql`
+    subscription {
+        newMessage {
+            chatID
+            msgID
+            msg_text
+            userID
+            url
+            type
+            time_sent
+        }
+    }
+`

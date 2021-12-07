@@ -3,6 +3,8 @@ import {Route, Switch} from 'react-router-dom'
 
 import { LoginForm, RegisterForm } from '../../components/export'
 
+import '../../components/Entry/entry.css'
+
 const Entry = () => {
     return (
         <>

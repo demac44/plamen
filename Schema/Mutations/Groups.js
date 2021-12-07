@@ -3,7 +3,7 @@ import connection from "../../middleware/db.js"
 import { CommentType } from "../TypeDefs/Comments.js"
 import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from "../TypeDefs/Likes.js"
-import { SavesType } from "../TypeDefs/Saves.js"
+import { PostType } from "../TypeDefs/Posts.js"
 
 
 export const CREATE_GROUP = {
@@ -15,11 +15,11 @@ export const CREATE_GROUP = {
         group_description: {type:GraphQLString},
         group_tags: {type:GraphQLString}
     },
-    resolve(_, args) {
+    async resolve(_, args) {
         const {group_name, group_creator_id, closed, group_description, group_tags} = args
         const sql = `INSERT INTO groups (groupID, group_name, group_creator_id, date_created, closed) 
                     VALUES (null, "${group_name}", ${group_creator_id}, null, ${closed})`
-        const res = connection.query(sql)
+        const res = await connection.promise().query(sql).then(res=>{return res[0]})
         const sql2 = `INSERT INTO group_info (groupID, group_description, group_tags)
                         VALUES (${res.insertId}, "${group_description}", "${group_tags}")`
         const sql3 = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
@@ -120,7 +120,7 @@ export const REMOVE_GP_LIKE = {
 }
 
 export const SAVE_GP = {
-    type: SavesType,
+    type: PostType,
     args: {
         userID: {type: GraphQLInt},
         postID: {type: GraphQLInt},
@@ -136,7 +136,7 @@ export const SAVE_GP = {
 }
 
 export const REMOVE_SAVED_GP = {
-    type: SavesType,
+    type: PostType,
     args: {
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt}

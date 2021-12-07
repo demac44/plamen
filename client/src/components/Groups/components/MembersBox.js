@@ -1,5 +1,4 @@
 import React from 'react'
-import UserBox from '../../UI/Users list/UserBox'
 import GroupMemberBox from './GroupMemberBox'
 
 const MembersBox = ({members}) => {

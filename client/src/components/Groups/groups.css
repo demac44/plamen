@@ -1,0 +1,246 @@
+/* GROUPS */
+
+
+/* group cards */
+.groups-grid{
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.group-card{
+    position: relative;
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+}
+.gcard_overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0,0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: ease .2s;
+}
+.gcard_overlay:hover{
+    background-color: rgba(0, 0, 0,0.7);
+}
+.gcard_overlay p{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+.gcard_overlay h4{
+    color: white;
+}
+.group-card i{
+    font-size: 40px;
+    color: white;
+}
+
+.create-group-form{
+    position: relative;
+    width: 40%;
+    background-color: #111827;
+    padding: 30px 20px;
+    border-radius: 20px;
+}
+
+.create-group-form input{
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin: 10px;
+}
+.create-group-form select{
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+.create-group-form h3{
+    color: white;
+    background-color: transparent !important;
+    margin-top: 5px;
+}
+.create-group-form button{
+    padding: 10px 60px;
+    margin-top: 30px;    
+}
+.create-group-form button:hover{
+    background-color: #b8b8b8;
+}
+.tags-box{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    min-height: 40px;
+    background-color: #3f3f3f;
+    border-radius: 10px;
+    flex-flow: wrap;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    overflow: auto;
+    max-height: 100px;
+}
+.create-group-form textarea{
+    width: 100%;
+    resize: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    height: 70px;
+}
+
+/* group */
+.group-container{
+    width: 100%;
+}
+
+.group-banner{
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-color: #1b1b1b;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.group-join-btn{
+    font-size: 20px;
+    padding: 8px 20px;
+    min-width: 150px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 100;
+}
+.group-join-btn:hover{
+    background-color: #b8b8b8;
+}
+.feed-container{
+    display: flex;
+    width: 100%;
+}
+.posts-container{
+    width: 60%;
+}
+.group-posts-container .add-np-box{
+    width: 100% !important;
+}
+.info-container{
+    width: 40%;
+    padding: 0 20px;
+}
+.info-box{
+    width: 100%;
+    height: fit-content;
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.profile-container .info-box{
+    margin-top: 30px;
+}
+.group-container .info-box{
+    margin-top: 30px;
+}
+.group-members-box{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #1b1b1b;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+.group-member-box{
+    position: relative;
+    width: 100%;
+    height: 80px;
+    padding: 5px;
+    background-color: #1b1b1b;
+
+}
+.group-member-box:hover{
+    background-color: #2f2f2f;
+    transition: ease .3s;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1200px){
+    .group-members-box{ 
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .group-container{
+        margin: 0;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .info-container{
+        padding: 0 10px;
+    }
+    .info-box{
+        padding: 5px;
+    }
+    .info-box h2{
+        font-size: 16px;
+    }
+    .groups-grid{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+}   
+
+@media screen and (max-width:580px){
+    /* GROUPS */
+    .feed-container{
+        flex-direction: column-reverse;
+    }
+    .group-banner{
+        border-radius: 0;
+        margin-top: 10px;
+    }
+    .group-banner h1{
+        font-size: 20px;
+    }
+    .group-join-btn{
+        bottom: 6px;
+        padding: 4px 15px;
+        min-width: 110px;
+    }
+    .groups-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 447px){
+    .group-members-box{
+        border-radius: 0;
+        margin-top: 10px;
+    }
+    .groups-grid{
+        grid-template-columns: 1fr;
+        margin-top: 10px;
+    }
+}

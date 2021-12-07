@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../../UI/Avatar'
-import ChatMenu from '../Functional components/ChatMenu'
+import ChatMenu from './ChatMenu'
+import Avatar from '../../General components/Avatar'
 
 const ChatBar = ({chatid, info}) => {
     const [showMenu, setShowMenu] = useState(false)
@@ -12,7 +12,7 @@ const ChatBar = ({chatid, info}) => {
 
     return (
         <>
-            <div className='chat-bar'>
+            <div className='chat-bar flex-ac'>
                 <div className='flex-ctr'>
                     <Link to='/chats'>
                         <i className="fas fa-arrow-left chat-back-icon"
@@ -25,14 +25,15 @@ const ChatBar = ({chatid, info}) => {
                         ></i>
                     </Link>
                     <Link to={'/profile/'+info.userID} style={{height:'50px'}} className='chat-user-info'>
-                        <Avatar height='100%' width='50px' pfp={info.profile_picture}/>
+                        <Avatar size='50px' image={info.profile_picture}/>
                         <p>{info.first_name+' '+info.last_name}</p>
                     </Link>
                 </div>
                 <i 
-                className="fas fa-ellipsis-v fp-options-btn"
-                onClick={handleChatMenu}
-                ></i>
+                    className="fas fa-ellipsis-v fp-options-btn"
+                    onClick={handleChatMenu}
+                    style={styles.menuBtn}
+                />
                 {showMenu && <ChatMenu chatid={chatid}/>}
             </div>
         </>
@@ -40,3 +41,12 @@ const ChatBar = ({chatid, info}) => {
 }
 
 export default ChatBar
+
+const styles = {
+    menuBtn:{
+        fontSize:'25px',
+        color:'white',
+        marginRight:'10px',
+        cursor:'pointer'
+    }
+}

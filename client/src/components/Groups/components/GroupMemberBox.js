@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../../UI/Avatar'
+import Avatar from '../../General components/Avatar'
 
 const GroupMemberBox = ({member}) => {
     const [date, setDate] = useState('')

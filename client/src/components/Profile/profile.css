@@ -1,0 +1,266 @@
+/* PROFILE */
+
+.profile-top-box{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    border-radius: 30px;
+    padding: 30px;
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid #2f2f2f;
+    box-shadow: 2px 2px 10px;
+}
+.pf-info{
+    height: 180px;
+    padding: 10px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    color: white;
+}
+.pf-name{
+    font-size: 30px;
+}
+.pf-tagname{
+    font-size: 16px;
+}
+.pf-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 280px;
+    margin-top: 20px;
+}
+.pf-stats div{
+    text-align: center;
+    cursor: pointer;
+}
+.pf-stats div:nth-child(3){
+    cursor:default;
+}
+.pf-stats div h6{
+    font-size: 14px;
+    color: white;
+}
+.pf-stats div p{
+    margin-top: 5px;
+    font-size: 14px;
+}
+.pf-edit-follow-btn{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    width: 150px;
+    height: 40px;
+    color: #111827;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+.follow-btn-notifications{
+    padding: 4px 10px;
+    background-color: #c7c7c7;
+    text-align: center;
+    border-radius: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.follow-btn-notifications p{
+    margin: 0 !important;
+}
+.pf-editpf-btn:hover{
+    background-color: #a8a8a8;
+}
+.send-msg-btn{
+    right: 180px;
+}
+
+
+/* EDIT PROFILE */
+
+.edit-pf-box{
+    width: 100%;
+    height: auto;
+    background-color: #111827;
+    border-radius: 10px;
+    border: 1px solid #1f1f1f;
+    display: flex;
+}
+.edit-pf-sidebar{
+    width: 20%;
+    height: 100%;
+    background-color: #111827;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+.edit-pf-sidebar a li{
+    font-size: 14px;
+}
+.edit-box{
+    width: 80%;
+    height: 100%;
+    padding: 30px 100px;
+}
+.edit-pfp-container{
+    position: relative;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0,0.5);
+    z-index: 1000000;
+}
+.edit-pfp-menu{
+    width: 400px;
+    height: auto;
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid #464646;
+    overflow: hidden;
+}
+.edit-pfp-menu ul{
+    width: 100%;
+}
+.edit-pfp-menu ul li{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #757575;
+    text-align: center;
+    line-height: 50px;
+}
+.edit-pfp-menu ul li:hover{
+    background-color: #c2c2c2;
+    cursor: pointer;
+}
+
+
+/* MEDIA QUERIES */
+
+
+@media screen and (max-width: 991px){
+    .profile-top-box{
+        padding: 20px 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .pf-info{
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin-top: 15px;
+        align-items: center;
+    }
+    .pf-stats{
+        width: 50%;
+    }
+    .profile-top-box .pf-edit-follow-btn{
+        position: static;
+        margin-top: 50px;
+        width: 250px;
+    }
+    .send-msg-btn{
+        margin-top: 10px !important;
+    }
+    .profile-top-box .user-avatar{
+        height: 150px !important;
+        width: 150px !important;
+    }
+    .foll-user-box .user-avatar{
+        height: 100% !important;
+        width: 70px !important;
+    }
+    .foll-user-box .pf-edit-follow-btn{
+        position: absolute;
+        width: 150px;
+    }
+    /* EDIT PROFILE */
+    .edit-pf-box{
+        margin: 0;
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    /* PROFILE */
+    .pf-stats{
+        width: 65%;
+    }
+    .add-np-box{
+        width: 100% !important;
+        padding: 5px;
+    }
+    .add-np-tbtn{
+        height: 40px ;
+    }
+    .add-np-types{
+        margin: 0;
+    }
+    .post{
+        width: 100% !important;
+    }
+    .user-list-box, .list-exit{
+        width: 80%;
+    }
+    .foll-user-box .pf-edit-follow-btn{
+        width: 110px;
+    }
+    /* EDIT PROFILE */
+    .edit-box{
+        width: 70%;
+        padding: 30px 20px;
+    }
+    .edit-pf-sidebar{
+        width: 30%;
+    }
+    .edit-pf-box .entry-form div{
+        flex-direction: column !important;
+    }
+}   
+@media screen and (max-width: 447px){
+    .profile-top-box{
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
+    .pf-stats{
+        width: 90%;
+    }
+    .add-np-tbtn i {
+        font-size: 20px;
+    }
+    .add-np-tbtn p{
+        display: none;
+    }
+    .fp-cmt-btn{
+        height: 90%;
+        margin: 0;
+    }
+    .user-list-box, .list-exit{
+        width: 95%;
+    }
+    .foll-user-box{
+        height: 60px;
+    }
+    .foll-user-info{
+        margin-left: 5px;
+    }
+    .foll-user-info p:nth-child(1n){
+        font-size: 14px;
+    }
+    .foll-user-box .pf-edit-follow-btn{
+        bottom: 15px;
+        right: 5px;
+        font-size: 14px;
+        height: 30px;
+        width: 80px;
+        line-height: 30px;
+    }
+    .foll-user-box .user-avatar{
+        width: 50px !important;
+    }
+}

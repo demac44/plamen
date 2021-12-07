@@ -7,7 +7,7 @@ import SearchDrop from './SearchDrop'
 
 const SEARCH_USERS = gql`
     query ($limit: Int, $offset: Int) {
-         users (limit: $limit, offset: $offset){
+         get_users (limit: $limit, offset: $offset){
             userID
             first_name
             last_name

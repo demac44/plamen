@@ -6,7 +6,8 @@ import { useQuery } from 'react-apollo'
 
 import Navbar from '../../components/Navbar/Navbar.js'
 import UserSearchBar from '../../components/Navbar/UserSearchBar'
-import LeftNavbar from '../../components/UI/LeftNavbar.js'
+import Sidebar from '../../components/General components/Sidebar.js'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar.js'
 
 const SEARCH_USERS = gql`
     query ($limit: Int, $offset: Int) {
@@ -74,9 +75,10 @@ const Search = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <LeftNavbar show={leftnav}/>
+                    <Sidebar show={leftnav}/>
                     <div className='search-container'>
                         <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p>

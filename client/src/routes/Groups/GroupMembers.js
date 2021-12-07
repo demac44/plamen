@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import LeftNavbar from '../../components/UI/LeftNavbar'
 import { useParams } from 'react-router-dom'
 
 import {gql} from 'graphql-tag'
@@ -8,9 +7,11 @@ import { useQuery } from 'react-apollo'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
-import GroupLoader from '../../components/UI/Loaders/GroupLoader'
 import MembersBox from '../../components/Groups/components/MembersBox'
+import Sidebar from '../../components/General components/Sidebar'
 
+import GroupLoader from '../../components/General components/Loaders/GroupLoader'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
@@ -52,14 +53,15 @@ const GroupMembers = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <LeftNavbar show={leftnav}/>
+                    <Sidebar show={leftnav}/>
                     <div className='group-container'>
                         <GroupBanner info={data?.get_group} user={data?.get_group_user} updatedCallback={updatedCallback}/>
                         <TagsBox tags={tags}/>                        
-                        <div className='group-posts-info'>
-                            <div className='group-posts-container'>
+                        <div className='feed-container'>
+                            <div className='posts-container'>
                                 {(!data.get_group.closed || data.get_group_user) ?
                                 <MembersBox members={data.get_group_members}/>
                                 : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>}

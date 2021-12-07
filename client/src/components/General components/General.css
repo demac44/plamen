@@ -1,0 +1,72 @@
+.my-groups-box{
+    width: 100%;
+    background-color: #1b1b1b;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px;
+    border: 1px solid #2f2f2f;
+}
+.sidebar{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: 100vh;
+    width: 20%;
+    padding: 0 5px;
+    box-shadow: 2px 2px 10px;
+    background-color: #1b1b1b;
+    z-index: 10000;
+}
+.ln-list a li, .tn-dropdown-menu a li{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    color: white;
+    font-size: 16px;
+    padding-left: 15px;
+    background-color: #1b1b1b;
+}
+.ln-list a li:hover, .tn-dropdown-menu a li:hover{
+    background-color: #1f1f1f;
+
+}
+.ln-list a li i{
+    width: 20px;
+    font-size: 20px;
+}
+.ln-list a li p{
+    margin-left: 20px;
+}
+
+.alternative-navbar{
+    position: sticky;
+    top: 60px;
+    width: 100%;
+    height: 60px;
+    margin-top: 60px;
+    background-color: #1b1b1b;
+    z-index: 100000;
+    box-shadow: 2px 2px 5px;
+    display: none;
+}
+
+/* MEDIA QUERIES */
+
+
+@media screen and (max-width: 991px){
+    .sidebar{
+        display: none;
+    }
+    .alternative-navbar{
+        display: block;
+    }
+   
+}
+
+@media screen and (max-width: 447px){
+    .sidebar{
+        width: 100vw;
+    }
+}

@@ -1,10 +1,10 @@
 import { GraphQLInt} from "graphql"
 import connection from "../../middleware/db.js"
-import { SavesType } from "../TypeDefs/Saves.js"
+import { PostType } from "../TypeDefs/Posts.js"
 
 
 export const SAVE_POST = {
-    type: SavesType,
+    type: PostType,
     args: {
         userID: {type: GraphQLInt},
         postID: {type: GraphQLInt}
@@ -19,7 +19,7 @@ export const SAVE_POST = {
 }
 
 export const REMOVE_SAVED = {
-    type: SavesType,
+    type: PostType,
     args: {
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt}

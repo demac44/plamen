@@ -11,8 +11,8 @@ const InfoBox = ({data, user, membersCount}) => {
     }, [data])
 
     return (
-        <div className='group-info-container'>
-            <div className='group-info-box'>
+        <div className='info-container'>
+            <div className='info-box'>
                 <div style={styles.descTitle}><h2>Information</h2></div>
                 <div className='flex-sb' style={{padding:'5px', color:'white'}}>
                     <p>{membersCount} members</p>
@@ -21,7 +21,7 @@ const InfoBox = ({data, user, membersCount}) => {
                 <p style={{color:'white', padding:'5px'}}>Created on {dateCreated}</p>
             </div>
 
-            <div className='group-info-box flex-col-ctr'>
+            <div className='info-box flex-col-ctr'>
                 <div style={styles.descTitle}><h2>Description</h2></div>
                 {data?.group_description ? 
                 <div style={styles.textBoxDesc}>{data?.group_description}</div>
@@ -31,7 +31,7 @@ const InfoBox = ({data, user, membersCount}) => {
                         <i style={{marginRight:'5px'}} className='fas fa-plus'></i><h3>Add description</h3></div>)}               
             </div>
 
-            <div className='group-info-box flex-col-ctr'>
+            <div className='info-box flex-col-ctr'>
                 <div style={styles.descTitle}><h2>Community rules</h2></div>
                 {data?.group_rules ? 
                 <div style={styles.textBoxDesc}><p>{data?.group_rules}</p></div>

@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import GroupsGrid from '../../components/Groups/components/GroupsGrid'
+import Sidebar from '../../components/General components/Sidebar'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const GET_GROUPS = gql`
     query ($uid: Int!){
@@ -34,9 +35,10 @@ const Groups = ({isLogged}) => {
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <LeftNavbar show={leftnav}/>
+                    <Sidebar show={leftnav}/>
                     <GroupsGrid groups={data?.get_groups}/>
                 </div>
             </div>

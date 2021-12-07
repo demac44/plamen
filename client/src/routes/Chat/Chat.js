@@ -4,20 +4,7 @@ import ChatMsgBox from '../../components/Chat/components/ChatMsgBox'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
-import ChatLoader from '../../components/UI/Loaders/ChatLoader'
-
-const GET_CHATS = gql`
-    query ($userID: Int!){
-        get_chats(user1_ID: $userID){
-            chatID
-            username
-            first_name
-            last_name
-            profile_picture
-            userID
-            date_created
-        }
-}`
+import ChatLoader from '../../components/General components/Loaders/ChatLoader'
 
 
 const Chat = ({isLogged}) => {
@@ -27,10 +14,6 @@ const Chat = ({isLogged}) => {
     const {data, loading, error, refetch} = useQuery(GET_CHATS, {
         variables:{userID: ls.userID},
     }) 
-
-    useEffect(()=>{
-        refetch()
-    },[refetch])
   
     if(loading) return <ChatLoader/>
     if(error) console.log(error); 
@@ -45,3 +28,17 @@ const Chat = ({isLogged}) => {
 }
 
 export default Chat
+
+
+const GET_CHATS = gql`
+    query ($userID: Int!){
+        get_chats(user1_ID: $userID){
+            chatID
+            username
+            first_name
+            last_name
+            profile_picture
+            userID
+            date_created
+        }
+}`

@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import Post from '../../components/Feed/Posts/Post'
-import Stories from '../../components/Feed/Stories/Stories'
-import AddPost from '../../components/Feed/Posts/Post components/Functional components/AddPost'
 import Navbar from '../../components/Navbar/Navbar'
-import LeftNavbar from '../../components/UI/LeftNavbar'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import FeedLoader from '../../components/UI/Loaders/FeedLoader'
+import MyGroupsList from '../../components/General components/MyGroupsList'
+import Posts from '../../components/Post/Posts'
+import CreatePost from '../../components/Post/Create post/CreatePost'
 
+import Stories from '../../components/Stories/Stories'
+import Sidebar from '../../components/General components/Sidebar'
+
+import FeedLoader from '../../components/General components/Loaders/FeedLoader'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -44,52 +47,41 @@ const Feed = ({isLogged}) => {
     if(loading) return <FeedLoader/>
     if(error) console.log(error); 
 
-    const posts = data?.feed_posts
-    const stories = data?.get_stories
+
+    const scrollPagination = () => {
+        window.onscroll = async ()=>{
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                try {
+                    await fetchMore({
+                        variables:{
+                            offset:data?.get_feed_posts?.length,
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return Object.assign({}, prev, {
+                              get_feed_posts: [...data.get_feed_posts, ...fetchMoreResult?.get_feed_posts]
+                            });
+                          }
+                    })
+                } catch{}
+            }
+        }
+    }
 
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
-            <div className='wrapper' onLoad={()=>{
-                window.onscroll = async ()=>{
-                 if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-                     try {
-                         await fetchMore({
-                             variables:{
-                                 offset:posts.length,
-                             },
-                             updateQuery: (prev, { fetchMoreResult }) => {
-                                 if (!fetchMoreResult) return prev;
-                                 return Object.assign({}, prev, {
-                                   feed_posts: [...posts, ...fetchMoreResult?.feed_posts]
-                                 });
-                               }
-                         })
-                     } catch{}
-                 }
-                }
-            }}>
-                <div className='main'>
-                    <LeftNavbar show={leftnav}/>
-                    <div className='posts-container-feed'>
-                        <Stories stories={stories} updatedCallback={updatedCallback}/>
-                        <AddPost updatedCallback={updatedCallback}/>
-                        {posts?.length > 0 ? posts?.map(post => <Post post={{
-                            postID: post.postID,
-                            post_text: post.post_text,
-                            date_posted: post.date_posted,
-                            url: post.url,
-                            type: post.type
-                        }} user={{
-                            userID: post.userID,
-                            first_name:post.first_name,
-                            last_name: post.last_name,
-                            username: post.username,
-                            profile_picture: post.profile_picture
-                        }} comments={post.comments}
-                        likes={post.likes}
-                        updatedCallback={updatedCallback}
-                        key={post.postID}/>) : <p style={{marginTop:'60px', color:'black', textAlign:'center', width:'70%'}}>No new posts</p>}
+            <AlternativeNavbar/>
+            <div className='wrapper' onLoad={scrollPagination}>
+                <div className='container-main'>
+                    <Sidebar show={leftnav}/>
+                    <div className='container-left'>
+                        <Stories stories={data?.get_stories} updatedCallback={updatedCallback}/>
+                        <CreatePost/>
+                        <Posts posts={data.get_feed_posts}/>
+                    </div>
+                    <div className='container-right'>
+                        <MyGroupsList/>
                     </div>
                 </div>
             </div>
@@ -102,7 +94,7 @@ export default Feed
 
 const FEED_POSTS = gql`
     query ($userID: Int!, $limit: Int, $offset: Int){
-        feed_posts (userID: $userID, limit: $limit, offset: $offset){
+        get_feed_posts (userID: $userID, limit: $limit, offset: $offset){
             postID
             post_text
             date_posted
@@ -113,23 +105,6 @@ const FEED_POSTS = gql`
             username
             profile_picture
             type
-            comments{
-                commentID
-                userID
-                username
-                comment_text
-                date_commented
-                profile_picture
-                postID
-            }
-            likes{
-                postID
-                userID
-                username
-                first_name
-                last_name
-                profile_picture
-            }
         }
         get_stories (userID: $userID){
             first_name

@@ -1,9 +1,9 @@
 import React from 'react'
-import  Avatar from '../UI/Avatar'
 import {NavLink} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import UserLoader from '../UI/Loaders/UserLoader'
+import Avatar from '../General components/Avatar'
+import UserLoader from '../General components/Loaders/UserLoader'
 
 const CREATE_CHAT = gql`
     mutation ($user1: Int!, $user2: Int!){

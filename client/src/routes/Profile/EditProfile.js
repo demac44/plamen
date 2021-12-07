@@ -3,11 +3,11 @@ import Navbar from '../../components/Navbar/Navbar'
 
 import '../../App.css'
 import '../../General.css'
-import Sidebar from '../../components/Profile/Functional components/Edit profile/Sidebar'
-import EditPfpChoice from '../../components/Profile/Functional components/Edit profile/Edit pfp/EditPfpChoice'
-import Avatar from '../../components/UI/Avatar'
-import EditForm from '../../components/Profile/Functional components/Edit profile/EditForm'
-import LeftNavbar from '../../components/UI/LeftNavbar'
+import EditForm from '../../components/Profile/components/Edit profile/EditForm'
+import Avatar from '../../components/General components/Avatar'
+import Sidebar from '../../components/General components/Sidebar'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import EditPfpChoice from '../../components/Profile/components/Edit profile/Edit pfp/EditPfpChoice'
 
 const EditProfile = ({isLogged}) => {
     // let fname,lname,username;
@@ -22,13 +22,13 @@ const EditProfile = ({isLogged}) => {
     return (
         <>
             <Navbar callback={()=>{return}} isLogged={isLogged}/>
+            <AlternativeNavbar/>
             {pfpMenu && <EditPfpChoice callback={closeMenu}/>}
             <div className='wrapper'> 
                 <div className='main'>
-                    <LeftNavbar/>
+                    <Sidebar/>
                     <div className='profile-container'>
                         <div className='edit-pf-box'>
-                            <Sidebar/>
                             <div className='edit-box'>
                                 <div className='flex-h' style={{width: '300px'}}>
                                     <Avatar height='70px' width='70px' pfp={user.profile_picture}/>

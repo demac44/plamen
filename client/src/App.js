@@ -12,12 +12,11 @@ import Profile from './routes/Profile/Profile';
 import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
-import ChatCont from './routes/Chat/ChatCont';
 import Post from './routes/Post/Post';
 import Groups from './routes/Groups/Groups';
 import Group from './routes/Groups/Group';
 import GroupMembers from './routes/Groups/GroupMembers';
-
+import Chats from './routes/Chat/Chats'
 
 function App() {
   const dispatch = useDispatch()
@@ -57,8 +56,8 @@ function App() {
               <Route exact path='/settings/editprofile'>{isLogged ? <EditProfile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/chats'>{isLogged ? <ChatCont isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/chat/:chatid'>{isLogged ? <ChatCont isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/chat/:chatid'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/post/:postid'><Post isLogged={isLogged}/></Route>
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
