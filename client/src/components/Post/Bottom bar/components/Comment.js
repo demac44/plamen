@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
 import SetTime from '../../../General components/SetTime'
 
-const Comment = ({comment, refetchComments}) => {
+const Comment = ({comment, refetchComments, groupID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [readMore, setReadMore] = useState(true)
 
-    const [delete_comment] = useMutation(DELETE_COMMENT)
+    const [delete_comment] = useMutation(groupID ? DELETE_GP_COMMENT : DELETE_COMMENT)
 
 
     const handleDelete = () => {
@@ -100,4 +100,13 @@ const DELETE_COMMENT = gql`
             postID
         }
     }
+`
+
+const DELETE_GP_COMMENT = gql`
+    mutation ($cmtID: Int!){
+        remove_group_post_comment(commentID: $cmtID){
+            commentID
+        }
+    }
+
 `

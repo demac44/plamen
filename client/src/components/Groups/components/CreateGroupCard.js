@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import CreateGroupForm from '../Functional components/CreateGroupForm'
+import CreateGroupForm from './CreateGroupForm'
 
 const CreateGroupCard = () => {
     const [createGroup, setCreateGroup] = useState(false)

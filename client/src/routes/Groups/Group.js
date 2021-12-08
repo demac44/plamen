@@ -7,12 +7,13 @@ import { useQuery } from 'react-apollo'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
-import CreatePost from '../../components/Post/Create post/CreatePost'
 import Sidebar from '../../components/General components/Sidebar'
 
 import GroupLoader from '../../components/General components/Loaders/GroupLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import CreateGroupPost from '../../components/Groups/components/Posts/CreateGroupPost'
 
+import Posts from '../../components/Post/Posts'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
@@ -47,7 +48,6 @@ const Group = ({isLogged}) => {
 
     if(loading) return <GroupLoader/>
 
-    const posts = data?.get_group_posts
 
     return (
         <>
@@ -61,7 +61,8 @@ const Group = ({isLogged}) => {
                 </div>
                 <div className='container-main'>
                         <div className='container-left'>
-                            {data.get_group_user && <CreatePost/>}
+                            {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
+                            <Posts posts={data.get_group_posts} refetchPosts={refetch}/>
                         </div>
                         <div className='container-right'>
                             <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
@@ -88,6 +89,7 @@ const GET_GROUP = gql`
             banner_image
         }
         get_group_posts (groupID: $gid, limit: $limit, offset: $offset){
+            groupID
             postID
             post_text
             date_posted

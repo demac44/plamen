@@ -4,12 +4,12 @@ import { useMutation } from 'react-apollo'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp'
 
 
-const AddComment = ({postID, userID, refetchComments}) => {
+const AddComment = ({postID, userID, groupID, refetchComments}) => {
     let comment_text;
     const isLogged = true
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loginPopUp, setLoginPopUp] = useState(false)
-    const [add_comment] = useMutation(ADD_COMMENT) 
+    const [add_comment] = useMutation(groupID ? ADD_GP_COMMENT : ADD_COMMENT) 
 
     const handleAddComment = (e) => {
         e.preventDefault()
@@ -27,7 +27,7 @@ const AddComment = ({postID, userID, refetchComments}) => {
                     postID: postID,
                     userID: ls.userID,
                     comment_text: comment_text,
-                    rid: userID
+                    rid: userID,
                 }
             }).then(()=>{
                 refetchComments()
@@ -81,7 +81,7 @@ const ADD_COMMENT = gql`
 `
 const ADD_GP_COMMENT = gql`
     mutation ($postID: Int!, $userID: Int!, $comment_text: String!){
-        comment_gp (postID: $postID, userID: $userID, comment_text: $comment_text){
+        comment_group_post (postID: $postID, userID: $userID, comment_text: $comment_text){
             postID
         }
     }

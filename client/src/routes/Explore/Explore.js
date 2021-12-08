@@ -39,9 +39,9 @@ const Explore = ({isLogged}) => {
                             style={styles.reloadBox} 
                             className='flex-col-ctr'
                         >
-                            <p>Go again? Click!</p>
+                            <p>Go again?</p>
                             <br/>
-                            <i class="fas fa-redo"></i>
+                            <i style={{fontSize:'20px'}} class="fas fa-redo"></i>
                         </div>
                     </div>
                 </div>

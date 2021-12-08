@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Comment from './Comment'
-import AddComment from './AddComment'
 
-const PostComments = ({comments, seeMore, refetchComments}) => {
+const PostComments = ({comments, seeMore, refetchComments, groupID}) => {
 
     return (
         <div className='post-comments-box'>
-            {comments.map(comment => <Comment comment={comment} key={comment.commentID} refetchComments={refetchComments}/>)}
+            {comments.map(comment => <Comment 
+                                        comment={comment} 
+                                        key={comment.commentID} 
+                                        refetchComments={refetchComments}
+                                        groupID={groupID}
+                                    />)}
             {comments.length > 0 && 
                 <div onClick={()=>seeMore()} className='flex-ctr' style={styles.seeMore}><p style={styles.seeMoreBtn}>Load more</p></div>}
         </div>

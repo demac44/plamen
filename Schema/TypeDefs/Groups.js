@@ -3,10 +3,8 @@ import {
     GraphQLInt,
     GraphQLString,
     GraphQLBoolean,
-    GraphQLList,
  } from "graphql";
-import { CommentType } from "./Comments.js";
-import { LikesType } from "./Likes.js";
+
 
 
 export const GroupType = new GraphQLObjectType({
@@ -27,9 +25,9 @@ export const GroupType = new GraphQLObjectType({
 export const GroupPostType = new GraphQLObjectType({
     name: 'GroupPost',
     fields: ()=>({
+        groupID: {type: GraphQLInt},
         postID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
-        groupID: {type: GraphQLInt},
         post_text: {type: GraphQLString},
         date_posted: {type: GraphQLString},
         url: {type: GraphQLString},
@@ -37,11 +35,10 @@ export const GroupPostType = new GraphQLObjectType({
         first_name:{type:GraphQLString},
         last_name:{type:GraphQLString},
         profile_picture: {type: GraphQLString},
-        comments: {type: new GraphQLList(CommentType)},
-        likes: {type: new GraphQLList(LikesType)}, 
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
-        type:{type:GraphQLString}
+        type:{type:GraphQLString},
+        groupPost:{type: GraphQLBoolean}
     })
 })
 

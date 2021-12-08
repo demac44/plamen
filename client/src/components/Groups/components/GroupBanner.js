@@ -1,5 +1,5 @@
 import React from 'react'
-import JoinBtn from '../Functional components/JoinBtn'
+import JoinBtn from './JoinBtn'
 
 const GroupBanner = ({info, user, updatedCallback}) => {
     return (

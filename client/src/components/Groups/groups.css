@@ -114,6 +114,7 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 5px 5px 10px;
+    border: 1px solid #1b1b1b;
 }
 .group-join-btn{
     font-size: 20px;

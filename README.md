@@ -12,6 +12,9 @@ POSTS:
 - like, comment, share and save posts
 - feed posts pagination
 
+EXPLORE:
+- random 100 posts
+
 STORIES:
 - image and video stories
 - reply to story

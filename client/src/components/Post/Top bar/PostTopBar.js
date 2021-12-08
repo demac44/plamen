@@ -21,7 +21,7 @@ const PostTopBar = ({data, refetchPosts}) => {
                 </Link >
 
                 <span className='flex'>
-                    <SavePostButton postID={data.postID}/>
+                    <SavePostButton postID={data.postID} groupID={data?.groupID}/>
                     <i 
                         className="fas fa-ellipsis-v" 
                         style={styles.optionsBtn} 
@@ -33,7 +33,8 @@ const PostTopBar = ({data, refetchPosts}) => {
                 refetchPosts={refetchPosts}
                 data={{
                     postID: data.postID,
-                    userID: data.userID
+                    userID: data.userID,
+                    groupID: data?.groupID
             }}/>}
         </>
     )

@@ -19,7 +19,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_USER, IF_REQUESTED } from "./Queries/Groups.js";
+import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
@@ -61,13 +61,20 @@ const RootQuery = new GraphQLObjectType({
         get_user_stories: GET_USER_STORIES,
         // notifications
         get_notifications: GET_NOTIFICATIONS,
-        // groups
+        //groups
         get_groups:GET_GROUPS,
         get_group: GET_GROUP,
+        // group users
         get_group_members: GET_GROUP_MEMBERS,
-        get_group_posts: GET_GROUP_POSTS,
         get_group_user: GET_GROUP_USER,
-        if_requested: IF_REQUESTED
+        if_requested: IF_REQUESTED,
+        //group posts
+        get_group_posts: GET_GROUP_POSTS,
+        get_group_post_comments: GET_GROUP_POST_COMMENTS,
+        get_group_post_likes: GET_GROUP_POST_LIKES,
+        get_saved_group_posts: GET_SAVED_GROUP_POSTS,
+        if_group_post_saved: IF_GROUP_POST_SAVED,
+        if_group_post_liked: IF_GROUP_POST_LIKED
     }
 })    
 
@@ -110,14 +117,16 @@ const RootMutation = new GraphQLObjectType({
         remove_comment_notif: REMOVE_COMMENT_NOTIF,
         // groups
         create_group: CREATE_GROUP,
+        // group posts
         create_group_post: CREATE_GROUP_POST,
         delete_group_post: DELETE_GROUP_POST,
-        like_gp: LIKE_GP_POST,
-        remove_gp_like:REMOVE_GP_LIKE,
-        comment_gp: ADD_GP_COMMENT,
-        remove_gp_cmt: REMOVE_GP_COMMENT,
-        save_gp: SAVE_GP,
-        remove_saved_gp: REMOVE_SAVED_GP,
+        like_group_post: LIKE_GP_POST,
+        remove_group_post_like:REMOVE_GP_LIKE,
+        comment_group_post: ADD_GP_COMMENT,
+        remove_group_post_comment: REMOVE_GP_COMMENT,
+        save_group_post: SAVE_GP,
+        remove_saved_group_post: REMOVE_SAVED_GP,
+        // group users
         join_group: JOIN_GROUP,
         leave_group: LEAVE_GROUP,
         join_request: JOIN_REQUEST,

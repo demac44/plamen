@@ -9,7 +9,6 @@ import PostBottomBar from './Bottom bar/PostBottomBar'
 import './Post.css'
 
 const Post = ({post, refetchPosts}) => {
-
     return (
         <div className='post'>
             <PostTopBar 
@@ -19,14 +18,15 @@ const Post = ({post, refetchPosts}) => {
                     pfp:post.profile_picture,
                     timestamp: post.date_posted,
                     postID: post.postID,
-                    userID: post.userID
+                    userID: post.userID,
+                    groupID: post?.groupID
             }}/>
             <PostMedia data={{
                 url:post.url,
                 type:post.type
             }}/>
             <PostTextBar post_text={post.post_text}/>
-            <PostBottomBar postID={post.postID} userID={post.userID}/>
+            <PostBottomBar postID={post.postID} userID={post.userID} groupID={post?.groupID}/>
         </div>
     )
 }
