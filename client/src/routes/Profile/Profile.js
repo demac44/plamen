@@ -20,8 +20,6 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
     
 const Profile = ({myprofile, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
-    const [updated, setUpdated] = useState(false)
-    const [leftnav, setLeftnav] = useState(false)
     const history = useHistory()
     const {id} = useParams()
     
@@ -39,15 +37,12 @@ const Profile = ({myprofile, isLogged}) => {
             offset:0
         }
     })
-    
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
+
 
     useEffect(()=>{
         if(userID === ls.userID) history.push('/myprofile')
         window.scrollTo(0,0)
-    }, [userID, ls.userID, updated, refetch])
+    }, [userID, ls.userID, refetch])
     
     if (loading) return <ProfileLoader/>
     if(error) throw error 
@@ -77,24 +72,24 @@ const Profile = ({myprofile, isLogged}) => {
                     })                 
                 } catch {}
             }
-           }
+        }
     }
     
     return ( 
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}> 
                 <div className='container-profile'>
                     <ProfileTopBox info={info}/>
                 </div>
                 <div className='container-main'>
-                    <Sidebar show={leftnav}/>
+                    <Sidebar/>
                     <div className='container-left'>
-                        {myprofile && <CreatePost/>}    
-                        <Posts posts={data?.get_profile_posts}/>  
+                        {myprofile && <CreatePost refetch={refetch}/>}    
+                        <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
-                    <div className='container-right'>
+                    <div className='container-right' style={{width:'35%'}}>
                         <MyGroupsList/>
                     </div>
                 </div>

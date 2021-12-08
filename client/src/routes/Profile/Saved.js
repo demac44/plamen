@@ -10,30 +10,19 @@ import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const Saved = ({isLogged}) => {
-    const [updated, setUpdated] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [leftnav, setLeftnav] = useState(false)
 
-    const {loading, data, error, refetch, fetchMore} = useQuery(GET_SAVED, { 
+    const {loading, data, error, fetchMore} = useQuery(GET_SAVED, { 
         variables: {
             userID: ls.userID,
             offset:0,
-            limit:20
+            limit:15
         },
     })
 
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
-
-
     useEffect(()=>{
         window.scrollTo(0,0)
-        if(updated){
-            refetch()
-            setUpdated(false)
-        }
-    }, [updated, refetch])
+    }, [])
 
     if(loading) return <SavedLoader/>
     if(error) console.log(error);
@@ -49,7 +38,7 @@ const Saved = ({isLogged}) => {
                         updateQuery: (prev, { fetchMoreResult }) => {
                             if (!fetchMoreResult) return prev;
                             return Object.assign({}, prev, {
-                              get_saves: [...data.get_saved_posts, ...fetchMoreResult.get_saved_posts]
+                              get_saved_posts: [...data.get_saved_posts, ...fetchMoreResult.get_saved_posts]
                             });
                           }
                     })
@@ -60,18 +49,18 @@ const Saved = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>
-                    <Sidebar show={leftnav}/>
+                    <Sidebar/>
                     <div className='container-left'>
                         <h2 style={styles.title}>Saved posts</h2>
                         <Posts posts={data.get_saved_posts}/>
                     </div>
-                    <div className='container-right'>
+                </div>
+                <div className='container-right' style={styles.containerRight}>
                         <MyGroupsList/>
-                    </div>
                 </div>
             </div>
         </>
@@ -89,6 +78,12 @@ const styles = {
         borderRadius:'10px',
         textAlign:'center',
         boxShadow:'5px 5px 10px black'
+    },
+    containerRight:{
+        position:'fixed', 
+        top:'80px', 
+        right:'20px', 
+        padding:'0 10px'
     }
 }
 

@@ -64,13 +64,13 @@ const ReportBox = ({data, closeReportCallback}) => {
 
 
     return (
-        <div className='report-overlay flex-col-ctr'>
-            <h3>Report post
-                <i className='fas fa-times' style={styles.exitBtn} onClick={()=>closeReportCallback()}></i>     
-            </h3>
-            {reportSent && <h3>Your report has been sent!</h3>}
-            <p>Please specify reasons for reporting this post:</p>
+        <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
+                <h3 style={styles.title}>Report post
+                    <i className='fas fa-times' style={styles.exitBtn} onClick={()=>closeReportCallback()}></i>     
+                </h3>
+                {reportSent && <h4 style={{...styles.title, marginTop:'10px'}}>Your report has been sent!</h4>}
+                <p style={{...styles.title, marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
                 <input type='checkbox' id='opt1' value='Spam'/>
                 <label htmlFor='opt2'>Spam</label>
                 <br/>
@@ -104,7 +104,7 @@ const ReportBox = ({data, closeReportCallback}) => {
                 <input type='checkbox' id='opt11' value='Suicide or self-injury'/>
                 <label htmlFor='opt2'>Suicide or self-injury</label>
                 <br/>
-                <button className='submit-report btn'>SUBMIT REPORT</button>
+                <div style={{width:'100%', textAlign:'center'}}><button style={styles.submitBtn} className='btn'>SUBMIT REPORT</button></div>
             </form>
         </div>
     )
@@ -115,10 +115,19 @@ export default ReportBox
 const styles = {
     exitBtn:{
         position:'absolute',
-        top:'10px',
-        right:'10px',
+        top:'20px',
+        right:'15px',
         color:'white',
         fontSize:'25px',
         cursor:'pointer'
+    },
+    title:{
+        width:'100%',
+        color:'white',
+        textAlign:'center'
+    },
+    submitBtn:{
+        padding:'5px 10px',
+        marginTop:'20px',
     }
 }

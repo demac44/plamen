@@ -15,8 +15,6 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [updated, setUpdated] = useState(false)
-    const [leftnav, setLeftnav] = useState(false)
     const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
             userID: ls.userID,
@@ -25,24 +23,10 @@ const Feed = ({isLogged}) => {
         },
         
     })
-    
 
     useEffect(()=>{
         window.scrollTo(0,0)
-        if(updated){
-            refetch()
-            setUpdated(false)
-        }
-    }, [updated, refetch])
-
-    
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
-    
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
+    }, [])
 
     if(loading) return <FeedLoader/>
     if(error) console.log(error); 
@@ -70,19 +54,19 @@ const Feed = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>
-                    <Sidebar show={leftnav}/>
+                    <Sidebar/>
                     <div className='container-left'>
-                        <Stories stories={data?.get_stories} updatedCallback={updatedCallback}/>
-                        <CreatePost/>
-                        <Posts posts={data.get_feed_posts}/>
+                        <Stories stories={data?.get_stories} refetch={refetch}/>
+                        <CreatePost refetch={refetch}/>
+                        <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
                     </div>
-                    <div className='container-right'>
-                        <MyGroupsList/>
-                    </div>
+                </div>
+                <div className='container-right' style={styles.containerRight}>
+                    <MyGroupsList/>
                 </div>
             </div>
         </>
@@ -123,3 +107,12 @@ const FEED_POSTS = gql`
         }
     }
 `
+
+const styles = {
+    containerRight:{
+        position:'fixed', 
+        top:'80px', 
+        right:'20px', 
+        padding:'0 10px'
+    }
+}

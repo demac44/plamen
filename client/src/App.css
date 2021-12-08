@@ -6,11 +6,11 @@
 }
 .container-left{
     width: 65%;
-    padding: 0 90px 50px 30px;
+    padding: 0 70px 50px 30px;
 }
 .container-right{
-    width: 35%;
-    padding: 0 10px;
+    width: 30%;
+    padding: 10px 0;
 }
 .container-profile{
     padding: 70px 35px 0 330px;
@@ -38,6 +38,9 @@
     }
     .container-profile{
         padding: 10px 10px 0 10px;
+    }
+    .container-right{
+        top: 130px !important;
     }
 }
 

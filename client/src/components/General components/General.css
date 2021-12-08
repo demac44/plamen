@@ -90,6 +90,11 @@
     -webkit-animation: spin 1.5s linear infinite;
     animation: spin 1.5s linear infinite;
 }
+.user-avatar{
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
 
 
 /* MEDIA QUERIES */

@@ -67,6 +67,7 @@ const styles = {
     saveBtn:{
         fontSize:'30px',
         marginRight:'20px',
+        cursor:'pointer'
     }
 }
 

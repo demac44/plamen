@@ -4,7 +4,7 @@ import { useMutation, useQuery } from 'react-apollo'
 // import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp.js'
 
-const LikePost = ({data}) => {
+const LikePost = ({postID, userID}) => {
     const isLogged = true
     const ls = JSON.parse(localStorage.getItem('user'))
     const [liked, setLiked] = useState(false)
@@ -14,14 +14,14 @@ const LikePost = ({data}) => {
 
     const ifLiked = useQuery(IF_LIKED, {
         variables:{
-            postID: data.postID,
-            userID: data.userID
+            postID: postID,
+            userID: userID
         }
     })
 
     useEffect(()=>{
         ifLiked?.data?.if_liked===true && setLiked(true)
-    }, [data, ifLiked?.data])
+    }, [ifLiked?.data])
 
     if(ifLiked.loading) return <p>O</p>
     if(error) throw error
@@ -31,9 +31,9 @@ const LikePost = ({data}) => {
         isLogged ?
         like_post({
             variables: {
-                postID: data?.postID,
+                postID: postID,
                 userID: ls.userID,
-                rid: data?.userID
+                rid: userID
             }
         }).then(() => {
             setLiked(true)
@@ -45,7 +45,7 @@ const LikePost = ({data}) => {
         isLogged ?
         remove_like({
             variables: {
-                postID: data?.postID,
+                postID: postID,
                 userID: ls.userID
             }
         }).then(()=>{

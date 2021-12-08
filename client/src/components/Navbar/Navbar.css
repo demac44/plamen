@@ -59,15 +59,6 @@
     color: white;
     display: none;
 }
-.user-avatar{
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-}
-.avatar-img{
-    min-width: 100%;
-    min-height: 100%;
-}
 .tn-dropdown-menu{
     position: fixed;
     top: 60px;
@@ -146,16 +137,17 @@
 .notifications-container{
     position: absolute;
     top: 60px;
-    right: 130px;
+    right: 50px;
     width:30vw;
     height: auto;
-    background-color: white;
-    border: 1px solid #111827;
+    background-color: #1b1b1b;
     max-height: 70vh;
     overflow: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 5px 5px 10px;
+    border: 1px solid #2f2f2f;
 }
 .notification-box{
     position: relative;
@@ -164,22 +156,21 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
     padding-right: 55px;
 }
 .notification-box:hover{
-    background-color: #ececec;
+    background-color: #2f2f2f;
 }
 .notification-box p{
     margin-left: 10px;
     font-size: 14px;
-    color: black;
+    color: white;
 }
 .nb-time{
     position: absolute;
     top: 21px;
     right: 5px;
-    color: black;
+    color: white;
 }
 
 

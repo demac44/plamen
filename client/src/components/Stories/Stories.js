@@ -4,7 +4,7 @@ import StoryHead from './components/StoryHead'
 
 import './Stories.css'
 
-const Stories = ({stories}) => {
+const Stories = ({stories, refetch}) => {
     const [width, setWidth] = useState(0)
     const [margin, setMargin] = useState(0)
     let index = 0 
@@ -21,7 +21,7 @@ const Stories = ({stories}) => {
         <div className="container-stories">
             <div className='inner-container-stories' style={{marginLeft:-margin.toString()+'%'}}>
                 <div className='flex-col-ctr'>
-                    <AddStory/>
+                    <AddStory refetch={refetch}/>
                     <p style={{fontSize:'14px',color:'white'}}>Add story</p>
                 </div>
                 {stories.map(story => (

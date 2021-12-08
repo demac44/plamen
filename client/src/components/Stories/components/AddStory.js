@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import StoryPreview from './StoryPreview'
 
-const AddStory = () => {
+const AddStory = ({refetch}) => {
     const [media, setMedia] = useState(null)
     const [previewMedia, setPreviewMedia] = useState('')
 
@@ -23,7 +23,13 @@ const AddStory = () => {
                     setPreviewMedia(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
                 }} style={{display:'none'}}/>
         </div>
-        {(previewMedia && media) && <StoryPreview previewMedia={previewMedia} media={media} exitCallback={exitCallback}/>}
+        {(previewMedia && media) && 
+            <StoryPreview 
+                previewMedia={previewMedia} 
+                media={media} 
+                exitCallback={exitCallback}
+                refetch={refetch}
+            />}
         </>
     )
 }

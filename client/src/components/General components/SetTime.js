@@ -31,6 +31,6 @@ export default SetTime
 
 const styles = {
     time:{
-        fontSize:'12px'
+        fontSize:'10px'
     }
 }

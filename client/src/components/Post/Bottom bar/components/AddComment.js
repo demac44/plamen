@@ -4,13 +4,12 @@ import { useMutation } from 'react-apollo'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp'
 
 
-const AddComment = ({data}) => {
+const AddComment = ({postID, userID, refetchComments}) => {
     let comment_text;
     const isLogged = true
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loginPopUp, setLoginPopUp] = useState(false)
     const [add_comment] = useMutation(ADD_COMMENT) 
-
 
     const handleAddComment = (e) => {
         e.preventDefault()
@@ -25,12 +24,13 @@ const AddComment = ({data}) => {
         } else{
             add_comment({
                 variables:{
-                    postID: data.postID,
+                    postID: postID,
                     userID: ls.userID,
                     comment_text: comment_text,
-                    rid: data.userID
+                    rid: userID
                 }
             }).then(()=>{
+                refetchComments()
                 e.target.comment_text.value=''
             })
         }

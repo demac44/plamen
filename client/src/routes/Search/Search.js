@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 
 import {gql} from 'graphql-tag'
@@ -25,12 +25,7 @@ const Search = ({isLogged}) => {
     const {query} = useParams()
     const [regex, setRegex] = useState('')
     const [users, setUsers] = useState([])
-    const [leftnav, setLeftnav] = useState(false)
     const [fetch, setFetch] = useState(true)
-
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
 
 
     const {loading, data, error, fetchMore} = useQuery(SEARCH_USERS, {
@@ -74,11 +69,11 @@ const Search = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <Sidebar show={leftnav}/>
+                    <Sidebar/>
                     <div className='search-container'>
                         <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p>

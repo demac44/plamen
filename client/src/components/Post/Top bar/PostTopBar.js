@@ -5,7 +5,7 @@ import PostMenu from './components/PostMenu'
 import Avatar from '../../General components/Avatar'
 import { Link } from 'react-router-dom'
 
-const PostTopBar = ({data}) => {
+const PostTopBar = ({data, refetchPosts}) => {
     const [menu, setMenu] = useState(false)
 
     return (
@@ -29,9 +29,11 @@ const PostTopBar = ({data}) => {
                 </span>
             </div>
 
-            {menu && <PostMenu data={{
-                postID: data.postID,
-                userID: data.userID
+            {menu && <PostMenu 
+                refetchPosts={refetchPosts}
+                data={{
+                    postID: data.postID,
+                    userID: data.userID
             }}/>}
         </>
     )
@@ -47,7 +49,8 @@ const styles = {
     optionsBtn:{
         fontSize:'30px',
         color:'white',
-        marginRight:'15px'
+        marginRight:'15px',
+        cursor:'pointer'
     },
     nameAndTime:{
         height:'100%',

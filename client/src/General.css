@@ -52,7 +52,7 @@ li{
 .btn{
     text-align: center;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     outline: none;
     transition: ease .1s;
     cursor: pointer;

@@ -5,10 +5,9 @@ import { useMutation } from 'react-apollo'
 import ReportBox from './ReportBox'
 
 
-const PostMenu = ({data}) => {
+const PostMenu = ({data, refetchPosts}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_POST)
-    const [deleted, setDeleted] = useState(false)
     const [copied, setCopied] = useState(false)
     const [reportMenu, setReportMenu] = useState(false)
 
@@ -16,8 +15,7 @@ const PostMenu = ({data}) => {
     const handlePostDelete = () => {
         try {delete_post({
             variables: {postID: data.postID}
-        })
-        setDeleted(true)}
+        }).then(()=>refetchPosts())}
         catch{}
     }
 
@@ -38,7 +36,12 @@ const PostMenu = ({data}) => {
             <div className='post-options-menu'>
                 <ul>
                     <li onClick={copyToClipboard}><i className='fas fa-share'></i> Share</li>
-                    {data.userID===ls.userID && <li onClick={handlePostDelete}><i className='fas fa-trash-alt'></i> Delete</li>}
+                    {data.userID===ls.userID && <li onClick={handlePostDelete}>
+                        <i 
+                            className='fas fa-trash-alt'
+                        ></i> Delete
+                    </li>}
+
                     <li onClick={()=>setReportMenu(true)}><i className="fas fa-flag"></i> Report</li>
                 </ul>
             </div>

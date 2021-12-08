@@ -17,6 +17,7 @@ import Groups from './routes/Groups/Groups';
 import Group from './routes/Groups/Group';
 import GroupMembers from './routes/Groups/GroupMembers';
 import Chats from './routes/Chat/Chats'
+import Explore from './routes/Explore/Explore';
 
 function App() {
   const dispatch = useDispatch()
@@ -62,6 +63,7 @@ function App() {
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/members'>{isLogged ? <GroupMembers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/explore'>{isLogged ? <Explore isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
       </>

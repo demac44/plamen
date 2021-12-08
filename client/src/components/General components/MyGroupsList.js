@@ -20,7 +20,7 @@ const MyGroupsList = () => {
     return (
         <div className='my-groups-box'>
             <div className='flex-sb' style={styles.descTitle}>
-                <h2>My groups</h2>
+                <h2>My communities</h2>
                 <Link to='/communities' style={styles.seeAllBtn}>See all</Link>
             </div>
             {data.get_groups.slice(0, 5).map(group=>
@@ -42,7 +42,7 @@ const styles = {
         width:'100%',
         padding:'5px',
         color:'white',
-        fontSize:'14px'
+        fontSize:'10px'
     },
     textBoxDesc:{
         width:'100%',

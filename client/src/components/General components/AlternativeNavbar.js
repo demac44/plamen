@@ -10,6 +10,11 @@ const AlternativeNavbar = ({chat}) => {
                         <i style={{color:'darkgreen'}} className="fas fa-newspaper"></i>
                     </li>
                 </NavLink>
+                <NavLink exact to='/explore'>
+                <li>
+                    <i class="fas fa-compass"></i>
+                </li>
+                </NavLink>
                 <NavLink exact to='/saved'>
                     <li>
                         <i style={{color:'#ffbb00'}} className="fas fa-bookmark"></i>

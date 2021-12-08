@@ -82,7 +82,8 @@ const NotficationsMenu = ({visible}) => {
             {data.get_notifications.length < 1 && <p style={{
                 width:'100%',
                 textAlign:'center',
-                padding:'20px'
+                padding:'20px',
+                color:'white'
             }}>No new notifications</p>}
             
 
@@ -93,7 +94,6 @@ const NotficationsMenu = ({visible}) => {
                         padding:'5px 10px 0 0',
                         textAlign:'end',
                         cursor:'pointer',
-                        backgroundColor:'white',
                         color:'teal',
                         fontSize:'14px'
                     }}
@@ -110,7 +110,7 @@ const NotficationsMenu = ({visible}) => {
                     padding:'3px',
                     textAlign:'center',
                     cursor:'pointer',
-                    backgroundColor:'#ececec',
+                    color:'white'
             }}><h5>See all</h5></div>}
         </div>
     )

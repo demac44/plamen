@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 
@@ -15,12 +15,11 @@ const NEW_POST = gql`
     }
 `
 
-const CreatePost = () => {
+const CreatePost = ({refetch}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
-    const [added, setAdded] = useState(false)
     const [imageUpload, setImageUpload] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -52,9 +51,9 @@ const CreatePost = () => {
                     }).then(()=>{
                         setVideo(null)
                         setImage(null )
-                        setAdded(true)
                         setLoading(false)
                         setImageUpload(false)
+                        refetch()
                         e.target.text.value = ''
                     }
                     )
@@ -75,7 +74,7 @@ const CreatePost = () => {
                             type:'video'
                         }
                     }).then(()=>{
-                        setAdded(true)
+                        refetch()
                         setLoading(false)
                         setImageUpload(false)
                         e.target.text.value = ''
@@ -91,7 +90,7 @@ const CreatePost = () => {
                         type:'text'
                     }
                 }).then(()=>{
-                    setAdded(true)
+                    refetch()
                     e.target.text.value = ''
                 })
             }
@@ -99,44 +98,44 @@ const CreatePost = () => {
     }
 
     return (
-        <>
-            <form className="create-post-box" onSubmit={handleSubmit}>
+        <form className="create-post-box" onSubmit={handleSubmit}>
+            {loading ? <div className='flex-ctr' style={{height:'100px'}}>
+                            <div className='small-spinner'></div>
+                        </div> :
+                <>
+                    <textarea 
+                        type="text" 
+                        name='text' 
+                        style={{...styles.textArea, border:err}} 
+                        placeholder="Add new post..."
+                    ></textarea>
 
-                {!loading && 
-                <textarea 
-                    type="text" 
-                    name='text' 
-                    style={{...styles.textArea, border:err}} 
-                    placeholder="Add new post..."
-                ></textarea>}
+                    {(imageUpload) && 
+                    <div>
+                        <Dropzone onSuccessBlob={ (img) => {setImage(img);setVideo(null)} }/>
+                    </div>}
 
-                {(!loading && imageUpload) && 
-                <div>
-                    <Dropzone onSuccessBlob={ (img) => {setImage(img);setVideo(null)} }/>
-                </div>}
+                    <div className="flex-sb" style={{marginTop:'10px'}}>
+                        <div className='flex-ctr'>
 
-                {!loading && 
-                <div className="flex-sb" style={{marginTop:'10px'}}>
-                    <div className='flex-ctr'>
+                            <i className="fas fa-images" onClick={() => setImageUpload(!imageUpload)}></i>
+                            <p>Image</p>
 
-                        <i className="fas fa-images" onClick={() => setImageUpload(!imageUpload)}></i>
-                        <p>Image</p>
-
-                        <>
-                            <label htmlFor='video_upload'>
-                                <i className="fas fa-video" style={{marginLeft: "25px"}}></i>
-                            </label>
-                            <input type='file' id='video_upload' accept="video/*" style={{display:'none'}} onChange={(e)=>{
-                                setVideo(e.target.files[0])
-                                setImageUpload(false)
-                                }}></input>
-                            <p>Video</p>
-                        </>
+                            <>
+                                <label htmlFor='video_upload'>
+                                    <i className="fas fa-video" style={{marginLeft: "25px"}}></i>
+                                </label>
+                                <input type='file' id='video_upload' accept="video/*" style={{display:'none'}} onChange={(e)=>{
+                                    setVideo(e.target.files[0])
+                                    setImageUpload(false)
+                                    }}></input>
+                                <p>Video</p>
+                            </>
+                        </div>
+                        <button type='submit' className="post-button btn">POST</button>
                     </div>
-                    <button type='submit' className="post-button btn">POST</button>
-                </div>}
+                </>}
             </form>
-        </>
     )
 }
 

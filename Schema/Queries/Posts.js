@@ -78,6 +78,20 @@ export const IF_SAVED = {
         return false
     }
 }
+// get random posts
+export const RANDOM_POSTS = {
+    type: new GraphQLList(PostType),
+    async resolve(_, args){
+        const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID FROM posts
+                     JOIN users ON users.userID=posts.userID
+                     ORDER BY RAND() limit 100`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}
+
+
+
 // get single post
 export const GET_POST = {
     type: PostType,

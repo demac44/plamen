@@ -10,6 +10,10 @@ const Sidebar = ({show}) => {
                     <i style={{color:'darkgreen'}} className="fas fa-newspaper"></i>
                     <p>Feed</p>
                 </li></NavLink>
+                <NavLink exact to='/explore'><li>
+                    <i style={{color:'#9933ff'}} class="fas fa-compass"></i>
+                    <p>Explore</p>
+                </li></NavLink>
                 <NavLink exact to='/saved'><li>
                     <i style={{color:'#ffbb00'}} className="fas fa-bookmark"></i>
                     <p>Saved</p>
