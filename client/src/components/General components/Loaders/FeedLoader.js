@@ -13,9 +13,9 @@ const FeedLoader = () => {
         <>
             <Navbar callback={()=>{return}} isLogged={true}/>
             <div className='wrapper'>
-                <div className='main'>
+                <div className='container-main'>
                     <Sidebar/>
-                    <div className='posts-container-feed'>
+                    <div className='container-left'>
                         <StoriesLoader/>
                         <PostLoader/>
                     </div>

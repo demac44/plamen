@@ -6,8 +6,8 @@ const PostLoader = () => {
             <div className='add-np-box' style={styles.addNP}>
                 <div style={styles.input}></div>
             </div>
-            <div className='post' style={{width:'60%', marginTop:'20px'}}>
-                <div style={styles.infoSave}></div>
+            <div className='post' style={{width:'100%', marginTop:'20px'}}>
+                <div style={styles.topBar}></div>
                 <div style={styles.postImg}></div>
                 <div style={styles.cmt}></div>
             </div>
@@ -19,7 +19,7 @@ export default PostLoader
 
 
 const styles = {
-    infoSave:{
+    topBar:{
         width:'100%',
         height:'50px',
         backgroundColor:'#1b1b1b',
@@ -37,12 +37,13 @@ const styles = {
         borderRadius:'0 0 20px 20px '
     },
     addNP:{
-        width:'60%',
+        width:'100%',
         height: '150px',
         borderRadius:'20px',
         backgroundColor:'#1b1b1b',
         marginTop:'20px',
-        padding:'10px'
+        padding:'10px',
+        boxShadow:'5px 5px 10px'
     },
     input:{
         width:'100%',

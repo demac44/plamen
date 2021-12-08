@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback} from 'react'
 import {gql} from 'graphql-tag'
-import { useMutation } from 'react-apollo'
+import { useMutation, useQuery } from 'react-apollo'
 // import ShowUsersList from '../../../../UI/Users list/ShowUsersList.js'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp.js'
 
@@ -8,18 +8,23 @@ const LikePost = ({data}) => {
     const isLogged = true
     const ls = JSON.parse(localStorage.getItem('user'))
     const [liked, setLiked] = useState(false)
-    const [like_post] = useMutation(LIKE_POST)
+    const [like_post, {error}] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
     const [loginPopUp, setLoginPopUp] = useState(false)
 
-    // useEffect(()=>{
-    //     for (let el of likes){
-    //         if (el.userID === ls.userID){
-    //             setLiked(true)
-    //             break
-    //         }
-    //     }
-    // },[ls.userID])
+    const ifLiked = useQuery(IF_LIKED, {
+        variables:{
+            postID: data.postID,
+            userID: data.userID
+        }
+    })
+
+    useEffect(()=>{
+        ifLiked?.data?.if_liked===true && setLiked(true)
+    }, [data, ifLiked?.data])
+
+    if(ifLiked.loading) return <p>O</p>
+    if(error) throw error
 
     
     const handleLike = () => {
@@ -64,7 +69,8 @@ const styles = {
     likeBtn:{
         fontSize:'30px',
         minWidth:'40px',
-        textAlign:'center'
+        textAlign:'center',
+        cursor:'pointer'
     }
 }
 
@@ -87,7 +93,12 @@ const REMOVE_LIKE = gql`
             postID
         }
     }
-    `
+`
+const IF_LIKED = gql`
+    query ($postID: Int!, $userID: Int!){
+        if_liked(postID: $postID, userID: $userID)
+    }
+`
 
 
 

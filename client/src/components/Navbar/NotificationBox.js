@@ -1,30 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import FollowBtn from '../Profile/components/FollowBtn'
 import Avatar from '../General components/Avatar'
+import SetTime from '../General components/SetTime'
 
 const NotificationBox = ({notif}) => {
-    const [time, setTime] = useState(null)
-
-    useEffect(()=>{
-        const getTime = () => {
-            let utcSeconds = parseInt(notif?.time_sent);
-            utcSeconds = new Date(utcSeconds).getTime()
-            let d = Date.now() - utcSeconds
-            d = Math.floor((d/1000)/60)
-            if(d===0) setTime('Now')
-            else if(d<60) setTime(d+'m')
-            else if(d>60 && d<60*24) setTime(Math.floor(d/60)+'h')
-            else if(d>60*24 && d<60*24*30) setTime(Math.floor(d/(60*24))+'d')
-            else if(d>60*24*30) {
-                let d = new Date(utcSeconds)
-                setTime(d.toDateString())
-            }
-        }
-        getTime()
-    }, [notif])
-
-
     return (
         <div className='notification-box' key={notif.Nid}>
             <Link to={notif.type==='follow' ? '/profile/'+notif.sender_id : '/post/'+notif.postID} className='flex-ctr'>
@@ -40,7 +20,7 @@ const NotificationBox = ({notif}) => {
             </Link>
             <div className='nb-time flex-ctr'>
                 {notif.type==='follow' && <FollowBtn uID={notif.sender_id} notifications={true}/>}
-                <h5>{time}</h5>
+                <SetTime timestamp={notif?.time_sent}/>
             </div>
         </div>
     )

@@ -6,7 +6,7 @@ import SendMsgBtn from './components/SendMsgBtn'
 import Avatar from '../General components/Avatar'
 import Story from '../Stories/components/Story'
 
-const ProfileInfoBox = ({info, updatedCallback}) => {
+const ProfileInfoBox = ({info}) => {
     const [openStory, setOpenStory] = useState(false)
 
     const closeStoryCallback = useCallback(()=>{
@@ -31,12 +31,16 @@ const ProfileInfoBox = ({info, updatedCallback}) => {
                 )} 
             </div>
             {openStory && <Story 
-                userInfo={info.user} 
-                allData={info} 
+                allData={{
+                    first_name: info.user.first_name,
+                    last_name: info.user.last_name,
+                    profile_picture:info.user.profile_picture,
+                    userID: info.user.userID,
+                    stories: info.stories
+                }} 
                 i={0} 
                 isProfile={true}
                 closeStoryCallback={closeStoryCallback}
-                updatedCallback={updatedCallback}
                 />}
         </>
     )

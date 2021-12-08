@@ -10,7 +10,7 @@ import Avatar from '../General components/Avatar'
 
 import {Link} from 'react-router-dom'
 
-import './navbar.css'
+import './Navbar.css'
 
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
@@ -35,11 +35,10 @@ const COUNT_MSGS = gql`
     }
 `
 
-const Navbar = ({callback, isLogged}) => {
+const Navbar = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
-    const [leftnav, setLeftNav] = useState(false)
     const {data} = useSubscription(NEW_MESSAGE)
     const [NotNo, setNotNo] = useState(0)
     const count = useQuery(COUNT_MSGS, {
@@ -53,16 +52,11 @@ const Navbar = ({callback, isLogged}) => {
 
     useEffect(()=>{
         setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
-        callback(leftnav)
         closeDropdown()
         if(count){
             count?.refetch()
         }
-    }, [callback, leftnav, count, data]) 
-    
-    const callbackDropdown = useCallback(val => {
-        setDropdown(val)
-    }, [setDropdown])
+    }, [count, data]) 
 
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => {
@@ -89,10 +83,10 @@ const Navbar = ({callback, isLogged}) => {
                         <div className='flex-ctr' style={styles.count}>{NotNo}</div>))}
                         <i className="fas fa-inbox" style={styles.inboxBtn}></i>
                     </Link>
-                    <div style={styles.avatar} onClick={handleDropdown}> 
-                        <Avatar size='50px' pfp={ls.profile_picture}/>
+                    <div className='flex-ac' style={styles.avatar} onClick={handleDropdown}> 
+                        <Avatar size='45px' image={ls.profile_picture}/>
                     </div>
-                    {dropdown && <Dropdown cbDropdown={callbackDropdown}/>}
+                    {dropdown && <Dropdown/>}
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
                 </>
                     : <Link to='/login'><button style={styles.loginBtn} className='btn'>LOGIN</button></Link>}
@@ -107,7 +101,7 @@ export default Navbar
 
 const styles = {
     inboxBtn: {
-        fontSize: '30px',
+        fontSize: '25px',
         color:'white',
         marginRight: '20px',
         cursor:'pointer'

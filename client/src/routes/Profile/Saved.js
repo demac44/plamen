@@ -87,7 +87,8 @@ const styles = {
         width:'100%',
         padding:'20px',
         borderRadius:'10px',
-        textAlign:'center'
+        textAlign:'center',
+        boxShadow:'5px 5px 10px black'
     }
 }
 

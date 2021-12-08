@@ -19,6 +19,9 @@
     display: flex;
     transition: ease 0.5s;
 }
+.story-head{
+    border-radius: 50%;
+}
 .story-overlay{
     width: 100vw;
     height: 100vh;

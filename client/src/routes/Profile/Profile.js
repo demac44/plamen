@@ -59,7 +59,6 @@ const Profile = ({myprofile, isLogged}) => {
         following: data.get_following,
         stories: data.get_user_stories
     }
-    console.log(info);
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{

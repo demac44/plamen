@@ -21,7 +21,7 @@ const SavePostButton = ({postID}) => {
     })
 
     useEffect(()=>{
-        ifSaved?.data?.if_saved?.postID===postID && setSaved(true)
+        ifSaved?.data?.if_saved && setSaved(true)
     }, [postID, ifSaved])
     
     if(ifSaved.loading) return <i className="fas fa-bookmark"></i>
@@ -86,9 +86,7 @@ mutation ($postID:Int!,$userID:Int!){
 `
 const IF_SAVED = gql`
     query ($userID: Int!, $postID: Int!){
-        if_saved(userID: $userID, postID: $postID){
-            postID
-        }
+        if_saved(userID: $userID, postID: $postID)
     }
 `
 

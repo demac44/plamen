@@ -148,46 +148,6 @@ li{
     text-align: left;
 }
 
-/* LOADER */
-
-.spinner-box{
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 10000000000000000;
-    min-height: 120px;
-}
-.spinner {
-    width:120px;height:120px;
-    left:48%;top:40%;
-    border: 10px solid #111827;
-    border-top-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
-}
-.inner-spinner{
-    width:100%;height:100%;
-    left:48%;top:40%;
-    border: 10px solid #111827;
-    border-top-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s reverse infinite;
-}
-.small-spinner{
-    width:60px;height:60px;
-    left:48%;top:40%;
-    border: 5px solid #111827;
-    border-top-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
-}
-
 
 
 /* SEARCH PAGE */
@@ -213,29 +173,6 @@ li{
 
 
 
-/* LOADER ANIMATIONS */
-
-@-webkit-keyframes spin {
-	from {-webkit-transform:rotate(0deg);}
-	to {-webkit-transform:rotate(360deg);}
-}
-
-@keyframes spin {
-	from {transform:rotate(0deg);}
-	to {transform:rotate(360deg);}
-}
-
-/* story load animation */
-
-@-webkit-keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
-}
-
-@keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
-}
 
 /* MEDIA QUERIES */
 

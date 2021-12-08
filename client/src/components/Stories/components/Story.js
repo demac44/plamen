@@ -3,7 +3,7 @@ import StoryBar from './StoryBar'
 import StoryMediaBox from './StoryMediaBox';
 import StoryReply from './StoryReply';
 
-const Story = ({i, story, closeStoryCallback, isProfile, allData, userInfo}) => {
+const Story = ({i, closeStoryCallback, isProfile, allData}) => {
     const [storyData, setStoryData] = useState([])
     const [index, setIndex] = useState(i)
     const [innerIndex, setInnerIndex] = useState(0)
@@ -39,7 +39,7 @@ const Story = ({i, story, closeStoryCallback, isProfile, allData, userInfo}) => 
                     closeStoryCallback={closeStoryCallback}
                     storyID={storyData?.stories && storyData?.stories[innerIndex]?.storyID}
                 />
-                <StoryMediaBox Y
+                <StoryMediaBox
                     storyData={storyData} 
                     allDataLength={allData?.length}
                     index={index} 

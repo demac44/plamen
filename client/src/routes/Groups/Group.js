@@ -54,18 +54,18 @@ const Group = ({isLogged}) => {
             <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
-                <div className='main'>
-                    <Sidebar show={leftnav}/>
-                    <div className='group-container'>
-                        <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
-                        <TagsBox tags={tags}/>                        
-                        <div className='feed-container'>
-                            <div className='posts-container'>
-                                {data.get_group_user && <CreatePost/>}
-                            </div>
+                <Sidebar show={leftnav}/>
+                <div className='container-profile'>
+                    <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
+                    <TagsBox tags={tags}/>                        
+                </div>
+                <div className='container-main'>
+                        <div className='container-left'>
+                            {data.get_group_user && <CreatePost/>}
+                        </div>
+                        <div className='container-right'>
                             <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
                         </div>
-                    </div>
                 </div>
             </div>
         </>

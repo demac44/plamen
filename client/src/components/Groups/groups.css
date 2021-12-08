@@ -89,7 +89,6 @@
     width: 100%;
     height: fit-content;
     min-height: 40px;
-    background-color: #3f3f3f;
     border-radius: 10px;
     flex-flow: wrap;
     padding-bottom: 5px;
@@ -107,17 +106,14 @@
 }
 
 /* group */
-.group-container{
-    width: 100%;
-}
-
 .group-banner{
     position: relative;
-    width: 100%;
+    width: 99%;
     height: 250px;
     background-color: #1b1b1b;
     border-radius: 20px;
     overflow: hidden;
+    box-shadow: 5px 5px 10px;
 }
 .group-join-btn{
     font-size: 20px;
@@ -132,32 +128,15 @@
 .group-join-btn:hover{
     background-color: #b8b8b8;
 }
-.feed-container{
-    display: flex;
-    width: 100%;
-}
-.posts-container{
-    width: 60%;
-}
-.group-posts-container .add-np-box{
-    width: 100% !important;
-}
-.info-container{
-    width: 40%;
-    padding: 0 20px;
-}
 .info-box{
     width: 100%;
     height: fit-content;
     background-color: #1b1b1b;
     border-radius: 10px;
     padding: 10px 15px;
-}
-.profile-container .info-box{
-    margin-top: 30px;
-}
-.group-container .info-box{
-    margin-top: 30px;
+    box-shadow: 5px 5px 10px;
+    border: 1px solid #2f2f2f;
+    margin-top: 15px;
 }
 .group-members-box{
     width: 100%;
@@ -166,7 +145,7 @@
     background-color: #1b1b1b;
     border-radius: 15px;
     overflow: hidden;
-    margin-top: 30px;
+    box-shadow: 5px 5px 10px;
 }
 .group-member-box{
     position: relative;
@@ -178,7 +157,7 @@
 }
 .group-member-box:hover{
     background-color: #2f2f2f;
-    transition: ease .3s;
+    transition: ease .2s;
 }
 
 /* MEDIA QUERIES */

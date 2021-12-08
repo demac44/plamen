@@ -2,13 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
-const Dropdown = ({cbDropdown}) => {
-    const [dropdown, setDropdown] = useState(true)
+const Dropdown = () => {
     const history = useHistory()
-
-    useEffect(()=>{
-        cbDropdown(dropdown)
-    },[cbDropdown, dropdown])
 
     const logout = async () => {
         await axios({
@@ -21,7 +16,7 @@ const Dropdown = ({cbDropdown}) => {
         })
     }
     return (
-       <div className="tn-dropdown-menu" onClick={()=>setDropdown(false)}>
+       <div className="tn-dropdown-menu">
             <ul>
                 <NavLink to="/myprofile"><li>My profile</li></NavLink>
                 <NavLink to="/login"><li>Change accounts</li></NavLink>

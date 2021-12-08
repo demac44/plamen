@@ -22,11 +22,11 @@ const StoryOptions = ({storyID, closeStoryCallback,updatedCallback}) => {
     }
 
     return (
-        <div className='fp-options-menu'>
+        <div>
             <ul>
                 <li onClick={handleRemove}><i 
                     className='fas fa-trash-alt'
-                ></i> Remove</li>
+                ></i></li>
             </ul>
         </div>
     )

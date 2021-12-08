@@ -57,18 +57,20 @@ const GroupMembers = ({isLogged}) => {
             <div className='wrapper'>
                 <div className='main'>
                     <Sidebar show={leftnav}/>
-                    <div className='group-container'>
+                    <div className='container-profile'>
                         <GroupBanner info={data?.get_group} user={data?.get_group_user} updatedCallback={updatedCallback}/>
                         <TagsBox tags={tags}/>                        
-                        <div className='feed-container'>
-                            <div className='posts-container'>
+                    </div>
+                        <div className='container-main'>
+                            <div className='container-left'>
                                 {(!data.get_group.closed || data.get_group_user) ?
                                 <MembersBox members={data.get_group_members}/>
                                 : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>}
                             </div>
-                            <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
+                            <div className='container-right'>
+                                <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </>

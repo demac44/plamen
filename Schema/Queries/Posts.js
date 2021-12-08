@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLList} from 'graphql';
+import { GraphQLBoolean, GraphQLInt, GraphQLList} from 'graphql';
 import connection from '../../middleware/db.js'
 import { CommentType } from '../TypeDefs/Comments.js';
 import { LikesType } from '../TypeDefs/Likes.js';
@@ -65,16 +65,17 @@ export const GET_SAVED_POSTS    = {
     }
 }
 export const IF_SAVED = {
-    type: PostType,
+    type: GraphQLBoolean,
     args: {
         userID: {type: GraphQLInt},
         postID: {type: GraphQLInt}
     },
     async resolve(_, args){
         const {userID, postID} = args
-        const sql = `SELECT * FROM saves WHERE userID=${userID} AND postID=${postID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result[0]
+        const sql = `SELECT EXISTS(SELECT 1 FROM saves WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifSaved`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0][0]})
+        if(result.ifSaved===1) return true
+        return false
     }
 }
 // get single post
@@ -123,5 +124,20 @@ export const GET_POST_LIKES = {
         const sql = `SELECT * FROM likes JOIN users ON likes.userID=users.userID WHERE postID=${postID} LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
+    }
+}
+
+export const IF_LIKED = {
+    type: GraphQLBoolean,
+    args:{
+        postID:{type:GraphQLInt},
+        userID:{type:GraphQLInt}
+    },
+    async resolve(_, args){
+        const {postID, userID} = args
+        const sql = `SELECT EXISTS(SELECT 1 FROM likes WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifLiked`
+        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
+        if(result.ifLiked===1) return true
+        return false
     }
 }

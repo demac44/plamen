@@ -25,7 +25,8 @@ const styles = {
         borderRadius:'20px',
         display:'flex',
         alignItems:'center',
-        padding:'20px 30px'
+        padding:'20px 30px',
+        boxShadow:'5px 5px 10px'
     },
     avatar:{
         width:'200px',

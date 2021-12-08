@@ -9,7 +9,7 @@ const SearchDrop = ({data, val, chat, searchHistory, dropdownCallback}) => {
 
     const setusers = () => {
         let arr=[]
-        regex && data.users.map(user => 
+        regex && data.get_users.map(user => 
             (user.first_name.match(regex)
             || user.last_name.match(regex)
             || user.username.match(regex)
@@ -30,9 +30,19 @@ const SearchDrop = ({data, val, chat, searchHistory, dropdownCallback}) => {
         <div className='search-drop'>
             {val.length<1 && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
             {users.map(user => <UserSearchBar chat={chat} user={user} key={user.userID}/>)}
-            {(users.length > 0 && !chat) && <Link to={'/search/'+val}><p className='see-all-btn'>See all</p></Link>}
+            {(users.length > 0 && !chat) && <Link to={'/search/'+val}><p style={styles.seeAll}>See all</p></Link>}
         </div>
     )
 }
 
 export default SearchDrop
+
+
+const styles = {
+    seeAll:{
+        width:'100%',
+        textAlign:'center',
+        color:'white',
+        padding:'5px',
+    }
+}

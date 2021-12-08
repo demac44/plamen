@@ -4,10 +4,10 @@ const StoriesLoader = () => {
     const num = [1,1,1,1,1,1,1,1,1,1]
 
     return (
-        <div className='stories-container'>
-            <div className='sc-inner'>
+        <div className='container-stories'>
+            <div className='inner-container-stories'>
                 {num.map(()=>
-                <div className='flex-col-ctr'>
+                <div className='flex-col-ctr' key={Math.random()}>
                     <div style={styles.loadHead}></div>  
                     <div style={styles.nameBar}></div>        
                 </div>)}

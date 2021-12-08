@@ -1,7 +1,7 @@
 .post{
     position: relative;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
     box-shadow: 2px 2px 10px;
     border-radius: 10px;
     background-color: #1b1b1b;
@@ -90,7 +90,7 @@
     background-color: #1b1b1b;
     padding: 10px;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
     box-shadow: 2px 2px 10px;
 }
 

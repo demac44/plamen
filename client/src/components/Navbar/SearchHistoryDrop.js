@@ -18,7 +18,7 @@ const SearchHistoryDrop = ({searchHistory, dropdownCallback}) => {
         <div className='searchHis-drop flex-col-ctr'>
             {
                 searchHistory.search_history.map(s =>         
-                <Link to={'/search/'+s} key={s} className='sh-box'>
+                <Link to={'/search/'+s} key={s} className='search-history-box'>
                     <p>{s}</p>
                 </Link>)
             }
@@ -34,7 +34,7 @@ const styles = {
         padding:'5px 10px',
         display:'flex',
         justifyContent:'space-between',
-        borderBottom:'1px solid #ddd'
+        color:'white'
     },
     clearBtn:{
         fontSize:'14px',

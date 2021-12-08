@@ -9,10 +9,12 @@ const ProfileLoader = () => {
         <>
             <Navbar callback={()=>{return}} isLogged={true}/>
             <div className='wrapper'>
-                <div className='main'>
-                    <Sidebar/>
-                    <div className='profile-container'>
-                        <ProfileBoxLoader/>
+                <Sidebar/>
+                <div className='container-profile'>
+                    <ProfileBoxLoader/>
+                </div>
+                <div className='container-main'>
+                    <div className='container-left'>
                         <PostLoader/>
                     </div>
                 </div>

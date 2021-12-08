@@ -11,7 +11,7 @@ const InfoBox = ({data, user, membersCount}) => {
     }, [data])
 
     return (
-        <div className='info-container'>
+        <>
             <div className='info-box'>
                 <div style={styles.descTitle}><h2>Information</h2></div>
                 <div className='flex-sb' style={{padding:'5px', color:'white'}}>
@@ -40,7 +40,7 @@ const InfoBox = ({data, user, membersCount}) => {
                     <div className='flex-ctr' style={styles.addInfoBtn}>
                         <i style={{marginRight:'5px'}} className='fas fa-plus'></i><h3>Add rules</h3></div>)}
             </div>
-    </div>
+        </>
     )
 }
 
