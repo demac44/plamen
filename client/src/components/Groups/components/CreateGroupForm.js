@@ -47,7 +47,7 @@ const CreateGroupForm = ({closeFormCallback}) => {
       }
 
     return (
-        <div className='story-preview flex-ctr'>
+        <div className='container-create-group flex-ctr'>
             <form className='create-group-form flex-col-ctr' onSubmit={handleSubmit}>
                 <i style={styles.exitBtn} onClick={()=>closeFormCallback()} className='fas fa-times'></i>
                 <h3>Community name:</h3>

@@ -3,10 +3,10 @@ import React from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
-import UserBox from '../../../General components/Users list/UserBox'
+import UserBox from '../../../../../General components/Users list/UserBox'
 
 const LikesList = ({postID, closeList}) => {
-    const {data, loading} = useQuery(GET_LIKES, {
+    const {data, loading} = useQuery(GET_LIKES_GP, {
         variables:{
             postID,
             limit: 20,
@@ -24,8 +24,8 @@ const LikesList = ({postID, closeList}) => {
                 
                 {loading ? <div style={{width:'100%', height:'150px'}} className='flex-ctr'><div className='small-spinner'></div></div> :
                 <div>
-                    {(data.get_post_likes.length === 0) && <p style={styles.emptyList}>No likes</p>}
-                    {data.get_post_likes.map(user => <UserBox user={user} key={user.userID}/>)}
+                    {(data.get_group_post_likes.length === 0) && <p style={styles.emptyList}>No likes</p>}
+                    {data.get_group_post_likes.map(user => <UserBox user={user} key={user.userID}/>)}
                 </div>
                 }
             </div>
@@ -53,9 +53,9 @@ const styles = {
     }
 }
 
-const GET_LIKES = gql`
+const GET_LIKES_GP = gql`
     query($postID: Int!, $limit: Int, $offset: Int){
-        get_post_likes(postID: $postID, limit: $limit, offset: $offset){
+        get_group_post_likes(postID: $postID, limit: $limit, offset: $offset){
             first_name
             last_name
             profile_picture

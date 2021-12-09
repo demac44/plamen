@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import SetTime from '../../General components/SetTime'
+import SetTime from '../../../../General components/SetTime'
 import SavePostButton from './components/SavePostButton'
 import PostMenu from './components/PostMenu'
-import Avatar from '../../General components/Avatar'
+import Avatar from '../../../../General components/Avatar'
 import { Link } from 'react-router-dom'
 
 const PostTopBar = ({data, refetchPosts, isLogged}) => {
@@ -21,7 +21,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
                 </Link >
 
                 <span className='flex'>
-                    <SavePostButton postID={data.postID} isLogged={isLogged}/>
+                    <SavePostButton postID={data.postID} groupID={data?.groupID} isLogged={isLogged}/>
                     <i 
                         className="fas fa-ellipsis-v" 
                         style={styles.optionsBtn} 

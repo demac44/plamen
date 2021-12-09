@@ -40,7 +40,7 @@ const Explore = ({isLogged}) => {
                         >
                             <p>Go again?</p>
                             <br/>
-                            <i style={{fontSize:'20px'}} class="fas fa-redo"></i>
+                            <i style={{fontSize:'20px'}} className="fas fa-redo"></i>
                         </div>
                     </div>
                 </div>

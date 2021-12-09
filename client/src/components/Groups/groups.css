@@ -108,10 +108,10 @@
 /* group */
 .group-banner{
     position: relative;
-    width: 99%;
+    width: 100%;
     height: 250px;
     background-color: #1b1b1b;
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
     box-shadow: 5px 5px 10px;
     border: 1px solid #1b1b1b;
@@ -135,9 +135,9 @@
     background-color: #1b1b1b;
     border-radius: 10px;
     padding: 10px 15px;
-    box-shadow: 5px 5px 10px;
+    /* box-shadow: 5px 5px 10px; */
     border: 1px solid #2f2f2f;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .group-members-box{
     width: 100%;
@@ -161,6 +161,16 @@
     transition: ease .2s;
 }
 
+.group-navbar{
+    width: 100%;
+    height: 60px;
+    background-color: #1b1b1b;
+    margin-top: 10px;
+    z-index: 100000;
+    box-shadow: 2px 2px 5px;
+    display: none;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1200px){
@@ -173,13 +183,13 @@
     .group-container{
         margin: 0;
     }
+    .group-navbar{
+        display: block;
+    }
 }
 
 
 @media screen and (max-width: 768px){
-    .info-container{
-        padding: 0 10px;
-    }
     .info-box{
         padding: 5px;
     }
@@ -199,7 +209,6 @@
     }
     .group-banner{
         border-radius: 0;
-        margin-top: 10px;
     }
     .group-banner h1{
         font-size: 20px;

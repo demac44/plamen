@@ -1,21 +1,29 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 import Dropzone from 'react-simple-dropzone/dist';
 
-const CreateGroupPost = ({groupid, refetch}) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+const NEW_POST = gql`
+    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
+        create_group_post(userID: $userID, post_text: $text, url: $url, type: $type, groupID: $groupID){
+            userID
+        }
+    }
+`
+
+const CreatePost = ({refetch, groupid}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
     const [imageUpload, setImageUpload] = useState(false)
     const [loading, setLoading] = useState(false)
 
-
-    const [new_group_post] = useMutation(NEW_GROUP_POST)
+    const [new_post] = useMutation(NEW_POST)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -33,13 +41,13 @@ const CreateGroupPost = ({groupid, refetch}) => {
                 data.append("folder", "Group posts")
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
                 .then(res => {
-                    new_group_post({
+                    new_post({
                         variables: {
-                            userID: user.userID,
+                            userID: ls.userID,
                             text: text,
                             url: res.data.url,
-                            groupID:parseInt(groupid),
-                            type:'image'
+                            type:'image',
+                            groupID: parseInt(groupid)
                         }
                     }).then(()=>{
                         setVideo(null)
@@ -55,34 +63,35 @@ const CreateGroupPost = ({groupid, refetch}) => {
                 const data = new FormData()
                 data.append("file", video)
                 data.append("upload_preset", "z8oybloj")
-                data.append("folder", "Group video posts")
+                data.append("folder", "Video posts")
                 setLoading(true) 
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/video/upload`, data)
                 .then(res => {
-                    new_group_post({
+                    new_post({
                         variables: {
-                            userID: user.userID,
+                            userID: ls.userID,
                             text: text,
                             url: res.data.url,
-                            groupID:parseInt(groupid),
-                            type:'video'
+                            type:'video',
+                            groupID: parseInt(groupid)
+
                         }
                     }).then(()=>{
+                        refetch()
                         setLoading(false)
                         setImageUpload(false)
-                        refetch()
                         e.target.text.value = ''
                     }
                     )
                 })
             } else {
-                new_group_post({
+                new_post({
                     variables: {
-                        userID: user.userID,
+                        userID: ls.userID,
                         text: text,
                         url: '',
-                        groupID:parseInt(groupid),
-                        type:'text'
+                        type:'text',
+                        groupID: parseInt(groupid)
                     }
                 }).then(()=>{
                     refetch()
@@ -134,7 +143,8 @@ const CreateGroupPost = ({groupid, refetch}) => {
     )
 }
 
-export default CreateGroupPost
+export default CreatePost
+
 
 const styles = {
     textArea:{
@@ -147,11 +157,3 @@ const styles = {
         fontSize:'14px'
     }
 }
-
-const NEW_GROUP_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!, $groupID:Int!, $type: String!){
-        create_group_post(userID: $userID, post_text: $text, url: $url, groupID: $groupID, type: $type){
-            userID
-        }
-    }
-`

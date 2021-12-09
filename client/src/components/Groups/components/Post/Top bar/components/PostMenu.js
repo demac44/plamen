@@ -7,7 +7,7 @@ import ReportBox from './ReportBox'
 
 const PostMenu = ({data, refetchPosts}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [delete_post] = useMutation(DELETE_POST)
+    const [delete_post] = useMutation(DELETE_GP)
     const [copied, setCopied] = useState(false)
     const [reportMenu, setReportMenu] = useState(false)
 
@@ -20,7 +20,7 @@ const PostMenu = ({data, refetchPosts}) => {
     }
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(window.location.origin+'/post/'+data.postID)
+        navigator.clipboard.writeText(window.location.origin+'/community/post/'+data.postID)
         setCopied(true)
         setTimeout(()=>{
             setCopied(false)
@@ -53,15 +53,13 @@ const PostMenu = ({data, refetchPosts}) => {
 
 export default PostMenu
 
-
-const DELETE_POST = gql`
-    mutation delete_post($postID: Int!){
-        delete_post(postID: $postID){
+const DELETE_GP = gql`
+    mutation ($postID: Int!){
+        delete_group_post (postID: $postID){
             postID
         }
     }
 `
-
 const styles = {
     copied:{
         position:'fixed',

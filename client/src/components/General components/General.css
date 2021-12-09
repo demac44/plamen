@@ -3,8 +3,8 @@
     background-color: #1b1b1b;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 2px 2px 5px;
     border: 1px solid #2f2f2f;
+    /* margin-top: 10px; */
 }
 .sidebar{
     position: fixed;

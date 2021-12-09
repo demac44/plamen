@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp.js'
+import LoginPopUp from '../../../../../Entry/Login/LoginPopUp.js'
 
 const LikePost = ({postID, userID, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [liked, setLiked] = useState(false)
-    const [like_post, {error}] = useMutation(LIKE_POST)
-    const [remove_like] = useMutation(REMOVE_LIKE)
+    const [like_post, {error}] = useMutation(LIKE_GP)
+    const [remove_like] = useMutation(REMOVE_GP_LIKE)
     const [loginPopUp, setLoginPopUp] = useState(false)
 
-    const ifLiked = useQuery(IF_LIKED, {
+    const ifLiked = useQuery(IF_LIKED_GP, {
         variables:{
             postID: postID,
             userID: userID
@@ -19,7 +19,7 @@ const LikePost = ({postID, userID, isLogged}) => {
 
     useEffect(()=>{
         if(isLogged){
-            ifLiked?.data?.if_liked===true && setLiked(true)
+            ifLiked?.data?.if_group_post_liked===true && setLiked(true)
         }
     }, [ifLiked?.data])
 
@@ -75,28 +75,22 @@ const styles = {
     }
 }
 
-const LIKE_POST = gql`
-    mutation ($postID: Int!, $userID: Int!, $rid: Int!){
-        like_post(postID: $postID, userID: $userID){
-            postID
-        }
-        like_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
-            postID
-        }
-    }
-    `
-const REMOVE_LIKE = gql`
-    mutation remove_like($postID: Int!, $userID: Int!){
-        remove_like(postID: $postID, userID: $userID){
-            postID
-        }
-        remove_like_notif(postID: $postID, sender_id: $userID){
+const LIKE_GP = gql`
+    mutation ($postID: Int!, $userID: Int!){
+        like_group_post (postID: $postID, userID: $userID){
             postID
         }
     }
 `
-const IF_LIKED = gql`
+const REMOVE_GP_LIKE = gql`
+    mutation ($postID: Int!, $userID: Int!){
+        remove_group_post_like (postID: $postID, userID: $userID){
+            postID
+        }
+    }
+`
+const IF_LIKED_GP = gql`
     query ($postID: Int, $userID: Int){
-        if_liked(postID: $postID, userID: $userID)
+        if_group_post_liked (postID: $postID, userID: $userID)
     }
 `

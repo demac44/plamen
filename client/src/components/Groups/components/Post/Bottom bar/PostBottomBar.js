@@ -3,13 +3,15 @@ import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'
 
+
+
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
 
-const PostBottomBar = ({postID, userID, isLogged}) => {
+const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
     const [likes, setLikes] = useState(false) 
-    const {data, loading, error, refetch, fetchMore} = useQuery(GET_COMMENTS, {
+    const {data, loading, error, refetch, fetchMore} = useQuery(GET_GP_COMMENTS, {
         variables:{
             postID,
             limit:1,
@@ -33,17 +35,17 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
             await fetchMore({
                 variables:{
                     limit:5,
-                    offset: data.get_post_comments.length,
+                    offset: data.get_group_post_comments.length
                 },
                 updateQuery: (prev, { fetchMoreResult }) => {
                     if (!fetchMoreResult) return prev;
-                    if(fetchMoreResult?.get_post_comments?.length===0)
+                        if(fetchMoreResult?.get_group_post_comments?.length===0)
+                            return Object.assign({}, prev, {
+                                get_group_post_comments: [data.get_group_post_comments[0]],
+                        });
                         return Object.assign({}, prev, {
-                            get_post_comments: [data.get_post_comments[0]],
-                    });
-                    return Object.assign({}, prev, {
-                        get_post_comments: [...data.get_post_comments, ...fetchMoreResult?.get_post_comments],
-                    });
+                            get_group_post_comments: [...data.get_group_post_comments, ...fetchMoreResult?.get_group_post_comments],
+                        });
                 }
             })
         } catch{}
@@ -53,7 +55,7 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
         <>
             <PostComments 
                 postID={postID} 
-                comments={data.get_post_comments} 
+                comments={data.get_group_post_comments} 
                 refetchComments={refetch} 
                 seeMore={seeMore}
                 isLogged={isLogged}
@@ -83,9 +85,9 @@ const styles = {
     }
 }
 
-const GET_COMMENTS = gql`
+const GET_GP_COMMENTS = gql`
     query($postID: Int!, $limit: Int, $offset: Int){
-        get_post_comments(postID: $postID, limit: $limit, offset: $offset){
+        get_group_post_comments (postID: $postID, limit: $limit, offset: $offset){
             commentID
             userID
             profile_picture

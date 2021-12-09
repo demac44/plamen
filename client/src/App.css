@@ -1,3 +1,9 @@
+.wrapper{
+    position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+}
 .container-main{
     display: flex;
     width: 100vw;
@@ -10,16 +16,15 @@
 }
 .container-right{
     width: 30%;
-    padding: 10px 0;
 }
 .container-profile{
-    padding: 70px 35px 0 330px;
+    padding: 70px 30px 0 330px;
 }
 
 
 @media screen and (max-width: 1200px){
     .container-main{
-        padding: 80px 10px 0 20%;
+        padding: 80px 30px 0 20%;
     }
     .container-left{
         padding: 0 30px;
@@ -31,15 +36,16 @@
 
 @media screen and (max-width:991px){
     .container-main{
-        padding: 10px 10px;
+        padding: 10px;
     }
     .container-left{
-        padding: 0;
+        padding: 0 20px 0 0 ;
     }
     .container-profile{
         padding: 10px 10px 0 10px;
     }
     .container-right{
+        width: 35%;
         top: 130px !important;
     }
 }
@@ -51,16 +57,19 @@
     }
     .container-left{
         width: 100%;
-        padding: 0 30px;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:580px){
+    .container-profile{
+        margin: 0;
     }
 }
 
 @media screen and (max-width:447px){
     .container-main{
         padding: 10px 0;
-    }
-    .container-left{
-        padding: 0;
     }
     .container-profile{
         padding:  10px 0;

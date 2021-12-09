@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp'
 import {useSelector} from 'react-redux'
+
+import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
 const AddComment = ({postID, userID, refetchComments}) => {
     let comment_text;
     const isLogged = useSelector(state => state?.isAuth.isAuth)
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loginPopUp, setLoginPopUp] = useState(false)
-    const [add_comment] = useMutation(ADD_COMMENT) 
+    const [add_comment] = useMutation(ADD_GP_COMMENT) 
 
     const handleAddComment = (e) => {
         e.preventDefault()
@@ -69,12 +70,9 @@ const styles = {
     }
 }
 
-const ADD_COMMENT = gql`
-    mutation ($postID: Int!, $userID: Int!, $comment_text: String!, $rid: Int!){
-        add_comment(postID: $postID, userID: $userID, comment_text: $comment_text){
-            postID
-        }
-        comment_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+const ADD_GP_COMMENT = gql`
+    mutation ($postID: Int!, $userID: Int!, $comment_text: String!){
+        comment_group_post (postID: $postID, userID: $userID, comment_text: $comment_text){
             postID
         }
     }

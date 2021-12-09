@@ -29,7 +29,7 @@ const styles = {
         bottom:'0',
         left:'0',
         width:'100%',
-        padding:'10px 160px 10px 15px',
+        padding:'10px 120px 10px 15px',
         backgroundColor:'rgba(0,0,0,0.9)',
         color:'white',
         zIndex:'10',

@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 
 import {gql} from 'graphql-tag'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp'
+import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
-const SavePostButton = ({postID, isLogged}) => {
+
+const SavePostButton = ({postID, groupID, isLogged}) => {
     const [saved, setSaved] = useState(false)
     const ls= JSON.parse(localStorage.getItem('user'))
-    const [save_post] = useMutation(SAVE_POST)
-    const [remove_saved] = useMutation(REMOVE_SAVED)
+    const [save_post] = useMutation(SAVE_GP)
+    const [remove_saved] = useMutation(REMOVE_SAVED_GP)
     const [loginPopUp, setLoginPopUp] = useState(false)
 
 
-    const ifSaved = useQuery(IF_SAVED, {
+    const ifSaved = useQuery(IF_GP_SAVED, {
         variables:{
             userID: ls?.userID,
             postID: postID
@@ -20,8 +21,8 @@ const SavePostButton = ({postID, isLogged}) => {
     })
 
     useEffect(()=>{
-        ifSaved?.data?.if_saved && setSaved(true)
-    }, [postID, ifSaved])
+        ifSaved?.data?.if_group_post_saved && setSaved(true)
+    }, [postID, ifSaved, groupID])
     
     if(ifSaved.loading) return <i style={{...styles.saveBtn, color:'white'}} className="fas fa-bookmark"></i>
     
@@ -31,6 +32,7 @@ const SavePostButton = ({postID, isLogged}) => {
             variables: {
                 postID: postID,
                 userID: isLogged && ls?.userID,
+                gid: groupID
             }
         }).then(() => setSaved(true))
         :
@@ -70,22 +72,23 @@ const styles = {
     }
 }
 
-const SAVE_POST = gql`
-    mutation ($postID:Int!,$userID:Int!){
-        save_post(userID: $userID,postID:$postID){
-            postID
-        }
-    }
-`
-const REMOVE_SAVED = gql`
+const REMOVE_SAVED_GP = gql`
 mutation ($postID:Int!,$userID:Int!){
-    remove_saved(userID: $userID,postID:$postID){
+    remove_saved_group_post (userID: $userID,postID:$postID){
         postID
     }
 }
 `
-const IF_SAVED = gql`
+const SAVE_GP = gql`
+    mutation ($postID:Int!,$userID:Int!, $gid: Int!){
+        save_group_post(userID: $userID,postID: $postID, groupID: $gid){
+            postID
+        }
+    }
+`
+
+const IF_GP_SAVED = gql`
     query ($userID: Int!, $postID: Int!){
-        if_saved(userID: $userID, postID: $postID)
+        if_group_post_saved (userID: $userID, postID: $postID)
     }
 `

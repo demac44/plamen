@@ -3,11 +3,11 @@ import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 
-import Avatar from '../../../General components/Avatar'
-import SetTime from '../../../General components/SetTime'
+import Avatar from '../../../../../General components/Avatar'
+import SetTime from '../../../../../General components/SetTime'
 
 import { useSelector } from 'react-redux'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp'
+import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
 const Comment = ({comment, refetchComments}) => {
     const [loginPopUp, setLoginPopUp] = useState(false)
@@ -15,7 +15,7 @@ const Comment = ({comment, refetchComments}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [readMore, setReadMore] = useState(true)
 
-    const [delete_comment] = useMutation(DELETE_COMMENT)
+    const [delete_comment] = useMutation(DELETE_GP_COMMENT)
 
 
     const handleDelete = () => {
@@ -105,13 +105,11 @@ const styles = {
     }
 }
 
-const DELETE_COMMENT = gql`
-    mutation ($cmtID: Int!, $senderID: Int!, $postID:Int!){
-        delete_comment(commentID: $cmtID){
+const DELETE_GP_COMMENT = gql`
+    mutation ($cmtID: Int!){
+        remove_group_post_comment(commentID: $cmtID){
             commentID
         }
-        remove_comment_notif(sender_id: $senderID, postID: $postID){
-            postID
-        }
     }
+
 `

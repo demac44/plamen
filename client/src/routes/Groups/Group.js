@@ -11,9 +11,11 @@ import Sidebar from '../../components/General components/Sidebar'
 
 import GroupLoader from '../../components/General components/Loaders/GroupLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-import CreateGroupPost from '../../components/Groups/components/Posts/CreateGroupPost'
+import CreateGroupPost from '../../components/Groups/components/Post/Create post/CreateGroupPost'
 
-import Posts from '../../components/Post/Posts'
+import GroupNavbar from '../../components/Groups/components/GroupNavbar'
+
+import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
@@ -46,14 +48,15 @@ const Group = ({isLogged}) => {
                 <Sidebar/>
                 <div className='container-profile'>
                     <GroupBanner info={data?.get_group} user={data.get_group_user}/>
+                    <GroupNavbar groupid={groupid}/>
                     <TagsBox tags={tags}/>                        
                 </div>
-                <div className='container-main'>
+                <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
                             {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
-                            <Posts posts={data.get_group_posts} refetchPosts={refetch}/>
+                            <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
                         </div>
-                        <div className='container-right'>
+                        <div className='container-right' style={{width:'35%'}}>
                             <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
                         </div>
                 </div>

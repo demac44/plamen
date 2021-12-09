@@ -112,7 +112,7 @@ const styles = {
     containerRight:{
         position:'fixed', 
         top:'80px', 
-        right:'20px', 
+        right:'10px', 
         padding:'0 10px'
     }
 }

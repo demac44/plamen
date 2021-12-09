@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 import './Post.css'
 
-const Post = ({post, refetchPosts}) => {
+const GroupPost = ({post, refetchPosts}) => {
     const isLogged = useSelector(state => state?.isAuth.isAuth)
 
     return (
@@ -23,15 +23,16 @@ const Post = ({post, refetchPosts}) => {
                     timestamp: post.date_posted,
                     postID: post.postID,
                     userID: post.userID,
+                    groupID: post?.groupID
             }}/>
             <PostMedia data={{
                 url:post.url,
                 type:post.type
             }}/>
             <PostTextBar post_text={post.post_text}/>
-            <PostBottomBar postID={post.postID} userID={post.userID} isLogged={isLogged}/>
+            <PostBottomBar postID={post.postID} userID={post.userID} groupID={post?.groupID} isLogged={isLogged}/>
         </div>
     )
 }
 
-export default Post
+export default GroupPost

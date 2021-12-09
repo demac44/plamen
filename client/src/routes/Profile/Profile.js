@@ -83,13 +83,13 @@ const Profile = ({myprofile, isLogged}) => {
                 <div className='container-profile'>
                     <ProfileTopBox info={info}/>
                 </div>
-                <div className='container-main'>
+                <div className='container-main'  style={{paddingTop:'10px'}}>
                     <Sidebar/>
                     <div className='container-left'>
                         {myprofile && <CreatePost refetch={refetch}/>}    
                         <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
-                    <div className='container-right' style={{width:'35%'}}>
+                    <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
                         <MyGroupsList/>
                     </div>
                 </div>

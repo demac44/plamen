@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import Comment from './Comment'
 
-import LoginPopUp from '../../../Entry/Login/LoginPopUp'
+import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
 const PostComments = ({comments, seeMore, refetchComments, isLogged}) => {
     const [loginPopUp, setLoginPopUp] = useState(false)
