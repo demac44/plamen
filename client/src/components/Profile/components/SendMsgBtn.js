@@ -38,7 +38,7 @@ const SendMsgBtn = ({userID}) => {
     } 
     
     return (
-        <div className="pf-edit-follow-btn send-msg-btn" onClick={createChat}>
+        <div className="profile-top-box-buttons send-msg-btn" onClick={createChat}>
             <p>Send message</p> 
         </div>
     )

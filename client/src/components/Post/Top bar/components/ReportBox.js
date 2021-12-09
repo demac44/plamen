@@ -34,9 +34,9 @@ const ReportBox = ({data, closeReportCallback}) => {
 
         const arr = [opt1,opt2,opt3,opt4,opt5,opt6,opt7,opt8,opt9,opt10,opt11]
 
-        arr.map(r => {
+        arr.map(r => (
             r.length > 1 && (reasons+=r+'\n')
-        })
+        ))
 
         return reasons
     }

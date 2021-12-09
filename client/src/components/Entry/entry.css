@@ -109,4 +109,25 @@
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0,0.5);
+    z-index: 1000000000000000000;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 991px){
+    /* ENTRY */
+    .entry-wrapper{
+        padding: 5px;
+    }
+    .entry-form-box{
+        width: 65%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    /* ENTRY */
+    .entry-form-box{
+        width: 80%;
+    }   
 }

@@ -97,6 +97,48 @@
 }
 
 
+/* USER LISTS */
+
+.container-users-list{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0,0.7);
+    z-index: 10000000000000;
+}
+.users-list-box{
+    width: 40%;
+    max-height: 80vh;
+    background-color: #1b1b1b;
+    border-radius: 10px; 
+    overflow: auto;
+}
+.users-list-top-bar{
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}
+
+.users-list-user-box{
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: ease .3s;
+}
+.users-list-user-box:hover{
+    background-color: #2f2f2f;
+}
+.follow-button{
+    background-color: white;
+    width: 90px;
+    padding: 5px;
+}
+
 /* MEDIA QUERIES */
 
 
@@ -107,12 +149,27 @@
     .alternative-navbar{
         display: block;
     }
-   
+    .users-list-box{
+        width: 50%;
+    }
+}
+
+@media screen and (max-width:768px){
+    .users-list-box{
+        width: 75%;
+    }
 }
 
 @media screen and (max-width: 447px){
     .sidebar{
         width: 100vw;
+    }
+    .users-list-box{
+        width: 100vw;
+        max-height: 100vh;
+        height: 100vh;
+        border-radius: 0;
+        padding: 5px 0;
     }
 }
 

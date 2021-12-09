@@ -43,7 +43,7 @@ const ChatListUser = ({data}) => {
                 </p>    
 
             </div>  
-            {((count > 0 || (newMsg?.data?.newMessage?.userID!==ls.userID)
+            {(count > 0 || (newMsg?.data?.newMessage?.userID!==ls.userID
                 && newMsg?.data?.newMessage?.chatID===data?.chatID))
                 && <div style={styles.count}></div>}
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
  
 import './General.css'
 

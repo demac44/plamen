@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const ProfileEditBtn = () => {
     return (
-        <NavLink exact to='/settings/editprofile' className="pf-edit-follow-btn">
+        <NavLink exact to='/settings/editprofile' className="profile-top-box-buttons">
             <p>Edit profile</p>
         </NavLink>
     )

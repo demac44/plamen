@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import {gql} from 'graphql-tag'
@@ -11,7 +11,6 @@ import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 const Explore = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
     const {loading, data, error, refetch} = useQuery(RANDOM_POSTS)
 
     useEffect(()=>{

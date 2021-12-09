@@ -12,7 +12,7 @@ const AlternativeNavbar = ({chat}) => {
                 </NavLink>
                 <NavLink exact to='/explore'>
                 <li>
-                    <i class="fas fa-compass"></i>
+                    <i style={{color:'#9933ff'}} className="fas fa-compass"></i>
                 </li>
                 </NavLink>
                 <NavLink exact to='/saved'>

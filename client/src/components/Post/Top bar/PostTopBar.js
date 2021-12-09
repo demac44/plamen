@@ -5,7 +5,7 @@ import PostMenu from './components/PostMenu'
 import Avatar from '../../General components/Avatar'
 import { Link } from 'react-router-dom'
 
-const PostTopBar = ({data, refetchPosts}) => {
+const PostTopBar = ({data, refetchPosts, isLogged}) => {
     const [menu, setMenu] = useState(false)
 
     return (
@@ -21,7 +21,7 @@ const PostTopBar = ({data, refetchPosts}) => {
                 </Link >
 
                 <span className='flex'>
-                    <SavePostButton postID={data.postID} groupID={data?.groupID}/>
+                    <SavePostButton postID={data.postID} groupID={data?.groupID} isLogged={isLogged}/>
                     <i 
                         className="fas fa-ellipsis-v" 
                         style={styles.optionsBtn} 
@@ -29,7 +29,7 @@ const PostTopBar = ({data, refetchPosts}) => {
                 </span>
             </div>
 
-            {menu && <PostMenu 
+            {(isLogged && menu) && <PostMenu 
                 refetchPosts={refetchPosts}
                 data={{
                     postID: data.postID,

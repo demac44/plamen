@@ -4,8 +4,7 @@ import { useMutation, useQuery } from 'react-apollo'
 import {gql} from 'graphql-tag'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp'
 
-const SavePostButton = ({postID, groupID}) => {
-    const isLogged = true
+const SavePostButton = ({postID, groupID, isLogged}) => {
     const [saved, setSaved] = useState(false)
     const ls= JSON.parse(localStorage.getItem('user'))
     const [save_post] = useMutation(groupID ? SAVE_GP : SAVE_POST)
@@ -23,7 +22,7 @@ const SavePostButton = ({postID, groupID}) => {
     useEffect(()=>{
         if(groupID) ifSaved?.data?.if_group_post_saved && setSaved(true)
         else ifSaved?.data?.if_saved && setSaved(true)
-    }, [postID, ifSaved])
+    }, [postID, ifSaved, groupID])
     
     if(ifSaved.loading) return <i style={{...styles.saveBtn, color:'white'}} className="fas fa-bookmark"></i>
     

@@ -48,8 +48,6 @@ const GroupMembers = ({isLogged}) => {
 
     if(loading) return <GroupLoader/>
 
-    console.log(groupid);
-
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/> 

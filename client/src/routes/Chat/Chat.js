@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ChatList from '../../components/Chat/components/ChatList'
 import ChatMsgBox from '../../components/Chat/components/ChatMsgBox'
 import {gql} from 'graphql-tag'
@@ -11,7 +11,7 @@ const Chat = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const {chatid} = useParams()
 
-    const {data, loading, error, refetch} = useQuery(GET_CHATS, {
+    const {data, loading, error} = useQuery(GET_CHATS, {
         variables:{userID: ls.userID},
     }) 
   

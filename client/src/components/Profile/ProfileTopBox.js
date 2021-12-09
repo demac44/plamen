@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import FollowBtn from './components/FollowBtn'
+import ProfileFollowBtn from './components/ProfileFollowBtn'
 import ProfileEditBtn from './components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
 import SendMsgBtn from './components/SendMsgBtn'
@@ -20,12 +20,12 @@ const ProfileInfoBox = ({info}) => {
                 <div style={{border: info.stories.length>0 && '3px solid #ffbb00', borderRadius:'50%'}} onClick={()=>{
                     info.stories.length>0 && setOpenStory(true)
                 }}>
-                    <Avatar size='200px' image={info.user.profile_picture}/>
+                    <Avatar size='170px' image={info.user.profile_picture}/>
                 </div>
                 <ProfileInfo info={info}/>
                 {info.user.currentUser ? <ProfileEditBtn/> : (
                 <>
-                <FollowBtn/>
+                <ProfileFollowBtn userID={info.user.userID}/>
                 <SendMsgBtn userID={info.user.userID}/>
                 </>
                 )} 

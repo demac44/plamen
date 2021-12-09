@@ -123,7 +123,7 @@ export const GET_GROUP_POST_LIKES = {
     },
     async resolve(_, args) {
         const {postID, limit, offset} = args
-        const sql = `SELECT * FROM group_posts_likes 
+        const sql = `SELECT first_name,last_name,users.userID,username,profile_picture FROM group_posts_likes 
                      JOIN users ON group_posts_likes.userID=users.userID 
                      WHERE postID=${postID} 
                      LIMIT ${limit} OFFSET ${offset}`

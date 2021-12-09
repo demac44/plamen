@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp'
-
+import {useSelector} from 'react-redux'
 
 const AddComment = ({postID, userID, groupID, refetchComments}) => {
     let comment_text;
-    const isLogged = true
+    const isLogged = useSelector(state => state?.isAuth.isAuth)
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loginPopUp, setLoginPopUp] = useState(false)
     const [add_comment] = useMutation(groupID ? ADD_GP_COMMENT : ADD_COMMENT) 

@@ -6,7 +6,12 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
 import SetTime from '../../../General components/SetTime'
 
+import { useSelector } from 'react-redux'
+import LoginPopUp from '../../../Entry/Login/LoginPopUp'
+
 const Comment = ({comment, refetchComments, groupID}) => {
+    const [loginPopUp, setLoginPopUp] = useState(false)
+    const isLogged = useSelector(state => state?.isAuth.isAuth)
     const ls = JSON.parse(localStorage.getItem('user'))
     const [readMore, setReadMore] = useState(true)
 
@@ -22,43 +27,47 @@ const Comment = ({comment, refetchComments, groupID}) => {
             }
         }).then(()=>refetchComments())
     }
+    console.log(comment);
 
     return (
-        <div className='comment'>
-            <div className='flex-sb'>
-                <Link to={'/profile/'+comment.userID} className='flex-ctr'>
-                    <Avatar size='35px' image={comment.profile_picture}/>
+        <>
+            <div className='comment'>
+                <div className='flex-sb'>
+                    <Link to={'/profile/'+comment.userID} className='flex-ctr'>
+                        <Avatar size='35px' image={comment.profile_picture}/>
 
-                    <span className='flex-col-sb' style={styles.nameAndTime}>
-                        <p style={styles.name}>{comment.username}</p>
-                        <SetTime timestamp={comment.date_commented}/>
-                    </span>
-                </Link>
-                {comment.userID===ls.userID && 
-                    <i 
-                        style={styles.deleteBtn} 
-                        className='fas fa-trash-alt'
-                        onClick={handleDelete}
-                    ></i>}
+                        <span className='flex-col-sb' style={styles.nameAndTime}>
+                            <p style={styles.name}>{comment.username}</p>
+                            <SetTime timestamp={comment.date_commented}/>
+                        </span>
+                    </Link>
+                    {isLogged && (comment.userID===ls.userID && 
+                        <i 
+                            style={styles.deleteBtn} 
+                            className='fas fa-trash-alt'
+                            onClick={handleDelete}
+                        ></i>)}
+                </div>
+                <div style={styles.textField}>
+                    {comment.comment_text.length>200 ? 
+                    (
+                    <>
+                        {readMore ? <p>{comment.comment_text.slice(0, 200)}. . .</p> : <p>{comment.comment_text}</p>}
+                        <br/>
+                        <p 
+                            onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
+                            style={{fontSize:'12px', color:'teal', cursor:'pointer'}}
+                        >
+                            {readMore ? 'Read more' : 'Read less'}
+                        </p>
+                    </>
+                    )
+                    : <p>{comment.comment_text}</p>
+                    }
+                </div>
             </div>
-            <div style={styles.textField}>
-                {comment.comment_text.length>200 ? 
-                (
-                <>
-                    {readMore ? <p>{comment.comment_text.slice(0, 200)}. . .</p> : <p>{comment.comment_text}</p>}
-                    <br/>
-                    <p 
-                        onClick={()=>setReadMore(!readMore)} 
-                        style={{fontSize:'12px', color:'teal', cursor:'pointer'}}
-                    >
-                        {readMore ? 'Read more' : 'Read less'}
-                    </p>
-                </>
-                )
-                : <p>{comment.comment_text}</p>
-                }
-            </div>
-        </div>
+            {loginPopUp && <LoginPopUp/>}
+        </>
     )
 }
 

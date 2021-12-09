@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import defaultAvatarImage from '../../images/pfp.jpg'
 
 const Avatar = ({size, image}) => {

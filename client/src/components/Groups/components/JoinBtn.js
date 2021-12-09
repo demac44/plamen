@@ -23,7 +23,7 @@ const JoinBtn = ({info, user, updatedCallback}) => {
         if(data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID){
             setState('REQUESTED')
         } else if(user) setState('LEAVE')
-    }, [data])
+    }, [data, info.groupID, ls.userID, user])
 
     if(loading) return <p>loading</p>
 

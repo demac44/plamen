@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { useParams } from 'react-router-dom'
 
@@ -17,8 +17,6 @@ import Posts from '../../components/Post/Posts'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
-    const [leftnav, setLeftnav] = useState(false)
-    const [updated, setUpdated] = useState(false)
     const [tags, setTags] = useState([])
     const ls = JSON.parse(localStorage.getItem('user'))
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -35,28 +33,19 @@ const Group = ({isLogged}) => {
         if(data){
             setTags(data.get_group.group_tags.split(','))
         }
-    }, [refetch, updated, data])
-
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
-
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
+    }, [refetch, data])
 
 
     if(loading) return <GroupLoader/>
 
-
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
-                <Sidebar show={leftnav}/>
+                <Sidebar/>
                 <div className='container-profile'>
-                    <GroupBanner info={data?.get_group} user={data.get_group_user} updatedCallback={updatedCallback}/>
+                    <GroupBanner info={data?.get_group} user={data.get_group_user}/>
                     <TagsBox tags={tags}/>                        
                 </div>
                 <div className='container-main'>
@@ -116,9 +105,3 @@ const GET_GROUP = gql`
         }
     }
 `
-const styles = {
-    p: {marginTop:'60px', 
-        color:'white', 
-        textAlign:'center', 
-        width:'100%'}
-}

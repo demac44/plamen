@@ -135,7 +135,11 @@ export const GET_POST_LIKES = {
     },
     async resolve(_, args) {
         const {postID, limit, offset} = args
-        const sql = `SELECT * FROM likes JOIN users ON likes.userID=users.userID WHERE postID=${postID} LIMIT ${limit} OFFSET ${offset}`
+        const sql = `SELECT first_name,last_name,users.userID,profile_picture,username
+                     FROM likes 
+                     JOIN users ON likes.userID=users.userID 
+                     WHERE postID=${postID} 
+                     LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
     }

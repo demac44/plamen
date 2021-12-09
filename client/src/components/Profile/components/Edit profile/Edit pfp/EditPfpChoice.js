@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
 
-import '../../../../../App.css'
-import '../../../../../General.css'
-
 import Dropzone from 'react-simple-dropzone/dist';
 import axios from 'axios';
 

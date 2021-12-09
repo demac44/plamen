@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import '../../App.css'
 import '../../General.css'
@@ -42,7 +42,7 @@ const Navbar = ({isLogged}) => {
     const {data} = useSubscription(NEW_MESSAGE)
     const [NotNo, setNotNo] = useState(0)
     const count = useQuery(COUNT_MSGS, {
-        variables:{rid: ls.userID}
+        variables:{rid: ls?.userID}
     })
 
     const handleDropdown = () => {
@@ -51,9 +51,9 @@ const Navbar = ({isLogged}) => {
     }
 
     useEffect(()=>{
-        setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
+        isLogged && setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
-        if(count){
+        if(count && isLogged){
             count?.refetch()
         }
     }, [count, data]) 

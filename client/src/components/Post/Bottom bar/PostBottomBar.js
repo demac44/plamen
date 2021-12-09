@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'
 
 
+
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import LikesList from './components/LikesList'
 
-const PostBottomBar = ({postID, userID, groupID}) => {
+const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
+    const [likes, setLikes] = useState(false) 
     const {data, loading, error, refetch, fetchMore} = useQuery(groupID ? GET_GP_COMMENTS : GET_COMMENTS, {
         variables:{
             postID,
@@ -15,10 +18,13 @@ const PostBottomBar = ({postID, userID, groupID}) => {
             offset:0
         }
     })
+    
+    const closeLikesList = useCallback(()=>{
+        setLikes(false)
+    }, [setLikes])
 
     if(loading) return <p>loading</p>
     if(error) throw error
-
     
     const seeMore = async () => {
         try {
@@ -31,16 +37,16 @@ const PostBottomBar = ({postID, userID, groupID}) => {
                     if (!fetchMoreResult) return prev;
                         if(groupID){
                             if(fetchMoreResult?.get_group_post_comments?.length===0)
-                            return Object.assign({}, prev, {
-                                get_group_post_comments: [data.get_group_post_comments[0]],
+                                return Object.assign({}, prev, {
+                                    get_group_post_comments: [data.get_group_post_comments[0]],
                             });
                             return Object.assign({}, prev, {
                                 get_group_post_comments: [...data.get_group_post_comments, ...fetchMoreResult?.get_group_post_comments],
                             });
                         } else {
                             if(fetchMoreResult?.get_post_comments?.length===0)
-                            return Object.assign({}, prev, {
-                                get_post_comments: [data.get_post_comments[0]],
+                                return Object.assign({}, prev, {
+                                    get_post_comments: [data.get_post_comments[0]],
                             });
                             return Object.assign({}, prev, {
                                 get_post_comments: [...data.get_post_comments, ...fetchMoreResult?.get_post_comments],
@@ -53,18 +59,20 @@ const PostBottomBar = ({postID, userID, groupID}) => {
 
     return (
         <>
-        <PostComments 
-            postID={postID} 
-            comments={groupID ? data.get_group_post_comments : data.get_post_comments} 
-            refetchComments={refetch} 
-            seeMore={seeMore}
-            groupID={groupID}
-        />
-        <div className='post-bottom-bar flex'>
-            <LikePost postID={postID} userID={userID} groupID={groupID}/>
-            <p style={styles.seeLikes}>See likes</p>
-            <AddComment postID={postID} userID={userID} groupID={groupID} refetchComments={refetch}/>
-        </div>
+            <PostComments 
+                postID={postID} 
+                comments={groupID ? data.get_group_post_comments : data.get_post_comments} 
+                refetchComments={refetch} 
+                seeMore={seeMore}
+                groupID={groupID}
+                isLogged={isLogged}
+            />
+            <div className='post-bottom-bar flex'>
+                <LikePost postID={postID} userID={userID} groupID={groupID} isLogged={isLogged}/>
+                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>See likes</p>
+                <AddComment postID={postID} userID={userID} groupID={groupID} refetchComments={refetch} isLogged={isLogged}/>
+            </div>
+            {(isLogged && likes) && <LikesList postID={postID} groupID={groupID} closeList={closeLikesList}/>}
         </>
     )
 }

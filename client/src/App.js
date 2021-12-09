@@ -12,7 +12,7 @@ import Profile from './routes/Profile/Profile';
 import EditProfile from './routes/Profile/EditProfile';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
-import Post from './routes/Post/Post';
+import SinglePost from './routes/Post/SinglePost';
 import Groups from './routes/Groups/Groups';
 import Group from './routes/Groups/Group';
 import GroupMembers from './routes/Groups/GroupMembers';
@@ -59,7 +59,7 @@ function App() {
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chat/:chatid'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/post/:postid'><Post isLogged={isLogged}/></Route>
+              <Route exact path='/post/:postid'><SinglePost isLogged={isLogged}/></Route>
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/members'>{isLogged ? <GroupMembers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

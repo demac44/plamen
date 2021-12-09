@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import FollowBtn from '../Profile/components/FollowBtn'
+// import FollowBtn from '../Profile/components/FollowBtn'
 import Avatar from '../General components/Avatar'
 import SetTime from '../General components/SetTime'
 
@@ -19,7 +19,7 @@ const NotificationBox = ({notif}) => {
                 {notif.type==='follow' && <div className='flex-ctr'><p>{'@'+notif.username+' followed you'}</p></div>}
             </Link>
             <div className='nb-time flex-ctr'>
-                {notif.type==='follow' && <FollowBtn uID={notif.sender_id} notifications={true}/>}
+                {/* {notif.type==='follow' && <FollowBtn uID={notif.sender_id} notifications={true}/>} */}
                 <SetTime timestamp={notif?.time_sent}/>
             </div>
         </div>

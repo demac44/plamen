@@ -11,7 +11,7 @@ const Sidebar = ({show}) => {
                     <p>Feed</p>
                 </li></NavLink>
                 <NavLink exact to='/explore'><li>
-                    <i style={{color:'#9933ff'}} class="fas fa-compass"></i>
+                    <i style={{color:'#9933ff'}} className="fas fa-compass"></i>
                     <p>Explore</p>
                 </li></NavLink>
                 <NavLink exact to='/saved'><li>
