@@ -11,7 +11,7 @@ const DELETE_CHAT = gql`
     }
 `
  
-const ChatMenu = ({chatid}) => {
+const ChatMenu = ({chatID}) => {
     const [chatMedia, setChatMedia] = useState(false)
     const [delete_chat] = useMutation(DELETE_CHAT)
 
@@ -23,7 +23,7 @@ const ChatMenu = ({chatid}) => {
     const handleChatDelete = () => {
         delete_chat({
             variables:{
-                chatID: parseInt(chatid)
+                chatID: chatID
             }
         }).then(()=>window.location.href='/chats')
           
@@ -40,7 +40,7 @@ const ChatMenu = ({chatid}) => {
                     >DELETE CHAT</li>
                 </ul>
             </div>
-            {chatMedia && <AllChatMedia chatID={chatid} closeAllMediaCallback={closeAllMediaCallback}/>}
+            {chatMedia && <AllChatMedia chatID={chatID} closeAllMediaCallback={closeAllMediaCallback}/>}
         </>
     )
 }

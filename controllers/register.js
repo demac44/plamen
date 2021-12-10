@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
     WHERE username='${username}'
     ) AS countUsername `
     const result = await connection.promise().query(oldUser).then(res=>{return res[0]})
-    console.log(result);
     if (result[0].countEmail > 0){
         res.send({error: 'Email already exists'})
     } else if (result[0].countUsername > 0){
@@ -26,14 +25,13 @@ router.post('/', async (req, res) => {
             bcrypt.hash(password, salt, async (err, hash) => {
                 const newUser =
                 `INSERT INTO users 
-                (userID, username, first_name, last_name, email, pass, gender, birth_date, date_registered, profile_picture)
+                (userID, username, first_name, last_name, email, pass, profile_picture)
                 VALUES 
-                (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}","${gender}", STR_TO_DATE("${birth_date}", '%Y-%m-%d'), null, null)`
-                await connection.promise().query(newUser).then(()=>{
-                    if (err) console.log(err)
-                    else  {
-                        res.sendStatus(200)
-                    }
+                (null, "${username}", "${fname}", "${lname}", "${email}", "${hash}", null)`
+                await connection.promise().query(newUser).then(async response=>{
+                    const userInfo = `INSERT INTO user_info (userID, gender, bDate, date_joined)
+                                      VALUES (${response[0].insertId} ,"${gender}", STR_TO_DATE("${birth_date}", '%Y-%m-%d'), null)`
+                    await connection.promise().query(userInfo).then(()=>{res.sendStatus(200)})           
                 })
             })
         })

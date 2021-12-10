@@ -20,6 +20,7 @@ const ChatListUser = ({data}) => {
     useEffect(()=>{
         !info.loading && setCount(info?.data?.count_msgs?.msgCount)
         info.data && setMsgData(info?.data)
+        info?.refetch()
     }, [data, info, newMsg?.data])
 
     if(info.loading) return <p>loading</p>
@@ -31,15 +32,16 @@ const ChatListUser = ({data}) => {
                 <p>{data?.userID===ls?.userID ? 'Me' : data?.first_name+' '+data?.last_name}</p>
 
                 <p style={{fontSize:'12px', 
-                            color:info.data.last_message.userID===ls.userID ? 'gray' : 'white', 
-                            fontWeight: info.data.last_message.userID===ls.userID ? 'lighter' : 'bold'}}>
+                            color:info?.data.last_message?.userID===ls.userID ? 'gray' : 'white', 
+                            fontWeight: info?.data?.last_message?.userID===ls.userID ? 'lighter' : 'bold'}}>
 
-                    {(newMsg && newMsg?.data) ? (newMsg?.data?.newMessage?.chatID===data?.chatID ? newMsg?.data?.newMessage?.msg_text : data?.msg_text) :
-                    msgData?.last_message?.msg_text && (msgData?.last_message?.msg_text.length>25 ? msgData?.last_message?.msg_text.slice(0,25)+'...' 
-                    : msgData?.last_message?.msg_text)}
+                    {(newMsg && newMsg?.data && newMsg?.data?.newMessage?.chatID===data?.chatID) ? newMsg?.data?.newMessage?.msg_text
+                        : msgData.last_message?.msg_text}
 
-                    {(msgData.last_message?.type==='image' && !msgData.last_message?.msg_text) && data.username+' sent an image'}
-                    {(msgData.last_message?.type==='video' && !msgData.last_message?.msg_text) && data.username+' sent a video'}
+                    {(msgData?.last_message?.type==='image' && !msgData.last_message?.msg_text) && 
+                        (info?.data.last_message?.userID===ls.userID ? 'You sent an image' : data.username+' sent an image')}
+                    {(msgData?.last_message?.type==='video' && !msgData.last_message?.msg_text) && 
+                        (info?.data.last_message?.userID===ls.userID ? 'You sent a video' : data.username+' sent a video')}
                 </p>    
 
             </div>  

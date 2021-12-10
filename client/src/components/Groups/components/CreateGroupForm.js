@@ -53,6 +53,7 @@ const CreateGroupForm = ({closeFormCallback}) => {
                 <h3>Community name:</h3>
                 <input placeholder='Community name...' id='name'></input>
                 <h3>Visibility:</h3>
+                <p style={{color:'white', fontSize:'12px'}}>You change this later</p>
                 <select id='closed'>
                     <option value='private'>Private</option>
                     <option value='public'>Public</option>
@@ -60,7 +61,8 @@ const CreateGroupForm = ({closeFormCallback}) => {
                 <h3>Add community description:</h3>
                 <textarea placeholder='Description...' id='description'></textarea>
                 <h3>Add community tags:</h3>
-                <div className='tags-box'>
+                {tags.length > 0 && <p style={{color:'white', fontSize:'12px', marginTop:'10px'}}>Click on tag to remove it</p>}
+                <div className='tags-box' style={{backgroundColor:'white'}}>
                     {tags.map(tag => <div
                         style={styles.tag}
                         onClick={()=>{tags.splice(tags.indexOf(tag), 1);setTags([...tags])}}

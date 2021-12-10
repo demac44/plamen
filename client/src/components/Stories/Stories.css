@@ -29,7 +29,7 @@
     top: 0;
     left: 0;
     background-color: #1b1b1b;
-    z-index: 1000000000000000000000000;
+    z-index: 1000000000;
 }
 .story-box{
     position: relative;

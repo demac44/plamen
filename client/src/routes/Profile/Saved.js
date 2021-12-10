@@ -8,6 +8,7 @@ import MyGroupsList from '../../components/General components/MyGroupsList'
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import NoPosts from '../../components/General components/NoPosts'
 
 const Saved = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -56,7 +57,8 @@ const Saved = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-left'>
                         <h2 style={styles.title}>Saved posts</h2>
-                        <Posts posts={data.get_saved_posts}/>
+                        {data.get_saved_posts.length > 0 ? <Posts posts={data.get_saved_posts}/>
+                            : <NoPosts/>}
                     </div>
                 </div>
                 <div className='container-right' style={styles.containerRight}>

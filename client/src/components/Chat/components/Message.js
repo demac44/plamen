@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import OpenMedia from './OpenMedia'
+import SetTime from '../../General components/SetTime'
 
 const DELETE_MESSAGE = gql`
     mutation ($msgID: Int!){
@@ -18,28 +19,10 @@ const Message = ({msg}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
-    const [time, setTime] = useState(null)
     const [delete_msg] = useMutation(DELETE_MESSAGE, {
         variables:{msgID: msg.msgID}
     })
-    
-    useEffect(()=>{
-        const getTime = () => {
-            let utcSeconds = parseInt(msg.time_sent);
-            utcSeconds = new Date(utcSeconds).getTime()
-            let d = Date.now() - utcSeconds
-            d = Math.floor((d/1000)/60)
-            if(d===0) setTime('Now')
-            else if(d<60) setTime(d+'m ago')
-            else if(d>60 && d<60*24) setTime(Math.floor(d/60)+'h ago')
-            else if(d>60*24 && d<60*24*30) setTime(Math.floor(d/(60*24))+'d ago')
-            else if(d>60*24*30) {
-                let d = new Date(utcSeconds)
-                setTime(d.toDateString())
-            }
-        }
-        getTime()
-    }, [msg])
+
 
     const handleDelete = () => {
         delete_msg().then(()=>{setDeleted(true)})
@@ -58,7 +41,6 @@ const Message = ({msg}) => {
 
                 {(msg.userID===ls.userID && msgOptions && !deleted) && 
                     <>
-                        <p style={styles.timeCU}>{time}</p>
                         <i 
                             className="fas fa-trash-alt"
                             style={styles.deletebtn}
@@ -71,20 +53,29 @@ const Message = ({msg}) => {
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
                     <>
+                        {/* media message */}
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' src={msg.url} controls/>}
+
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
+
+                        <span style={{...styles.timestamp, textAlign:'right'}}>
+                            <SetTime timestamp={msg.time_sent}/>
+                        </span>
                     </>}
                 </div>
                 : <div className='msg msg-other-user'>
+
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
+
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text
-                    }</p>
+                        }</p>
+                        
+                        <span><SetTime timestamp={msg.time_sent}/></span>
                 </div>}
-                {(msg.userID!==ls.userID && msgOptions && !deleted) && <p style={styles.timeOU}>{time}</p>}
             </div>
             {openMedia && <OpenMedia url={msg.url} callback={closeMediaCallback}/>}    
         </>
@@ -105,16 +96,7 @@ const styles = {
         color:'white',
         textDecoration:'underline'
     },
-    timeCU:{
-        fontSize:'14px',
-        marginRight:'30px',
-        marginTop:'7px',
-        color:'#aaa'
-    },
-    timeOU:{
-        fontSize:'14px',
-        marginLeft:'30px',
-        marginTop:'7px',
-        color:'#aaa'
+    timestamp:{
+        width:'100%'
     }
 }

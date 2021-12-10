@@ -2,13 +2,14 @@
 
 .all-chats-box{
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     width: 350px;
     overflow:auto;
     height: 100vh;
     z-index: 1000;
     background-color: #1b1b1b;
+    padding-top: 10px;
 }
 .chat-user-box{
     position: relative;
@@ -39,7 +40,7 @@
     padding-bottom:110px;
     padding-top: 60px;
     margin:0 0 0 350px;
-    background-color: white;
+    background-color: #2f2f2f;
     z-index: 999;
 }
 .msg-input-box{
@@ -93,11 +94,21 @@
     max-width: 60%;
     margin: 0 20px;
     border-radius: 10px;
-    padding: 10px 15px;
+    padding: 10px;
     color: white;
     text-align: justify;
     margin-top: 10px;
+    animation-name: msg;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    opacity: 0;
 }
+
+@keyframes msg {
+    /* 0%{opacity: 0;} */
+    100%{opacity: 1;}
+}
+
 .msg p{
     white-space:pre-wrap;
     word-wrap: break-word;

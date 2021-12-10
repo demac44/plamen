@@ -1,9 +1,9 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
-const GroupNavbar = ({chat, groupid}) => {
+const GroupNavbar = ({chat}) => {
 
-
+    const {groupid} = useParams
 
     return (
         <div className='group-navbar' style={chat && styles.nav}>
@@ -20,7 +20,7 @@ const GroupNavbar = ({chat, groupid}) => {
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/info'}>
                     <li>
-                        <i style={{color:'teal'}} className="fas fa-info"></i>
+                        <i style={{color:'#36579e'}} className="fas fa-info-circle"></i>
                     </li>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/settings'}>

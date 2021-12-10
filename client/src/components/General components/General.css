@@ -1,3 +1,17 @@
+.loader-logo {
+    font-size: 35px;
+    opacity: 0;
+    animation-name: logo;
+    animation-duration: 5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes logo {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+
 .my-groups-box{
     width: 100%;
     background-color: #1b1b1b;
@@ -49,6 +63,7 @@
     z-index: 100000;
     box-shadow: 2px 2px 5px;
     display: none;
+    z-index: 100000000;
 }
 
 /* LOADER */
@@ -106,7 +121,6 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0,0.7);
-    z-index: 10000000000000;
 }
 .users-list-box{
     width: 40%;
@@ -114,6 +128,8 @@
     background-color: #1b1b1b;
     border-radius: 10px; 
     overflow: auto;
+    box-shadow: 5px 5px 10px;
+    border: 1px solid #3f3f3f;
 }
 .users-list-top-bar{
     position: relative;

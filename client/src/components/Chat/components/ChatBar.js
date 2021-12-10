@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
 
-const ChatBar = ({chatid, info}) => {
+const ChatBar = ({chatID, info}) => {
     const [showMenu, setShowMenu] = useState(false)
 
     const handleChatMenu = () => {
@@ -34,7 +34,7 @@ const ChatBar = ({chatid, info}) => {
                     onClick={handleChatMenu}
                     style={styles.menuBtn}
                 />
-                {showMenu && <ChatMenu chatid={chatid}/>}
+                {showMenu && <ChatMenu chatID={chatID}/>}
             </div>
         </>
     )

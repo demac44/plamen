@@ -10,12 +10,12 @@ export const CREATE_CHAT = {
         user1_ID: {type: GraphQLInt},
         user2_ID: {type: GraphQLInt},
     },
-    resolve(_, args) {
+    async resolve(_, args) {
         let {user1_ID, user2_ID} = args
         const sql = `INSERT INTO chats (chatID, user1_ID, user2_ID, date_created)
         VALUES (null, ${user1_ID}, ${user2_ID}, null)`
-        const res = connection.query(sql)
-        args.chatID=res.insertId
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        args.chatID=result.insertId
         return args
     }
 }

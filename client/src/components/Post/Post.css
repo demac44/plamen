@@ -8,6 +8,15 @@
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid #2f2f2f;
+    animation-name: post;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    z-index: 10000000;
+}
+
+@keyframes post {
+    100%{opacity: 1;}
 }
 /* top bar */
 .post-top-bar{
@@ -26,7 +35,6 @@
     border-bottom-left-radius: 10px;
     background-color: #1f1f1f;
     border: 1px solid #3f3f3f;
-    z-index: 100;
 }
 .post-options-menu ul{width:100%; cursor: pointer;}
 .post-options-menu ul li{
@@ -102,7 +110,9 @@
     color: white;
     margin-left: 10px;
 }
-
+.create-post-box label{
+    cursor: pointer;
+}
 /* report post */
 
 .container-report{
@@ -111,7 +121,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10000000;
+    z-index: 1000000000;
     background-color: rgba(0,0,0,0.8);
 }
 .report-form{
@@ -127,6 +137,13 @@
 }
 .report-form input{
     margin-top: 10px;
+}
+
+.post-media-preview{
+    height: 100px;
+}
+.post-media-preview img, .post-media-preview video{
+    height: 100%;
 }
 
 

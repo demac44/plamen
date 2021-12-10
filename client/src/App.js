@@ -18,6 +18,7 @@ import Group from './routes/Groups/Group';
 import GroupMembers from './routes/Groups/GroupMembers';
 import Chats from './routes/Chat/Chats'
 import Explore from './routes/Explore/Explore';
+import MainLoader from './components/General components/Loaders/MainLoader';
 
 function App() {
   const dispatch = useDispatch()
@@ -26,8 +27,12 @@ function App() {
   const uid = useSelector(state => state.isAuth.user?.userID)
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
+  const [animationDone, setAnimationDone] = useState(false)
 
   useEffect(()=>{
+    setTimeout(()=>{
+      setAnimationDone(true)
+    }, 4000)
     const checkUser = () => {
       if(!token) return true
       else if(!user) return true
@@ -47,7 +52,7 @@ function App() {
   
   return (
       <>
-        {isLoading ? 'p' :
+        {isLoading ? <MainLoader/> :
           <Switch>
             <>
               <Route exact path='/'></Route>

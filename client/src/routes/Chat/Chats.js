@@ -2,10 +2,9 @@ import React from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import Chat from './Chat'
+import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 import '../../components/Chat/Chat.css'
-import '../../App.css'
-import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
  
 const ChatCont = ({isLogged}) => {
     return (

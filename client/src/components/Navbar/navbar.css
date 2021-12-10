@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10000000000000000000;
+    z-index: 100000000;
 }
 .tn-left, .tn-center,.tn-right{
     width: 33.3%;

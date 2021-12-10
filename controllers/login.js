@@ -21,12 +21,11 @@ router.post('/', async (req, res) => {
         const obj = {
             userID: userID,
             first_name: result[0].first_name,
-            last_name: result[0].last_name,
+            last_name: result[0].last_name, 
             username: result[0].username,
             profile_picture: result[0].profile_picture,
             currentUser: true,
         }
-        const theme = 'YELLOW'
         bcrypt.compare(password, hashedPass).then(response => {
             if (!response) {
                 res.send({error: 'Incorrect password!'})
@@ -36,7 +35,6 @@ router.post('/', async (req, res) => {
                 res.json({
                     token,
                     user: obj,
-                    theme
                 })
             }
         })

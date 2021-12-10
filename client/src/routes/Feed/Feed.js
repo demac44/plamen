@@ -12,6 +12,8 @@ import Sidebar from '../../components/General components/Sidebar'
 
 import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import { Link } from 'react-router-dom'
+import NoPosts from '../../components/General components/NoPosts'
 
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -62,7 +64,8 @@ const Feed = ({isLogged}) => {
                     <div className='container-left'>
                         <Stories stories={data?.get_stories} refetch={refetch}/>
                         <CreatePost refetch={refetch}/>
-                        <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
+                        {data.get_feed_posts.length > 0 ? <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
+                            : <NoPosts/>}
                     </div>
                 </div>
                 <div className='container-right' style={styles.containerRight}>

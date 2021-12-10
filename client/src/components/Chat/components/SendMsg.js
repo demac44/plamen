@@ -20,7 +20,7 @@ const MSG_NOTIFICATION = gql`
 `
 
 
-const SendMsg = ({chatid, loaderCallback, info}) => {
+const SendMsg = ({chatID, loaderCallback, info}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [send_msg] = useMutation(SEND_MSG)
     const [msg_notification] = useMutation(MSG_NOTIFICATION)
@@ -45,7 +45,7 @@ const SendMsg = ({chatid, loaderCallback, info}) => {
                     send_msg({
                         variables: {
                             userID: ls.userID,
-                            chatID: parseInt(chatid), 
+                            chatID: chatID, 
                             msg_text: msg_text,
                             type: media.type.slice(0,5),
                             url: res.data.url
@@ -55,7 +55,7 @@ const SendMsg = ({chatid, loaderCallback, info}) => {
                                 variables:{
                                     sid: ls.userID,
                                     rid: info.userID,
-                                    chatID: parseInt(chatid)
+                                    chatID: chatID
                                 }
                             })
                         }).then(()=>{
@@ -68,7 +68,7 @@ const SendMsg = ({chatid, loaderCallback, info}) => {
             send_msg({
                 variables: {
                     userID: ls.userID,
-                    chatID: parseInt(chatid), 
+                    chatID: chatID, 
                     msg_text: msg_text,
                     type:'text',
                     url: 'null'
@@ -78,7 +78,7 @@ const SendMsg = ({chatid, loaderCallback, info}) => {
                         variables:{
                             sid: ls.userID,
                             rid: info.userID,
-                            chatID: parseInt(chatid)
+                            chatID: chatID
                         },
                         
                     })
@@ -138,7 +138,7 @@ const styles = {
     imgPreviewBar:{
         width:'100%',
         height:'100px',
-        backgroundColor: '#111827',
+        backgroundColor: '#1f1f1f',
         position:'absolute',
         bottom:'50px',
         zIndex:'10000000000000000000000000000',

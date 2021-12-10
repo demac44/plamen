@@ -5,7 +5,7 @@ const MsgsLoader = () => {
     const arr = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
     return (
-        <div style={{backgroundColor:'#3f3f3f', width:'100%', height:'100vh'}}>
+        <div style={{backgroundColor:'#3f3f3f', width:'100%', height:'100vh', paddingLeft:'350px'}}>
             {arr.map(()=>
             <>
                 <div className='msg-wrapper-cu'>

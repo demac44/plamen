@@ -4,7 +4,7 @@ import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
 
-const JoinBtn = ({info, user, updatedCallback}) => {
+const JoinBtn = ({info, user}) => {
     const [state, setState] = useState('JOIN')
     const ls = JSON.parse(localStorage.getItem('user'))
     const {data, loading, refetch} = useQuery(IF_REQUESTED, {
@@ -34,7 +34,7 @@ const JoinBtn = ({info, user, updatedCallback}) => {
                 uid: ls.userID,
                 gid: info.groupID
             }
-        }).then(()=>{setState('LEAVE');updatedCallback(true)})
+        }).then(()=>{window.location.reload()})
     }
 
     const handleLeave = () => {
@@ -43,7 +43,7 @@ const JoinBtn = ({info, user, updatedCallback}) => {
                 uid: ls.userID,
                 gid: info.groupID
             }
-        }).then(()=>{setState('JOIN');updatedCallback(true)})
+        }).then(()=>{window.location.reload()})
     }
 
     const handleRequest = () => {
@@ -53,14 +53,14 @@ const JoinBtn = ({info, user, updatedCallback}) => {
                     uid: ls.userID,
                     gid: info.groupID
                 }
-            }).then(()=>{setState('JOIN');updatedCallback(true);refetch()})
+            }).then(()=>{setState('JOIN');refetch()})
         } else {
             request({
                 variables:{
                     uid: ls.userID,
                     gid: info.groupID
                 }
-            }).then(()=>{setState('REQUESTED');updatedCallback(true);refetch()})
+            }).then(()=>{setState('REQUESTED');refetch()})
         }
     }
 

@@ -12,6 +12,7 @@ import Sidebar from '../../components/General components/Sidebar'
 
 import GroupLoader from '../../components/General components/Loaders/GroupLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
@@ -57,6 +58,7 @@ const GroupMembers = ({isLogged}) => {
                     <Sidebar show={leftnav}/>
                     <div className='container-profile'>
                         <GroupBanner info={data?.get_group} user={data?.get_group_user} updatedCallback={updatedCallback}/>
+                        <GroupNavbar/>
                         <TagsBox tags={tags}/>                        
                     </div>
                         <div className='container-main'>

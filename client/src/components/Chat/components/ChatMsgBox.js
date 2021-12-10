@@ -44,14 +44,14 @@ const SEEN = gql`
 `
 
 
-const ChatMsgBox = ({chatid, info}) => {
+const ChatMsgBox = ({chat, info}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loader, setLoader] = useState(false)
-    const [fetchBtn, setFetchBtn] = useState(true)
+    const [fetchBtn, setFetchBtn] = useState(false)
     const [seen] = useMutation(SEEN)
-    const {data, loading, subscribeToMore, error, fetchMore} = useQuery(GET_MESSAGES, {
+    const messages = useQuery(GET_MESSAGES, {
         variables: {
-            chatID: parseInt(chatid),
+            chatID: chat.chatID,
             limit:50,
             offset:0
         },
@@ -63,13 +63,13 @@ const ChatMsgBox = ({chatid, info}) => {
 
     useLayoutEffect(()=>{ 
         const subscribeNewMessage = () => {
-            return subscribeToMore && subscribeToMore({
+            return messages && messages.subscribeToMore({
                 document: NEW_MESSAGE,
                 updateQuery: (prev, { subscriptionData }) => {
                     if (!subscriptionData?.data) return prev;
                     const newMsg = subscriptionData.data.newMessage;
                     
-                    if (newMsg?.chatID === parseInt(chatid)){
+                    if (newMsg?.chatID === chat.chatID){
                     return Object.assign({}, prev, {
                         get_messages: [newMsg, ...prev.get_messages],
                         scroll: ()=>{
@@ -81,23 +81,24 @@ const ChatMsgBox = ({chatid, info}) => {
             }});
         }
         subscribeNewMessage()
-    }, [chatid, subscribeToMore])        
+    }, [chat, messages?.subscribeToMore])        
     
     
     useEffect(()=>{
+        messages?.data?.get_messages?.length>=50 && setFetchBtn(true)
         seen({
             variables:{
-                cid: parseInt(chatid),
+                cid: chat.chatID,
                 rid: ls.userID
             }
         })
-    }, [data, chatid, ls.userID, seen])
+    }, [messages?.data, chat, ls.userID, seen])
 
 
     const handleFetchMore = () => {
-        fetchMore({
+        messages?.fetchMore({
             variables:{
-                offset:data?.get_messages?.length,
+                offset: messages?.data?.get_messages?.length,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
@@ -106,25 +107,25 @@ const ChatMsgBox = ({chatid, info}) => {
                     return
                 }
                 return Object.assign({}, prev, {
-                  get_messages: [...data?.get_messages, ...fetchMoreResult?.get_messages]
+                  get_messages: [...messages?.data?.get_messages, ...fetchMoreResult?.get_messages]
                 });
             }
         })
     }
       
-    if(error) console.log(error); 
+    if(messages.error) console.log(messages.error); 
 
     return (
         <div className='chat-msg-box'> 
-        {loading ? <MsgsLoader/> :
+        {messages?.loading ? <MsgsLoader/> :
         <>
-            <ChatBar chatid={chatid} info={info}/>
+            <ChatBar chatID={chat.chatID} info={chat}/>
             <div className='chat-messages'>
-                {loader && <div className='flex-ctr' style={styles.loader}><Loader size='small'/></div>}
-                {data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
+                {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
+                {messages?.data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
             </div>
-            <SendMsg chatid={chatid} info={info} loaderCallback={loaderCallback}/> 
+            <SendMsg chatID={chat.chatID} info={chat} loaderCallback={loaderCallback}/> 
         </>}
         </div>
     )
@@ -135,11 +136,9 @@ export default ChatMsgBox
 
 const styles = {
     loader: {
-        width:'20%',
-        height:'100px',
-        backgroundColor:'black',
+        padding:'60px 100px 30px 0',
         alignSelf:'flex-end',
-        marginTop:'20px',
+        // margin:'50px',
         zIndex:'1'
     },
     loadMore:{
