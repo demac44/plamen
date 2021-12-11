@@ -23,12 +23,14 @@ export const EDIT_INFO = {
         first_name: {type: GraphQLString},
         last_name: {type: GraphQLString},
         username: {type: GraphQLString},
-        birth_date: {type: GraphQLString},
-        gender: {type: GraphQLString}
     },  
     resolve(_, args) {
-        const {userID, first_name, last_name, username, birth_date, gender} = args
-        const sql = `UPDATE users SET first_name="${first_name}", last_name="${last_name}", username="${username}", birth_date=STR_TO_DATE("${birth_date}", "%Y-%m-%d"), gender="${gender}" WHERE userID=${userID}`
+        const {userID, first_name, last_name, username} = args
+        const sql = `UPDATE users SET 
+                        first_name="${first_name}", 
+                        last_name="${last_name}", 
+                        username="${username}"
+                        WHERE userID=${userID}`
         connection.query(sql)
         return userID
     }

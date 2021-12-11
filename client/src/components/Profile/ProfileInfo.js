@@ -52,7 +52,7 @@ const ProfileInfo = ({info}) => {
 
                     <div style={{textAlign:'center'}}>
                         <h6>Posts</h6>
-                        <p>{info.count}</p>
+                        <p>{info.postsLength}</p>
                     </div>
                 </div>
             </div>

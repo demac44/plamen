@@ -161,7 +161,7 @@ export const validateUsername = (username) => {
 export const validateNames = (fname, lname) => {
     let error = false
     let chars = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=0123456789"
-    if (fname.length > 50 || lname.length > 50){
+    if (fname.length > 20 || lname.length > 20){
         error = true
         return error
     }

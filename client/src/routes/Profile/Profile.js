@@ -26,11 +26,6 @@ const Profile = ({myprofile, isLogged}) => {
     const {id} = useParams()
     
     const userID = parseInt(id)
-    
-    const getUser = useQuery(GET_USER, {
-        variables: {userID: userID},
-        skip: myprofile
-    })
 
     const {loading, error, data, refetch, fetchMore} = useQuery(FETCH_INFO, {
         variables: {
@@ -49,13 +44,6 @@ const Profile = ({myprofile, isLogged}) => {
     if (loading) return <ProfileLoader/>
     if(error) throw error 
     
-    const info = {
-        user: myprofile ? ls : getUser?.data?.get_user,
-        count: data.get_profile_posts.length,
-        followers: data.get_followers,
-        following: data.get_following,
-        stories: data.get_user_stories
-    }
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -83,7 +71,7 @@ const Profile = ({myprofile, isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}> 
                 <div className='container-profile'>
-                    <ProfileTopBox info={info}/>
+                    <ProfileTopBox userID={userID} myprofile={myprofile} postsLength={data.get_profile_posts.length}/>
                 </div>
                 <div className='container-main'  style={{paddingTop:'10px'}}>
                     <Sidebar/>
@@ -119,41 +107,6 @@ const FETCH_INFO= gql`
             username
             profile_picture
             type
-        }
-        get_followers(followedID: $userID){
-            userID
-            username
-            first_name
-            last_name
-            profile_picture
-        }
-        get_following(followerID: $userID){
-            userID
-            username
-            first_name
-            last_name
-            profile_picture
-        }
-        get_user_stories (userID: $userID){
-            first_name
-            last_name
-            userID
-            profile_picture
-            storyID
-            type
-            url
-            date_posted
-        } 
-    }`
-
-const GET_USER = gql`
-    query ($userID: Int){
-        get_user(userID: $userID){
-            first_name
-            last_name
-            profile_picture
-            username
-            userID
         }
     }
 `

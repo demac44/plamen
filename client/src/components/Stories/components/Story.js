@@ -19,7 +19,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
 
 
     useEffect(()=>{
-        setStoryData(isProfile ? allData : allData[index])
+        setStoryData(isProfile ? {...allData.user, ...allData} : allData[index])
         storyData?.stories && setType(storyData?.stories[innerIndex]?.type)
     }, [index, innerIndex, type, i, storyData, allData, isProfile])
 
