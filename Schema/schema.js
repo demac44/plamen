@@ -7,7 +7,7 @@ import { pubsub } from "../server.js";
 
 import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
-import { EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
+import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 import { ACCEPT_REQUEST, ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_REQUEST, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
@@ -16,7 +16,7 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
-import { CREATE_USER } from "./Mutations/Users.js";
+import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
@@ -88,6 +88,10 @@ const RootMutation = new GraphQLObjectType({
         unfollow: UNFOLLOW_USER,
         edit_pfp: EDIT_PFP,
         edit_info: EDIT_INFO,
+        change_password: CHANGE_PASSWORD,
+        disable_account: DISABLE_ACCOUNT,
+        undisable_account: UNDISABLE_ACCOUNT,
+        delete_account: DELETE_ACCOUNT,
         // posts
         delete_post: DELETE_POST,
         like_post: LIKE_POST,

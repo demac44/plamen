@@ -135,6 +135,22 @@
 .edit-pfp-menu li:hover{
     background-color: #2f2f2f;
 }
+.change-pass-box{
+    width:100%;
+    padding:10px;
+    border:1px solid #2f2f2f;
+    border-radius:5px;
+    box-shadow:5px 5px 10px;
+}
+.change-pass-box input{
+    width: 60%;
+    height: 35px;
+    border: 1px solid #ffbb00;
+    margin-top: 10px;
+}
+.disable-acc-box div:hover{
+    background-color: #2f2f2f;
+}
 
 /* MEDIA QUERIES */
 
@@ -196,5 +212,8 @@
     }
     .profile-top-box-stats{
         width: 90%;
+    }
+    .change-pass-box input{
+        width: 100%;
     }
 }

@@ -59,7 +59,6 @@ function App() {
               <Route exact path='/myprofile'>{isLogged ? <Profile myprofile={true} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/profile/:id'>{isLogged ? <Profile myprofile={false} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/settings/editprofile'>{isLogged ? <EditProfile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
@@ -69,6 +68,7 @@ function App() {
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/members'>{isLogged ? <GroupMembers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/explore'>{isLogged ? <Explore isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/settings/account'>{isLogged ? <EditProfile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
       </>

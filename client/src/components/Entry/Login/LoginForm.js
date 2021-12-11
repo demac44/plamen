@@ -3,9 +3,13 @@ import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 import ErrorMsg from '../ErrorMsg';
 
+import {gql} from 'graphql-tag'
+import { useMutation } from 'react-apollo';
+
 const LoginForm = ({popup}) => {
     let password, username;
     const [errorMsg, setErrorMsg] = useState('')
+    const [undisable_account] = useMutation(UNDISABLE_ACCOUNT)
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -33,6 +37,11 @@ const LoginForm = ({popup}) => {
                     localStorage.setItem('token', res?.data.token)
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
                     localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
+                    undisable_account({
+                        variables:{
+                            userID: res?.data?.user?.userID
+                        }
+                    })
                     popup ? window.location.reload() : window.location.href = '/myprofile'}
             })
         } catch (error) {
@@ -61,3 +70,12 @@ const LoginForm = ({popup}) => {
 }
 
 export default LoginForm
+
+
+const UNDISABLE_ACCOUNT = gql`
+    mutation ($userID: Int!){
+        undisable_account(userID: $userID){
+            userID
+        }
+    }
+`

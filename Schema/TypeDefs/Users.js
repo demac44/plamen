@@ -1,7 +1,8 @@
 import { 
     GraphQLObjectType,
     GraphQLInt,
-    GraphQLString
+    GraphQLString,
+    GraphQLBoolean
  } from "graphql";
 
 export const UserType = new GraphQLObjectType({
@@ -19,5 +20,16 @@ export const UserType = new GraphQLObjectType({
         profile_picture: {type: GraphQLString},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
+    })
+})
+
+export const PasswordType = new GraphQLObjectType({
+    name: 'Pass',
+    fields:()=>({
+        userID: {type: GraphQLInt},
+        oldPassword: {type: GraphQLString},
+        newPassword: {type: GraphQLString},
+        changed: {type: GraphQLBoolean},
+        error: {type: GraphQLString}
     })
 })

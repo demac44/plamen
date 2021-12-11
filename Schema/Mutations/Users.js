@@ -1,4 +1,4 @@
-import { GraphQLString } from "graphql"
+import { GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
 import { UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
@@ -27,3 +27,42 @@ export const CREATE_USER = {
     }
 }
 
+export const DISABLE_ACCOUNT = {
+    type: UserType,
+    args:{
+        userID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID} = args
+        const sql = `UPDATE users SET disabled=true WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const UNDISABLE_ACCOUNT = {
+    type: UserType,
+    args:{
+        userID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID} = args
+        const sql = `UPDATE users SET disabled=false WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+
+export const DELETE_ACCOUNT = {
+    type: UserType,
+    args:{
+        userID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID} = args
+        const sql = `DELETE FROM users WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}

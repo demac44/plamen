@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import {  validateAge, validateNames, validateUsername} from '../../../Entry/Register/RegisterForm'
-import ErrorMsg from '../../../Entry/ErrorMsg'
+import {  validateAge, validateNames, validateUsername} from '../../../../Entry/Register/RegisterForm'
+import ErrorMsg from '../../../../Entry/ErrorMsg'
 
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
-import Avatar from '../../../General components/Avatar'
+import Avatar from '../../../../General components/Avatar'
 
 
 
@@ -76,7 +76,7 @@ const EditForm = ({handleMenu}) => {
             <span style={styles.box} className='flex-col-ctr'>
                 <p style={styles.title}>Change profile picture</p>
                 <span className='flex-ctr'>
-                    <Avatar size='80px' image={ls.profile_picture}/>
+                    <Avatar size='70px' image={ls.profile_picture}/>
                     <p onClick={()=>handleMenu(true)} style={styles.pfpBtn}>Change</p>
                 </span>
             </span>
@@ -105,9 +105,7 @@ const EditForm = ({handleMenu}) => {
                     placeholder="Change username" 
                     defaultValue={user.username}
                 />
-                <br/>
-                <button className="post-button btn" type="submit">EDIT</button>
-                <br/>
+                <button style={{marginTop:'15px'}} className="post-button btn" type="submit">EDIT</button>
             </form>
         </>
     )

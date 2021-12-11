@@ -1,6 +1,8 @@
 import { GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
-import { UserType } from "../TypeDefs/Users.js"
+import { PasswordType, UserType } from "../TypeDefs/Users.js"
+import bcrypt from 'bcrypt'
+
 
 export const EDIT_PFP = {
     type: UserType,
@@ -35,3 +37,43 @@ export const EDIT_INFO = {
         return userID
     }
 }
+
+let changed = false
+let error = null;
+
+export const CHANGE_PASSWORD = {
+    type: PasswordType,
+    args:{
+        oldPassword: {type: GraphQLString},
+        newPassword: {type: GraphQLString},
+        userID: {type: GraphQLInt},
+    },
+    async resolve(_, args){
+        const {oldPassword, newPassword, userID} = args
+        const getOldPass = `SELECT pass FROM users WHERE userID=${userID}`
+        const oldPass = await connection.promise().query(getOldPass).then(res=>{return res[0][0]})
+        const validPassword = await bcrypt.compare(oldPassword, oldPass.pass)
+        if(!validPassword) {
+            error = 'Invalid password'
+            return {changed, error}
+        } else {
+            try {
+                bcrypt.genSalt(10, (_, salt) => {
+                    bcrypt.hash(newPassword, salt, (err, hash) => {
+                        if(err) return err;
+                        const newPass = `UPDATE users SET pass="${hash}" WHERE userID=${userID}`
+                        connection.query(newPass)
+                        changed = true
+                        return
+                    })
+                })
+                
+            } catch (error) {
+                
+            }
+        }
+        return {changed, error}
+    }
+}
+
+

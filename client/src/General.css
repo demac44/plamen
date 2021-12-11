@@ -57,6 +57,14 @@ li{
     transition: ease .1s;
     cursor: pointer;
 }
+.input{
+    text-align: center;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    transition: ease .1s;
+    margin: 5px;
+}
 .wh-100{
     width: 100vw;
     height: 100vh;

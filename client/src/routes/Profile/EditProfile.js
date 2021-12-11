@@ -3,12 +3,14 @@ import Navbar from '../../components/Navbar/Navbar'
 
 import '../../App.css'
 import '../../General.css'
-import EditForm from '../../components/Profile/components/Edit profile/EditForm'
+import EditForm from '../../components/Profile/components/Edit profile/Account settings/EditForm'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 
 import EditProfileNav from '../../components/Profile/components/Edit profile/EditProfileNav'
 import EditPfpMenu from '../../components/Profile/components/Edit profile/Edit pfp/EditPfpMenu'
+import ChangePassBox from '../../components/Profile/components/Edit profile/Account settings/ChangePassBox'
+import DisableAccBox from '../../components/Profile/components/Edit profile/Account settings/DisableAccBox'
 
 const EditProfile = ({isLogged}) => {
     // let fname,lname,username;
@@ -30,6 +32,8 @@ const EditProfile = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-left'>
                         <EditForm handleMenu={handleMenu}/>
+                        <ChangePassBox/>
+                        <DisableAccBox/>
                     </div>
                     <div className='container-right'>
                         <EditProfileNav/>
