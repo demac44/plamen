@@ -16,6 +16,8 @@ import '../../components/Profile/profile.css'
 import CreatePost from '../../components/Post/Create post/CreatePost'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import SideInfoBox from '../../components/Profile/components/SideInfoBox'
+import InterestsBox from '../../components/Profile/components/InterestsBox'
 
     
 const Profile = ({myprofile, isLogged}) => {
@@ -90,6 +92,8 @@ const Profile = ({myprofile, isLogged}) => {
                         <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
                     <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
+                        <SideInfoBox myprofile={myprofile}/>
+                        <InterestsBox myprofile={myprofile}/>
                         <MyGroupsList/>
                     </div>
                 </div>

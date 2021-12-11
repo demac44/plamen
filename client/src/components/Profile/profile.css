@@ -113,6 +113,40 @@
     cursor: pointer;
 }
 
+/* user info */
+
+.profile-side-info-box{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: white;
+}
+.profile-side-info-box div{
+    margin: 15px 0;
+}
+.profile-side-info-box div i{
+    width: 25px;
+}
+.profile-side-info-box p{
+    margin-left: 10px;
+}
+.profile-side-info-box p{
+    font-size: 14px;
+}
+
+/* my interests */
+
+.profile-interests-box{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: white;
+}
+
 
 /* MEDIA QUERIES */
 
