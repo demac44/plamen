@@ -21,8 +21,6 @@ const biggerEventEmitter = new EventEmitter();
 biggerEventEmitter.setMaxListeners(30);
 export const pubsub = new PubSub({eventEmitter: biggerEventEmitter});
 
-// export const pubsub = new PubSub();
-
 
 import login from './controllers/login.js'
 import register from './controllers/register.js'

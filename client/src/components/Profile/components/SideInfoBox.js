@@ -10,7 +10,7 @@ const SideInfoBox = ({myprofile}) => {
 
            <div className='flex-sb'>
                 <span className='flex-h'>
-                    <i class="fas fa-briefcase"></i> 
+                    <i style={{color:'brown'}} class="fas fa-briefcase"></i> 
                     <h4>Works at</h4>
                     <p>Job</p>
                 </span>
@@ -18,7 +18,7 @@ const SideInfoBox = ({myprofile}) => {
 
            <div className='flex-sb'>
                 <span className='flex-h'>
-                    <i class="fas fa-university"></i> 
+                    <i style={{color:'teal'}} class="fas fa-university"></i> 
                     <h4>University</h4>
                     <p>Amman Arab Univeristy</p>
                 </span>
@@ -26,7 +26,7 @@ const SideInfoBox = ({myprofile}) => {
 
            <div className='flex-sb'>
                 <span className='flex-h'>
-                    <i style={{fontSize:'14px'}} class="fas fa-school"></i>
+                    <i style={{fontSize:'14px', color:'green'}} class="fas fa-school"></i>
                     <h4>High school</h4>
                     <p>Druga Gimnazija Sarajevo</p>
                 </span>
@@ -34,7 +34,7 @@ const SideInfoBox = ({myprofile}) => {
 
            <div className='flex-sb'>
                 <span className='flex-h'>
-                    <i class="fas fa-birthday-cake"></i>
+                    <i style={{color:'orange'}} class="fas fa-birthday-cake"></i>
                     <h4>Birthday</h4>
                     <p style={{marginLeft:'10px'}}>August 10th</p>
                     <p style={{fontSize:'12px'}}>21yrs</p>
@@ -43,7 +43,7 @@ const SideInfoBox = ({myprofile}) => {
 
            <div className='flex-sb'>
                 <span className='flex-h'>
-                    <i class="fas fa-mobile-alt"></i>
+                    <i style={{color:'silver'}} class="fas fa-mobile-alt"></i>
                     <h4>Phone</h4>
                     <p style={{marginLeft:'10px'}}>+387 61 955 906</p>
                 </span>

@@ -7,41 +7,6 @@ import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
 import MsgsLoader from '../../General components/Loaders/MsgsLoader'
-import Loader from '../../General components/Loaders/Loader'
-
-const GET_MESSAGES = gql`
-    query ($chatID: Int!, $limit: Int, $offset: Int){
-        get_messages (chatID: $chatID, limit: $limit, offset: $offset){
-            chatID
-            msgID
-            msg_text
-            userID
-            type
-            url
-            time_sent
-        }
-    }
-`
-const NEW_MESSAGE = gql`
-    subscription {
-        newMessage {
-            chatID
-            msgID
-            msg_text
-            userID
-            url
-            type
-            time_sent
-        }
-    }
-`
-const SEEN = gql`
-    mutation($cid: Int!, $rid: Int!){
-        seen(chatID: $cid, receiver_id: $rid){
-            chatID
-        }
-    }
-`
 
 
 const ChatMsgBox = ({chat, info}) => {
@@ -138,7 +103,6 @@ const styles = {
     loader: {
         padding:'60px 100px 30px 0',
         alignSelf:'flex-end',
-        // margin:'50px',
         zIndex:'1'
     },
     loadMore:{
@@ -150,3 +114,37 @@ const styles = {
         color:'white'
     }
 }
+
+const GET_MESSAGES = gql`
+    query ($chatID: Int!, $limit: Int, $offset: Int){
+        get_messages (chatID: $chatID, limit: $limit, offset: $offset){
+            chatID
+            msgID
+            msg_text
+            userID
+            type
+            url
+            time_sent
+        }
+    }
+`
+const NEW_MESSAGE = gql`
+    subscription {
+        newMessage {
+            chatID
+            msgID
+            msg_text
+            userID
+            url
+            type
+            time_sent
+        }
+    }
+`
+const SEEN = gql`
+    mutation($cid: Int!, $rid: Int!){
+        seen(chatID: $cid, receiver_id: $rid){
+            chatID
+        }
+    }
+`

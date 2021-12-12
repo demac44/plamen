@@ -2,6 +2,8 @@ import { GraphQLInt, GraphQLList } from 'graphql';
 import connection from '../../middleware/db.js'
 import { ChatListType, ChatMessagesType, ChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
+import CryptoJS from 'crypto-js'
+
 export const CHAT_EXISTS = {
     type: ChatType,
     args: {
@@ -42,6 +44,8 @@ export const LAST_MESSAGE = {
         const {chatID} = args
         const sql = `SELECT msg_text, type, userID FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT 1`
         const result = await connection.promise().query(sql).then(res => {return res[0]})
+        const decrypted = CryptoJS.AES.decrypt(result[0].msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+        result[0].msg_text = decrypted
         return result[0]
     }
 }
@@ -57,6 +61,10 @@ export const GET_MESSAGES = {
         const {chatID, limit, offset} = args
         const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        await result.map(msg => {
+            const decrypted = CryptoJS.AES.decrypt(msg.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+            msg.msg_text = decrypted
+        })
         return result
     }
 }

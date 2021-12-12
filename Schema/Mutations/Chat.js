@@ -4,6 +4,8 @@ import { ChatMessagesType, ChatType, MsgNotificationType } from "../TypeDefs/Cha
 
 import { pubsub } from '../../server.js'
 
+import CryptoJS from 'crypto-js'
+
 export const CREATE_CHAT = {
     type: ChatType,
     args: {
@@ -43,8 +45,9 @@ export const SEND_MESSAGE = {
     },
     async resolve(_, args){
         const {chatID, userID, msg_text, url, type} = args
+        const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url, type)
-                     VALUES (null, ${chatID}, ${userID}, null, "${msg_text}", "${url}", "${type}")`
+                     VALUES (null, ${chatID}, ${userID}, null, "${encrypted}", "${url}", "${type}")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, type, msgID: msg.insertId, time_sent: new Date().getTime()}})  
         return args

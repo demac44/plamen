@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -19,10 +19,10 @@ const Message = ({msg}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
+    const [msgg, setMsg] = useState('')
     const [delete_msg] = useMutation(DELETE_MESSAGE, {
         variables:{msgID: msg.msgID}
     })
-
 
     const handleDelete = () => {
         delete_msg().then(()=>{setDeleted(true)})
@@ -56,7 +56,7 @@ const Message = ({msg}) => {
                         {/* media message */}
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' src={msg.url} controls/>}
-
+                            
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
 
