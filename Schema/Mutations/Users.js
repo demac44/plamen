@@ -1,6 +1,6 @@
-import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
+import { GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
-import { PasswordType, UserType } from "../TypeDefs/Users.js"
+import { PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 
 export const CREATE_USER = {
@@ -26,6 +26,8 @@ export const CREATE_USER = {
         return args
     }
 }
+
+// account settings
 
 export const DISABLE_ACCOUNT = {
     type: PasswordType,
@@ -83,3 +85,88 @@ export const UNDISABLE_ACCOUNT = {
     }
 }
 
+// user info settings
+
+
+export const EDIT_INTERESTS = {
+    type: UserInfoType,
+    args:{
+        userID: {type: GraphQLInt},
+        interests: {type: GraphQLString}
+    },
+    resolve(_, args){
+        const {userID, interests} = args
+        const sql = `UPDATE user_info SET interests="${interests}" WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const EDIT_USER_INFO = {
+    type: UserInfoType,
+    args:{
+        userID: {type: GraphQLInt},
+        job: {type: GraphQLString},
+        university: {type: GraphQLString},
+        high_school: {type: GraphQLString},
+        phone_number: {type: GraphQLString},
+    },
+    resolve(_, args){
+        const {userID, job, university, high_school, phone_number} = args
+        const sql = `UPDATE user_info 
+                        SET job="${job}",
+                            university="${university}",
+                            high_school="${high_school}",
+                            phone_number="${phone_number}"
+                        WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const EDIT_BDATE= {
+    type: UserInfoType,
+    args:{
+        userID: {type: GraphQLInt},
+        bDate: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {userID, bDate} = args
+        const ifChanged = `SELECT bDate_changed, bDate FROM user_info WHERE userID=${userID}`
+        const sql = `UPDATE user_info 
+                        SET 
+                            bDate=STR_TO_DATE("${bDate}", "%Y-%m-%d"),
+                            bDate_changed=true 
+                        WHERE userID=${userID}`
+        const result = await connection.promise().query(ifChanged).then(res=>{return res[0][0]})
+        if(result.bDate_changed===0){
+            connection.query(sql)
+            return {error: null}
+        } else if (result.bDate_changed===1) return {error: "You already changed you birth date once!"}
+    }
+}
+
+export const EDIT_GENDER= {
+    type: UserInfoType,
+    args:{
+        userID: {type: GraphQLInt},
+        gender: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {userID, gender} = args
+        const ifChanged = `SELECT gender_changed, gender FROM user_info WHERE userID=${userID}`
+        const sql = `UPDATE user_info 
+                        SET 
+                            gender="${gender}",
+                            gender_changed=true 
+                        WHERE userID=${userID}`
+        const result = await connection.promise().query(ifChanged).then(res=>{return res[0][0]})
+        if(result.gender_changed===0){
+            if(result.gender===gender) return {error: `Your gender is already set as ${gender}`}
+            else {
+                connection.query(sql)
+                return {error: null}
+            }
+        } else if (result.gender_changed===1) return {error: "You already changed you gender once!"}
+    }
+}

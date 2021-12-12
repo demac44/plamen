@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {  validateAge, validateNames, validateUsername} from '../../../../Entry/Register/RegisterForm'
+import { validateNames, validateUsername } from '../../../../Entry/Register/RegisterForm'
 import ErrorMsg from '../../../../Entry/ErrorMsg'
 
 import {gql} from 'graphql-tag'

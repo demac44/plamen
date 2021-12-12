@@ -16,14 +16,14 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
-import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
+import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
-import { GET_USER, GET_ALL_USERS } from "./Queries/Users.js";
+import { GET_USER, GET_ALL_USERS, GET_USER_INFO } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { NotificationType } from "./TypeDefs/Notifications.js";
 
@@ -36,6 +36,7 @@ const RootQuery = new GraphQLObjectType({
         ifFollowing: IF_FOLLOWING,
         get_followers: GET_FOLLOWERS,
         get_following: GET_FOLLOWING,
+        get_user_info: GET_USER_INFO,
         // posts
         get_post: GET_POST,
         get_profile_posts: GET_PROFILE_POSTS,
@@ -92,6 +93,10 @@ const RootMutation = new GraphQLObjectType({
         disable_account: DISABLE_ACCOUNT,
         undisable_account: UNDISABLE_ACCOUNT,
         delete_account: DELETE_ACCOUNT,
+        edit_user_interests: EDIT_INTERESTS,
+        edit_user_info: EDIT_USER_INFO,
+        edit_bdate: EDIT_BDATE,
+        edit_gender: EDIT_GENDER,
         // posts
         delete_post: DELETE_POST,
         like_post: LIKE_POST,

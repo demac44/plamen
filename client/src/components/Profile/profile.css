@@ -88,7 +88,7 @@
     color: white;
 }
 
-/* setting */
+/* settings */
 
 .edit-profile-nav{
     width: 100%;
@@ -161,7 +161,39 @@
     z-index: 1;
 }
 
+/* user info setting */
 
+.edit-user-info-box{
+    width:100%;
+    padding:10px;
+    box-shadow:5px 5px 10px black;
+    border:1px solid #2f2f2f;
+    border-radius:5px;
+    color:white;
+    margin-top: 10px;
+}
+.edit-user-info-box div{
+    width: 100%;
+    margin-top: 10px;
+}
+.edit-user-info-box h5{
+    min-width: 70px;
+}
+.edit-user-info-box input{
+    height: 35px;
+    border: 1px solid #ffbb00;
+}
+.edit-user-info-box select{
+    height: 35px;
+    width: 100%;
+    margin-left: 5px;
+    border-radius: 30px;
+    padding: 5px;
+    border: 1px solid #ffbb00;
+}
+.bDate-form select{
+    width: 60%;
+}
 /* MEDIA QUERIES */
 
 
@@ -227,6 +259,20 @@
         width: 90%;
     }
     .change-pass-box input{
+        width: 100%;
+    }
+    .edit-user-info-box div{
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    .edit-user-info-box h5{
+        min-width: none;
+        text-align: center;
+    }
+    .edit-user-info-box select{
+        margin-top: 5px;
+    }
+    .bDate-form select{
         width: 100%;
     }
 }

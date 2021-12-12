@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
-import { UserType } from '../TypeDefs/Users.js';
+import { UserInfoType, UserType } from '../TypeDefs/Users.js';
 
 export const GET_ALL_USERS = {
     type: new GraphQLList(UserType),
@@ -27,4 +27,17 @@ export const GET_USER = {
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }    
+}
+
+export const GET_USER_INFO = {
+    type: UserInfoType,
+    args: {
+        userID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID} = args
+        const sql = `SELECT * FROM user_info WHERE userID=${userID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
+        return result
+    }
 }

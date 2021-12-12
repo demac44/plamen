@@ -2,7 +2,7 @@ import React from 'react'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
 import Sidebar from '../../../components/General components/Sidebar'
 import Navbar from '../../../components/Navbar/Navbar'
-import EditProfileNav from '../../../components/Profile/components/Edit profile/EditProfileNav'
+import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
 
 const Settings = ({isLogged}) => {
     return (

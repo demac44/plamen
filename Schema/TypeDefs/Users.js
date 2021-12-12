@@ -33,3 +33,19 @@ export const PasswordType = new GraphQLObjectType({
         error: {type: GraphQLString}
     })
 })
+
+export const UserInfoType = new GraphQLObjectType({
+    name:'UserInfo',
+    fields: () => ({
+        userID: {type: GraphQLInt},
+        job: {type: GraphQLString},
+        university: {type: GraphQLString},
+        high_school: {type: GraphQLString},
+        bDate: {type: GraphQLString},
+        phone_number: {type: GraphQLString},
+        gender: {type: GraphQLString},
+        date_joined: {type: GraphQLString},
+        interests: {type: GraphQLString},
+        error: {type: GraphQLString}
+    })
+})

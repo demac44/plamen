@@ -52,14 +52,17 @@ const CreateGroupForm = ({closeFormCallback}) => {
                 <i style={styles.exitBtn} onClick={()=>closeFormCallback()} className='fas fa-times'></i>
                 <h3>Community name:</h3>
                 <input placeholder='Community name...' id='name'></input>
+
                 <h3>Visibility:</h3>
                 <p style={{color:'white', fontSize:'12px'}}>You change this later</p>
                 <select id='closed'>
                     <option value='private'>Private</option>
                     <option value='public'>Public</option>
                 </select>
+
                 <h3>Add community description:</h3>
                 <textarea placeholder='Description...' id='description'></textarea>
+                
                 <h3>Add community tags:</h3>
                 {tags.length > 0 && <p style={{color:'white', fontSize:'12px', marginTop:'10px'}}>Click on tag to remove it</p>}
                 <div className='tags-box' style={{backgroundColor:'white'}}>

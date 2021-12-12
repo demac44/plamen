@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from 'react'
 import Navbar from '../../../components/Navbar/Navbar'
 
-import EditForm from '../../../components/Profile/components/Edit profile/Account settings/EditForm'
+import EditForm from '../../../components/Profile/components/Settings/Account settings/EditForm'
 import Sidebar from '../../../components/General components/Sidebar'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
 
-import EditProfileNav from '../../../components/Profile/components/Edit profile/EditProfileNav'
-import EditPfpMenu from '../../../components/Profile/components/Edit profile/Edit pfp/EditPfpMenu'
-import ChangePassBox from '../../../components/Profile/components/Edit profile/Account settings/ChangePassBox'
-import DisableAccBox from '../../../components/Profile/components/Edit profile/Account settings/DisableAccBox'
+import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
+import EditPfpMenu from '../../../components/Profile/components/Settings/Account settings/EditPfpMenu'
+import ChangePassBox from '../../../components/Profile/components/Settings/Account settings/ChangePassBox'
+import DisableAccBox from '../../../components/Profile/components/Settings/Account settings/DisableAccBox'
+
 
 const AccountSettings = ({isLogged}) => {
     const [pfpMenu, setPfpMenu] = useState(false)
