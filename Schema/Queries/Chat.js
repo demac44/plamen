@@ -26,7 +26,7 @@ export const GET_CHAT_LIST = {
         const sql = `
         SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, date_created FROM users 
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
-        WHERE chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}`
+        WHERE disabled=false AND chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     }  

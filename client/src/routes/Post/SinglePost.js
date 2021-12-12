@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams, useHistory } from 'react-router'
+import { Redirect } from 'react-router-dom'
 
 
 import gql from 'graphql-tag'
@@ -36,6 +37,9 @@ const SinglePost = ({isLogged}) => {
     })
 
     if(loading) return <div className='wh-100'><PostLoader/></div>
+
+    if(!data?.get_post?.postID) return <Redirect to='/404'/>
+
 
     return (
         <>

@@ -11,7 +11,10 @@ export const GET_GROUPS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT group_name, group_users.groupID FROM group_users JOIN groups ON group_users.groupID=groups.groupID WHERE group_users.userID=${userID}`
+        const sql = `SELECT group_name, group_users.groupID 
+                     FROM group_users 
+                     JOIN groups ON group_users.groupID=groups.groupID 
+                     WHERE group_users.userID=${userID}`
         const result = await connection.promise().query(sql).then((res)=>{
             return res
         })
@@ -52,7 +55,8 @@ export const GET_GROUP_POSTS = {
         const sql = `SELECT postID,group_posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,groupID
                      FROM group_posts
                      JOIN users ON group_posts.userID=users.userID 
-                     WHERE group_posts.groupID=${groupID}
+                     WHERE users.disabled=false 
+                     AND group_posts.groupID=${groupID}
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
@@ -72,7 +76,8 @@ export const GET_SAVED_GROUP_POSTS = {
                         FROM group_posts_saved
                         JOIN group_posts ON group_posts.postID=group_posts_saved.postID 
                         JOIN users ON users.userID=posts.userID 
-                        WHERE saves.userID=${userID} 
+                        WHERE users.disabled=false 
+                        AND saves.userID=${userID} 
                         ORDER BY date_posted DESC 
                         LIMIT ${limit} OFFSET ${offset};`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -107,7 +112,8 @@ export const GET_GROUP_POST_COMMENTS = {
         const sql = `SELECT commentID,username,group_posts_comments.userID,comment_text,date_commented,profile_picture,postID 
                      FROM group_posts_comments 
                      JOIN users ON group_posts_comments.userID=users.userID 
-                     WHERE postID=${postID} 
+                     WHERE users.disabled=false 
+                     AND postID=${postID} 
                      ORDER BY date_commented DESC 
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -125,7 +131,8 @@ export const GET_GROUP_POST_LIKES = {
         const {postID, limit, offset} = args
         const sql = `SELECT first_name,last_name,users.userID,username,profile_picture FROM group_posts_likes 
                      JOIN users ON group_posts_likes.userID=users.userID 
-                     WHERE postID=${postID} 
+                     WHERE users.disabled=false 
+                     AND postID=${postID} 
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
@@ -176,7 +183,8 @@ export const GET_GROUP_MEMBERS = {
                      FROM group_users
                      JOIN users ON group_users.userID=users.userID
                      JOIN group_roles ON group_roles.roleID=group_users.roleID
-                     WHERE group_users.groupID=${groupID}`
+                     WHERE users.disabled=false 
+                     AND group_users.groupID=${groupID}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
     }

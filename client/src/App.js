@@ -20,6 +20,7 @@ import Chats from './routes/Chat/Chats'
 import Explore from './routes/Explore/Explore';
 import MainLoader from './components/General components/Loaders/MainLoader';
 import Settings from './routes/Profile/Settings/Settings';
+import NotFound from './routes/Not found/NotFound';
 
 function App() {
   const dispatch = useDispatch()
@@ -71,6 +72,7 @@ function App() {
               <Route exact path='/explore'>{isLogged ? <Explore isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/settings'>{isLogged ? <Settings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/settings/account'>{isLogged ? <AccountSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/404'>{isLogged ? <NotFound/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
       </>

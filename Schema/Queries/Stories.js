@@ -11,8 +11,10 @@ export const GET_STORIES = {
     async resolve(_, args){
         const {userID} = args
         const sql = `SELECT storyID, users.userID, first_name, last_name, profile_picture, username, type
-                    FROM stories JOIN users ON stories.userID=users.userID 
-                    WHERE (users.userID=${userID} OR users.userID IN 
+                    FROM stories 
+                    JOIN users ON stories.userID=users.userID 
+                    WHERE disabled=false 
+                    AND (users.userID=${userID} OR users.userID IN 
                         (SELECT followedID FROM followings WHERE followerID=${userID})) 
                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
                         GROUP BY (users.userID)
@@ -37,7 +39,10 @@ export const GET_USER_STORIES = {
     async resolve(_, args){
         const {userID} = args
         const sql = `SELECT storyID, url, type, users.userID, first_name, last_name, profile_picture, username, date_posted FROM stories
-                        JOIN users ON stories.userID=users.userID WHERE stories.userID=${userID} AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)`
+                        JOIN users ON stories.userID=users.userID 
+                        WHERE disabled=false 
+                        AND stories.userID=${userID} 
+                        AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }

@@ -10,7 +10,7 @@ export const GET_ALL_USERS = {
     },
     async resolve(_, args){
         const {limit, offset} = args
-        const sql = `SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`
+        const sql = `SELECT * FROM users WHERE disabled=false LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }    
@@ -23,7 +23,7 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const sql = `SELECT * FROM users WHERE userID=${userID} OR username="${username}"`
+        const sql = `SELECT * FROM users WHERE disabled=false AND userID=${userID} OR username="${username}"`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }    

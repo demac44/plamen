@@ -1,5 +1,6 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
+import { Redirect } from 'react-router-dom'
 
 import '../../App.css'
 import '../../General.css'
@@ -44,6 +45,7 @@ const Profile = ({myprofile, isLogged}) => {
     if (loading) return <ProfileLoader/>
     if(error) throw error 
     
+    if(!data?.get_user?.userID) return <Redirect to='/404'/>
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -107,6 +109,13 @@ const FETCH_INFO= gql`
             username
             profile_picture
             type
+        }
+        get_user(userID: $userID){
+            first_name
+            last_name
+            profile_picture
+            username
+            userID
         }
     }
 `

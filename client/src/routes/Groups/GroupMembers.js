@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
-import { useParams } from 'react-router-dom'
+import { Redirect, useParams } from 'react-router-dom'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -34,7 +34,7 @@ const GroupMembers = ({isLogged}) => {
             setUpdated(false)
         }
         if(data){
-            setTags(data.get_group.group_tags.split(','))
+            setTags(data?.get_group?.group_tags?.split(','))
         }
     }, [refetch, updated, data])
 
@@ -48,6 +48,8 @@ const GroupMembers = ({isLogged}) => {
 
 
     if(loading) return <GroupLoader/>
+
+    if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
 
     return (
         <>

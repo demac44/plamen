@@ -35,7 +35,9 @@ export const GET_FEED_POSTS = {
         const {userID, limit, offset} = args
         const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID
                      FROM posts 
-                     JOIN users ON posts.userID=users.userID WHERE (users.userID =${userID} OR users.userID IN 
+                     JOIN users ON posts.userID=users.userID 
+                     WHERE disabled=false 
+                     AND (users.userID =${userID} OR users.userID IN 
                      (SELECT followedID FROM followings WHERE followerID=${userID})) 
                      AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
@@ -57,7 +59,8 @@ export const GET_SAVED_POSTS    = {
                         FROM saves 
                         JOIN posts ON posts.postID=saves.postID 
                         JOIN users ON users.userID=posts.userID 
-                        WHERE saves.userID=${userID} 
+                        WHERE disabled=false 
+                        AND saves.userID=${userID} 
                         ORDER BY date_posted DESC 
                         LIMIT ${limit} OFFSET ${offset};`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -84,6 +87,7 @@ export const RANDOM_POSTS = {
     async resolve(_, args){
         const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID FROM posts
                      JOIN users ON users.userID=posts.userID
+                     WHERE disabled=false
                      ORDER BY RAND() limit 100`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
@@ -101,8 +105,10 @@ export const GET_POST = {
     async resolve(_, args){
         const {postID} = args
         const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture, type 
-                        FROM posts JOIN users ON posts.userID=users.userID 
-                        WHERE posts.postID=${postID}`
+                        FROM posts 
+                        JOIN users ON posts.userID=users.userID 
+                        WHERE disabled=false 
+                        AND posts.postID=${postID}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result[0]
     }
