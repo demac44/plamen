@@ -88,7 +88,7 @@
     color: white;
 }
 
-/* edit profile */
+/* setting */
 
 .edit-profile-nav{
     width: 100%;
@@ -151,6 +151,16 @@
 .disable-acc-box div:hover{
     background-color: #2f2f2f;
 }
+.settings-arrow-back{
+    position: absolute;
+    left:15px;
+    top:14px;
+    font-size: 20px;
+    color: white;
+    display: none;
+    z-index: 1;
+}
+
 
 /* MEDIA QUERIES */
 
@@ -202,6 +212,9 @@
     }
     .edit-pf-box .entry-form div{
         flex-direction: column !important;
+    }
+    .settings-arrow-back{
+        display: block;
     }
 }   
 @media screen and (max-width: 447px){

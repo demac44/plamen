@@ -88,52 +88,54 @@ const RegisterForm = () => {
     }
     
         return (
-            <>
-            <h1>Register</h1>
-            <p>Enter your details below to continue</p>
-            {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
-            <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
-                <div className="reg-names-box">
-                    <input type="text" id='first_name' name='first_name' placeholder="First name"/>
-                    <input type="text" id='last_name' name='last_name' placeholder="Last name"/>
+            <div className='entry-form-box flex-col-ctr'>
+                <span style={{alignSelf:'flex-start'}}>
+                    <h1>Register</h1>
+                    <p>Enter your details below to continue</p>
+                </span>
+                {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
+                <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
+                    <div className="reg-names-box">
+                        <input type="text" id='first_name' name='first_name' placeholder="First name"/>
+                        <input type="text" id='last_name' name='last_name' placeholder="Last name"/>
+                    </div>
+                    <div className="birthdt-reg-box">
+                        <select id='gender' name='gender'>
+                            <option value='male'>Male</option>
+                            <option value='female'>Female</option>
+                        </select>
+                        <select id="year" name="year">
+                            {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
+                        </select>
+                        <select id='month' name="month">
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                        <select d='day' name='day'>
+                            {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
+                        </select>
+                    </div>
+                    <input type="text"  id='email' name='email' placeholder="Email"/>
+                    <input type="text" id='username' name='username' placeholder="Create your username"/>
+                    <input type="password" id='password' name='password' placeholder="Password"/>
+                    <input type="password" id='confirmpass' name='confirmpass' placeholder="Confirm your password"/>
+                    <button className="entry-btn btn" type="submit">REGISTER</button>
+                </form>
+                <div className="entry-link flex-ctr">
+                    <h6>Already have an account?</h6>                
+                    <NavLink exact to="/login">Login</NavLink>
                 </div>
-                <div className="birthdt-reg-box">
-                    <select id='gender' name='gender'>
-                        <option value='male'>Male</option>
-                        <option value='female'>Female</option>
-                    </select>
-                    <select id="year" name="year">
-                        {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
-                    </select>
-                    <select id='month' name="month">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">Jun</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                    </select>
-                    <select d='day' name='day'>
-                        {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
-                    </select>
-                </div>
-                <input type="text"  id='email' name='email' placeholder="Email"/>
-                <input type="text" id='username' name='username' placeholder="Create your username"/>
-                <input type="password" id='password' name='password' placeholder="Password"/>
-                <input type="password" id='confirmpass' name='confirmpass' placeholder="Confirm your password"/>
-                <button className="entry-btn btn" type="submit">REGISTER</button>
-            </form>
-            <div className="entry-link flex-ctr">
-                <h6>Already have an account?</h6>                
-                <NavLink exact to="/login">Login</NavLink>
             </div>
-        </>
     )
 }
 

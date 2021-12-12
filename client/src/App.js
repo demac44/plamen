@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Feed from './routes/Feed/Feed';
 import Profile from './routes/Profile/Profile';
-import EditProfile from './routes/Profile/EditProfile';
+import AccountSettings from './routes/Profile/Settings/AccountSettings';
 import Saved from './routes/Profile/Saved';
 import Search from './routes/Search/Search';
 import SinglePost from './routes/Post/SinglePost';
@@ -19,6 +19,7 @@ import GroupMembers from './routes/Groups/GroupMembers';
 import Chats from './routes/Chat/Chats'
 import Explore from './routes/Explore/Explore';
 import MainLoader from './components/General components/Loaders/MainLoader';
+import Settings from './routes/Profile/Settings/Settings';
 
 function App() {
   const dispatch = useDispatch()
@@ -68,7 +69,8 @@ function App() {
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/members'>{isLogged ? <GroupMembers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/explore'>{isLogged ? <Explore isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/settings/account'>{isLogged ? <EditProfile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/settings'>{isLogged ? <Settings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/settings/account'>{isLogged ? <AccountSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </>
           </Switch>}
       </>

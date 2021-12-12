@@ -51,9 +51,11 @@ const LoginForm = ({popup}) => {
 
     
     return (
-        <div>
-            <h1>Login</h1>
-            <p>Enter your details below to continue</p>
+        <div className='entry-form-box flex-col-ctr'>
+            <span style={{alignSelf:'flex-start'}}> 
+                <h1>Login</h1>
+                <p>Enter your details below to continue</p>
+            </span>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
             <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
                 <input type="text" ref={value => username = value} id='username' name='username' placeholder="Username or email"/>

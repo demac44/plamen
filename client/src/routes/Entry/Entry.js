@@ -9,16 +9,14 @@ const Entry = () => {
     return (
         <>
             <Switch>
-                <Route exact path={['/login', '/register', '/messages']}>              
+                <Route exact path={['/login', '/register']}>              
                     <div className='entry-wrapper flex-ctr'>
-                        <div className='entry-form-box'>
-                            <Route exact path='/register'>
-                                <RegisterForm/>
-                            </Route>
-                            <Route exact path='/login'>
-                                <LoginForm/>
-                            </Route>
-                        </div>
+                        <Route exact path='/register'>
+                            <RegisterForm/>
+                        </Route>
+                        <Route exact path='/login'>
+                            <LoginForm/>
+                        </Route>
                     </div>
                 </Route>
             </Switch>

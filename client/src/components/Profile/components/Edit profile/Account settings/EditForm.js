@@ -5,6 +5,7 @@ import ErrorMsg from '../../../../Entry/ErrorMsg'
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 import Avatar from '../../../../General components/Avatar'
+import { Link } from 'react-router-dom'
 
 
 
@@ -72,7 +73,14 @@ const EditForm = ({handleMenu}) => {
     return (
         <>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
-            <h3 style={{...styles.box, textAlign:'center', color:'white'}}>Account settings</h3>
+            <span style={{position:'relative'}}>
+                <Link to='/settings'>
+                    <i className='fas fa-arrow-left settings-arrow-back'/>
+                </Link>
+                <h3 style={{...styles.box, textAlign:'center', color:'white'}}>
+                    Account settings
+                </h3>
+            </span>
             <span style={styles.box} className='flex-col-ctr'>
                 <p style={styles.title}>Change profile picture</p>
                 <span className='flex-ctr'>
@@ -124,6 +132,7 @@ const styles = {
         cursor:'pointer'
     },
     box:{
+        position:'relative',
         border:'1px solid #2f2f2f',
         boxShadow:'5px 5px 10px black',
         padding:'10px',

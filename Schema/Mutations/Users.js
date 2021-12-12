@@ -1,6 +1,6 @@
-import { GraphQLInt, GraphQLString } from "graphql"
+import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
-import { UserType } from "../TypeDefs/Users.js"
+import { PasswordType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 
 export const CREATE_USER = {
@@ -28,15 +28,45 @@ export const CREATE_USER = {
 }
 
 export const DISABLE_ACCOUNT = {
-    type: UserType,
+    type: PasswordType,
     args:{
-        userID: {type: GraphQLInt}
+        userID: {type: GraphQLInt},
+        password: {type: GraphQLString}
     },
-    resolve(_, args){
-        const {userID} = args
-        const sql = `UPDATE users SET disabled=true WHERE userID=${userID}`
-        connection.query(sql)
-        return args
+    async resolve(_, args){
+        const {userID, password} = args
+        const getPass = `SELECT pass FROM users WHERE userID=${userID}`
+        const pass = await connection.promise().query(getPass).then(res=>{return res[0][0]})
+        const validPassword = await bcrypt.compare(password, pass.pass)
+        if(validPassword){
+            const sql = `UPDATE users SET disabled=true WHERE userID=${userID}`
+            connection.query(sql)
+            return {error: null}
+        }
+        else {
+            return {error: 'Invalid password'}
+        }
+    }
+}
+export const DELETE_ACCOUNT = {
+    type: PasswordType,
+    args:{
+        userID: {type: GraphQLInt},
+        password: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {userID, password} = args
+        const getPass = `SELECT pass FROM users WHERE userID=${userID}`
+        const pass = await connection.promise().query(getPass).then(res=>{return res[0][0]})
+        const validPassword = await bcrypt.compare(password, pass.pass)
+        if(validPassword){
+            const sql = `DELETE FROM users WHERE userID=${userID}`
+            connection.query(sql)
+            return {error: null}
+        }
+        else {
+            return {error: 'Invalid password'}
+        }
     }
 }
 
@@ -53,16 +83,3 @@ export const UNDISABLE_ACCOUNT = {
     }
 }
 
-
-export const DELETE_ACCOUNT = {
-    type: UserType,
-    args:{
-        userID: {type: GraphQLInt}
-    },
-    resolve(_, args){
-        const {userID} = args
-        const sql = `DELETE FROM users WHERE userID=${userID}`
-        connection.query(sql)
-        return args
-    }
-}
