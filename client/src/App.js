@@ -59,9 +59,8 @@ function App() {
           <Switch>
             <>
               <Route exact path='/'></Route>
-              <Route exact path='/myprofile'>{isLogged ? <Profile myprofile={true} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/profile/:id'>{isLogged ? <Profile myprofile={false} isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/profile/:username'>{isLogged ? <Profile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

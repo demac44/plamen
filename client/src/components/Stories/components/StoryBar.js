@@ -10,7 +10,7 @@ const StoryBar = ({user, date, closeStoryCallback, storyID, updatedCallback}) =>
 
     return (
         <div className='story-top-bar flex-sb'>
-            <Link to={'/profile/'+user.userID} className='flex-ctr' style={{height:'100%', color:'white'}}>
+            <Link to={'/profile/'+user.username} className='flex-ctr' style={{height:'100%', color:'white'}}>
                 <Avatar size='45px' image={user.profile_picture}/>
                 <p style={{marginLeft:'10px'}}>{user.first_name+' '+user.last_name}</p>
             </Link>

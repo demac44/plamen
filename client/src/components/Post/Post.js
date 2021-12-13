@@ -23,6 +23,7 @@ const Post = ({post, refetchPosts}) => {
                     timestamp: post.date_posted,
                     postID: post.postID,
                     userID: post.userID,
+                    username: post.username
             }}/>
             <PostMedia data={{
                 url:post.url,

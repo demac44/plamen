@@ -2,12 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // import FollowBtn from '../Profile/components/FollowBtn'
 import Avatar from '../General components/Avatar'
+import FollowButton from '../General components/FollowButton'
 import SetTime from '../General components/SetTime'
 
 const NotificationBox = ({notif}) => {
     return (
         <div className='notification-box' key={notif.Nid}>
-            <Link to={notif.type==='follow' ? '/profile/'+notif.sender_id : '/post/'+notif.postID} className='flex-ctr'>
+            <Link to={notif.type==='follow' ? '/profile/'+notif.username : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
                     <Avatar size='50px' image={notif.profile_picture}/>
                     {notif.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
@@ -19,7 +20,7 @@ const NotificationBox = ({notif}) => {
                 {notif.type==='follow' && <div className='flex-ctr'><p>{'@'+notif.username+' followed you'}</p></div>}
             </Link>
             <div className='nb-time flex-ctr'>
-                {/* {notif.type==='follow' && <FollowBtn uID={notif.sender_id} notifications={true}/>} */}
+                {/* {notif.type==='follow' && <FollowButton uID={notif.sender_id} notifications={true}/>} */}
                 <SetTime timestamp={notif?.time_sent}/>
             </div>
         </div>

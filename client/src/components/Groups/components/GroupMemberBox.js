@@ -14,7 +14,7 @@ const GroupMemberBox = ({member}) => {
     }, [member])
 
     return (
-        <Link to={'/profile/'+member.userID} className='group-member-box flex-sb'>
+        <Link to={'/profile/'+member.username} className='group-member-box flex-sb'>
             <div style={{height:'100%'}} className='flex-sb'>
                 <Avatar size='50px' image={member.profile_picture}/>
                 <div style={{marginLeft:'10px', color:'white', height:'100%'}} className='flex-col-sb'>

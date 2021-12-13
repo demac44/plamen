@@ -6,6 +6,8 @@ import SendMsgBtn from './components/SendMsgBtn'
 import Avatar from '../General components/Avatar'
 import Story from '../Stories/components/Story'
 
+import {useParams} from 'react-router-dom'
+
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
@@ -13,8 +15,10 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
     const [openStory, setOpenStory] = useState(false)
     const ls = JSON.parse(localStorage.getItem('user')) 
 
+    const {username} = useParams()
+
     const getUser = useQuery(GET_USER, {
-        variables: {userID: userID},
+        variables: {username: username},
         skip: myprofile
     })
 
@@ -100,8 +104,8 @@ const FETCH_INFO= gql`
     }`
 
 const GET_USER = gql`
-    query ($userID: Int){
-        get_user(userID: $userID){
+    query ($username: String!){
+        get_user(username:$username){
             first_name
             last_name
             profile_picture

@@ -1,4 +1,4 @@
-import { GraphQLBoolean, GraphQLInt, GraphQLList} from 'graphql';
+import { GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLString} from 'graphql';
 import connection from '../../middleware/db.js'
 import { CommentType } from '../TypeDefs/Comments.js';
 import { LikesType } from '../TypeDefs/Likes.js';
@@ -9,15 +9,16 @@ export const GET_PROFILE_POSTS = {
     type: new GraphQLList(PostType),
     args: {
         userID: {type: GraphQLInt},
+        username: {type: GraphQLString},
         limit: {type: GraphQLInt},
         offset: {type: GraphQLInt}
     },   
     async resolve(_, args) {
-        const {userID, limit, offset} = args
+        const {userID, limit, offset, username} = args
         const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID 
                      FROM posts
                      JOIN users ON posts.userID=users.userID
-                     WHERE posts.userID=${userID} 
+                     WHERE users.username="${username}"
                      ORDER BY date_posted DESC 
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})

@@ -6,12 +6,13 @@ import Avatar from '../../General components/Avatar'
 import { Link } from 'react-router-dom'
 
 const PostTopBar = ({data, refetchPosts, isLogged}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [menu, setMenu] = useState(false)
 
     return (
         <>
             <div className='post-top-bar'>
-                <Link to={'/profile/'+data.userID} className='flex'>
+                <Link to={'/profile/'+data.username} className='flex'>
                     <Avatar size='40px' image={data.pfp}/>
 
                     <span className='flex-col-sb' style={styles.nameAndTime}>

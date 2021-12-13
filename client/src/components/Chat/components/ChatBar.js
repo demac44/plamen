@@ -24,7 +24,7 @@ const ChatBar = ({chatID, info}) => {
                             }}
                         ></i>
                     </Link>
-                    <Link to={'/profile/'+info.userID} style={{height:'50px'}} className='chat-user-info'>
+                    <Link to={'/profile/'+info.username} style={{height:'50px'}} className='chat-user-info'>
                         <Avatar size='50px' image={info.profile_picture}/>
                         <p>{info.first_name+' '+info.last_name}</p>
                     </Link>

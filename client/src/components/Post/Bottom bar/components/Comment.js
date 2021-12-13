@@ -32,7 +32,7 @@ const Comment = ({comment, refetchComments}) => {
         <>
             <div className='comment'>
                 <div className='flex-sb'>
-                    <Link to={'/profile/'+comment.userID} className='flex-ctr'>
+                    <Link to={'/profile/'+comment.username} className='flex-ctr'>
                         <Avatar size='35px' image={comment.profile_picture}/>
 
                         <span className='flex-col-sb' style={styles.nameAndTime}>

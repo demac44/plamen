@@ -11,7 +11,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
     return (
         <>
             <div className='post-top-bar'>
-                <Link to={'/profile/'+data.userID} className='flex'>
+                <Link to={'/profile/'+data.username} className='flex'>
                     <Avatar size='40px' image={data.pfp}/>
 
                     <span className='flex-col-sb' style={styles.nameAndTime}>

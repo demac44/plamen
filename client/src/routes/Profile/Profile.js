@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect } from 'react-router-dom'
 
@@ -21,33 +21,32 @@ import SideInfoBox from '../../components/Profile/components/SideInfoBox'
 import InterestsBox from '../../components/Profile/components/InterestsBox'
 
     
-const Profile = ({myprofile, isLogged}) => {
+const Profile = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
+    const [myprofile, setMyProfile] = useState(false)
     const history = useHistory()
-    const {id} = useParams()
-    
-    const userID = parseInt(id)
+    const {username} = useParams()
 
+    
     const {loading, error, data, refetch, fetchMore} = useQuery(FETCH_INFO, {
         variables: {
-            userID: myprofile ? ls.userID : userID,
+            username: username===ls.username ? ls.username : username,
             limit:20,
             offset:0
         }
     })
-
-
+    
     useEffect(()=>{
+        if(username===ls.username) setMyProfile(true)
         window.scrollTo(0,0)
-        if(userID === ls.userID) {
-            return history.push('/myprofile')}
-        return
-    }, [userID, ls.userID, refetch, history])
+        return null
+    }, [username, ls.username, refetch, history, myprofile])
+
     
     if (loading) return <ProfileLoader/>
     if(error) throw error 
     
-    if(!data?.get_user?.userID) return <Redirect to='/404'/>
+    if(!data?.get_user?.username) return <Redirect to='/404'/>
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -75,7 +74,7 @@ const Profile = ({myprofile, isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}> 
                 <div className='container-profile'>
-                    <ProfileTopBox userID={userID} myprofile={myprofile} postsLength={data.get_profile_posts.length}/>
+                    <ProfileTopBox userID={data.get_user.userID} myprofile={myprofile} postsLength={data.get_profile_posts.length}/>
                 </div>
                 <div className='container-main'  style={{paddingTop:'10px'}}>
                     <Sidebar/>
@@ -84,8 +83,8 @@ const Profile = ({myprofile, isLogged}) => {
                         <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
                     <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
-                        <SideInfoBox myprofile={myprofile} userID={userID}/>
-                        <InterestsBox myprofile={myprofile} userID={userID}/>
+                        <SideInfoBox myprofile={myprofile} userID={data.get_user.userID}/>
+                        <InterestsBox myprofile={myprofile} userID={data.get_user.userID}/>
                         <MyGroupsList/>
                     </div>
                 </div>
@@ -99,8 +98,8 @@ export default Profile
 
 
 const FETCH_INFO= gql`
-    query ($userID: Int!, $limit: Int, $offset: Int){
-        get_profile_posts (userID: $userID, limit: $limit, offset: $offset){
+    query ($limit: Int, $offset: Int, $username: String!){
+        get_profile_posts (limit: $limit, offset: $offset, username: $username){
             postID
             post_text
             date_posted
@@ -112,7 +111,7 @@ const FETCH_INFO= gql`
             profile_picture
             type
         }
-        get_user(userID: $userID){
+        get_user(username: $username){
             first_name
             last_name
             profile_picture

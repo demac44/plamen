@@ -19,7 +19,7 @@ const StoryHead = ({index, story, allData}) => {
             }>
                 <Avatar size='60px' image={story?.profile_picture}/>
             </div>
-            {openStory && <Story allData={allData} story={story} i={index} closeStoryCallback={closeStoryCallback}/>}
+            {openStory && <Story allData={allData} i={index} closeStoryCallback={closeStoryCallback}/>}
         </>
     )
 }

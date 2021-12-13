@@ -32,7 +32,8 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                         first_name: isProfile ? allData.user.first_name : storyData?.first_name, 
                         last_name: isProfile ? allData.user.last_name : storyData?.last_name,
                         profile_picture: isProfile ? allData.user.profile_picture : storyData?.profile_picture,
-                        userID:isProfile ? allData.user.userID : storyData?.userID
+                        userID:isProfile ? allData.user.userID : storyData?.userID,
+                        username:isProfile ? allData.user.username : storyData?.username
                     }} 
                     date={(isProfile && storyData?.stories) ? storyData.stories[innerIndex]?.date_posted : 
                     (storyData?.stories && storyData?.stories[innerIndex]?.date_posted)}

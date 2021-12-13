@@ -23,7 +23,7 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const sql = `SELECT * FROM users WHERE disabled=false AND userID=${userID} OR username="${username}"`
+        const sql = `SELECT * FROM users WHERE disabled=false AND username="${username}"`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }    

@@ -23,7 +23,8 @@ const GroupPost = ({post, refetchPosts}) => {
                     timestamp: post.date_posted,
                     postID: post.postID,
                     userID: post.userID,
-                    groupID: post?.groupID
+                    groupID: post?.groupID,
+                    username: post?.username
             }}/>
             <PostMedia data={{
                 url:post.url,
