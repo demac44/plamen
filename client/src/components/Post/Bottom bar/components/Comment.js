@@ -30,41 +30,37 @@ const Comment = ({comment, refetchComments}) => {
 
     return (
         <>
-            <div className='comment'>
-                <div className='flex-sb'>
-                    <Link to={'/profile/'+comment.username} className='flex-ctr'>
-                        <Avatar size='35px' image={comment.profile_picture}/>
-
-                        <span className='flex-col-sb' style={styles.nameAndTime}>
-                            <p style={styles.name}>{comment.username}</p>
-                            <SetTime timestamp={comment.date_commented}/>
-                        </span>
-                    </Link>
-                    {isLogged && (comment.userID===ls.userID && 
-                        <i 
-                            style={styles.deleteBtn} 
-                            className='fas fa-trash-alt'
-                            onClick={handleDelete}
-                        ></i>)}
-                </div>
+            <div className='comment flex'>
+                <Link to={'/profile/'+comment.username} style={{marginTop:'5px'}}>
+                    <Avatar size='35px' image={comment.profile_picture}/>
+                </Link>
                 <div style={styles.textField}>
                     {comment.comment_text.length>200 ? 
                     (
                     <>
-                        {readMore ? <p>{comment.comment_text.slice(0, 200)}<span
-                            onClick={()=>isLogged ? setReadMore(false) : setLoginPopUp(true)} 
+                        {readMore ? <p><strong>{comment.username}</strong>{' '+comment.comment_text.slice(0, 200)}
+                        <span
+                            onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
                             style={styles.seeMore}
-                        > . . . Read more</span></p> : <p>{comment.comment_text}</p>}
-                        <br/>
-                        {!readMore && <p 
-                            onClick={()=>isLogged ? setReadMore(true) : setLoginPopUp(true)} 
+                        > . . . Read more</span></p> 
+                        : <p><strong>{comment.username}</strong>{' '+comment.comment_text}
+                        <span
+                            onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
                             style={styles.seeMore}
-                        >Read less</p>}
+                    > Read less</span></p>}
                     </>
                     )
-                    : <p>{comment.comment_text}</p>
-                    }
+                    : <p><strong>{comment.username}</strong>{' '+comment.comment_text}</p>}
+
+                    <SetTime timestamp={comment.date_commented}/>
+
                 </div>
+                {isLogged && (comment.userID===ls.userID && 
+                    <i 
+                        style={styles.deleteBtn} 
+                        className='fas fa-trash-alt'
+                        onClick={handleDelete}
+                    ></i>)}
             </div>
             {loginPopUp && <LoginPopUp/>}
         </>
@@ -77,11 +73,6 @@ const styles = {
     name:{
         fontSize:'14px'
     },
-    nameAndTime:{
-        height:'100%',
-        marginLeft:'10px',
-        color:'white'
-    },
     textField:{
         width:'100%',
         color:'white',
@@ -89,14 +80,14 @@ const styles = {
         backgroundColor:'#2f2f2f',
         borderRadius:'10px',
         wordWrap:'break-word',
-        marginTop:'5px',
+        margin:'5px 10px 0 5px',
         fontSize:'14px'
     },
     deleteBtn:{
-        fontSize:'15px',
+        fontSize:'13px',
         color:'white',
-        marginRight:'15px',
-        cursor:'pointer'
+        cursor:'pointer',
+        marginTop:'10px'
     },
     seeMore:{
         fontSize:'12px', 

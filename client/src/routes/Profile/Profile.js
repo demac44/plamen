@@ -10,7 +10,6 @@ import { useQuery } from 'react-apollo'
 import { useParams, useHistory } from 'react-router'
 import ProfileLoader from '../../components/General components/Loaders/ProfileLoader'
 import Posts from '../../components/Post/Posts'
-import MyGroupsList from '../../components/General components/MyGroupsList'
 
 import '../../components/Groups/groups.css'
 import '../../components/Profile/profile.css'
@@ -24,6 +23,7 @@ import InterestsBox from '../../components/Profile/components/InterestsBox'
 const Profile = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const [myprofile, setMyProfile] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const history = useHistory()
     const {username} = useParams()
 
@@ -37,13 +37,19 @@ const Profile = ({isLogged}) => {
     })
     
     useEffect(()=>{
-        if(username===ls.username) setMyProfile(true)
+        if(username===ls.username) {
+            setMyProfile(true)
+            setIsLoading(false)
+        } else {
+            setMyProfile(false)
+            setIsLoading(false)
+        }
         window.scrollTo(0,0)
         return null
     }, [username, ls.username, refetch, history, myprofile])
 
     
-    if (loading) return <ProfileLoader/>
+    if (loading || isLoading) return <ProfileLoader/>
     if(error) throw error 
     
     if(!data?.get_user?.username) return <Redirect to='/404'/>
@@ -85,7 +91,6 @@ const Profile = ({isLogged}) => {
                     <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
                         <SideInfoBox myprofile={myprofile} userID={data.get_user.userID}/>
                         <InterestsBox myprofile={myprofile} userID={data.get_user.userID}/>
-                        <MyGroupsList/>
                     </div>
                 </div>
             </div>

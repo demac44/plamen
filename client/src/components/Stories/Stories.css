@@ -162,6 +162,9 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
 .bar-vid{
     background-color: white;
 }
+.story-timestamp p{
+    font-size: 14px !important;
+}
 
 /* MEDIA QUERIES */
 

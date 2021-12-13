@@ -20,7 +20,7 @@ const Dropdown = () => {
        <div className="tn-dropdown-menu">
             <ul>
                 <h5 style={styles.loggedAs}>Logged in as @{ls.username}</h5>
-                <NavLink to="/myprofile"><li>My profile</li></NavLink>
+                <NavLink to={"/profile/"+ls.username}><li>My profile</li></NavLink>
                 <NavLink to="/login"><li>Change accounts</li></NavLink>
                 <NavLink to="/settings"><li>Settings</li></NavLink>
                 <NavLink to="/login"><li onClick={logout}>Log out</li></NavLink>

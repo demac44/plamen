@@ -16,8 +16,9 @@ const InterestsBox = ({myprofile, userID}) => {
     })
 
     useEffect(()=>{
+        setTags([])
         data?.get_user_info?.interests && setTags(data?.get_user_info?.interests.split(','))
-    }, [data])
+    }, [data, userID, myprofile])
 
     if(loading) return <p>loading</p>
 

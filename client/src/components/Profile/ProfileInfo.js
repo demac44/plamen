@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import UsersList from '../General components/Users list/UsersList.js'
 
 const ProfileInfo = ({info}) => {  
@@ -7,6 +7,9 @@ const ProfileInfo = ({info}) => {
     const [showList, setShowList] = useState(false)
 
 
+    useEffect(()=>{
+        return setShowList(false)
+    }, [info])
 
     const closeList = useCallback(() => {
         setShowList(false)

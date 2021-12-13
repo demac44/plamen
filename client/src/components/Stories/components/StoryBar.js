@@ -14,7 +14,9 @@ const StoryBar = ({user, date, closeStoryCallback, storyID, updatedCallback}) =>
                 <Avatar size='45px' image={user.profile_picture}/>
                 <p style={{marginLeft:'10px'}}>{user.first_name+' '+user.last_name}</p>
             </Link>
-            <SetTime timestamp={date}/>
+            <span className='story-timestamp'>
+                <SetTime timestamp={date}/>
+            </span>
             <span>
                 <i 
                     className='fas fa-times' 
