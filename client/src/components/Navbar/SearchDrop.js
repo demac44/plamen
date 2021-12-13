@@ -3,34 +3,20 @@ import { Link } from 'react-router-dom'
 import SearchHistoryDrop from './SearchHistoryDrop'
 import UserSearchBar from './UserSearchBar'
 
-const SearchDrop = ({data, val, chat, searchHistory, dropdownCallback}) => {
-    const [regex, setRegex] = useState(null)
+const SearchDrop = ({data, query, chat, searchHistory, dropdownCallback}) => {
     const [users, setUsers] = useState([])
 
-    const setusers = () => {
-        let arr=[]
-        regex && data.get_users.map(user => 
-            (user.first_name.match(regex)
-            || user.last_name.match(regex)
-            || user.username.match(regex)
-            || (user.first_name+user.last_name).match(regex)
-            || (user.last_name+user.first_name).match(regex))
-            && arr.push(user) 
-        )
-        setUsers(arr)
-    }
     
     useEffect(()=>{
-        setRegex(new RegExp(escape(val), 'gi'))
-        setusers() 
-    }, [val])
+        setUsers(filterUsers(data, query))
+    }, [query, data])
 
 
     return (
         <div className='search-drop'>
-            {val.length<1 && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
+            {(query.length<1 && !chat) && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
             {users.map(user => <UserSearchBar chat={chat} user={user} key={user.userID}/>)}
-            {(users.length > 0 && !chat) && <Link to={'/search/'+val}><p style={styles.seeAll}>See all</p></Link>}
+            {(users.length > 0 && !chat) && <Link to={'/search/'+query}><p style={styles.seeAll}>See all</p></Link>}
         </div>
     )
 }
@@ -45,4 +31,23 @@ const styles = {
         color:'white',
         padding:'5px',
     }
+}
+
+
+const filterUsers = (data, query) => {
+    if(query.length <= 0) return []
+    return data.get_users.filter((user)=> {
+        const str1 = user.first_name+user.last_name+user.username
+        const str2 = user.first_name+user.username+user.last_name
+
+        const str3 = user.last_name+user.username+user.first_name
+        const str4 = user.last_name+user.first_name+user.username
+
+        const str5 = user.username+user.first_name+user.last_name
+        const str6 = user.username+user.last_name+user.first_name
+
+        const str = (str1+str2+str3+str4+str5+str6).toLowerCase()
+
+        return str.includes(query)
+    })
 }

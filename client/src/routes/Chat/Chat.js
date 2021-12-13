@@ -3,12 +3,10 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
 
-// import { ChatList, ChatMsgBox } from '../../components/Chat/export'
+import { ChatList, ChatMsgBox } from '../../components/Chat/export'
+
 
 import ChatLoader from '../../components/General components/Loaders/ChatLoader'
-
-import ChatList from '../../components/Chat/components/ChatList'
-import ChatMsgBox from '../../components/Chat/components/ChatMsgBox'
 import MsgsLoader from '../../components/General components/Loaders/MsgsLoader'
 
 

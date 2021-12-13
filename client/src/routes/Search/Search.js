@@ -23,10 +23,8 @@ const SEARCH_USERS = gql`
 
 const Search = ({isLogged}) => {
     const {query} = useParams()
-    const [regex, setRegex] = useState('')
     const [users, setUsers] = useState([])
     const [fetch, setFetch] = useState(true)
-
 
     const {loading, data, error, fetchMore} = useQuery(SEARCH_USERS, {
         variables:{
@@ -34,33 +32,10 @@ const Search = ({isLogged}) => {
             offset:0
         }
     })
-    
-    const setusers = () => {
-        let arr=[]
-        data?.get_users?.map(user => 
-            (user.first_name.match(regex)
-            || user.last_name.match(regex)
-            || user.username.match(regex)
-            || (user.first_name+user.last_name).match(regex)
-            || (user.last_name+user.first_name).match(regex))
-            && arr.push(user) 
-            )
-        setUsers(arr)
-    }
-
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-      }
-
-    const handleSearchHistory = () => {
-        const sh = JSON.parse(localStorage.getItem('search-history'))
-        localStorage.setItem('search-history', JSON.stringify({search_history:[...sh.search_history, query].filter(onlyUnique)}))
-    }
 
     useEffect(()=>{
-        handleSearchHistory()
-        setRegex(new RegExp(escape(query), 'gi'))
-        setusers()
+        handleSearchHistory(query)
+        data?.get_users && setUsers(filterUsers(data, query))
     }, [data, query])
     
     if(loading) return <div className='wh-100'>sta ima</div>
@@ -128,3 +103,30 @@ const styles = {
 }
 
 
+const filterUsers = (data, query) => {
+    if(query.length <= 0) return []
+    return data.get_users.filter((user)=> {
+        const str1 = user.first_name+user.last_name+user.username
+        const str2 = user.first_name+user.username+user.last_name
+
+        const str3 = user.last_name+user.username+user.first_name
+        const str4 = user.last_name+user.first_name+user.username
+
+        const str5 = user.username+user.first_name+user.last_name
+        const str6 = user.username+user.last_name+user.first_name
+
+        const str = (str1+str2+str3+str4+str5+str6).toLowerCase()
+
+        return str.includes(query)
+    })
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+const handleSearchHistory = (query) => {
+    const sh = JSON.parse(localStorage.getItem('search-history'))
+    localStorage.setItem('search-history', JSON.stringify({search_history:[...sh.search_history, query].filter(onlyUnique)}))
+    return null
+}

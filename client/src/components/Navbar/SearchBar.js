@@ -19,7 +19,7 @@ const SEARCH_USERS = gql`
 const SearchBar = ({chat, isLogged}) => {
     const [dropdown, setDropdown] = useState(false)
     const [searchHistory, setSearchHistory] = useState([])
-    const [val, setVal] = useState('')
+    const [query, setQuery] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS, {
         variables:{
             limit:10,
@@ -32,9 +32,9 @@ const SearchBar = ({chat, isLogged}) => {
     }, [setDropdown])
 
     useEffect(()=>{
-        !chat && document.querySelector('.wrapper').addEventListener('click', ()=>{setVal('');setDropdown(false)}) 
-        val.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
-    }, [val, chat])
+        !chat && document.querySelector('.wrapper').addEventListener('click', ()=>{setQuery('');setDropdown(false)}) 
+        query.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
+    }, [query, chat])
 
     if(loading) return (
         <div className='tn-center flex-ctr'><div className="search-icon">
@@ -44,22 +44,17 @@ const SearchBar = ({chat, isLogged}) => {
 
     if (error) console.log(error.message);
 
-    const handleInput = (e) => {
-        setVal(e.target.value)
-    }
-    
-
     return (
         <>
-            <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+val}}>
+            <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+query}}>
                 <div className="search-icon"><i className="fas fa-search"></i></div>
                 <input 
                     type="text" 
                     className="tn-search-input" 
-                    value={val} 
-                    onChange={handleInput} 
-                    placeholder='Search' 
-                    style={{borderRadius: val.length < 1 ? '0 50px 50px 0' : '0'}} 
+                    onChange={(e)=>setQuery(e.target.value)} 
+                    placeholder='Search'
+                    value={query}
+                    style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0'}} 
                     disabled={!isLogged && true}
                     onFocus={()=>{
                         setDropdown(true)
@@ -72,8 +67,12 @@ const SearchBar = ({chat, isLogged}) => {
                             }
                         })
                     }}/>
-                {val.length>0 && <i className='fas fa-times' style={styles.closeIcon} onClick={()=>setVal('')}></i>}
-                {dropdown && <SearchDrop dropdownCallback={dropdownCallback} chat={chat} data={data} searchHistory={searchHistory} val={val.replace(/\s/g, '')}/>}
+                {query.length>0 && <i className='fas fa-times' style={styles.closeIcon} onClick={()=>setQuery('')}></i>}
+                {dropdown && <SearchDrop 
+                                dropdownCallback={dropdownCallback} 
+                                chat={chat} data={data} 
+                                searchHistory={searchHistory} 
+                                query={query.replace(/\s/g, '').toLowerCase()}/>}
             </form>
         </>
     )
