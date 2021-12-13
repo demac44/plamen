@@ -1,22 +1,23 @@
 import React from 'react'
 
-import '../../../App.css'
-import '../../../General.css'
-import Navbar from '../../Navbar/Navbar'
 import PostLoader from './PostLoader'
-import Sidebar from '../Sidebar'
 
 import StoriesLoader from './StoriesLoader'
+import NavbarLoader from './NavbarLoader'
+import SidebarLoader from './SidebarLoader'
 
 const FeedLoader = () => {
     return (
         <>
-            <Navbar callback={()=>{return}} isLogged={true}/>
+            <NavbarLoader/>
             <div className='wrapper'>
                 <div className='container-main'>
-                    <Sidebar/>
+                    <SidebarLoader/>
                     <div className='container-left'>
                         <StoriesLoader/>
+                        <PostLoader/>
+                    </div>
+                    <div className='container-right'>
                         <PostLoader/>
                     </div>
                 </div>

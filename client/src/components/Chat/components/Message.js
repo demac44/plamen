@@ -19,7 +19,6 @@ const Message = ({msg}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
-    const [msgg, setMsg] = useState('')
     const [delete_msg] = useMutation(DELETE_MESSAGE, {
         variables:{msgID: msg.msgID}
     })

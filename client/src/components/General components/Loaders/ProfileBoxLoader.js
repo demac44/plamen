@@ -31,18 +31,18 @@ const styles = {
     avatar:{
         width:'200px',
         height:'200px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
         borderRadius:'50%'
     },
     nameBar:{
         width:'200px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
         height:'20px',
         borderRadius:'10px'
     },
     usernameBar:{
         width:'100px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
         height:'15px',
         marginTop:'15px',
         borderRadius:'10px'
@@ -58,7 +58,7 @@ const styles = {
         position:'absolute',
         right:'20px',
         bottom:'15px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
         width:'180px',
         height:'45px',
         borderRadius:'30px'

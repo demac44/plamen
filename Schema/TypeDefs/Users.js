@@ -46,6 +46,8 @@ export const UserInfoType = new GraphQLObjectType({
         gender: {type: GraphQLString},
         date_joined: {type: GraphQLString},
         interests: {type: GraphQLString},
-        error: {type: GraphQLString}
+        error: {type: GraphQLString},
+        country: {type: GraphQLString},
+        city: {type: GraphQLString}
     })
 })

@@ -5,7 +5,6 @@ import axios from 'axios'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
-import Dropzone from 'react-simple-dropzone/dist';
 
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
@@ -20,7 +19,6 @@ const CreatePost = ({refetch}) => {
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
-    const [imageUpload, setImageUpload] = useState(false)
     const [loading, setLoading] = useState(false)
     const [preview, setPreview] = useState(null)
 
@@ -127,7 +125,7 @@ const CreatePost = ({refetch}) => {
                     {(image && preview) &&
                     <div className='post-media-preview flex'>
                         <img src={preview} 
-                            onLoad={()=>URL.revokeObjectURL(preview)}/>
+                            onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
                         <div><i 
                                 className='fas fa-times flex-ctr' 
                                 style={styles.removePreview}

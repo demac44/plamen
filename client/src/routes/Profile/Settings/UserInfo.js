@@ -45,7 +45,9 @@ const UserInfo = ({isLogged}) => {
                             job:data?.get_user_info?.job,
                             university:data?.get_user_info?.university,
                             high_school:data?.get_user_info?.high_school,
-                            phone_number:data?.get_user_info?.phone_number
+                            phone_number:data?.get_user_info?.phone_number,
+                            country:data?.get_user_info?.country,
+                            city:data?.get_user_info?.city,
                         }}/>
 
                         <EditBDate data={data?.get_user_info?.bDate}/>
@@ -86,6 +88,8 @@ const USER_INFO = gql`
             date_joined
             interests
             gender
+            country
+            city
         }
     }
 `

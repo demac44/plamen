@@ -78,7 +78,7 @@ const CreateGroupForm = ({closeFormCallback}) => {
                         setTags([...arr, e.target.value].filter(onlyUnique))
                         tags.filter(onlyUnique)
                     }}>
-                    {allTags.map(tag => <option value={tag}>{tag}</option>)}
+                    {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
                 </select>
                 <button type='submit' className='btn'>CREATE</button>
             </form>

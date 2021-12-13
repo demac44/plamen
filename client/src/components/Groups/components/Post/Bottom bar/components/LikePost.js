@@ -20,8 +20,10 @@ const LikePost = ({postID, userID, isLogged}) => {
     useEffect(()=>{
         if(isLogged){
             ifLiked?.data?.if_group_post_liked===true && setLiked(true)
+            return
         }
-    }, [ifLiked?.data])
+        return
+    }, [ifLiked?.data, isLogged])
 
     if(ifLiked.loading) return <i style={{...styles.likeBtn, color:'white'}}  className='fas fa-heart'></i>
 

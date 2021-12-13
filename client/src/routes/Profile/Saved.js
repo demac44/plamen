@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'

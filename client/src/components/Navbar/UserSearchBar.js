@@ -44,7 +44,7 @@ const UserSearchBar = ({user, chat}) => {
     return (
         <>            
         {!chat ?
-            <NavLink exact to={'/profile/'+user.userID} className='search-user-box'>
+            <NavLink exact to={ls.userID===user.userID ? '/myprofile' : '/profile/'+user.userID} className='search-user-box'>
                 <Avatar size='50px' image={user.profile_picture}/>
                 <div style={{marginLeft:'15px'}}>
                     <p>{user.first_name+' '+user.last_name}</p>

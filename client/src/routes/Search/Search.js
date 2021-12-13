@@ -11,7 +11,7 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 
 const SEARCH_USERS = gql`
     query ($limit: Int, $offset: Int) {
-         users (limit: $limit, offset: $offset){
+         get_users (limit: $limit, offset: $offset){
             userID
             first_name
             last_name
@@ -37,7 +37,7 @@ const Search = ({isLogged}) => {
     
     const setusers = () => {
         let arr=[]
-        data?.users.map(user => 
+        data?.get_users?.map(user => 
             (user.first_name.match(regex)
             || user.last_name.match(regex)
             || user.username.match(regex)
@@ -66,35 +66,36 @@ const Search = ({isLogged}) => {
     if(loading) return <div className='wh-100'>sta ima</div>
     if(error) throw error 
     
+    const loadMore = () => {
+        fetchMore({
+            variables:{
+                offset:users.length,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if(fetchMoreResult.get_users.length < 1) {
+                    setFetch(false)
+                    return
+                }
+                return Object.assign({}, prev, {
+                  users: [...users, ...fetchMoreResult.get_users]
+                });
+              }
+        })
+    }
 
     return (
         <>
             <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
-                <div className='main'>
-                    <Sidebar/>
-                    <div className='search-container'>
+                <Sidebar/>
+                <div className='container-main'>
+                    <div className='container-left'>
                         <p style={styles.title}>Search results</p>
                         {users.length < 1 ? <p style={{color:'white'}}>No results</p>
                         : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
-                        {fetch && <div style={styles.loadMore} onClick={()=>{
-                            fetchMore({
-                                variables:{
-                                    offset:users.length,
-                                },
-                                updateQuery: (prev, { fetchMoreResult }) => {
-                                    if (!fetchMoreResult) return prev;
-                                    if(fetchMoreResult.users.length < 1) {
-                                        setFetch(false)
-                                        return
-                                    }
-                                    return Object.assign({}, prev, {
-                                      users: [...users, ...fetchMoreResult.users]
-                                    });
-                                  }
-                            })
-                        }}>Load more</div>}
+                        {fetch && <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
                     </div>
                 </div>
             </div>

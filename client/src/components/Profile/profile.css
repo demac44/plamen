@@ -226,6 +226,9 @@
         margin: 0;
         width: 100%;
     }
+    .edit-pfp-menu{
+        width: 50%;
+    }
 }
 
 
@@ -247,6 +250,9 @@
     }
     .settings-arrow-back{
         display: block;
+    }
+    .edit-pfp-menu{
+        width: 60%;
     }
 }   
 @media screen and (max-width: 447px){
@@ -274,5 +280,8 @@
     }
     .bDate-form select{
         width: 100%;
+    }
+    .edit-pfp-menu{
+        width: 95%;
     }
 }

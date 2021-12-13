@@ -15,10 +15,11 @@ const ProfileFollowBtn = ({userID}) => {
     
     useEffect(()=>{ 
         setIsFollowing(data?.ifFollowing) 
+        return
     }, [data])
     
     
-    if (loading) return <p>loading</p>
+    if (loading) return <p></p>
 
 
 

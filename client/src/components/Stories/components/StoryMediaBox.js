@@ -34,6 +34,7 @@ const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setInde
 
     useEffect(()=>{
         storyData?.stories && setUrl(storyData && storyData?.stories[innerIndex]?.url)
+        return
     }, [storyData, innerIndex])
 
     return (

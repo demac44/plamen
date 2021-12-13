@@ -4,13 +4,14 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
 import TagsBox from '../../Groups/components/TagsBox'
+import { Link } from 'react-router-dom'
 
-const InterestsBox = ({myprofile}) => {
+const InterestsBox = ({myprofile, userID}) => {
     const [tags, setTags] = useState([])
     const ls = JSON.parse(localStorage.getItem('user'))
     const {data, loading} = useQuery(USER_INFO, {
         variables:{
-            userID: ls.userID
+            userID: myprofile ? ls.userID : userID
         }
     })
 
@@ -23,8 +24,8 @@ const InterestsBox = ({myprofile}) => {
     return (
         <div className='profile-interests-box'>
             <div style={styles.title} className='flex-sb'>
-                <h3>My interests</h3>
-                {myprofile && <p style={styles.editBtn}>Edit</p>}
+                <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
+                {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}
             </div>
             <TagsBox tags={tags}/>                        
         </div>
@@ -43,7 +44,8 @@ const styles = {
         backgroundColor:'#2f2f2f',
         borderRadius:'10px',
         fontSize:'14px',
-        cursor:'pointer'
+        cursor:'pointer',
+        color:'white'
     }
 }
 

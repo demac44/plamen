@@ -37,11 +37,14 @@ const EditInterests = ({data}) => {
             {tags.length > 0 && <p style={{color:'white', fontSize:'12px', marginTop:'10px'}}>Click on tag to remove it</p>}
 
             <div className='tags-box' style={{backgroundColor:'white'}}>
-                {tags.map(tag => <div
+                {tags.map(tag => 
+                <div
                     style={styles.tag}
                     onClick={()=>{tags.splice(tags.indexOf(tag), 1);setTags([...tags])}}
                     key={tag}
-                >{tag}</div>)}
+                >
+                    {tag}
+                </div>)}
             </div>
             <select 
                 style={styles.selectTags}
@@ -50,7 +53,7 @@ const EditInterests = ({data}) => {
                     setTags([...arr, e.target.value].filter(onlyUnique))
                     tags.filter(onlyUnique)
                 }}>
-                {allTags.map(tag => <option value={tag}>{tag}</option>)}
+                {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
             </select>
 
             <p style={styles.editBtn} onClick={handleEditInterests}>EDIT</p>
@@ -97,13 +100,6 @@ const styles = {
 
 const allTags = ['Sport', 'Programming', 'Politics', 'Photography', 'Computers', 'DIY', 'Reading', 'Gaming', 'Comedy', 'Memes', 'Movies']
 
-const USER_INFO = gql`
-    query ($userID: Int!){
-        get_user_info (userID: $userID){
-            interests
-        }
-    }
-`
 const EDIT_INTERESTS = gql`
     mutation ($userID: Int!, $interests: String!){
         edit_user_interests (userID: $userID, interests: $interests){

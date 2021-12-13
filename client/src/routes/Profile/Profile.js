@@ -38,9 +38,11 @@ const Profile = ({myprofile, isLogged}) => {
 
 
     useEffect(()=>{
-        if(userID === ls.userID) history.push('/myprofile')
         window.scrollTo(0,0)
-    }, [userID, ls.userID, refetch])
+        if(userID === ls.userID) {
+            return history.push('/myprofile')}
+        return
+    }, [userID, ls.userID, refetch, history])
     
     if (loading) return <ProfileLoader/>
     if(error) throw error 
@@ -82,8 +84,8 @@ const Profile = ({myprofile, isLogged}) => {
                         <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
                     <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
-                        <SideInfoBox myprofile={myprofile}/>
-                        <InterestsBox myprofile={myprofile}/>
+                        <SideInfoBox myprofile={myprofile} userID={userID}/>
+                        <InterestsBox myprofile={myprofile} userID={userID}/>
                         <MyGroupsList/>
                     </div>
                 </div>

@@ -19,7 +19,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
 
 
     useEffect(()=>{
-        setStoryData(isProfile ? {...allData.user, ...allData} : allData[index])
+        setStoryData(isProfile ? allData : allData[index])
         storyData?.stories && setType(storyData?.stories[innerIndex]?.type)
     }, [index, innerIndex, type, i, storyData, allData, isProfile])
 
@@ -29,10 +29,10 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
             <div className='story-box'>
                 <StoryBar 
                     user={{
-                        first_name: storyData?.first_name, 
-                        last_name: storyData?.last_name,
-                        profile_picture: storyData?.profile_picture,
-                        userID:storyData?.userID
+                        first_name: isProfile ? allData.user.first_name : storyData?.first_name, 
+                        last_name: isProfile ? allData.user.last_name : storyData?.last_name,
+                        profile_picture: isProfile ? allData.user.profile_picture : storyData?.profile_picture,
+                        userID:isProfile ? allData.user.userID : storyData?.userID
                     }} 
                     date={(isProfile && storyData?.stories) ? storyData.stories[innerIndex]?.date_posted : 
                     (storyData?.stories && storyData?.stories[innerIndex]?.date_posted)}

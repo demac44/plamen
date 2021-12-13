@@ -17,7 +17,9 @@ export const CREATE_USER = {
     resolve(parent, args) {
         const {tag_name, first_name, last_name, email, pass, birth_date, pfp_url} = args
         bcrypt.genSalt(10, (err, salt) => {
+            if(err) return err
             bcrypt.hash(pass, salt, (err, hash) => {
+                if(err) return err
                 const sql = `INSERT INTO users (user_id, tag_name, first_name, last_name, email, pass, birth_date, date_registered, pfp_url)
                             VALUES (null, "${tag_name}", "${first_name}", "${last_name}", "${email}", "${hash}", STR_TO_DATE("${birth_date}", "%Y-%m-%d"), null, "${pfp_url}")`
                 connection.query(sql)
@@ -110,14 +112,18 @@ export const EDIT_USER_INFO = {
         university: {type: GraphQLString},
         high_school: {type: GraphQLString},
         phone_number: {type: GraphQLString},
+        country: {type: GraphQLString},
+        city: {type: GraphQLString},
     },
     resolve(_, args){
-        const {userID, job, university, high_school, phone_number} = args
+        const {userID, job, university, high_school, phone_number, country, city} = args
         const sql = `UPDATE user_info 
                         SET job="${job}",
                             university="${university}",
                             high_school="${high_school}",
-                            phone_number="${phone_number}"
+                            phone_number="${phone_number}",
+                            country="${country}",
+                            city="${city}"
                         WHERE userID=${userID}`
         connection.query(sql)
         return args

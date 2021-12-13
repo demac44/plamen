@@ -28,7 +28,7 @@ const styles = {
     postImg:{
         width:'100%',
         height:'350px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
     },
     cmt:{
         width:'100%',
@@ -48,6 +48,6 @@ const styles = {
     input:{
         width:'100%',
         height:'80px',
-        background:'linear-gradient(to bottom right, #6f6f6f, #2f2f2f)',
+        background:'#3f3f3f',
     }
 }

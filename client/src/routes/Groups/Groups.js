@@ -30,7 +30,7 @@ const Groups = ({isLogged}) => {
         setLeftnav(val)
     }, [setLeftnav])
 
-    if(loading) return <p>loading</p>
+    if(loading) return <p></p>
 
     return (
         <>

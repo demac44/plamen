@@ -27,7 +27,8 @@ const EditBDate = ({data}) => {
         }
         setSelectYear(years)
         setSelectDay(days)
-    }, [])
+        return
+    }, [data])
 
     const handleBDateChange = (e) => {
         e.preventDefault()

@@ -1,17 +1,21 @@
 import React from 'react'
-import Navbar from '../../Navbar/Navbar'
 import PostLoader from './PostLoader'
-import Sidebar from '../Sidebar'
+import NavbarLoader from './NavbarLoader'
+import SidebarLoader from './SidebarLoader'
+
 
 const SavedLoader = () => {
     return (
         <>
-            <Navbar callback={()=>{return}} isLogged={true}/>
+            <NavbarLoader/>
             <div className='wrapper'>
-                <div className='main'>
-                    <Sidebar/>
-                    <div className='posts-container-feed'>
+                <SidebarLoader/>
+                <div className='container-main'>
+                    <div className='container-left'>
                         <h2 style={styles.title}>Saved posts</h2>
+                        <PostLoader/>
+                    </div>
+                    <div className='container-right'>
                         <PostLoader/>
                     </div>
                 </div>

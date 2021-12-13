@@ -10,7 +10,7 @@ import TagsBox from '../../components/Groups/components/TagsBox'
 import MembersBox from '../../components/Groups/components/MembersBox'
 import Sidebar from '../../components/General components/Sidebar'
 
-import GroupLoader from '../../components/General components/Loaders/GroupLoader'
+import ProfileLoader from '../../components/General components/Loaders/ProfileLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 
@@ -47,7 +47,7 @@ const GroupMembers = ({isLogged}) => {
     }, [setUpdated])
 
 
-    if(loading) return <GroupLoader/>
+    if(loading) return <ProfileLoader/>
 
     if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
 

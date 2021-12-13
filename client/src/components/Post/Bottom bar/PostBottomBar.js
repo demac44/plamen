@@ -21,11 +21,7 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
         setLikes(false)
     }, [setLikes])
 
-    if(loading) return <div className='post-bottom-bar flex'>
-                            <LikePost/>
-                            <p style={styles.seeLikes}>See likes</p>
-                            <AddComment/>
-                        </div>
+    if(loading) return <div style={styles.loader}></div>
     if(error) throw error
     
     const seeMore = async () => {
@@ -80,6 +76,11 @@ const styles = {
         borderRadius:'10px',
         textAlign:'center',
         cursor:'pointer',
+    },
+    loader:{
+        width:'100%',
+        height:'40px',
+        backgroundColor:'#1f1f1f'
     }
 }
 

@@ -7,14 +7,14 @@ const MsgsLoader = () => {
     return (
         <div style={{backgroundColor:'#3f3f3f', width:'100%', height:'100vh', paddingLeft:'350px'}}>
             {arr.map(()=>
-            <>
+            <span key={Math.random()}>
                 <div className='msg-wrapper-cu'>
                     <div style={styles.msg} className='msg'></div>
                 </div>
                 <div className='msg-wrapper-ou'>
                     <div style={styles.msg} className='msg'></div>
                 </div>
-            </>
+            </span>
             )}
             <div style={styles.input}></div>
         </div>

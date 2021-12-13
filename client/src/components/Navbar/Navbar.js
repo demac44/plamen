@@ -54,9 +54,10 @@ const Navbar = ({isLogged}) => {
         isLogged && setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
         if(count && isLogged){
-            count?.refetch()
+            return count?.refetch()
         }
-    }, [count, data]) 
+        return
+    }, [count, data, isLogged]) 
 
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => {

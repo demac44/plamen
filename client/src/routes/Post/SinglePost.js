@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, useHistory } from 'react-router'
+import { useParams } from 'react-router'
 import { Redirect } from 'react-router-dom'
 
 
@@ -31,7 +31,6 @@ const GET_POST = gql`
 
 const SinglePost = ({isLogged}) => {
     const {postid} = useParams()
-    const history = useHistory()
     const {data, loading} = useQuery(GET_POST, {
         variables:{postID: parseInt(postid)}
     })

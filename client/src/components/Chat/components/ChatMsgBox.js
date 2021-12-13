@@ -9,7 +9,7 @@ import ChatBar from './ChatBar'
 import MsgsLoader from '../../General components/Loaders/MsgsLoader'
 
 
-const ChatMsgBox = ({chat, info}) => {
+const ChatMsgBox = ({chat}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
@@ -26,13 +26,14 @@ const ChatMsgBox = ({chat, info}) => {
         setLoader(val)
     }, [setLoader])
 
+    
     useLayoutEffect(()=>{ 
         const subscribeNewMessage = () => {
-            return messages && messages.subscribeToMore({
+            return messages?.subscribeToMore({
                 document: NEW_MESSAGE,
                 updateQuery: (prev, { subscriptionData }) => {
                     if (!subscriptionData?.data) return prev;
-                    const newMsg = subscriptionData.data.newMessage;
+                    const newMsg = subscriptionData?.data?.newMessage;
                     
                     if (newMsg?.chatID === chat.chatID){
                     return Object.assign({}, prev, {
@@ -45,8 +46,8 @@ const ChatMsgBox = ({chat, info}) => {
                 }
             }});
         }
-        subscribeNewMessage()
-    }, [chat, messages?.subscribeToMore])        
+        return subscribeNewMessage()
+    }, [chat, messages])        
     
     
     useEffect(()=>{
@@ -76,6 +77,7 @@ const ChatMsgBox = ({chat, info}) => {
                 });
             }
         })
+        return
     }
       
     if(messages.error) console.log(messages.error); 
@@ -87,7 +89,7 @@ const ChatMsgBox = ({chat, info}) => {
             <ChatBar chatID={chat.chatID} info={chat}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
-                {messages?.data?.get_messages.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
+                {messages?.data?.get_messages?.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendMsg chatID={chat.chatID} info={chat} loaderCallback={loaderCallback}/> 

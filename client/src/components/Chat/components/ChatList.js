@@ -10,9 +10,9 @@ const ChatList = ({data, isLogged}) => {
             <div className='chat-search'>
                 <SearchBar chat={true} isLogged={isLogged}/>
             </div>
-            {data.get_chats.length > 0 ? data.get_chats.map(chat => 
-                    <ChatListUser data={chat} key={chat.chatID}/>)
-            : <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>}
+            {data.get_chats.map(chat => 
+                    <ChatListUser data={chat} key={chat.chatID}/>)}
+            {data.get_chats.length === 0 && <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>}
         </div>
     )
 }

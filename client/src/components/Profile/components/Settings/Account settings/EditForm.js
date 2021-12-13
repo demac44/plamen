@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { validateNames, validateUsername } from '../../../../Entry/Register/RegisterForm'
 import ErrorMsg from '../../../../Entry/ErrorMsg'
 

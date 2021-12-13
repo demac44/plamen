@@ -15,8 +15,8 @@ const EditInfoBox = ({data}) => {
         const uni = e.target.uni.value
         const hs = e.target.hs.value
         const num = e.target.num.value
-
-
+        const country = e.target.country.value
+        const city = e.target.city.value
 
         update_info({
             variables:{
@@ -24,7 +24,9 @@ const EditInfoBox = ({data}) => {
                 job,
                 uni,
                 hs,
-                num
+                num,
+                country,
+                city
             }
         }).then(()=>setUpdated(true))
     }
@@ -36,23 +38,33 @@ const EditInfoBox = ({data}) => {
             {updated && <p style={styles.updated}>Your info is updated!</p>}
 
             <div className='flex-ctr'>
+                <h5>Country</h5>
+                <input type='text' className='input' id='country' placeholder='Add country' defaultValue={data.country}/>
+            </div>       
+
+            <div className='flex-ctr'>
+                <h5>City</h5>
+                <input type='text' className='input' id='city' placeholder='Add city' defaultValue={data.city}/>
+            </div>
+
+            <div className='flex-ctr'>
                 <h5>Job</h5>
-                <input type='text' className='input' id='job' placeholder='Edit job' defaultValue={data.job}/>
+                <input type='text' className='input' id='job' placeholder='Add job' defaultValue={data.job}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>University</h5>
-                <input type='text' className='input' id='uni' placeholder='Edit university' defaultValue={data.university}/>
+                <input type='text' className='input' id='uni' placeholder='Add university' defaultValue={data.university}/>
             </div>            
 
             <div className='flex-ctr'>
                 <h5>High school</h5>
-                <input type='text' className='input' id='hs' placeholder='Edit high school' defaultValue={data.high_school}/>
+                <input type='text' className='input' id='hs' placeholder='Add high school' defaultValue={data.high_school}/>
             </div>    
 
             <div className='flex-ctr'>
                 <h5>Phone</h5>
-                <input type='text' className='input' id='num' placeholder='Edit phone number' defaultValue={data.phone_number}/>
+                <input type='text' className='input' id='num' placeholder='Add phone number' defaultValue={data.phone_number}/>
             </div>  
 
             <button type='submit' style={styles.editBtn}>EDIT</button>
@@ -82,8 +94,8 @@ const styles = {
 }
 
 const UPDATE_INFO = gql`
-    mutation ($userID: Int!, $job: String!, $uni: String!, $hs: String!, $num: String!){
-        edit_user_info (userID: $userID, job: $job, university: $uni, high_school: $hs, phone_number: $num ){
+    mutation ($userID: Int!, $job: String!, $uni: String!, $hs: String!, $num: String!, $country: String!, $city: String!){
+        edit_user_info (userID: $userID, job: $job, university: $uni, high_school: $hs, phone_number: $num, country: $country, city: $city ){
             userID
         }
     }

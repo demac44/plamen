@@ -48,10 +48,10 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
                     <Avatar size='170px' image={info.user.profile_picture}/>
                 </div>
                 <ProfileInfo info={info}/>
-                {info.user.currentUser ? <ProfileEditBtn/> : (
+                {myprofile ? <ProfileEditBtn/> : (
                 <>
-                <ProfileFollowBtn userID={info.user.userID}/>
-                <SendMsgBtn userID={info.user.userID}/>
+                    <ProfileFollowBtn userID={info?.user?.userID}/>
+                    <SendMsgBtn userID={info?.user?.userID}/>
                 </>
                 )} 
             </div>
