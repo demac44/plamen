@@ -12,8 +12,8 @@ export const CREATE_POST = {
     },
     resolve (_, args){
         const {userID, post_text, url, type} = args
-        const sql = `INSERT INTO posts (postID, userID, post_text, date_posted, url, type)
-                    VALUES (null, ${userID}, "${post_text}", null, "${url}", "${type}")`
+        const sql = `INSERT INTO posts (userID, post_text, url, type)
+                    VALUES (${userID}, "${post_text}", "${url}", "${type}")`
         connection.query(sql)
         return args
     }

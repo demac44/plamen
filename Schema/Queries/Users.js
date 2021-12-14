@@ -76,7 +76,6 @@ export const USER_SUGGESTIONS = {
                                                 WHERE followerID=${userID} AND followedID=users.userID)
                                     ORDER BY RAND() LIMIT 20`
             const additional_result = await connection.promise().query(additional).then(res=>{return res[0]})
-            console.log(additional_result);
             return additional_result
         }
         return result
