@@ -2,6 +2,7 @@ import React from 'react'
 import UserBox from './UserBox'
 
 import '../General.css'
+import UserSuggestionsBox from '../UserSuggestionsBox'
 
 const UsersList = ({data, title, closeList}) => {
 
@@ -14,9 +15,12 @@ const UsersList = ({data, title, closeList}) => {
                 </div>
                 
                 <div>
-                    {(data.length === 0) && <p style={styles.emptyList}>Add follow suggestions here!!</p>}
+                    {(data.length === 0) && <p style={styles.emptyList}>Empty</p>}
                     {data.map(user => <UserBox user={user} key={user.userID}/>)}
                 </div>
+                <span className='user-suggest-cont'>
+                    <UserSuggestionsBox/>
+                </span>
             </div>
         </div>
     )

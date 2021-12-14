@@ -52,6 +52,7 @@
     color: white;
     background-color: rgba(0,0,0,0.2);
     z-index: 10;
+    border-radius: 0 0 15px 15px;
 }
 .story-bottom-bar{
     width: 100%;

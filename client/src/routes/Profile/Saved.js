@@ -9,6 +9,7 @@ import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 
 const Saved = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -62,7 +63,8 @@ const Saved = ({isLogged}) => {
                     </div>
                 </div>
                 <div className='container-right' style={styles.containerRight}>
-                        <MyGroupsList/>
+                    <MyGroupsList/>
+                    <UserSuggestionsBox/>
                 </div>
             </div>
         </>

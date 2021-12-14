@@ -9,6 +9,7 @@ import Sidebar from '../../components/General components/Sidebar'
 
 import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 
 const Explore = ({isLogged}) => {
     const {loading, data, error, refetch} = useQuery(RANDOM_POSTS)
@@ -46,6 +47,7 @@ const Explore = ({isLogged}) => {
                 </div>
                 <div className='container-right' style={styles.containerRight}>
                     <MyGroupsList/>
+                    <UserSuggestionsBox/>
                 </div>
             </div>
         </>

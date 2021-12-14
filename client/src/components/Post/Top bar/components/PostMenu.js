@@ -5,12 +5,10 @@ import { useMutation } from 'react-apollo'
 import ReportBox from './ReportBox'
 
 
-const PostMenu = ({data, refetchPosts}) => {
+const PostMenu = ({data, refetchPosts, handleReport}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_POST)
     const [copied, setCopied] = useState(false)
-    const [reportMenu, setReportMenu] = useState(false)
-
 
     const handlePostDelete = () => {
         try {delete_post({
@@ -27,10 +25,6 @@ const PostMenu = ({data, refetchPosts}) => {
         }, 2000)
     }
 
-    const closeReportCallback = useCallback(() => {
-        setReportMenu(false)
-    }, [setReportMenu])
-
     return (
         <>
             <div className='post-options-menu'>
@@ -42,11 +36,10 @@ const PostMenu = ({data, refetchPosts}) => {
                         ></i> Delete
                     </li>}
 
-                    <li onClick={()=>setReportMenu(true)}><i className="fas fa-flag"></i> Report</li>
+                    <li onClick={()=>handleReport(true)}><i className="fas fa-flag"></i> Report</li>
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}
-            {reportMenu && <ReportBox data={data} closeReportCallback={closeReportCallback}/>}
         </>
     )
 }

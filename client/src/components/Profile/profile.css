@@ -72,11 +72,12 @@
 }
 .profile-side-info-box p{
     margin-left: 10px;
-}
-.profile-side-info-box p{
     font-size: 14px;
 }
-
+.profile-side-info-box h5{
+    font-size: 12px;
+    word-wrap: normal;
+}
 /* my interests */
 
 .profile-interests-box{

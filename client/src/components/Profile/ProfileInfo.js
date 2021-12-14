@@ -8,8 +8,9 @@ const ProfileInfo = ({info}) => {
 
 
     useEffect(()=>{
-        return setShowList(false)
-    }, [info])
+        document.querySelector('body').style.overflowY = (showList ? 'hidden' : 'auto')
+        // return setShowList(false)
+    }, [info, showList])
 
     const closeList = useCallback(() => {
         setShowList(false)

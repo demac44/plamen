@@ -23,6 +23,9 @@ import Settings from './routes/Profile/Settings/Settings';
 import NotFound from './routes/Not found/NotFound';
 import UserInfo from './routes/Profile/Settings/UserInfo';
 
+import {gql} from 'graphql-tag'
+import { useQuery } from 'react-apollo';
+
 function App() {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
@@ -30,32 +33,32 @@ function App() {
   const uid = useSelector(state => state.isAuth.user?.userID)
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
-  const [animationDone, setAnimationDone] = useState(false)
+
+  const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
+    variables:{
+      userID: user.userID
+    }
+  })
 
   useEffect(()=>{
-    setTimeout(()=>{
-      setAnimationDone(true)
-    }, 4000)
-    const checkUser = () => {
-      if(!token) return true
-      else if(!user) return true
-      else if (uid && user.userID !== uid){
-        return true
-      }
-      return false
-    }
-    dispatch(authenticate())
-    if(checkUser()){
-      localStorage.removeItem('user')
-      localStorage.removeItem('token')
-    }
-    setIsLoading(false)
-  },[isLogged, user, uid, dispatch, token])
+    setIsLoading(true)
 
+    dispatch(authenticate())
+
+    if(checkUser(token, user, uid)){
+      localStorage.clear()
+    } else {
+      if(data?.get_user_suggestions){
+        localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
+      }
+    }
+
+    setIsLoading(false)
+  },[isLogged, user, uid, token, data])
   
   return (
       <>
-        {isLoading ? <MainLoader/> :
+        {(isLoading || loading) ? <MainLoader/> :
           <Switch>
             <>
               <Route exact path='/'></Route>
@@ -82,3 +85,23 @@ function App() {
 
 export default App;
 
+const GET_FOLLOW_SUGGESTIONS = gql`
+  query ($userID: Int!) {
+    get_user_suggestions (userID: $userID){
+      first_name
+      last_name
+      username
+      userID
+      profile_picture
+    }
+  }
+`
+
+const checkUser = (token, user, uid) => {
+  if(!token) return true
+  else if(!user) return true
+  else if (uid && user.userID !== uid){
+    return true
+  }
+  return false
+}

@@ -13,6 +13,7 @@ import Sidebar from '../../components/General components/Sidebar'
 import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -69,6 +70,7 @@ const Feed = ({isLogged}) => {
                 </div>
                 <div className='container-right' style={styles.containerRight}>
                     <MyGroupsList/>
+                    <UserSuggestionsBox/>
                 </div>
             </div>
         </>
@@ -114,7 +116,9 @@ const styles = {
     containerRight:{
         position:'fixed', 
         top:'80px', 
-        right:'10px', 
-        padding:'0 10px'
+        right:'0', 
+        padding:'0 10px',
+        maxHeight: '90vh',
+        overflowY: 'auto',
     }
 }

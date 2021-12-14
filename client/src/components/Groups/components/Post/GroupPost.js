@@ -7,7 +7,7 @@ import PostBottomBar from './Bottom bar/PostBottomBar'
 
 import { useSelector } from 'react-redux'
 
-import './Post.css'
+import '../../../Post/Post.css'
 
 const GroupPost = ({post, refetchPosts}) => {
     const isLogged = useSelector(state => state?.isAuth.isAuth)

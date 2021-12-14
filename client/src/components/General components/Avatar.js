@@ -1,6 +1,7 @@
 import React from 'react'
 import defaultAvatarImage from '../../images/pfp.jpg'
 
+
 const Avatar = ({size, image}) => {
     return (
         <div className='user-avatar flex-ctr' style={{width:size, height:size}}>
@@ -14,7 +15,7 @@ export default Avatar
 
 const styles = {
     image:{
-        minHeight:'100%',
-        minWidth:'100%'
+        height:'auto',
+        width:'100%'
     }
 }

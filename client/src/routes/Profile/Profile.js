@@ -18,6 +18,7 @@ import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import SideInfoBox from '../../components/Profile/components/SideInfoBox'
 import InterestsBox from '../../components/Profile/components/InterestsBox'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 
     
 const Profile = ({isLogged}) => {
@@ -78,7 +79,7 @@ const Profile = ({isLogged}) => {
         <>
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
-            <div className='wrapper' onLoad={scrollPagination}> 
+            <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-profile'>
                     <ProfileTopBox userID={data.get_user.userID} myprofile={myprofile} postsLength={data.get_profile_posts.length}/>
                 </div>
@@ -88,7 +89,7 @@ const Profile = ({isLogged}) => {
                         {myprofile && <CreatePost refetch={refetch}/>}    
                         <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                     </div>
-                    <div className='container-right' style={{width:'35%', paddingTop:'10px'}}>
+                    <div className='container-right' style={{width:'35%', paddingTop:'10px', display:'block'}}>
                         <SideInfoBox myprofile={myprofile} userID={data.get_user.userID}/>
                         <InterestsBox myprofile={myprofile} userID={data.get_user.userID}/>
                     </div>

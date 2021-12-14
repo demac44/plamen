@@ -8,6 +8,8 @@ import Navbar from '../../components/Navbar/Navbar.js'
 import UserSearchBar from '../../components/Navbar/UserSearchBar'
 import Sidebar from '../../components/General components/Sidebar.js'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar.js'
+import MyGroupsList from '../../components/General components/MyGroupsList.js'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
 
 const SEARCH_USERS = gql`
     query ($limit: Int, $offset: Int) {
@@ -72,6 +74,10 @@ const Search = ({isLogged}) => {
                         : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
                         {fetch && <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
                     </div>
+                    <div className='container-right' style={styles.containerRight}>
+                        <MyGroupsList/>
+                        <UserSuggestionsBox/>
+                    </div>
                 </div>
             </div>
         </>
@@ -99,6 +105,12 @@ const styles = {
         cursor:'pointer',
         marginTop:'10px',
         borderRadius:'10px'
+    },
+    containerRight:{
+        position:'fixed', 
+        top:'80px', 
+        right:'20px', 
+        padding:'0 10px'
     }
 }
 

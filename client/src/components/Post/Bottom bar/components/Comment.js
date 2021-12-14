@@ -38,11 +38,11 @@ const Comment = ({comment, refetchComments}) => {
                     {comment.comment_text.length>200 ? 
                     (
                     <>
-                        {readMore ? <p><strong>{comment.username}</strong>{' '+comment.comment_text.slice(0, 200)}
+                        {readMore ? <p><strong>{comment.username}</strong>{' '+comment.comment_text.slice(0, 200)+'. . .'}
                         <span
                             onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
                             style={styles.seeMore}
-                        > . . . Read more</span></p> 
+                        >  Read more</span></p> 
                         : <p><strong>{comment.username}</strong>{' '+comment.comment_text}
                         <span
                             onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 

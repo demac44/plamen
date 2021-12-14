@@ -11,7 +11,7 @@ const REPORT_POST = gql`
     }
 ` 
 
-const ReportBox = ({data, closeReportCallback}) => {
+const ReportBox = ({data, handleReportClose}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [report_post] = useMutation(REPORT_POST)
     const [reportSent, setReportSent] = useState(false)
@@ -56,7 +56,7 @@ const ReportBox = ({data, closeReportCallback}) => {
         }).then(()=>{
             setReportSent(true)
             setTimeout(()=>{
-                closeReportCallback()
+                handleReportClose(false)
             }, 1000)
         })
     }
@@ -66,8 +66,8 @@ const ReportBox = ({data, closeReportCallback}) => {
     return (
         <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
-                <h3 style={styles.title}>Report post
-                    <i className='fas fa-times' style={styles.exitBtn} onClick={()=>closeReportCallback()}></i>     
+                <h3 style={styles.title}>Report
+                    <i className='fas fa-times' style={styles.exitBtn} onClick={()=>handleReportClose(false)}></i>     
                 </h3>
                 {reportSent && <h4 style={{...styles.title, marginTop:'10px'}}>Your report has been sent!</h4>}
                 <p style={{...styles.title, marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
