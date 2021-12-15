@@ -10,10 +10,10 @@ LOGIN AND REGISTER:
 POSTS:
 - image video and text posts
 - like, comment, share and save posts
-- feed posts pagination
+- posts scroll pagination
 
 EXPLORE:
-- random 100 posts
+- posts based on user interests
 
 STORIES:
 - image and video stories
@@ -31,12 +31,23 @@ COMMUNITIES
 - creator,admin,moderator and member roles
 
 EDIT PROFILE:
-- change profile picture
-- edit user info
-- change password
+- account settings
+    - change profile picture
+    - change name and username
+    - change password
+    - temporarily disable account (password verification)
+    - delete account (password verification)
+
+- user info settings
+    - change user info
+    - changing birthday and gender allowed only once
 
 SEARCH USERS:
+- based on name and username
 - search results pagination
+
+FOLLOW SUGGESTIONS:
+- based on users info and interests 
 
 USER ACTIONS:
 - follow and unfollow user
