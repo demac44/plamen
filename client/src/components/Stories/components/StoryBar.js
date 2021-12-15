@@ -3,8 +3,9 @@ import {Link} from 'react-router-dom'
 import StoryOptions from './StoryOptions'
 import Avatar from '../../General components/Avatar'
 import SetTime from '../../General components/SetTime'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const StoryBar = ({user, date, closeStoryCallback, storyID, updatedCallback}) => {
+const StoryBar = ({user, date, closeStoryCallback, storyID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [storyOptions, setStoryOptions] = useState(false)
 
@@ -17,20 +18,21 @@ const StoryBar = ({user, date, closeStoryCallback, storyID, updatedCallback}) =>
             <span className='story-timestamp'>
                 <SetTime timestamp={date}/>
             </span>
-            <span>
-                <i 
-                    className='fas fa-times' 
+            <span className='flex-h'>
+                <FontAwesomeIcon
+                    icon='times'
                     style={{...styles.btns, marginRight:'10px'}} 
                     onClick={()=>closeStoryCallback()}
-                ></i>
-                {user.userID===ls.userID && 
-                    <i 
-                        className='fas fa-ellipsis-v fp-options-btn'
+                />
+                {/* {user.userID===ls.userID && 
+                    <FontAwesomeIcon
+                        icon='ellipsis-v' 
+                        className='fp-options-btn'
                         onClick={()=>setStoryOptions(!storyOptions)}
                         style={styles.btns}
-                    ></i>}
+                    />}
+                {storyOptions && <StoryOptions storyID={storyID} closeStoryCallback={closeStoryCallback}/>} */}
             </span>
-            {storyOptions && <StoryOptions storyID={storyID} closeStoryCallback={closeStoryCallback} updatedCallback={updatedCallback}/>}
         </div>
     )
 }

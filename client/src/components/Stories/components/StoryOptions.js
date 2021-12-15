@@ -2,6 +2,7 @@ import React from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const DELETE_STORY = gql`
@@ -12,23 +13,25 @@ const DELETE_STORY = gql`
     }
 `
 
-const StoryOptions = ({storyID, closeStoryCallback,updatedCallback}) => {
+const StoryOptions = ({storyID, closeStoryCallback}) => {
     const [delete_story] = useMutation(DELETE_STORY)
 
     const handleRemove = () => {
         delete_story({
             variables:{sid: storyID}
-        }).then(()=>{closeStoryCallback();updatedCallback(true)})
+        }).then(()=>{closeStoryCallback()})
     }
 
     return (
-        <div>
-            <ul>
-                <li onClick={handleRemove}><i 
-                    className='fas fa-trash-alt'
-                ></i></li>
-            </ul>
-        </div>
+        <span style={{height:'100%', width:'40px'}} className='flex-ctr'>
+            <FontAwesomeIcon 
+                icon='trash-alt' 
+                size='normal' 
+                color='white' 
+                onClick={handleRemove}
+                fixedWidth
+            />
+        </span>
     )
 }
 

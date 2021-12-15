@@ -17,8 +17,6 @@
     background-color: #1b1b1b;
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #2f2f2f;
-    /* margin-top: 10px; */
 }
 .sidebar{
     position: fixed;
@@ -143,7 +141,7 @@
     position: relative;
     display: flex;
     width: 100%;
-    padding: 3px;
+    padding: 5px 20px 5px 10px;
     cursor: pointer;
     transition: ease .3s;
 }
@@ -152,8 +150,9 @@
 }
 .follow-button{
     background-color: white;
-    width: 90px;
-    padding: 5px;
+    width: 80px;
+    padding: 2px;
+    font-size: 14px;
 }
 
 .user-suggest-cont div, .user-suggest-cont h4{

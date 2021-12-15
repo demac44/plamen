@@ -16,6 +16,8 @@ import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
 import NotficationsMenu from './NotficationsMenu'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const NEW_MESSAGE = gql`
     subscription {
         newMsgNotification {
@@ -76,13 +78,12 @@ const Navbar = ({isLogged}) => {
                 <div className="tn-right">
                 {isLogged ?
                 <>
-                    <i style={{...styles.inboxBtn, marginTop:'-13px'}} 
-                        onClick={()=>{setNotificiations(!notifications);setDropdown(false)}} 
-                        className="fas fa-sort-down"></i>
+                    <FontAwesomeIcon icon='sort-down' style={{...styles.inboxBtn, marginTop:'-13px'}} 
+                        onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
                     <Link to='/chats' style={{position:'relative'}}>
                         {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
                         <div className='flex-ctr' style={styles.count}>{NotNo}</div>))}
-                        <i className="fas fa-inbox" style={styles.inboxBtn}></i>
+                        <FontAwesomeIcon icon='inbox' style={styles.inboxBtn}/>
                     </Link>
                     <div className='flex-ac' style={styles.avatar} onClick={handleDropdown}> 
                         <Avatar size='45px' image={ls.profile_picture}/>

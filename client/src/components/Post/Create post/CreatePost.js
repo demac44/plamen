@@ -5,6 +5,8 @@ import axios from 'axios'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
@@ -116,21 +118,25 @@ const CreatePost = ({refetch}) => {
                     <div className='post-media-preview flex'>
                         <video src={preview} 
                             onLoad={()=>URL.revokeObjectURL(preview)}/>
-                        <div><i 
-                                className='fas fa-times flex-ctr' 
-                                style={styles.removePreview}
+                        <div style={styles.removePreview} className='flex-ctr'>
+                            <FontAwesomeIcon
+                                color='white'
+                                icon='times'
                                 onClick={()=>{setVideo(null);setPreview(null)}}
-                            ></i></div>
+                            />
+                        </div>
                     </div>}
                     {(image && preview) &&
                     <div className='post-media-preview flex'>
                         <img src={preview} 
                             onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
-                        <div><i 
-                                className='fas fa-times flex-ctr' 
-                                style={styles.removePreview}
+                        <div style={styles.removePreview} className='flex-ctr'>
+                            <FontAwesomeIcon
+                                color='white'
+                                icon='times'
                                 onClick={()=>{setImage(null);setPreview(null)}}
-                            ></i></div>
+                            />
+                        </div>
                     </div>}
 
                     <div className="flex-sb" style={{marginTop:'10px'}}>
@@ -138,7 +144,7 @@ const CreatePost = ({refetch}) => {
                             {/* upload image */}
                             <>
                                 <label htmlFor='image_upload' className='flex-ctr'>
-                                    <i className="fas fa-images"></i>
+                                    <FontAwesomeIcon icon='images' size='lg' color='white'/>
                                     <p>Image</p>
                                 </label>
                                 <input 
@@ -151,13 +157,18 @@ const CreatePost = ({refetch}) => {
                                         setImage(e.target.files[0])
                                         setPreview(URL.createObjectURL(e.target.files[0]))
                                         }}
-                                ></input>
+                                />
                             </>
 
                             {/* upload video */}
                             <>
                                 <label htmlFor='video_upload' className='flex-ctr'>
-                                    <i className="fas fa-video" style={{marginLeft: "25px"}}></i>
+                                    <FontAwesomeIcon 
+                                        icon='video' 
+                                        size='lg'
+                                        color='white' 
+                                        style={{marginLeft: "25px"}}
+                                    />
                                     <p>Video</p>
                                 </label>
                                 <input 
@@ -170,7 +181,7 @@ const CreatePost = ({refetch}) => {
                                         setVideo(e.target.files[0])
                                         setPreview(URL.createObjectURL(e.target.files[0]))
                                         }}
-                                ></input>
+                                />
                             </>
                         </div>
                         <button type='submit' className="post-button btn">POST</button>
@@ -195,7 +206,7 @@ const styles = {
     },
     removePreview:{
         height:'100%', 
-        padding:'10px',
+        padding:'7px',
         backgroundColor:'#2f2f2f',
         cursor:'pointer'
     }

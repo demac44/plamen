@@ -3,6 +3,7 @@ import UserBox from './UserBox'
 
 import '../General.css'
 import UserSuggestionsBox from '../UserSuggestionsBox'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const UsersList = ({data, title, closeList}) => {
 
@@ -10,8 +11,8 @@ const UsersList = ({data, title, closeList}) => {
         <div className='container-users-list flex-col-ctr'>
             <div className='users-list-box'>
                 <div className='users-list-top-bar'>
-                    <h2 style={{color:'white'}}>{title}</h2>
-                    <i onClick={()=>closeList()} style={styles.closeBtn} className='fas fa-times'></i>
+                    <h3 style={{color:'white'}}>{title}</h3>
+                    <FontAwesomeIcon icon='times' onClick={()=>closeList()} style={styles.closeBtn}/>
                 </div>
                 
                 <div>
@@ -34,7 +35,7 @@ const styles = {
         position:'absolute',
         right:'10px',
         top:'7px',
-        fontSize:'30px',
+        fontSize:'20px',
         color:'white',
         cursor:'pointer'
     },

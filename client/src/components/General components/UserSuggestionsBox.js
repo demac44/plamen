@@ -10,7 +10,7 @@ const UserSuggestionsBox = () => {
         <>
             <h4 style={styles.title}>Suggestions</h4>  
             <div style={styles.box}>
-                {user_suggestions.map(user => <UserBox user={user}/>)}
+                {user_suggestions.map(user => <UserBox user={user} key={user.userID}/>)}
             </div>
         </>
     )
@@ -22,11 +22,10 @@ export default UserSuggestionsBox
 const styles = {
     box:{
         width:'100%',
-        border:'1px solid #2f2f2f',
         borderRadius:'0 0 10px 10px',
         borderTop:'none',
         overflow:'auto',
-        maxHeight:'60vh',
+        marginTop:'20px'
     },
     title:{
         width:'100%',
@@ -35,9 +34,8 @@ const styles = {
         textAlign:'center',
         backgroundColor:'#1b1b1b',
         zIndex:'11',
-        border:'1px solid #2f2f2f',
         borderRadius:'10px 10px 0 0',
         borderBottom:'none',
-        marginTop:'10px'
+        marginTop:'20px'
     }
 }

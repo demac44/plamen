@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setIndexCallback, type,  setInnerIndexCallback, innerIndex, allDataLength}) => {
     let timeout;
     const [url, setUrl] = useState(null)
+    const [loadBar, setLoadBar] = useState(false)
     
     const nextStory = () => {
         clearTimeout(timeout)
@@ -42,6 +43,7 @@ const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setInde
             {type==='image' && 
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
+                    setLoadBar(true)
                     timeout = setTimeout(()=>{
                         nextStory()
                     }, 5000)
@@ -63,8 +65,8 @@ const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setInde
             <div className='story-count-bars'>
                 {storyData?.stories && storyData.stories.map(story => 
                 <div className='story-count-bar' key={story.storyID}>
-                    {(url && type==='image') && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'bar'}></div>}
-                    {(url && type==='video') && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'bar bar-vid' : 'bar'}></div>}
+                    {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'bar'}></div>}
+                    {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'bar bar-vid' : 'bar'}></div>}
                 </div>)}
             </div> 
         </div>

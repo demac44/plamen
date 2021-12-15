@@ -118,7 +118,8 @@ const styles = {
         top:'80px', 
         right:'0', 
         padding:'0 10px',
-        maxHeight: '90vh',
-        overflowY: 'auto',
+        maxHeight: '85vh',
+        overflowY: 'scroll',
+        marginRight:'-17px'
     }
 }

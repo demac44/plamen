@@ -3,6 +3,8 @@ import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp.js'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const LikePost = ({postID, userID, isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [liked, setLiked] = useState(false)
@@ -25,7 +27,7 @@ const LikePost = ({postID, userID, isLogged}) => {
         return
     }, [ifLiked?.data, isLogged])
 
-    if(ifLiked.loading) return <i style={{...styles.likeBtn, color:'white'}}  className='fas fa-heart'></i>
+    if(ifLiked.loading) return <FontAwesomeIcon icon='heart' size='lg' color='white'/>
 
     if(error) throw error
 
@@ -58,9 +60,10 @@ const LikePost = ({postID, userID, isLogged}) => {
     }
     return (
         <>
-            <i  className='fas fa-heart'
-                style={{...styles.likeBtn, color: liked ? '#a50202' : 'white'}}
-                onClick={() => liked ? handleRemove() : handleLike()}></i> 
+            <FontAwesomeIcon icon='heart'
+                style={{...styles.likeBtn}}
+                color={liked ? '#a50202' : 'white'}
+                onClick={() => liked ? handleRemove() : handleLike()}/>
             {loginPopUp && <LoginPopUp/>}
         </>
     )

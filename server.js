@@ -12,7 +12,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { execute, subscribe } from 'graphql';
 import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
-// import auth from './middleware/auth.js';
+import auth from './middleware/auth.js';
 import {EventEmitter} from 'events'
 
 import { PubSub } from 'graphql-subscriptions';
@@ -35,10 +35,10 @@ import logout from './controllers/logout.js'
     const httpServer = createServer(app)
     
     
-    const subscriptionServer = SubscriptionServer.create({
+    const subscriptionServer =  SubscriptionServer.create({
         schema,
         execute,
-        subscribe
+        subscribe,
     }, {
         server: httpServer,
         path: '/graphql',
@@ -71,7 +71,7 @@ import logout from './controllers/logout.js'
     app.use(express.json());
     
 
-    app.use('/graphiql', graphqlHTTP({
+    app.use('/graphiql', auth, graphqlHTTP({
         schema,
         graphiql:true
     }))
@@ -79,7 +79,7 @@ import logout from './controllers/logout.js'
     
     app.use('/api/login', login)
     app.use('/api/register', register)
-    app.use('/api/logout', logout)
+    app.use('/api/logout', auth, logout)
     
     
     app.get('*', (req,res)=>{
@@ -89,7 +89,7 @@ import logout from './controllers/logout.js'
     await server.start()
     server.applyMiddleware({app})
     
-    const PORT = 8000
+    const PORT = process.env.PORT || 8000
     httpServer.listen(PORT, ()=> console.log('Server is running')) 
     
 })()

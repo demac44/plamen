@@ -37,8 +37,8 @@ const Groups = ({isLogged}) => {
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper'>
+                <Sidebar show={leftnav}/>
                 <div className='container-main'>
-                    <Sidebar show={leftnav}/>
                     <GroupsGrid groups={data?.get_groups}/>
                 </div>
             </div>

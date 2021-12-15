@@ -7,6 +7,8 @@ import { useMutation } from 'react-apollo'
 
 import Dropzone from 'react-simple-dropzone/dist';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
         create_group_post(userID: $userID, post_text: $text, url: $url, type: $type, groupID: $groupID){
@@ -20,8 +22,8 @@ const CreatePost = ({refetch, groupid}) => {
     const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
-    const [imageUpload, setImageUpload] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [preview, setPreview] = useState(null)
 
     const [new_post] = useMutation(NEW_POST)
 
@@ -33,7 +35,7 @@ const CreatePost = ({refetch, groupid}) => {
             setErr('2px solid #E82c30')
             return
         } else {
-            if (imageUpload){
+            if (image){
                 const data = new FormData()
                 data.append("file", image)
                 data.append("upload_preset", "z8oybloj")
@@ -53,7 +55,7 @@ const CreatePost = ({refetch, groupid}) => {
                         setVideo(null)
                         setImage(null )
                         setLoading(false)
-                        setImageUpload(false)
+                        setPreview(null)
                         refetch()
                         e.target.text.value = ''
                     }
@@ -77,9 +79,11 @@ const CreatePost = ({refetch, groupid}) => {
 
                         }
                     }).then(()=>{
+                        setImage(null)
+                        setVideo(null)
                         refetch()
                         setLoading(false)
-                        setImageUpload(false)
+                        setPreview(null)
                         e.target.text.value = ''
                     }
                     )
@@ -114,26 +118,76 @@ const CreatePost = ({refetch, groupid}) => {
                         placeholder="Add new post..."
                     ></textarea>
 
-                    {(imageUpload) && 
-                    <div>
-                        <Dropzone onSuccessBlob={ (img) => {setImage(img);setVideo(null)} }/>
+                    {(video && preview) && 
+                    <div className='post-media-preview flex'>
+                        <video src={preview} 
+                            onLoad={()=>URL.revokeObjectURL(preview)}/>
+                        <div style={styles.removePreview} className='flex-ctr'>
+                            <FontAwesomeIcon
+                                color='white'
+                                icon='times'
+                                onClick={()=>{setVideo(null);setPreview(null)}}
+                            />
+                        </div>
                     </div>}
+
+                    {(image && preview) &&
+                    <div className='post-media-preview flex'>
+                        <img src={preview} 
+                            onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
+                        <div style={styles.removePreview} className='flex-ctr'>
+                            <FontAwesomeIcon
+                                color='white'
+                                icon='times'
+                                onClick={()=>{setImage(null);setPreview(null)}}
+                            />
+                        </div>
+                    </div>}
+
 
                     <div className="flex-sb" style={{marginTop:'10px'}}>
                         <div className='flex-ctr'>
-
-                            <i className="fas fa-images" onClick={() => setImageUpload(!imageUpload)}></i>
-                            <p>Image</p>
-
+                            {/* upload image */}
                             <>
-                                <label htmlFor='video_upload'>
-                                    <i className="fas fa-video" style={{marginLeft: "25px"}}></i>
+                                <label htmlFor='image_upload' className='flex-ctr'>
+                                    <FontAwesomeIcon icon='images' size='lg' color='white'/>
+                                    <p>Image</p>
                                 </label>
-                                <input type='file' id='video_upload' accept="video/*" style={{display:'none'}} onChange={(e)=>{
-                                    setVideo(e.target.files[0])
-                                    setImageUpload(false)
-                                    }}></input>
-                                <p>Video</p>
+                                <input 
+                                    type='file' 
+                                    id='image_upload' 
+                                    accept="image/*" 
+                                    style={{display:'none'}} 
+                                    onChange={(e)=>{
+                                        setVideo(null)
+                                        setImage(e.target.files[0])
+                                        setPreview(URL.createObjectURL(e.target.files[0]))
+                                        }}
+                                />
+                            </>
+
+                            {/* upload video */}
+                            <>
+                                <label htmlFor='video_upload' className='flex-ctr'>
+                                    <FontAwesomeIcon 
+                                        icon='video' 
+                                        size='lg'
+                                        color='white' 
+                                        style={{marginLeft: "25px"}}
+                                    />
+                                    <p>Video</p>
+                                </label>
+                                <input 
+                                    type='file' 
+                                    id='video_upload' 
+                                    accept="video/*" 
+                                    style={{display:'none'}} 
+                                    onChange={(e)=>{
+                                        setImage(null)
+                                        setVideo(e.target.files[0])
+                                        setPreview(URL.createObjectURL(e.target.files[0]))
+                                        }}
+                                />
                             </>
                         </div>
                         <button type='submit' className="post-button btn">POST</button>
@@ -155,5 +209,11 @@ const styles = {
         border:'none',
         outline:'none',
         fontSize:'14px'
+    },
+    removePreview:{
+        height:'100%', 
+        padding:'7px',
+        backgroundColor:'#2f2f2f',
+        cursor:'pointer'
     }
 }

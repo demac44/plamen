@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const REPORT_POST = gql`
     mutation ($postID:Int!, $userPostedID:Int!, $userReportedID:Int!, $reasons: String!){
         post_report(postID: $postID, userPostedID: $userPostedID, userReportedID: $userReportedID, reasons: $reasons){
@@ -67,7 +69,7 @@ const ReportBox = ({data, closeReportCallback}) => {
         <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
                 <h3 style={styles.title}>Report post
-                    <i className='fas fa-times' style={styles.exitBtn} onClick={()=>closeReportCallback()}></i>     
+                    <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>closeReportCallback()}/>
                 </h3>
                 {reportSent && <h4 style={{...styles.title, marginTop:'10px'}}>Your report has been sent!</h4>}
                 <p style={{...styles.title, marginTop:'10px'}}>Please specify reasons for reporting this post:</p>

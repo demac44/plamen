@@ -9,6 +9,9 @@ import SetTime from '../../../General components/SetTime'
 import { useSelector } from 'react-redux'
 import LoginPopUp from '../../../Entry/Login/LoginPopUp'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+
 const Comment = ({comment, refetchComments}) => {
     const [loginPopUp, setLoginPopUp] = useState(false)
     const isLogged = useSelector(state => state?.isAuth.isAuth)
@@ -56,11 +59,12 @@ const Comment = ({comment, refetchComments}) => {
 
                 </div>
                 {isLogged && (comment.userID===ls.userID && 
-                    <i 
+                    <FontAwesomeIcon 
+                        icon='trash-alt' 
                         style={styles.deleteBtn} 
                         className='fas fa-trash-alt'
                         onClick={handleDelete}
-                    ></i>)}
+                    />)}
             </div>
             {loginPopUp && <LoginPopUp/>}
         </>

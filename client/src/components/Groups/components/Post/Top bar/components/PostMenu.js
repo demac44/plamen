@@ -4,6 +4,8 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import ReportBox from './ReportBox'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 
 const PostMenu = ({data, refetchPosts}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -35,14 +37,13 @@ const PostMenu = ({data, refetchPosts}) => {
         <>
             <div className='post-options-menu'>
                 <ul>
-                    <li onClick={copyToClipboard}><i className='fas fa-share'></i> Share</li>
+                    <li onClick={copyToClipboard}><FontAwesomeIcon icon='share' /> Share</li>
                     {data.userID===ls.userID && <li onClick={handlePostDelete}>
-                        <i 
-                            className='fas fa-trash-alt'
-                        ></i> Delete
+                        <FontAwesomeIcon icon='trash-alt' 
+                        /> Delete
                     </li>}
 
-                    <li onClick={()=>setReportMenu(true)}><i className="fas fa-flag"></i> Report</li>
+                    <li onClick={()=>setReportMenu(true)}><FontAwesomeIcon icon='flag'/> Report</li>
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}

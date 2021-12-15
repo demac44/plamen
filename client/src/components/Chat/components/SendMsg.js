@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const SEND_MSG = gql`
     mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
@@ -104,13 +105,13 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                     {media.type.slice(0,5)==='video' &&
                         <video style={styles.previewMedia} src={preview}
                         onLoad={()=>URL.revokeObjectURL(preview)}></video>}
-                    <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><i className='fas fa-times'></i></div>
+                    <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><FontAwesomeIcon icon='times'/></div>
                 </div>}
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
 
                 <div>
                     <label htmlFor='file-input'>
-                        <i className='fas fa-image' style={styles.imgIcon}></i>
+                        <FontAwesomeIcon icon='image' style={styles.imgIcon}/>
                     </label>
                     <input type='file' id='file-input' accept='video/*, image/*' style={{display:'none'}} 
                         onChange={(e)=>{

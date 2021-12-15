@@ -4,6 +4,8 @@ import { useMutation, useQuery } from 'react-apollo'
 import {gql} from 'graphql-tag'
 import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 
 const SavePostButton = ({postID, groupID, isLogged}) => {
     const [saved, setSaved] = useState(false)
@@ -52,11 +54,11 @@ const SavePostButton = ({postID, groupID, isLogged}) => {
 
     return (
         <>
-            <i 
-                className="fas fa-bookmark" 
+            <FontAwesomeIcon
+                icon='bookmark'
                 onClick={()=> saved ? handleRemove() : handleSave()} 
                 style={{...styles.saveBtn, color: saved ? '#ffbb00' : 'white'}}
-            ></i>
+            />
             {loginPopUp && <LoginPopUp/>}
         </>
     )

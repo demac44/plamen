@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import FollowBtn from '../Profile/components/FollowBtn'
 import Avatar from '../General components/Avatar'
 import FollowButton from '../General components/FollowButton'
 import SetTime from '../General components/SetTime'
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const NotificationBox = ({notif}) => {
     return (
@@ -11,9 +12,9 @@ const NotificationBox = ({notif}) => {
             <Link to={notif.type==='follow' ? '/profile/'+notif.username : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
                     <Avatar size='50px' image={notif.profile_picture}/>
-                    {notif.type==='like' && <i style={styles.typeIconLike} className="fas fa-heart"></i>}
-                    {notif.type==='comment' && <i style={styles.typeIconComm} className="fas fa-comment-dots"></i>}
-                    {notif.type==='follow' && <i style={styles.typeIconFoll} className="fas fa-user"></i>}
+                    {notif.type==='like' && <FontAwesomeIcon icon='heart' style={styles.typeIconLike}/>}
+                    {notif.type==='comment' && <FontAwesomeIcon icon='comment' style={styles.typeIconComm}/>}
+                    {notif.type==='follow' && <FontAwesomeIcon icon='user' style={styles.typeIconFoll}/>}
                 </span>
                 {notif.type==='like' && <p>{'@'+notif.username+' liked your post'}</p>}
                 {notif.type==='comment' && <p>{'@'+notif.username+' commented on your post'}</p>}

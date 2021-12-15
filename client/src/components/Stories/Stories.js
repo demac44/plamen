@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import AddStory from './components/AddStory'
 import StoryHead from './components/StoryHead'
@@ -45,7 +46,7 @@ const Stories = ({stories, refetch}) => {
                 onClick={()=>setMargin(margin+100 > width ? margin :margin+100)}
                 style={{...styles.btn, right:'0'}}
                 >
-                <i className="fas fa-chevron-right"></i>
+                <FontAwesomeIcon icon='chevron-right'/>
             </div>
         </div>
     )

@@ -1,29 +1,31 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const Sidebar = ({show}) => {
 
     return (
         <div className="sidebar" style={{transform: show && 'translate(0)', transition:'ease .3s'}}>
             <ul className="ln-list">
                 <NavLink exact to="/feed"><li>
-                    <i style={{color:'darkgreen'}} className="fas fa-newspaper"></i>
+                    <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                     <p>Feed</p>
                 </li></NavLink>
                 <NavLink exact to='/explore'><li>
-                    <i style={{color:'#9933ff'}} className="fas fa-compass"></i>
+                    <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
                     <p>Explore</p>
                 </li></NavLink>
                 <NavLink exact to='/saved'><li>
-                    <i style={{color:'#ffbb00'}} className="fas fa-bookmark"></i>
+                    <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
                     <p>Saved</p>
                 </li></NavLink>
                 <NavLink exact to='/communities'><li>
-                    <i style={{color:'teal'}} className="fas fa-users"></i>
+                    <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                     <p>Communities</p>
                 </li></NavLink>
                 <NavLink exact to='/someapptube'><li>
-                    <i style={{color:'darkred'}} className="fas fa-play"></i>
+                    <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
                     <p>SomeAppTube</p>
                 </li></NavLink>
             </ul>

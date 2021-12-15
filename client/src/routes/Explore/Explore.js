@@ -78,8 +78,11 @@ const styles = {
     containerRight:{
         position:'fixed', 
         top:'80px', 
-        right:'20px', 
-        padding:'0 10px'
+        right:'0', 
+        padding:'0 10px',
+        maxHeight: '85vh',
+        overflowY: 'scroll',
+        marginRight:'-17px'
     },
     title:{
         width:'100%',

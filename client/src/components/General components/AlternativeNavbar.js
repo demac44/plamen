@@ -1,33 +1,35 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 const AlternativeNavbar = ({chat}) => {
     return (
         <div className='alternative-navbar' style={chat && styles.nav}>
             <ul className='flex-sa' style={{width:'100%', height:'100%'}}>
                 <NavLink exact to="/feed">
                     <li>
-                        <i style={{color:'darkgreen'}} className="fas fa-newspaper"></i>
+                        <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                     </li>
                 </NavLink>
                 <NavLink exact to='/explore'>
                 <li>
-                    <i style={{color:'#9933ff'}} className="fas fa-compass"></i>
+                    <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
                 </li>
                 </NavLink>
                 <NavLink exact to='/saved'>
                     <li>
-                        <i style={{color:'#ffbb00'}} className="fas fa-bookmark"></i>
+                        <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
                     </li>
                 </NavLink>
                 <NavLink exact to='/communities'>
                 <li>
-                    <i style={{color:'teal'}} className="fas fa-users"></i>
+                    <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                 </li>
                 </NavLink>
                 <NavLink exact to='/someapptube'>
                     <li>
-                        <i style={{color:'darkred'}} className="fas fa-play"></i>
+                        <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
                     </li>
                 </NavLink>
             </ul>

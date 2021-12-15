@@ -18,7 +18,7 @@ const FollowButton = ({userID}) => {
     }, [data])
     
     
-    if (loading) return <p>loading</p>
+    if (loading) return (<div className='follow-button btn'><p>Follow</p></div>)
 
 
 

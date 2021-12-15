@@ -9,10 +9,10 @@ const UserBox = ({user}) => {
     return (
         <div className='users-list-user-box flex-sb'>
             <NavLink exact to={'/profile/'+user.username} className='flex-ctr'>
-                <Avatar size='50px' image={user.profile_picture}/>
+                <Avatar size='40px' image={user.profile_picture}/>
                 <div style={styles.namesBox}>
-                    <p>{user.first_name+' '+user.last_name}</p>
-                    <p style={{fontSize:'14px'}}>@{user.username}</p>
+                    <p style={{fontSize:'14px'}}>{user.first_name+' '+user.last_name}</p>
+                    <p style={{fontSize:'12px'}}>@{user.username}</p>
                 </div>
             </NavLink>
             {user.userID === ls.userID ? null : <FollowButton userID={user.userID}/>}

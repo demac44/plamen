@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+
 const SideInfoBox = ({myprofile, userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [dateJoined, setDateJoined] = useState(null)
@@ -52,7 +55,7 @@ const SideInfoBox = ({myprofile, userID}) => {
             {(data?.get_user_info?.country || data?.get_user_info?.city) && 
             <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{color:'#426e57'}} className="fas fa-home"></i> 
+                        <FontAwesomeIcon icon='home' color='#426e57' fixedWidth/>
                         <h5>Living in</h5>
                         {(data?.get_user_info?.city && !data?.get_user_info?.country) && <p>{data?.get_user_info?.city}</p>}
                         {(!data?.get_user_info?.city && data?.get_user_info?.country) && <p>{data?.get_user_info?.country}</p>}
@@ -64,7 +67,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            {data?.get_user_info?.job && 
             <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{color:'brown'}} className="fas fa-briefcase"></i> 
+                        <FontAwesomeIcon icon='briefcase' color='brown' fixedWidth/>
                         <h5>Works at</h5>
                         <p>{data?.get_user_info?.job}</p>
                     </span>
@@ -74,7 +77,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            {data?.get_user_info?.university && 
             <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{color:'teal'}} className="fas fa-university"></i> 
+                        <FontAwesomeIcon icon='university' color='teal' fixedWidth/>
                         <h5>University</h5>
                         <p>{data?.get_user_info?.university}</p>
                     </span>
@@ -83,7 +86,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            {data?.get_user_info?.high_school && 
             <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{fontSize:'14px', color:'green'}} className="fas fa-school"></i>
+                        <FontAwesomeIcon icon='school' color='green' fixedWidth/>
                         <h5>High school</h5>
                         <p>{data?.get_user_info?.high_school}</p>
                     </span>
@@ -92,7 +95,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            {data?.get_user_info?.bDate && 
             <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{color:'orange'}} className="fas fa-birthday-cake"></i>
+                        <FontAwesomeIcon icon='birthday-cake' color='orange' fixedWidth/>
                         <h5>Birthday</h5>
                         <p style={{marginLeft:'10px'}}>{birthDate}</p>
                         <p style={{fontSize:'12px'}}>{age}yrs</p>
@@ -102,7 +105,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            {data?.get_user_info?.phone_number &&
                 <div className='flex-sb'>
                     <span className='flex-h'>
-                        <i style={{color:'silver'}} className="fas fa-mobile-alt"></i>
+                        <FontAwesomeIcon icon='mobile-alt' color='silver' fixedWidth/>
                         <h5>Phone</h5>
                         <p style={{marginLeft:'10px'}}>{data?.get_user_info?.phone_number}</p>
                     </span>

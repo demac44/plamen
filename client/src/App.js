@@ -26,6 +26,18 @@ import UserInfo from './routes/Profile/Settings/UserInfo';
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo';
 
+import {library} from '@fortawesome/fontawesome-svg-core'
+
+import {faNewspaper, faCompass, faBookmark, faUsers, faPlay, faPlus, faInbox, 
+        faSortDown, faHome, faBriefcase, faUniversity, faSchool, faBirthdayCake, 
+        faMobileAlt, faHeart, faComment, faUser, faTrashAlt, faEllipsisV, faArrowLeft,
+        faTimes,faImages, faVideo, faShare, faFlag, faChevronRight, faSearch} from '@fortawesome/free-solid-svg-icons'
+library.add(faNewspaper, faCompass, faBookmark, faUsers, faPlay, faPlus, faInbox, 
+            faSortDown, faHome, faBriefcase, faUniversity, faSchool, faBirthdayCake, 
+            faMobileAlt, faHeart, faComment, faUser, faTrashAlt, faEllipsisV, faArrowLeft,
+              faTimes,faImages, faVideo, faShare, faFlag, faChevronRight, faSearch)
+
+
 function App() {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
@@ -35,8 +47,9 @@ function App() {
   const token = localStorage.getItem('token')
 
   const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
+    skip: user?.userID ? false : true,
     variables:{
-      userID: user.userID
+      userID: user?.userID
     }
   })
 

@@ -5,6 +5,9 @@ import { useQuery } from 'react-apollo'
 
 import UserBox from '../../../../../General components/Users list/UserBox'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+
 const LikesList = ({postID, closeList}) => {
     const {data, loading} = useQuery(GET_LIKES_GP, {
         variables:{
@@ -19,7 +22,7 @@ const LikesList = ({postID, closeList}) => {
             <div className='users-list-box'>
                 <div className='users-list-top-bar'>
                     <h2 style={{color:'white'}}>Likes</h2>
-                    <i onClick={()=>closeList()} style={styles.closeBtn} className='fas fa-times'></i>
+                    <FontAwesomeIcon icon='times' onClick={()=>closeList()} style={styles.closeBtn} />
                 </div>
                 
                 {loading ? <div style={{width:'100%', height:'150px'}} className='flex-ctr'><div className='small-spinner'></div></div> :
