@@ -1,51 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom'
 
 import './App.css';
 import './General.css'
 
+import Profile from './routes/Profile/Profile';
+import MainLoader from './components/General components/Loaders/MainLoader';
+
 import { authenticate } from './Redux-actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
-
-import Feed from './routes/Feed/Feed';
-import Profile from './routes/Profile/Profile';
-import AccountSettings from './routes/Profile/Settings/AccountSettings';
-import Saved from './routes/Profile/Saved';
-import Search from './routes/Search/Search';
-import SinglePost from './routes/Post/SinglePost';
-import Groups from './routes/Groups/Groups';
-import Group from './routes/Groups/Group';
-import GroupMembers from './routes/Groups/GroupMembers';
-import Chats from './routes/Chat/Chats'
-import Explore from './routes/Explore/Explore';
-import MainLoader from './components/General components/Loaders/MainLoader';
-import Settings from './routes/Profile/Settings/Settings';
-import NotFound from './routes/Not found/NotFound';
-import UserInfo from './routes/Profile/Settings/UserInfo';
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo';
 
-import {library} from '@fortawesome/fontawesome-svg-core'
+import('@fortawesome/free-solid-svg-icons').then(i=>{
+  import('@fortawesome/fontawesome-svg-core').then(core =>{
+    core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
+      i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
+      i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
+      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch)
+    })
+})
 
-import {faNewspaper, faCompass, faBookmark, faUsers, faPlay, faPlus, faInbox, 
-        faSortDown, faHome, faBriefcase, faUniversity, faSchool, faBirthdayCake, 
-        faMobileAlt, faHeart, faComment, faUser, faTrashAlt, faEllipsisV, faArrowLeft,
-        faTimes,faImages, faVideo, faShare, faFlag, faChevronRight, faSearch} from '@fortawesome/free-solid-svg-icons'
-library.add(faNewspaper, faCompass, faBookmark, faUsers, faPlay, faPlus, faInbox, 
-            faSortDown, faHome, faBriefcase, faUniversity, faSchool, faBirthdayCake, 
-            faMobileAlt, faHeart, faComment, faUser, faTrashAlt, faEllipsisV, faArrowLeft,
-              faTimes,faImages, faVideo, faShare, faFlag, faChevronRight, faSearch)
-
+const Feed = lazy(()=>import('./routes/Feed/Feed'))
+const Group = lazy(()=>import('./routes/Groups/Group'))
+const Groups = lazy(()=>import('./routes/Groups/Groups'))
+const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
+const Explore = lazy(()=>import('./routes/Explore/Explore'))
+const Chats = lazy(()=>import('./routes/Chat/Chats'))
+const Saved = lazy(()=>import('./routes/Profile/Saved'))
+const NotFound = lazy(()=>import('./routes/Not found/NotFound'))
+const SinglePost = lazy(()=>import('./routes/Post/SinglePost'))
+const Search = lazy(()=>import('./routes/Search/Search'))
+const AccountSettings = lazy(()=>import('./routes/Profile/Settings/AccountSettings'))
+const Settings = lazy(()=>import('./routes/Profile/Settings/Settings'))
+const UserInfo = lazy(()=>import('./routes/Profile/Settings/UserInfo'))
 
 function App() {
   const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = useState(true)
   const isLogged = useSelector(state => state?.isAuth.isAuth)
   const uid = useSelector(state => state.isAuth.user?.userID)
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
-
+  
   const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
     skip: user?.userID ? false : true,
     variables:{
@@ -54,10 +51,8 @@ function App() {
   })
 
   useEffect(()=>{
-    setIsLoading(true)
-
     dispatch(authenticate())
-
+    
     if(checkUser(token, user, uid)){
       localStorage.clear()
     } else {
@@ -65,18 +60,16 @@ function App() {
         localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
       }
     }
-
-    setIsLoading(false)
-  },[isLogged, user, uid, token, data])
+  },[isLogged, user, uid, token, data, dispatch])
   
   return (
       <>
-        {(isLoading || loading) ? <MainLoader/> :
+        {(loading) ? <MainLoader/> :
           <Switch>
-            <>
+            <Route exact path='/profile/:username'>{isLogged ? <Profile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+            <Suspense fallback={<MainLoader/>}>
               <Route exact path='/'></Route>
               <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
-              <Route exact path='/profile/:username'>{isLogged ? <Profile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
@@ -90,13 +83,23 @@ function App() {
               <Route exact path='/settings/account'>{isLogged ? <AccountSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/settings/info'>{isLogged ? <UserInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/404'>{isLogged ? <NotFound/> : <Redirect to='/login'/>}</Route>
-            </>
+            </Suspense>
           </Switch>}
       </>
   );
 }
 
 export default App;
+
+const checkUser = (token, user, uid) => {
+  if(!token) return true
+  else if(!user) return true
+  else if (uid && user.userID !== uid){
+    return true
+  }
+  return false
+}
+
 
 const GET_FOLLOW_SUGGESTIONS = gql`
   query ($userID: Int!) {
@@ -109,12 +112,3 @@ const GET_FOLLOW_SUGGESTIONS = gql`
     }
   }
 `
-
-const checkUser = (token, user, uid) => {
-  if(!token) return true
-  else if(!user) return true
-  else if (uid && user.userID !== uid){
-    return true
-  }
-  return false
-}

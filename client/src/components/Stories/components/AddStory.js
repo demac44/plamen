@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import StoryPreview from './StoryPreview'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -37,7 +37,7 @@ const AddStory = ({refetch}) => {
     )
 }
 
-export default AddStory
+export default memo(AddStory)
 
 const styles = {
     addBtn:{

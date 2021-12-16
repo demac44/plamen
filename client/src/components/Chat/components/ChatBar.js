@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
@@ -43,7 +43,7 @@ const ChatBar = ({chatID, info}) => {
     )
 }
 
-export default ChatBar
+export default memo(ChatBar)
 
 const styles = {
     menuBtn:{

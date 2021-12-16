@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import {gql} from 'graphql-tag'
 
@@ -54,7 +54,7 @@ const FollowButton = ({userID}) => {
     )
 }
 
-export default FollowButton
+export default memo(FollowButton)
 
 
 const FOLLOW = gql`

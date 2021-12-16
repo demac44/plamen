@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import {gql} from 'graphql-tag'
@@ -77,7 +77,7 @@ const Feed = ({isLogged}) => {
     )
 }
 
-export default Feed
+export default memo(Feed)
 
 
 const FEED_POSTS = gql`

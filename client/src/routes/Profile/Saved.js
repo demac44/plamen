@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, memo} from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
@@ -71,7 +71,7 @@ const Saved = ({isLogged}) => {
     )
 }
 
-export default Saved
+export default memo(Saved)
 
 const styles = {
     title: {

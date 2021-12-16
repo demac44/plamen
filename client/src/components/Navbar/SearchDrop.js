@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import SearchHistoryDrop from './SearchHistoryDrop'
 import UserSearchBar from './UserSearchBar'
@@ -21,7 +21,7 @@ const SearchDrop = ({data, query, chat, searchHistory, dropdownCallback}) => {
     )
 }
 
-export default SearchDrop
+export default memo(SearchDrop)
 
 
 const styles = {
@@ -48,6 +48,10 @@ const filterUsers = (data, query) => {
 
         const str = (str1+str2+str3+str4+str5+str6).toLowerCase()
 
-        return str.includes(query)
+        return str.includes(query) 
+                || query.includes(user.last_name.toLowerCase()) 
+                || query.includes(user.first_name.toLowerCase())
+                || query.includes(user.username.toLowerCase())
+            
     })
 }

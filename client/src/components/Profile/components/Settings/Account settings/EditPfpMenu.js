@@ -23,7 +23,7 @@ const EditPfpMenu = ({closeMenu}) => {
     const handlePfpChange = () => {
         const data = new FormData()
         data.append("file", image)
-        data.append("upload_preset", "z8oybloj")
+        data.append("upload_preset", "ms8dmaqw")
         data.append("folder", "Profile pictures")
         axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
         .then(res => {

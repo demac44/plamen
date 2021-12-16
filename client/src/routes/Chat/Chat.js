@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
@@ -35,7 +35,7 @@ const Chat = ({isLogged}) => {
     )
 }
 
-export default Chat
+export default memo(Chat)
 
 
 const GET_CHATS = gql`

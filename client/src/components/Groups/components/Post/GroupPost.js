@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import PostTopBar from './Top bar/PostTopBar'
 import PostMedia from './Media/PostMedia'
@@ -36,4 +36,4 @@ const GroupPost = ({post, refetchPosts}) => {
     )
 }
 
-export default GroupPost
+export default memo(GroupPost)

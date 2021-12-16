@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import AddStory from './components/AddStory'
 import StoryHead from './components/StoryHead'
 
@@ -52,7 +52,7 @@ const Stories = ({stories, refetch}) => {
     )
 }
 
-export default Stories
+export default memo(Stories)
 
 
 const styles = {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -60,7 +60,7 @@ const Message = ({msg}) => {
                             <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
 
                         <span style={{...styles.timestamp, textAlign:'right'}}>
-                            <SetTime timestamp={msg.time_sent}/>
+                            <SetTime timestamp={msg.time_sent} fontSize='12px'/>
                         </span>
                     </>}
                 </div>
@@ -73,7 +73,7 @@ const Message = ({msg}) => {
                             <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text
                         }</p>
                         
-                        <span><SetTime timestamp={msg.time_sent}/></span>
+                        <span><SetTime timestamp={msg.time_sent} fontSize='12px'/></span>
                 </div>}
             </div>
             {openMedia && <OpenMedia url={msg.url} callback={closeMediaCallback}/>}    
@@ -81,7 +81,7 @@ const Message = ({msg}) => {
     )
 }
 
-export default Message
+export default memo(Message)
 
 
 const styles = {

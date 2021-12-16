@@ -55,7 +55,7 @@ const Comment = ({comment, refetchComments}) => {
                     )
                     : <p><strong>{comment.username}</strong>{' '+comment.comment_text}</p>}
 
-                    <SetTime timestamp={comment.date_commented}/>
+                    <SetTime timestamp={comment.date_commented} fontSize='12px'/>
 
                 </div>
                 {isLogged && (comment.userID===ls.userID && 

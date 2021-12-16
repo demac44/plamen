@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 import {Link} from 'react-router-dom'
-import StoryOptions from './StoryOptions'
 import Avatar from '../../General components/Avatar'
 import SetTime from '../../General components/SetTime'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const StoryBar = ({user, date, closeStoryCallback, storyID}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
-    const [storyOptions, setStoryOptions] = useState(false)
+const StoryBar = ({user, date, closeStoryCallback}) => {
 
     return (
         <div className='story-top-bar flex-sb'>
@@ -24,20 +21,12 @@ const StoryBar = ({user, date, closeStoryCallback, storyID}) => {
                     style={{...styles.btns, marginRight:'10px'}} 
                     onClick={()=>closeStoryCallback()}
                 />
-                {/* {user.userID===ls.userID && 
-                    <FontAwesomeIcon
-                        icon='ellipsis-v' 
-                        className='fp-options-btn'
-                        onClick={()=>setStoryOptions(!storyOptions)}
-                        style={styles.btns}
-                    />}
-                {storyOptions && <StoryOptions storyID={storyID} closeStoryCallback={closeStoryCallback}/>} */}
             </span>
         </div>
     )
 }
 
-export default StoryBar
+export default memo(StoryBar)
 
 
 const styles = {

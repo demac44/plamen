@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, memo } from 'react'
 import UsersList from '../General components/Users list/UsersList.js'
 
 const ProfileInfo = ({info}) => {  
@@ -64,7 +64,7 @@ const ProfileInfo = ({info}) => {
     )
 }
 
-export default ProfileInfo
+export default memo(ProfileInfo)
 
 const styles = {
     name:{

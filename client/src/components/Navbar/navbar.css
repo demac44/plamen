@@ -162,18 +162,22 @@
 .notification-box:hover{
     background-color: #2f2f2f;
 }
-.notification-box p{
+.notif-text p{
     margin-left: 10px;
     font-size: 14px;
     color: white;
 }
-.nb-time{
+.nb-right{
     position: absolute;
     top: 21px;
     right: 5px;
+}
+.nb-right .set-time-p{
     color: white;
 }
-
+.nb-right .follow-button{
+    margin-right: 10px;
+}
 
 /* MEDIA QUERIES */
 

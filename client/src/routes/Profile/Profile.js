@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect } from 'react-router-dom'
 
@@ -99,7 +99,7 @@ const Profile = ({isLogged}) => {
     )
 }
 
-export default Profile  
+export default memo(Profile)  
 
 
 

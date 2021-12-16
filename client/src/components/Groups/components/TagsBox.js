@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 const TagsBox = ({tags}) => {
     return (
@@ -11,7 +11,7 @@ const TagsBox = ({tags}) => {
     )
 }
 
-export default TagsBox
+export default memo(TagsBox)
 
 const styles = {
     tag:{

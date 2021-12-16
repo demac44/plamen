@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
-import Dropzone from 'react-simple-dropzone/dist';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 

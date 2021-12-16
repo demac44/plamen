@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, memo } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -116,4 +116,4 @@ const NotficationsMenu = ({visible}) => {
     )
 }
 
-export default NotficationsMenu
+export default memo(NotficationsMenu)

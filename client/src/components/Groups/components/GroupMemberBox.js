@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../../General components/Avatar'
 
@@ -33,7 +33,7 @@ const GroupMemberBox = ({member}) => {
     )
 }
 
-export default GroupMemberBox
+export default memo(GroupMemberBox)
 
 const styles = {
     roleTag:{

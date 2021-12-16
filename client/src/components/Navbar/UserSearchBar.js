@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {NavLink} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -62,5 +62,5 @@ const UserSearchBar = ({user, chat}) => {
     )
 }
 
-export default UserSearchBar
+export default memo(UserSearchBar)
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { useParams } from 'react-router'
 import { Redirect } from 'react-router-dom'
 
@@ -11,6 +11,10 @@ import Sidebar from '../../components/General components/Sidebar'
 import Post from '../../components/Post/Post'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+
+import MyGroupsList from '../../components/General components/MyGroupsList'
+import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
+
 
 const GET_POST = gql`
     query ($postID: Int!){
@@ -48,16 +52,21 @@ const SinglePost = ({isLogged}) => {
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <h2 style={styles.title}>Post by @{data.get_post.username}</h2>
+                        <h3 style={styles.title}>Post by @{data.get_post.username}</h3>
                         <Post post={data.get_post}/>
                     </div>
+                    {isLogged &&
+                    <div className='container-right' style={{width:'35%'}}>
+                        <MyGroupsList/>
+                        <UserSuggestionsBox/>
+                    </div>}
                 </div>
             </div>
         </> 
     )
 }
 
-export default SinglePost
+export default memo(SinglePost)
 
 
 const styles = {

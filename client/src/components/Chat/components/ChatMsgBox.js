@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from 'react'
 import SendMsg from './SendMsg'
 import Message from './Message'
 
@@ -98,7 +98,7 @@ const ChatMsgBox = ({chat}) => {
     )
 }
 
-export default ChatMsgBox  
+export default memo(ChatMsgBox)  
 
 
 const styles = {

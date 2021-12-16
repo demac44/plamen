@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import ProfileFollowBtn from './components/ProfileFollowBtn'
 import ProfileEditBtn from './components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
@@ -72,7 +72,7 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
     )
 }
 
-export default ProfileInfoBox
+export default memo(ProfileInfoBox)
 
 
 const FETCH_INFO= gql`

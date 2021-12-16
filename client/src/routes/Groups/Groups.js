@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import {gql} from 'graphql-tag'
@@ -46,4 +46,4 @@ const Groups = ({isLogged}) => {
     )
 }
 
-export default Groups
+export default memo(Groups)

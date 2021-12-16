@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 
 import '../../App.css'
 import '../../General.css'
@@ -98,7 +98,7 @@ const Navbar = ({isLogged}) => {
     )
 }
 
-export default Navbar
+export default memo(Navbar)
 
 
 const styles = {

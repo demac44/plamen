@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import UserBox from './Users list/UserBox'
 
@@ -16,7 +16,7 @@ const UserSuggestionsBox = () => {
     )
 }
 
-export default UserSuggestionsBox
+export default memo(UserSuggestionsBox)
 
 
 const styles = {

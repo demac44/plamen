@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import Story from './Story'
 import Avatar from '../../General components/Avatar'
 
@@ -13,8 +13,7 @@ const StoryHead = ({index, story, allData}) => {
         <>
             <div   
                 className="story-head" 
-                style={{border:'2px solid', 
-                    borderColor:"#" + ((1<<24)*Math.random() | 0).toString(16)}} 
+                style={{border:'2px solid #ffbb00'}} 
                 onClick={()=>setOpenStory(true)
             }>
                 <Avatar size='60px' image={story?.profile_picture}/>
@@ -24,4 +23,4 @@ const StoryHead = ({index, story, allData}) => {
     )
 }
 
-export default StoryHead
+export default memo(StoryHead)

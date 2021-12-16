@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import CreateGroupCard from './CreateGroupCard'
 import GroupCard from './GroupCard'
 
@@ -12,4 +12,4 @@ const GroupsGrid = ({groups}) => {
     )
 }
 
-export default GroupsGrid
+export default memo(GroupsGrid)

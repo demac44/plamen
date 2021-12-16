@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'
@@ -66,7 +66,7 @@ const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
     )
 }
 
-export default PostBottomBar
+export default memo(PostBottomBar)
 
 const styles = {
     seeLikes:{

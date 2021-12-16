@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, memo } from 'react'
 import StoryBar from './StoryBar'
 import StoryMediaBox from './StoryMediaBox';
 import StoryReply from './StoryReply';
@@ -56,5 +56,5 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
     )
 }
 
-export default Story
+export default memo(Story)
 

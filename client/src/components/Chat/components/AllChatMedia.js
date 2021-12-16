@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -59,7 +59,7 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
     )
 }
 
-export default AllChatMedia
+export default memo(AllChatMedia)
 
 
 const styles = {

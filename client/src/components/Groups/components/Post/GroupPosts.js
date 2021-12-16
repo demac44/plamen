@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import GroupPost from './GroupPost'
 
 
@@ -10,5 +10,5 @@ const Posts = ({posts, refetchPosts}) => {
     )
 }
 
-export default Posts
+export default memo(Posts)
 

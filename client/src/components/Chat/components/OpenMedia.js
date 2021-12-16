@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 
 const OpenMedia = ({url, callback}) => {
 
@@ -18,5 +18,5 @@ const OpenMedia = ({url, callback}) => {
     )
 }
 
-export default OpenMedia
+export default memo(OpenMedia)
 

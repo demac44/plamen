@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { Link } from 'react-router-dom'
 
 const GroupCard = ({group}) => {
@@ -11,4 +11,4 @@ const GroupCard = ({group}) => {
     )
 }
 
-export default GroupCard
+export default memo(GroupCard)

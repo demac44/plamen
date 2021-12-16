@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const SetTime = ({timestamp}) => {
+const SetTime = ({timestamp, fontSize}) => {
     const [time, setTime] = useState('')
 
     useEffect(()=>{
@@ -22,15 +22,8 @@ const SetTime = ({timestamp}) => {
     }, [timestamp])
 
     return (
-        <p style={styles.time}>{time}</p>
+        <p style={{fontSize: fontSize}} className='set-time-p'>{time}</p>
     )
 }
 
 export default SetTime
-
-
-const styles = {
-    time:{
-        fontSize:'10px',
-    }
-}

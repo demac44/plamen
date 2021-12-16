@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 
 import '../../General components/General.css'
 
@@ -18,7 +18,7 @@ const PostMedia = ({data}) => {
     )
 }
 
-export default PostMedia
+export default memo(PostMedia)
 
 
 const styles = {
@@ -28,8 +28,8 @@ const styles = {
     },
     loader:{
         position:'absolute',
-        top:'50px',
-        height:'300px',
+        height:'100%',
+        minHeight:'300px',
         width:'100%',
         zIndex:'10000',
         backgroundColor:'#1b1b1b'

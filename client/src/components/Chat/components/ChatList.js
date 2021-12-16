@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import ChatListUser from './ChatListUser'
 import SearchBar from '../../Navbar/SearchBar'
 
@@ -17,7 +17,7 @@ const ChatList = ({data, isLogged}) => {
     )
 }
 
-export default ChatList
+export default memo(ChatList)
 
 
 const styles = {

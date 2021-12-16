@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import GroupMemberBox from './GroupMemberBox'
 
 const MembersBox = ({members}) => {
@@ -9,4 +9,4 @@ const MembersBox = ({members}) => {
     )
 }
 
-export default MembersBox
+export default memo(MembersBox)

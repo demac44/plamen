@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -34,7 +34,7 @@ const MyGroupsList = () => {
     )
 }
 
-export default MyGroupsList
+export default memo(MyGroupsList)
 
 
 const styles = {

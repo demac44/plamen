@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
@@ -29,7 +29,7 @@ const Dropdown = () => {
     )
 }
 
-export default Dropdown
+export default memo(Dropdown)
 
 
 const styles = {

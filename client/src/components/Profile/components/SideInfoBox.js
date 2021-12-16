@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import {Link} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -118,7 +118,7 @@ const SideInfoBox = ({myprofile, userID}) => {
     )
 }
 
-export default SideInfoBox
+export default memo(SideInfoBox)
 
 
 const styles = {

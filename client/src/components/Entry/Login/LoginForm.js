@@ -4,7 +4,7 @@ import axios from 'axios'
 import ErrorMsg from '../ErrorMsg';
 
 import {gql} from 'graphql-tag'
-import { useMutation, useQuery } from 'react-apollo';
+import { useMutation } from 'react-apollo';
 
 const LoginForm = ({popup}) => {
     let password, username;

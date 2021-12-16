@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, memo} from 'react'
 
 const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setIndexCallback, type,  setInnerIndexCallback, innerIndex, allDataLength}) => {
     let timeout;
@@ -73,4 +73,4 @@ const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setInde
     )
 }
 
-export default StoryMediaBox
+export default memo(StoryMediaBox)

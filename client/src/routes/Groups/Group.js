@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect, useParams } from 'react-router-dom'
 
@@ -69,7 +69,7 @@ const Group = ({isLogged}) => {
     )
 }
 
-export default Group
+export default memo(Group)
 
 const GET_GROUP = gql`
     query($gid: Int!, $limit: Int, $offset: Int, $uid: Int!){

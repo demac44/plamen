@@ -129,7 +129,11 @@ const filterUsers = (data, query) => {
 
         const str = (str1+str2+str3+str4+str5+str6).toLowerCase()
 
-        return str.includes(query)
+        return str.includes(query) 
+                || query.includes(user.last_name.toLowerCase()) 
+                || query.includes(user.first_name.toLowerCase())
+                || query.includes(user.username.toLowerCase())
+            
     })
 }
 

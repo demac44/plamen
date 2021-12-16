@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, memo } from 'react'
 import SetTime from '../../General components/SetTime'
 import SavePostButton from './components/SavePostButton'
 import PostMenu from './components/PostMenu'
@@ -25,7 +25,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
 
                     <span className='flex-col-sb' style={styles.nameAndTime}>
                         <p style={styles.name}>{data.name}</p>
-                        <SetTime timestamp={data.timestamp}/>
+                        <SetTime timestamp={data.timestamp} fontSize='12px'/>
                     </span>
                 </Link >
 
@@ -53,7 +53,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
     )
 }
 
-export default PostTopBar
+export default memo(PostTopBar)
 
 
 const styles = {

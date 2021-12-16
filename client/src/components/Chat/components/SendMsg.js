@@ -111,7 +111,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 
                 <div>
                     <label htmlFor='file-input'>
-                        <FontAwesomeIcon icon='image' style={styles.imgIcon}/>
+                        <FontAwesomeIcon icon='images' style={styles.imgIcon}/>
                     </label>
                     <input type='file' id='file-input' accept='video/*, image/*' style={{display:'none'}} 
                         onChange={(e)=>{

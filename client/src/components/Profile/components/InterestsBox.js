@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -33,7 +33,7 @@ const InterestsBox = ({myprofile, userID}) => {
     )
 }
 
-export default InterestsBox
+export default memo(InterestsBox)
 
 
 const styles = {

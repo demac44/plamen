@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import JoinBtn from './JoinBtn'
 
 const GroupBanner = ({info, user, updatedCallback}) => {
@@ -13,7 +13,7 @@ const GroupBanner = ({info, user, updatedCallback}) => {
     )
 }
 
-export default GroupBanner 
+export default memo(GroupBanner) 
 
 const styles = {
     bannerImage:{

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo, useState} from 'react'
 import StoryBar from './StoryBar'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -15,9 +15,11 @@ const ADD_STORY = gql`
 
 const StoryPreview = ({previewMedia, media, exitCallback, refetch}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
+    const [loading, setLoading] = useState(false)
     const [new_story] = useMutation(ADD_STORY)
 
     const handleUpload = () => {
+        setLoading(true)
         const data = new FormData()
         data.append("file", media)
         data.append("upload_preset", "z8oybloj")
@@ -33,6 +35,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch}) => {
             }).then(()=>{
                 exitCallback()
                 refetch()
+                setLoading(false)
                 }
             )
         })
@@ -42,6 +45,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch}) => {
         <div className='story-overlay flex-col-ctr'>
             <div className='story-box'>
                 <StoryBar user={ls} closeStoryCallback={exitCallback}/>
+                {loading ? <div className='flex-ctr wh-100' style={{backgroundColor:'#2f2f2f'}}><div className='small-spinner'></div></div> :
                 <div className='story-media flex-ctr'>
                     {media.type.slice(0,5)==='image' && 
                         <img  src={previewMedia} onLoad={()=>URL.revokeObjectURL(previewMedia)} alt=''/>
@@ -49,14 +53,14 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch}) => {
                     {media.type.slice(0,5)==='video' && 
                         <video src={previewMedia} onLoad={()=>URL.revokeObjectURL(previewMedia)} controls/>
                     }
-                </div>
+                </div>}
                 <div className='story-bottom-bar'>
-                    <button className='story-upload-btn btn' onClick={handleUpload}>UPLOAD</button>
+                    <button className='story-upload-btn btn' onClick={handleUpload} disabled={loading}>UPLOAD</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default StoryPreview
+export default memo(StoryPreview)
 
