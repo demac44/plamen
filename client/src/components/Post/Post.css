@@ -13,7 +13,7 @@
 /* top bar */
 .post-top-bar{
     width: 100%;
-    height: 50px;
+    min-height: 50px;
     padding: 5px 10px;
 }
 .post-options-menu{

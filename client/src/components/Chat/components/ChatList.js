@@ -1,18 +1,29 @@
 import React, {memo} from 'react'
 import SearchBar from '../../Navbar/SearchBar'
 import ChatListUser from './ChatListUser'
+import ChatsOptions from './ChatsOptions'
 
-const ChatList = ({data, isLogged}) => {
+import {gql} from 'graphql-tag'
+import { useQuery } from 'react-apollo'
+
+const ChatList = ({isLogged}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
+
+    const {data, loading} = useQuery(GET_CHATS_LIST, {
+        variables:{userID: ls.userID},
+    }) 
+
     return (
-        <div className='all-chats-box'>
+        <div className='all-chats-box flex-col'>
             <div className='chat-search'>
                 <SearchBar isLogged={isLogged} chat={true}/>
             </div>
-            {data ?
+            <ChatsOptions/>
+            {!loading ?
             data.get_chats.map(chat => 
                     <ChatListUser data={chat} key={chat.chatID}/>)
                 : <p style={styles.emptyInbox} className='flex-ctr'>Loading...</p>}
-            {data && (data.get_chats.length === 0 && <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>)}
+            {!loading && (data.get_chats.length === 0 && <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>)}
         </div>
     )
 }
@@ -27,3 +38,15 @@ const styles = {
         color:'white',
     }
 }
+
+const GET_CHATS_LIST = gql`
+    query ($userID: Int!){
+        get_chats(user1_ID: $userID){
+            chatID
+            first_name
+            last_name
+            username
+            profile_picture
+            userID
+        }
+}`

@@ -1,12 +1,15 @@
 import React, { useState, memo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-const ChatBar = ({chatID, info}) => {
+const ChatBar = ({chatID}) => {
     const [showMenu, setShowMenu] = useState(false)
+    const {state} = useLocation()
+
+
 
     const handleChatMenu = () => {
         setShowMenu(!showMenu)
@@ -26,9 +29,9 @@ const ChatBar = ({chatID, info}) => {
                             }}
                         />
                     </Link>
-                    <Link to={'/profile/'+info.username} style={{height:'50px'}} className='flex-h'>
-                        <Avatar size='50px' image={info.profile_picture}/>
-                        <p style={{color:'white', marginLeft:'10px'}}>{info.first_name+' '+info.last_name}</p>
+                    <Link to={'/profile/'+state?.username} style={{height:'50px'}} className='flex-h'>
+                        <Avatar size='50px' image={state?.profile_picture}/>
+                        <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
                     </Link>
                 </div>
                 <FontAwesomeIcon

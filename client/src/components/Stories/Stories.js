@@ -26,9 +26,9 @@ const Stories = ({stories, refetch}) => {
                     <p style={{fontSize:'14px',color:'white'}}>Add story</p>
                 </div>
                 {stories.map(story => (
-                    <div className='flex-col-ctr' style={{marginLeft:'10px'}}  key={story?.storyID}>
+                    <div className='flex-col-ctr' style={styles.sHeadBox}  key={story?.storyID}>
                         <StoryHead story={story} allData={stories} index={index++}/>
-                        <p style={{fontSize:'14px', color:'white', marginTop:'8px'}}>{story?.username}</p>
+                        <p style={styles.sHeadName}>{story?.username}</p>
                     </div>
                 ))}
             </div>
@@ -65,5 +65,16 @@ const styles = {
         color: 'white',
         fontSize: '25px',
         cursor: 'pointer'
+    },
+    sHeadBox:{
+        width:'65px',
+        marginLeft:'10px', 
+        overflow:'hidden',
+        alignItems:'flex-start'
+    },
+    sHeadName:{
+        fontSize:'14px', 
+        color:'white', 
+        marginTop:'8px'
     }
 }

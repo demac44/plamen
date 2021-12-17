@@ -28,6 +28,10 @@ li{
     justify-content: center;
     align-items: center;
 }
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
 .flex-col-ctr{
     display: flex;
     flex-direction: column;

@@ -14,11 +14,11 @@ export const GET_PROFILE_POSTS = {
         offset: {type: GraphQLInt}
     },   
     async resolve(_, args) {
-        const {userID, limit, offset, username} = args
-        const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID 
-                     FROM posts
-                     JOIN users ON posts.userID=users.userID
-                     WHERE users.username="${username}"
+        const {limit, offset, username} = args
+        const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type 
+                     FROM users AS u,posts AS p
+                     WHERE username="${username}"
+                     AND u.userID=p.userID
                      ORDER BY date_posted DESC 
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
@@ -38,7 +38,7 @@ export const GET_FEED_POSTS = {
                      FROM posts 
                      JOIN users ON posts.userID=users.userID 
                      WHERE disabled=false 
-                     AND (users.userID =${userID} OR users.userID IN 
+                     AND (users.userID=${userID} OR users.userID IN 
                      (SELECT followedID FROM followings WHERE followerID=${userID})) 
                      AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`

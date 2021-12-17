@@ -10,7 +10,7 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
         <div className='story-top-bar flex-sb'>
             <Link to={'/profile/'+user.username} className='flex-ctr' style={{height:'100%', color:'white'}}>
                 <Avatar size='45px' image={user.profile_picture}/>
-                <p style={{marginLeft:'10px'}}>{user.first_name+' '+user.last_name}</p>
+                <p style={{marginLeft:'10px'}}>{user.username}</p>
             </Link>
             <span className='story-timestamp'>
                 <SetTime timestamp={date}/>

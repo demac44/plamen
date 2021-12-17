@@ -15,7 +15,9 @@ const Chat = ({isLogged}) => {
     }) 
 
     useEffect(()=>{
-        data?.get_chats?.map(chat => chat.chatID===parseInt(chatid) && setChat(chat))
+        data?.get_all_user_chats?.map(chat => {
+            if(chat.chatID===parseInt(chatid)) return setChat(chat)
+        })
     }, [data, chatid])
   
     if(error) console.log(error); 
@@ -24,7 +26,7 @@ const Chat = ({isLogged}) => {
         <>
             {loading ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
                 <>
-                <ChatList data={data} isLogged={isLogged}/>
+                <ChatList chatID={data.get_all_user_chats.chatID} isLogged={isLogged}/>
                 {chat && <ChatMsgBox chat={chat} key={chat?.chatID}/>}
                 </>
             }
@@ -37,13 +39,7 @@ export default memo(Chat)
 
 const GET_CHATS = gql`
     query ($userID: Int!){
-        get_chats(user1_ID: $userID){
+        get_all_user_chats(user1_ID: $userID){
             chatID
-            username
-            first_name
-            last_name
-            profile_picture
-            userID
-            date_created
         }
 }`

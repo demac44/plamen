@@ -25,7 +25,14 @@ const ChatListUser = ({data}) => {
     }, [data, info, newMsg?.data])
     
     return (
-        <Link to={'/chat/'+data?.chatID} className='chat-user-box flex-h'>
+        <Link to={{pathname:'/chat/'+data?.chatID, 
+                state:{
+                    first_name: data?.first_name,
+                    last_name: data?.last_name,
+                    username: data?.username,
+                    profile_picture: data?.profile_picture
+                }}}     
+                className='chat-user-box flex-h'>
             <Avatar size='50px' image={data?.profile_picture}/>
             <div className='chat-name-msg flex-col-sb'>
                 <p style={{color:'white'}}>{data?.userID===ls?.userID ? 'Me' : data?.first_name+' '+data?.last_name}</p>

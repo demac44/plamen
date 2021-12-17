@@ -18,6 +18,19 @@ export const CHAT_EXISTS = {
     }    
 }
 
+export const GET_ALL_USER_CHATS = {
+    type: new GraphQLList(ChatListType),
+    args:{
+        user1_ID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {user1_ID} = args
+        const sql = `SELECT chatID FROM chats WHERE user1_ID=${user1_ID} OR user2_ID=${user1_ID}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        return result    
+    } 
+}
+
 export const GET_CHAT_LIST = {
     type: new GraphQLList(ChatListType),
     args:{
@@ -26,13 +39,16 @@ export const GET_CHAT_LIST = {
     async resolve(_, args){
         const {user1_ID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, date_created FROM users 
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID
+        FROM users
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
-        WHERE disabled=false AND chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}`
+        JOIN messages ON chats.chatID=messages.chatID
+        WHERE disabled=false AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
+        GROUP BY chats.chatID`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     }  
-
+    
 }
 
 export const LAST_MESSAGE = {
@@ -125,3 +141,9 @@ export const COUNT_MSGS = {
         return result[0]
     }
 }
+
+
+
+// SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, date_created FROM users 
+//         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
+//         WHERE disabled=false AND chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID}

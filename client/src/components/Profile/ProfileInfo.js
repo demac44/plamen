@@ -26,7 +26,7 @@ const ProfileInfo = ({info}) => {
     return (
         <>
             {showList && <UsersList data={follows} title={title} closeList={closeList}/>}
-            <div className="profile-top-box-info flex-col">
+            <div className="profile-top-box-info flex-col-ctr">
 
                 <h4 style={styles.name}>{info.user.first_name+' '+info.user.last_name}</h4>    
                 <h5 style={styles.username}>@{info.user.username}</h5>

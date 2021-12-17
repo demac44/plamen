@@ -25,7 +25,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
 
 
     return (
-        <div className='story-overlay flex-col-ctr'>
+        <div className='overlay flex-col-ctr' style={{backgroundColor: '#1b1b1b'}}>
             <div className='story-box'>
                 <StoryBar 
                     user={{

@@ -32,13 +32,7 @@ export const GET_GROUP = {
         const sql = `SELECT * FROM groups 
                      JOIN group_info ON groups.groupID=group_info.groupID
                      WHERE groups.groupID=${groupID}`
-        const users_sql = `SELECT * FROM group_users
-                            JOIN group_roles ON group_users.roleID=group_roles.roleID
-                            WHERE groupID=${groupID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        // const users = connection.query(users_sql)
-        // result.posts = posts
-        // result.users = users 
         return result[0]
     }
 }
@@ -62,6 +56,7 @@ export const GET_GROUP_POSTS = {
         return result
     }
 }
+
 // saved posts
 export const GET_SAVED_GROUP_POSTS = {
     type: new GraphQLList(GroupPostType),

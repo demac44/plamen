@@ -23,7 +23,13 @@ export const GET_FOLLOWERS = {
     },
     async resolve(_, args){
         const {followedID} = args
-        const sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE disabled=false AND userID IN (SELECT followerID from followings WHERE followedID=${followedID})`
+        const sql = `SELECT userID,username,first_name,last_name,profile_picture 
+                     FROM users 
+                     WHERE disabled=false 
+                     AND userID IN 
+                        (SELECT followerID 
+                            FROM followings 
+                            WHERE followedID=${followedID})`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }
@@ -35,7 +41,13 @@ export const GET_FOLLOWING = {
     },
     async resolve(_, args){
         const {followerID} = args
-        const sql = `SELECT userID,username,first_name,last_name,profile_picture FROM users WHERE disabled=false AND userID IN (SELECT followedID from followings WHERE followerID=${followerID})`
+        const sql = `SELECT userID,username,first_name,last_name,profile_picture 
+                     FROM users 
+                     WHERE disabled=false 
+                     AND userID IN 
+                        (SELECT followedID 
+                            FROM followings 
+                            WHERE followerID=${followerID})`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }

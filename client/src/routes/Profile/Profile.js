@@ -102,7 +102,6 @@ const Profile = ({isLogged}) => {
                     <div className='container-right' style={{width:'35%', paddingTop:'10px', display:'block'}}>
                         <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
                         <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
-                        <UserSuggestionsBox/>
                     </div>
                 </div>
             </div>

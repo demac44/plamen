@@ -2,12 +2,9 @@ import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from '
 import SendMsg from './SendMsg'
 import Message from './Message'
 
-
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
-import MsgsLoader from '../../General components/Loaders/MsgsLoader'
-
 
 const ChatMsgBox = ({chat}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
