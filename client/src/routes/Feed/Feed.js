@@ -14,6 +14,8 @@ import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
+import StoriesLoader from '../../components/General components/Loaders/StoriesLoader'
+import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Feed = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -30,9 +32,7 @@ const Feed = ({isLogged}) => {
         window.scrollTo(0,0)
     }, [])
 
-    if(loading) return <FeedLoader/>
     if(error) console.log(error); 
-
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -62,10 +62,13 @@ const Feed = ({isLogged}) => {
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <Stories stories={data?.get_stories} refetch={refetch}/>
-                        <CreatePost refetch={refetch}/>
-                        {data.get_feed_posts.length > 0 ? <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
-                            : <NoPosts/>}
+                        {loading ? <StoriesLoader/> : <Stories stories={data?.get_stories} refetch={refetch}/>}
+                        {loading ? <PostLoader/> : 
+                        <>
+                            <CreatePost refetch={refetch}/>
+                            {data.get_feed_posts.length > 0 ? <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
+                                : <NoPosts/>}
+                        </>}
                     </div>
                 </div>
                 <div className='container-right' style={styles.containerRight}>

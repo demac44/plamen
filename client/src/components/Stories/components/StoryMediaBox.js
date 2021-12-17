@@ -1,6 +1,11 @@
 import React, {useState, useEffect, memo} from 'react'
 
-const StoryMediaBox = ({storyData ,isProfile, closeStoryCallback, index, setIndexCallback, type,  setInnerIndexCallback, innerIndex, allDataLength}) => {
+const StoryMediaBox = ({
+                        storyData ,isProfile, closeStoryCallback, 
+                        index, setIndexCallback, type,  setInnerIndexCallback,
+                        innerIndex, allDataLength
+                    }) => {
+
     let timeout;
     const [url, setUrl] = useState(null)
     const [loadBar, setLoadBar] = useState(false)

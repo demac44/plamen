@@ -39,10 +39,9 @@ const SinglePost = ({isLogged}) => {
         variables:{postID: parseInt(postid)}
     })
 
-    if(loading) return <div className='wh-100'><PostLoader/></div>
-
-    if(!data?.get_post?.postID) return <Redirect to='/404'/>
-
+    if(!loading){
+        if(!data?.get_post?.postID) return <Redirect to='/404'/>
+    }
 
     return (
         <>
@@ -52,8 +51,11 @@ const SinglePost = ({isLogged}) => {
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <h3 style={styles.title}>Post by @{data.get_post.username}</h3>
-                        <Post post={data.get_post}/>
+                        {loading ? <PostLoader/> :
+                        <>
+                            <h3 style={styles.title}>Post by @{data.get_post.username}</h3>
+                            <Post post={data.get_post}/>
+                        </>}
                     </div>
                     {isLogged &&
                     <div className='container-right' style={{width:'35%'}}>

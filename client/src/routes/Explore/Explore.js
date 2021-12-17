@@ -7,9 +7,9 @@ import MyGroupsList from '../../components/General components/MyGroupsList'
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 
-import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
+import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Explore = ({isLogged}) => {
     const {loading, data, error, refetch} = useQuery(RANDOM_POSTS)
@@ -18,7 +18,6 @@ const Explore = ({isLogged}) => {
         window.scrollTo(0,0)
     }, [])
 
-    if(loading) return <FeedLoader/>
     if(error) console.log(error); 
 
     return (
@@ -30,7 +29,7 @@ const Explore = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-left'>
                         <div style={styles.title}><h2>Explore</h2></div>
-                        <Posts posts={data.random_posts} refetchPosts={refetch}/>
+                        {loading ? <PostLoader/> : <Posts posts={data.random_posts} refetchPosts={refetch}/>}
                         <div 
                             onClick={()=>{
                                 window.scrollTo(0,0);
@@ -39,7 +38,7 @@ const Explore = ({isLogged}) => {
                             style={styles.reloadBox} 
                             className='flex-col-ctr'
                         >
-                            <p>Go again?</p>
+                            <p>Refresh?</p>
                             <br/>
                             <i style={{fontSize:'20px'}} className="fas fa-redo"></i>
                         </div>

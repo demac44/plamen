@@ -3,7 +3,7 @@ import defaultAvatarImage from '../../images/pfp.jpg'
 
 const Avatar = ({size, image}) => {
     return (
-        <div className='user-avatar flex-ctr' style={{width:size, height:size}}>
+        <div className='user-avatar flex-ctr' style={{width:size, height:size, minWidth:size}}>
             <img src={image ? image : defaultAvatarImage} style={styles.image} alt=""/>
         </div>
     )

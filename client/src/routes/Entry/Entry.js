@@ -10,7 +10,7 @@ const Entry = () => {
         <>
             <Switch>
                 <Route exact path={['/login', '/register']}>              
-                    <div className='entry-wrapper flex-ctr'>
+                    <div className='entry-wrapper flex-ctr overlay' style={{backgroundColor:'#1f1f1f'}}>
                         <Route exact path='/register'>
                             <RegisterForm/>
                         </Route>

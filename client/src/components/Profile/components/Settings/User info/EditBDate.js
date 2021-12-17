@@ -14,19 +14,9 @@ const EditBDate = ({data}) => {
     const [errorMsg, setErrorMsg] = useState(null)
 
     useEffect(()=>{
-        const date = new Date(parseInt(data)).toDateString()
-        setBDate(date)
-        let years = []
-        let days = []
-        for(let i=2021;i>1920;i--){
-            years.push(`${i}`)
-        }
-        for(let i=1;i<32;i++){
-            if (i < 10) days.push('0'+i)
-            else days.push(`${i}`)
-        }
-        setSelectYear(years)
-        setSelectDay(days)
+        setSelectYear(setYears())
+        setSelectDay(setDays())
+        setBDate(getBDate(data))
         return
     }, [data])
 
@@ -135,4 +125,27 @@ const styles = {
     select:{
         marginTop:'10px'
     }
+}
+
+
+const getBDate = (data) => {
+    const date = new Date(parseInt(data)).toDateString()
+    return date
+}
+
+const setYears = () => {
+    let years = []
+    for(let i=2021;i>1920;i--){
+        years.push(`${i}`)
+    }
+    return years
+}
+
+const setDays = () => {
+    let days = []
+    for(let i=1;i<32;i++){
+        if (i < 10) days.push('0'+i)
+        else days.push(`${i}`)
+    }
+    return days
 }

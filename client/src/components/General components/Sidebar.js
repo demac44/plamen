@@ -3,32 +3,32 @@ import { NavLink } from 'react-router-dom'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-const Sidebar = ({show}) => {
+const Sidebar = () => {
 
     return (
-        <div className="sidebar" style={{transform: show && 'translate(0)', transition:'ease .3s'}}>
-            <ul className="ln-list">
-                <NavLink exact to="/feed"><li>
+        <div className="sidebar">
+            <div className="ln-list">
+                <NavLink exact to="/feed" activeClassName='nav-active'>
                     <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                     <p>Feed</p>
-                </li></NavLink>
-                <NavLink exact to='/explore'><li>
+                </NavLink>
+                <NavLink exact to='/explore' activeClassName='nav-active'>
                     <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
                     <p>Explore</p>
-                </li></NavLink>
-                <NavLink exact to='/saved'><li>
+                </NavLink>
+                <NavLink exact to='/saved' activeClassName='nav-active'>
                     <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
                     <p>Saved</p>
-                </li></NavLink>
-                <NavLink exact to='/communities'><li>
+                </NavLink>
+                <NavLink exact to='/communities' activeClassName='nav-active'>
                     <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                     <p>Communities</p>
-                </li></NavLink>
-                <NavLink exact to='/someapptube'><li>
+                </NavLink>
+                <NavLink exact to='/someapptube' activeClassName='nav-active'>
                     <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
                     <p>SomeAppTube</p>
-                </li></NavLink>
-            </ul>
+                </NavLink>
+            </div>
         </div>
     )
 }

@@ -32,13 +32,12 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
         setOpenStory(false)
     }, [setOpenStory])
 
-    if(loading) return <p>loading</p>
     if(error) throw error
 
     const info = {
-        user: myprofile ? ls : getUser?.data?.get_user,
-        followers: data.get_followers,
-        following: data.get_following,
+        user: myprofile ? ls : (!getUser.loading && getUser?.data?.get_user),
+        followers: data?.get_followers,
+        following: data?.get_following,
         postsLength
     }
 
@@ -46,23 +45,23 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
     return (
         <>
             <div className="profile-top-box">
-                <div style={{border: data.get_user_stories.length>0 && '3px solid #ffbb00', borderRadius:'50%'}} onClick={()=>{
-                    data.get_user_stories.length>0 && setOpenStory(true)
+                <div style={{border: data?.get_user_stories?.length>0 && '3px solid #ffbb00', borderRadius:'50%'}} onClick={()=>{
+                    data?.get_user_stories?.length>0 && setOpenStory(true)
                 }}>
-                    <Avatar size='170px' image={info.user.profile_picture}/>
+                    <Avatar size='170px' image={info?.user?.profile_picture}/>
                 </div>
-                <ProfileInfo info={info}/>
-                {myprofile ? <ProfileEditBtn/> : (
+                {(!loading && !getUser.loading) && <ProfileInfo info={info}/>}
+                {(myprofile && !loading) ? <ProfileEditBtn/> : (
                 <>
                     <ProfileFollowBtn userID={info?.user?.userID}/>
                     <SendMsgBtn userID={info?.user?.userID}/>
                 </>
                 )} 
             </div>
-            {openStory && <Story 
+            {(!loading && openStory) && <Story 
                 allData={{
-                    user: info.user,
-                    stories: data.get_user_stories
+                    user: info?.user,
+                    stories: data?.get_user_stories
                 }} 
                 i={0} 
                 isProfile={true}

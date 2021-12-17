@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Comment from './Comment'
 
-import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
-
-const PostComments = ({comments, seeMore, refetchComments, isLogged}) => {
-    const [loginPopUp, setLoginPopUp] = useState(false)
+const PostComments = ({comments, seeMore, refetchComments}) => {
 
     return (
-        <>
         <div className='post-comments-box'>
             {comments.map(comment => <Comment 
                                         comment={comment} 
@@ -16,10 +12,8 @@ const PostComments = ({comments, seeMore, refetchComments, isLogged}) => {
                                         refetchComments={refetchComments}
                                     />)}
             {comments.length > 0 && 
-                <div onClick={()=>isLogged ? seeMore() : setLoginPopUp(true)} className='flex-ctr' style={styles.seeMore}><p style={styles.seeMoreBtn}>Load more</p></div>}
+                <div onClick={()=>seeMore()} className='flex-ctr' style={styles.seeMore}><p style={styles.seeMoreBtn}>Load more</p></div>}
         </div>
-        {loginPopUp && <LoginPopUp/>}
-        </>
     )
 }
 

@@ -119,7 +119,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
                     }}></input>
                 </div>
-                <textarea name='msg_text' placeholder='Send message...'></textarea>
+                <textarea name='msg_text' className='msg_text' placeholder='Send message...'></textarea>
                 <button type='submit' className="post-button btn">SEND</button>
             </form>
         </>

@@ -2,16 +2,9 @@
     font-size: 35px;
     opacity: 0;
     animation-name: logo;
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-fill-mode: forwards;
 }
-
-@keyframes logo {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-
-
 .my-groups-box{
     width: 100%;
     background-color: #1b1b1b;
@@ -28,7 +21,13 @@
     background-color: #1b1b1b;
     z-index: 10000;
 }
-.ln-list a li, .tn-dropdown-menu a li{
+.nav-active{
+    background-color: #292929;
+}
+.ln-list a{
+    width: 100%;
+}
+.ln-list a, .tn-dropdown-menu a li{
     display: flex;
     align-items: center;
     width: 100%;
@@ -37,18 +36,13 @@
     color: white;
     font-size: 16px;
     padding-left: 15px;
-    background-color: #1b1b1b;
 }
-.ln-list a li:hover, .tn-dropdown-menu a li:hover{
+.ln-list a:hover, .tn-dropdown-menu a li:hover{
     background-color: #1f1f1f;
 
 }
-.ln-list a li i{
-    width: 20px;
-    font-size: 20px;
-}
-.ln-list a li p{
-    margin-left: 20px;
+.ln-list a p{
+    margin-left: 10px;
 }
 
 .alternative-navbar{
@@ -64,35 +58,6 @@
     z-index: 100000000;
 }
 
-/* LOADER */
-
-.spinner-box{
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    z-index: 10000000000000000;
-    min-height: 120px;
-}
-.spinner {
-    width:120px;height:120px;
-    left:48%;top:40%;
-    border: 10px solid #111827;
-    border-top-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
-}
-.inner-spinner{
-    width:100%;height:100%;
-    left:48%;top:40%;
-    border: 10px solid #111827;
-    border-top-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s reverse infinite;
-}
 .small-spinner{
     width:60px;height:60px;
     left:48%;top:40%;
@@ -100,27 +65,15 @@
     border-top-color:transparent;
     border-bottom-color:transparent;
     border-radius:50%;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
 }
 .user-avatar{
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
 }
-
-
 /* USER LISTS */
-
-.container-users-list{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0,0.7);
-    z-index: 10000000000;
-}
 .users-list-box{
     width: 35%;
     max-height: 80vh;
@@ -136,10 +89,8 @@
     padding: 5px;
     text-align: center;
 }
-
 .users-list-user-box{
     position: relative;
-    display: flex;
     width: 100%;
     padding: 5px 20px 5px 10px;
     cursor: pointer;
@@ -210,14 +161,11 @@
 	to {transform:rotate(360deg);}
 }
 
-/* story load animation */
-
-@-webkit-keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
+@-webkit-keyframes logo {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
-
-@keyframes load {
-    0% {width: 0%;}
-    100% {width: 100%;}
+@keyframes logo {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }

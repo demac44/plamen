@@ -6,33 +6,23 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 const AlternativeNavbar = ({chat}) => {
     return (
         <div className='alternative-navbar' style={chat && styles.nav}>
-            <ul className='flex-sa' style={{width:'100%', height:'100%'}}>
+            <div className='flex-sa' style={{width:'100%', height:'100%'}}>
                 <NavLink exact to="/feed">
-                    <li>
-                        <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
-                    </li>
+                    <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                 </NavLink>
-                <NavLink exact to='/explore'>
-                <li>
+                <NavLink exact to='/explore'>      
                     <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
-                </li>
                 </NavLink>
                 <NavLink exact to='/saved'>
-                    <li>
-                        <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
-                    </li>
+                    <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
                 </NavLink>
                 <NavLink exact to='/communities'>
-                <li>
                     <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
-                </li>
                 </NavLink>
                 <NavLink exact to='/someapptube'>
-                    <li>
-                        <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
-                    </li>
+                    <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
                 </NavLink>
-            </ul>
+            </div>
         </div>
     )
 }

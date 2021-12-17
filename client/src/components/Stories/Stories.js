@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState, memo } from 'react'
 import AddStory from './components/AddStory'
 import StoryHead from './components/StoryHead'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './Stories.css'
 

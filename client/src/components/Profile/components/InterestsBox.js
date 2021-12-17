@@ -20,15 +20,13 @@ const InterestsBox = ({myprofile, userID}) => {
         data?.get_user_info?.interests && setTags(data?.get_user_info?.interests.split(','))
     }, [data, userID, myprofile])
 
-    if(loading) return <p>loading</p>
-
     return (
         <div className='profile-interests-box'>
             <div style={styles.title} className='flex-sb'>
                 <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
                 {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}
             </div>
-            <TagsBox tags={tags}/>                        
+            {!loading && <TagsBox tags={tags}/> }                       
         </div>
     )
 }

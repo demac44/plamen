@@ -1,28 +1,7 @@
 import React from 'react'
 
-// import {gql} from 'graphql-tag'
-// import {useMutation} from 'react-apollo'
-
-// const REPLY_TO_STORY = gql`
-//     mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
-//         send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url, type: $type){
-//             msgID
-//         }
-//     }
-// `
-
-
 const StoryReply = ({userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    // const [reply] = useMutation(REPLY_TO_STORY)
-
-    // const handleReply = () => {
-    //     reply({
-    //         variables: {
-
-    //         }
-    //     })
-    // }
 
     return (
         <form className='story-bottom-bar'>

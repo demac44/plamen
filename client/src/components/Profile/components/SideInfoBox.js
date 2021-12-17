@@ -11,39 +11,18 @@ const SideInfoBox = ({myprofile, userID}) => {
     const [dateJoined, setDateJoined] = useState(null)
     const [birthDate, setBirthDate] = useState(null)
     const [age, setAge] = useState(null)
-    const {data, loading} = useQuery(USER_INFO, {
+    const {data} = useQuery(USER_INFO, {
         variables:{
             userID: myprofile ? ls.userID : userID
         }
     })
 
-    const calculateAge = (timestamp) => {
-        setAge(Math.floor((Date.now() - timestamp) / (31557600000)))
-        return
-    }
-
-    const calcDateJoined = (timestamp) => {
-        let date = new Date(parseInt(timestamp))
-        const m = date.toLocaleString('default', { month: 'short' });
-        const y = date.getFullYear()
-        setDateJoined(m+' '+y)
-        return
-    }
-
-    const calcBirthDate = (timestamp) => {
-        let bdate = new Date(parseInt(timestamp)).toDateString()
-        setBirthDate(bdate)
-        return
-    }
-
     useEffect(()=>{
-        calcDateJoined(data?.get_user_info?.date_joined)
-        calcBirthDate(data?.get_user_info?.bDate)
-        data?.get_user_info?.bDate && calculateAge(data?.get_user_info?.bDate)
+        setDateJoined(calcDateJoined(data?.get_user_info?.date_joined))
+        setBirthDate(calcBirthDate(data?.get_user_info?.bDate))
+        setAge(calculateAge(data?.get_user_info?.bDate))
         return
     }, [data])
-
-    if(loading) return <p></p>
 
     return (
         <div className='profile-side-info-box'>
@@ -154,3 +133,19 @@ const USER_INFO = gql`
         }
     }
 `
+
+const calculateAge = (timestamp) => {
+    return Math.floor((Date.now() - timestamp) / (31557600000))
+}
+
+const calcDateJoined = (timestamp) => {
+    let date = new Date(parseInt(timestamp))
+    const m = date.toLocaleString('default', { month: 'short' });
+    const y = date.getFullYear()
+    return m+' '+y
+}
+
+const calcBirthDate = (timestamp) => {
+    let bdate = new Date(parseInt(timestamp)).toDateString()
+    return bdate
+}

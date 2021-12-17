@@ -9,7 +9,6 @@ import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
 import Sidebar from '../../components/General components/Sidebar'
 
-import ProfileLoader from '../../components/General components/Loaders/ProfileLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import CreateGroupPost from '../../components/Groups/components/Post/Create post/CreateGroupPost'
 
@@ -17,6 +16,8 @@ import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 
 import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
 import NoPosts from '../../components/General components/NoPosts'
+import BannerLoader from '../../components/General components/Loaders/BannerLoader'
+import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
@@ -31,17 +32,15 @@ const Group = ({isLogged}) => {
         }
     })
 
-
     useEffect(()=>{
         if(data){
             setTags(data?.get_group?.group_tags?.split(','))
         }
     }, [refetch, data])
 
-
-    if(loading) return <ProfileLoader/>
-
-    if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+    if(!loading){
+        if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+    }
 
     return (
         <>
@@ -50,18 +49,21 @@ const Group = ({isLogged}) => {
             <div className='wrapper'>
                 <Sidebar/>
                 <div className='container-profile'>
-                    <GroupBanner info={data?.get_group} user={data.get_group_user}/>
+                    {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
                     <GroupNavbar groupid={groupid}/>
-                    <TagsBox tags={tags}/>                        
+                    {!loading && <TagsBox tags={tags}/>}                        
                 </div>
                 <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
-                            {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
-                            {data.get_group_posts.length > 0 ? <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
-                                : <NoPosts/>}
+                            {loading ? <PostLoader/> : 
+                            <>
+                                {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
+                                {data.get_group_posts.length > 0 ? <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
+                                    : <NoPosts/>}
+                            </>}
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
-                            <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
+                            {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
                         </div>
                 </div>
             </div>

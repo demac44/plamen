@@ -30,8 +30,6 @@ const Groups = ({isLogged}) => {
         setLeftnav(val)
     }, [setLeftnav])
 
-    if(loading) return <p></p>
-
     return (
         <>
             <Navbar callback={leftNavCallback} isLogged={isLogged}/>
@@ -39,7 +37,7 @@ const Groups = ({isLogged}) => {
             <div className='wrapper'>
                 <Sidebar show={leftnav}/>
                 <div className='container-main'>
-                    <GroupsGrid groups={data?.get_groups}/>
+                    {!loading && <GroupsGrid groups={data?.get_groups}/>}
                 </div>
             </div>
         </>

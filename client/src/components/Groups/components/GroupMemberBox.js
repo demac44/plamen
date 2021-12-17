@@ -7,10 +7,7 @@ const GroupMemberBox = ({member}) => {
 
 
     useEffect(()=>{
-        let date = new Date(parseInt(member.date_joined))
-        const m = date.toLocaleString('default', { month: 'short' });
-        const y = date.getFullYear()
-        setDate(m+' '+y)
+        setDate(getDateJoined(member.date_joined))
     }, [member])
 
     return (
@@ -45,4 +42,11 @@ const styles = {
         top:'8px',
         right:'10px'
     }
+}
+
+const getDateJoined = (timestamp) => {
+    let date = new Date(parseInt(timestamp))
+    const m = date.toLocaleString('default', { month: 'short' });
+    const y = date.getFullYear()
+    return m+' '+y
 }

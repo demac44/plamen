@@ -55,7 +55,7 @@ const EditPfpMenu = ({closeMenu}) => {
 
 
     return (
-        <div className='overlay-edit-pfp flex-ctr'>
+        <div className='overlay flex-ctr' style={{backgroundColor:'rgba(0,0,0,0.7)'}}>
             <div className='edit-pfp-menu'>
                 <ul>
                     {!showDropzone && <li onClick={()=>setShowDropzone(true)}>Change profile picture</li>}

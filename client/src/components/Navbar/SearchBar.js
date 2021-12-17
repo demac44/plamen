@@ -37,14 +37,6 @@ const SearchBar = ({chat, isLogged}) => {
         query.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
     }, [query, chat])
 
-    if(loading) return (
-        <div className='tn-center flex-ctr'>
-            <div className="search-icon">
-                <FontAwesomeIcon icon='search' color='black'/>
-            </div>
-            <input className='tn-search-input' style={{borderRadius:'0 50px 50px 0'}} placeholder='search'/>
-        </div>)
-
     if (error) console.log(error.message);
 
     return (
@@ -74,7 +66,7 @@ const SearchBar = ({chat, isLogged}) => {
                 <div style={styles.closeIcon} className='flex-ctr'>
                     <FontAwesomeIcon icon='times' onClick={()=>setQuery('')} size='lg'/>
                 </div>}
-                {dropdown && <SearchDrop 
+                {(!loading && dropdown) && <SearchDrop 
                                 dropdownCallback={dropdownCallback} 
                                 chat={chat} data={data} 
                                 searchHistory={searchHistory} 

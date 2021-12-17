@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, memo } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect, useParams } from 'react-router-dom'
 
@@ -10,14 +10,12 @@ import TagsBox from '../../components/Groups/components/TagsBox'
 import MembersBox from '../../components/Groups/components/MembersBox'
 import Sidebar from '../../components/General components/Sidebar'
 
-import ProfileLoader from '../../components/General components/Loaders/ProfileLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
+import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
-    const [leftnav, setLeftnav] = useState(false)
-    const [updated, setUpdated] = useState(false)
     const [tags, setTags] = useState([])
     const ls = JSON.parse(localStorage.getItem('user'))
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -27,50 +25,37 @@ const GroupMembers = ({isLogged}) => {
         }
     })
 
-
     useEffect(()=>{
-        if(updated){
-            refetch()
-            setUpdated(false)
-        }
         if(data){
             setTags(data?.get_group?.group_tags?.split(','))
         }
-    }, [refetch, updated, data])
+    }, [refetch, data])
 
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
-
-    const updatedCallback = useCallback(val => {
-        setUpdated(val)
-    }, [setUpdated])
-
-
-    if(loading) return <ProfileLoader/>
-
-    if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+    if(!loading){
+        if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+    }
 
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/> 
+            <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>
-                    <Sidebar show={leftnav}/>
+                    <Sidebar/>
                     <div className='container-profile'>
-                        <GroupBanner info={data?.get_group} user={data?.get_group_user} updatedCallback={updatedCallback}/>
+                        {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data?.get_group_user}/>}
                         <GroupNavbar/>
-                        <TagsBox tags={tags}/>                        
+                        {!loading && <TagsBox tags={tags}/>}                        
                     </div>
                         <div className='container-main'>
                             <div className='container-left'>
-                                {(!data.get_group.closed || data.get_group_user) ?
+                                {!loading &&
+                                ((!data.get_group.closed || data.get_group_user) ?
                                 <MembersBox members={data.get_group_members}/>
-                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>}
+                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>)}
                             </div>
                             <div className='container-right'>
-                                <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>
+                               {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
                             </div>
                         </div>
                 </div>

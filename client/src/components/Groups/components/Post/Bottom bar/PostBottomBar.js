@@ -9,7 +9,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
 
-const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
+const PostBottomBar = ({postID, userID}) => {
     const [likes, setLikes] = useState(false) 
     const {data, loading, error, refetch, fetchMore} = useQuery(GET_GP_COMMENTS, {
         variables:{
@@ -23,7 +23,6 @@ const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
         setLikes(false)
     }, [setLikes])
 
-    if(loading) return <div style={styles.loader}></div>
     if(error) throw error
     
     const seeMore = async () => {
@@ -49,19 +48,19 @@ const PostBottomBar = ({postID, userID, groupID, isLogged}) => {
 
     return (
         <>
+            {!loading &&
             <PostComments 
                 postID={postID} 
                 comments={data.get_group_post_comments} 
                 refetchComments={refetch} 
                 seeMore={seeMore}
-                isLogged={isLogged}
-            />
+            />}
             <div className='post-bottom-bar flex'>
-                <LikePost postID={postID} userID={userID} isLogged={isLogged}/>
+                <LikePost postID={postID} userID={userID}/>
                 <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>See likes</p>
-                <AddComment postID={postID} userID={userID} refetchComments={refetch} isLogged={isLogged}/>
+                <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>
-            {(isLogged && likes) && <LikesList postID={postID} closeList={closeLikesList}/>}
+            {likes && <LikesList postID={postID} closeList={closeLikesList}/>}
         </>
     )
 }

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const UsersList = ({data, title, closeList}) => {
 
     return (
-        <div className='container-users-list flex-col-ctr'>
+        <div className='flex-col-ctr overlay' style={{backgroundColor: 'rgba(0, 0, 0,0.7)'}}>
             <div className='users-list-box'>
                 <div className='users-list-top-bar'>
                     <h3 style={{color:'white'}}>{title}</h3>

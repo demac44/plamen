@@ -1,43 +1,30 @@
 import React from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 
-const GroupNavbar = ({chat}) => {
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+const GroupNavbar = () => {
 
     const {groupid} = useParams
 
     return (
-        <div className='group-navbar' style={chat && styles.nav}>
-            <ul className='flex-sa' style={{width:'100%', height:'100%'}}>
+        <div className='group-navbar'>
+            <div className='flex-sa' style={{width:'100%', height:'100%'}}>
                 <NavLink exact to={'/community/'+groupid}>
-                    <li>
-                        <i style={{color:'darkgreen'}} className="fas fa-newspaper"></i>
-                    </li>
+                    <FontAwesomeIcon icon='newspaper' color='darkgreen'/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/saved'}>
-                    <li>
-                        <i style={{color:'#ffbb00'}} className="fas fa-bookmark"></i>
-                    </li>
+                    <FontAwesomeIcon icon='bookmark' color='#ffbb00'/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/info'}>
-                    <li>
-                        <i style={{color:'#36579e'}} className="fas fa-info-circle"></i>
-                    </li>
+                    <FontAwesomeIcon icon='info-circle' color='#36579e'/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/settings'}>
-                    <li>
-                        <i style={{color:'silver'}} className="fas fa-user-cog"></i>
-                    </li>
+                    <FontAwesomeIcon icon='user-cog' color='silver'/>
                 </NavLink>
-            </ul>
+            </div>
         </div>
     )
 }
 
 export default GroupNavbar
-
-const styles = {
-    nav:{
-        position:'fixed',
-        top:'-60px',
-    }
-}

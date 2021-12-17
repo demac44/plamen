@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import ReportBox from './ReportBox'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
@@ -47,7 +46,6 @@ const PostMenu = ({data, refetchPosts}) => {
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}
-            {reportMenu && <ReportBox data={data} closeReportCallback={closeReportCallback}/>}
         </>
     )
 }

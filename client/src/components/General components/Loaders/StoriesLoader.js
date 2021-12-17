@@ -1,7 +1,7 @@
 import React from 'react'
 
 const StoriesLoader = () => {
-    const num = [1,1,1,1,1,1,1,1,1,1]
+    const num = [1,1,1,1,1,1,1,1]
 
     return (
         <div className='container-stories'>

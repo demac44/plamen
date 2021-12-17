@@ -9,7 +9,7 @@ const ProfileInfo = ({info}) => {
 
     useEffect(()=>{
         document.querySelector('body').style.overflowY = (showList ? 'hidden' : 'auto')
-        // return setShowList(false)
+        return
     }, [info, showList])
 
     const closeList = useCallback(() => {
@@ -26,12 +26,12 @@ const ProfileInfo = ({info}) => {
     return (
         <>
             {showList && <UsersList data={follows} title={title} closeList={closeList}/>}
-            <div className="profile-top-box-info">
+            <div className="profile-top-box-info flex-col">
 
                 <h4 style={styles.name}>{info.user.first_name+' '+info.user.last_name}</h4>    
                 <h5 style={styles.username}>@{info.user.username}</h5>
 
-                <div className='profile-top-box-stats'>
+                <div className='profile-top-box-stats flex-sb'>
                     <div 
                         onClick={()=>{
                             handleOpen(info.following)

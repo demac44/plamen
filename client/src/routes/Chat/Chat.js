@@ -5,11 +5,6 @@ import { useParams } from 'react-router'
 
 import { ChatList, ChatMsgBox } from '../../components/Chat/export'
 
-
-import ChatLoader from '../../components/General components/Loaders/ChatLoader'
-import MsgsLoader from '../../components/General components/Loaders/MsgsLoader'
-
-
 const Chat = ({isLogged}) => {
     const [chat, setChat] = useState(null)
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -23,14 +18,16 @@ const Chat = ({isLogged}) => {
         data?.get_chats?.map(chat => chat.chatID===parseInt(chatid) && setChat(chat))
     }, [data, chatid])
   
-    if(loading) return <ChatLoader/>
     if(error) console.log(error); 
 
     return (
         <>
-            <ChatList data={data} isLogged={isLogged}/>
-            {chat ? <ChatMsgBox chat={chat} key={chat?.chatID}/>
-            : <MsgsLoader/>}
+            {loading ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
+                <>
+                <ChatList data={data} isLogged={isLogged}/>
+                {chat && <ChatMsgBox chat={chat} key={chat?.chatID}/>}
+                </>
+            }
         </>
     )
 }

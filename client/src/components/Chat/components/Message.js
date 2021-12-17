@@ -33,7 +33,7 @@ const Message = ({msg}) => {
     
     return (
         <>
-            <div className={msg.userID===ls.userID ? 'msg-wrapper-cu' : 'msg-wrapper-ou'}
+            <div className={msg.userID===ls.userID ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
                     onMouseOver={()=>setMsgOptions(true)}
                     onMouseLeave={()=>setMsgOptions(false)}
                     onClick={()=>setMsgOptions(!msgOptions)}>

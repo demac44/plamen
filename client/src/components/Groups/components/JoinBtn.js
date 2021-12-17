@@ -20,13 +20,10 @@ const JoinBtn = ({info, user}) => {
 
 
     useEffect(()=>{
-        if(data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID){
+        if(!loading && (data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID)){
             setState('REQUESTED')
-        } else if(user) setState('LEAVE')
+        } else if(!loading && user) setState('LEAVE')
     }, [data, info.groupID, ls.userID, user])
-
-    if(loading) return <p>loading</p>
-
 
     const handleJoin = () => {
         join_group({
@@ -68,12 +65,14 @@ const JoinBtn = ({info, user}) => {
         <button 
             className='group-join-btn btn'
             onClick={()=>{
-                if(user) handleLeave()
-                else if (!user && info.closed) handleRequest()
-                else if (!user && !info.closed) handleJoin()
+                if(!loading){
+                    if(user) handleLeave()
+                    else if (!user && info.closed) handleRequest()
+                    else if (!user && !info.closed) handleJoin()
+                }
             }}
             >
-            {state}
+            {loading ? 'Loading' : state}
         </button>
     )
 }

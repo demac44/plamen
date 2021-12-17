@@ -4,8 +4,6 @@ import UserBox from './Users list/UserBox'
 
 const UserSuggestionsBox = () => {
     const user_suggestions = JSON.parse(localStorage.getItem('user-suggestions'))
-
-
     return (
         <>
             <h4 style={styles.title}>Suggestions</h4>  

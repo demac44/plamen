@@ -10,6 +10,7 @@ import Sidebar from '../../components/General components/Sidebar.js'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar.js'
 import MyGroupsList from '../../components/General components/MyGroupsList.js'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
+import UserLoader from '../../components/General components/Loaders/UserLoader.js'
 
 const SEARCH_USERS = gql`
     query ($limit: Int, $offset: Int) {
@@ -40,7 +41,6 @@ const Search = ({isLogged}) => {
         data?.get_users && setUsers(filterUsers(data, query))
     }, [data, query])
     
-    if(loading) return <div className='wh-100'>sta ima</div>
     if(error) throw error 
     
     const loadMore = () => {
@@ -70,9 +70,20 @@ const Search = ({isLogged}) => {
                 <div className='container-main'>
                     <div className='container-left'>
                         <p style={styles.title}>Search results</p>
-                        {users.length < 1 ? <p style={{color:'white'}}>No results</p>
-                        : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
-                        {fetch && <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
+
+                        {loading ? (
+                            <>
+                                <UserLoader key='1'/>
+                                <UserLoader key='2'/>
+                                <UserLoader key='3'/>
+                                <UserLoader key='4'/>
+                            </>
+                        )
+                        : (users.length < 1 ? <p style={{color:'white'}}>No results</p>
+                            : users.map(user => <UserSearchBar user={user} key={user.userID}/>))}
+
+                        {(!loading && fetch) && <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
+
                     </div>
                     <div className='container-right' style={styles.containerRight}>
                         <MyGroupsList/>

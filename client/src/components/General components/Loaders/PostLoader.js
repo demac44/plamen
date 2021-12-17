@@ -11,6 +11,11 @@ const PostLoader = () => {
                 <div style={styles.postImg}></div>
                 <div style={styles.cmt}></div>
             </div>
+            <div className='post' style={{width:'100%', marginTop:'20px'}}>
+                <div style={styles.topBar}></div>
+                <div style={styles.postImg}></div>
+                <div style={styles.cmt}></div>
+            </div>
         </>
     )
 }

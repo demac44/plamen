@@ -4,6 +4,7 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
 import './General.css'
 
+import Feed from './routes/Feed/Feed'
 import Profile from './routes/Profile/Profile';
 import MainLoader from './components/General components/Loaders/MainLoader';
 
@@ -18,11 +19,11 @@ import('@fortawesome/free-solid-svg-icons').then(i=>{
     core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
       i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
       i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
-      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch)
+      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle)
     })
 })
 
-const Feed = lazy(()=>import('./routes/Feed/Feed'))
+// const Feed = lazy(()=>import('./routes/Feed/Feed'))
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const Groups = lazy(()=>import('./routes/Groups/Groups'))
 const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
@@ -66,10 +67,10 @@ function App() {
       <>
         {(loading) ? <MainLoader/> :
           <Switch>
+            <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             <Route exact path='/profile/:username'>{isLogged ? <Profile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             <Suspense fallback={<MainLoader/>}>
               <Route exact path='/'></Route>
-              <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

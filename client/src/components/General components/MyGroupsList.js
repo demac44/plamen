@@ -14,16 +14,13 @@ const MyGroupsList = () => {
         }
     })
 
-
-    if(loading) return <p>loading</p>
-
     return (
         <div className='my-groups-box'>
             <div className='flex-sb' style={styles.descTitle}>
                 <h2>My communities</h2>
                 <Link to='/communities' style={styles.seeAllBtn}>See all</Link>
             </div>
-            {data.get_groups.slice(0, 5).map(group=>
+            {!loading && data.get_groups.slice(0, 5).map(group=>
                 <div style={{...styles.groupBox, backgroundColor: "#" + ((1<<24)*Math.random() | 0).toString(16)}} key={group.groupID}>
                     <Link  to={'/community/'+group.groupID}  className='gcard_overlay flex-ctr'>
                         <h4>{group.group_name}</h4>

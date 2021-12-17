@@ -20,8 +20,6 @@ const UserInfo = ({isLogged}) => {
         }
     })
 
-    if(loading) return <p>loading</p>
-
     return (
         <>
             <Navbar isLogged={isLogged}/>
@@ -39,20 +37,20 @@ const UserInfo = ({isLogged}) => {
                             </h3>
                         </span>
 
-                        <EditInterests data={data?.get_user_info?.interests}/>
+                        {!loading && <EditInterests data={data?.get_user_info?.interests}/>}
 
-                        <EditInfoBox data={{
+                        {!loading &&<EditInfoBox data={{
                             job:data?.get_user_info?.job,
                             university:data?.get_user_info?.university,
                             high_school:data?.get_user_info?.high_school,
                             phone_number:data?.get_user_info?.phone_number,
                             country:data?.get_user_info?.country,
                             city:data?.get_user_info?.city,
-                        }}/>
+                        }}/>}
 
-                        <EditBDate data={data?.get_user_info?.bDate}/>
+                        {!loading && <EditBDate data={data?.get_user_info?.bDate}/>}
 
-                        <EditGender data={data?.get_user_info?.gender}/>
+                        {!loading && <EditGender data={data?.get_user_info?.gender}/>}
                     </div>
                     <div className='container-right'>
                         <EditProfileNav/>

@@ -95,11 +95,11 @@ const RegisterForm = () => {
                 </span>
                 {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
                 <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
-                    <div className="reg-names-box">
+                    <div className="reg-names-box flex">
                         <input type="text" id='first_name' name='first_name' placeholder="First name"/>
                         <input type="text" id='last_name' name='last_name' placeholder="Last name"/>
                     </div>
-                    <div className="birthdt-reg-box">
+                    <div className="birthdt-reg-box flex">
                         <select id='gender' name='gender'>
                             <option value='male'>Male</option>
                             <option value='female'>Female</option>

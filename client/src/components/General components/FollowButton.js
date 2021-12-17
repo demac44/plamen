@@ -14,13 +14,8 @@ const FollowButton = ({userID}) => {
     })
     
     useEffect(()=>{ 
-        setIsFollowing(data?.ifFollowing) 
+        !loading && setIsFollowing(data?.ifFollowing) 
     }, [data])
-    
-    
-    if (loading) return (<div className='follow-button btn'><p>Follow</p></div>)
-
-
 
     const handleFollow = () => {
         follow({
@@ -48,8 +43,8 @@ const FollowButton = ({userID}) => {
     }
     return (
         <div className='follow-button btn'
-            onClick={() => isFollowing ? handleUnfollow() : handleFollow()}>
-            <p>{isFollowing ? 'Unfollow' : 'Follow'}</p> 
+            onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>
+            <p>{loading ? 'Loading' : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
         </div>
     )
 }

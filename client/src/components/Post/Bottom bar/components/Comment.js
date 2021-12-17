@@ -6,15 +6,10 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
 import SetTime from '../../../General components/SetTime'
 
-import { useSelector } from 'react-redux'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const Comment = ({comment, refetchComments}) => {
-    const [loginPopUp, setLoginPopUp] = useState(false)
-    const isLogged = useSelector(state => state?.isAuth.isAuth)
     const ls = JSON.parse(localStorage.getItem('user'))
     const [readMore, setReadMore] = useState(true)
 
@@ -32,42 +27,37 @@ const Comment = ({comment, refetchComments}) => {
     }
 
     return (
-        <>
-            <div className='comment flex'>
-                <Link to={'/profile/'+comment.username} style={{marginTop:'5px'}}>
-                    <Avatar size='35px' image={comment.profile_picture}/>
-                </Link>
-                <div style={styles.textField}>
-                    {comment.comment_text.length>200 ? 
-                    (
-                    <>
-                        {readMore ? <p><strong>{comment.username}</strong>{' '+comment.comment_text.slice(0, 200)+'. . .'}
-                        <span
-                            onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
-                            style={styles.seeMore}
-                        >  Read more</span></p> 
-                        : <p><strong>{comment.username}</strong>{' '+comment.comment_text}
-                        <span
-                            onClick={()=>isLogged ? setReadMore(!readMore) : setLoginPopUp(true)} 
-                            style={styles.seeMore}
-                    > Read less</span></p>}
-                    </>
-                    )
-                    : <p><strong>{comment.username}</strong>{' '+comment.comment_text}</p>}
-
-                    <SetTime timestamp={comment.date_commented} fontSize='12px'/>
-
-                </div>
-                {isLogged && (comment.userID===ls.userID && 
-                    <FontAwesomeIcon 
-                        icon='trash-alt' 
-                        style={styles.deleteBtn} 
-                        className='fas fa-trash-alt'
-                        onClick={handleDelete}
-                    />)}
+        <div className='comment flex'>
+            <Link to={'/profile/'+comment.username} style={{marginTop:'5px'}}>
+                <Avatar size='35px' image={comment.profile_picture}/>
+            </Link>
+            <div style={styles.textField}>
+                {comment.comment_text.length>200 ? 
+                (
+                <>
+                    {readMore ? <p><strong>{comment.username}</strong>{' '+comment.comment_text.slice(0, 200)+'. . .'}
+                    <span
+                        onClick={()=>setReadMore(!readMore)} 
+                        style={styles.seeMore}
+                    >  Read more</span></p> 
+                    : <p><strong>{comment.username}</strong>{' '+comment.comment_text}
+                    <span
+                        onClick={()=>setReadMore(!readMore)} 
+                        style={styles.seeMore}
+                > Read less</span></p>}
+                </>
+                )
+                : <p><strong>{comment.username}</strong>{' '+comment.comment_text}</p>}
+                <SetTime timestamp={comment.date_commented} fontSize='12px'/>
             </div>
-            {loginPopUp && <LoginPopUp/>}
-        </>
+            {comment.userID===ls.userID && 
+                <FontAwesomeIcon 
+                    icon='trash-alt' 
+                    style={styles.deleteBtn} 
+                    className='fas fa-trash-alt'
+                    onClick={handleDelete}
+                />}
+        </div>
     )
 }
 

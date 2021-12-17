@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
 
-const PostBottomBar = ({postID, userID, isLogged}) => {
+const PostBottomBar = ({postID, userID}) => {
     const [likes, setLikes] = useState(false) 
     const {data, loading, error, refetch, fetchMore} = useQuery(GET_COMMENTS, {
         variables:{
@@ -21,7 +21,6 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
         setLikes(false)
     }, [setLikes])
 
-    if(loading) return <div style={styles.loader}></div>
     if(error) throw error
     
     const seeMore = async () => {
@@ -29,7 +28,7 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
             await fetchMore({
                 variables:{
                     limit:5,
-                    offset: data.get_post_comments.length,
+                    offset: data?.get_post_comments?.length,
                 },
                 updateQuery: (prev, { fetchMoreResult }) => {
                     if (!fetchMoreResult) return prev;
@@ -47,19 +46,19 @@ const PostBottomBar = ({postID, userID, isLogged}) => {
 
     return (
         <>
+            {!loading &&
             <PostComments 
                 postID={postID} 
                 comments={data.get_post_comments} 
                 refetchComments={refetch} 
                 seeMore={seeMore}
-                isLogged={isLogged}
-            />
+            />}
             <div className='post-bottom-bar flex'>
-                <LikePost postID={postID} userID={userID} isLogged={isLogged}/>
+                <LikePost postID={postID} userID={userID}/>
                 <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>See likes</p>
-                <AddComment postID={postID} userID={userID} refetchComments={refetch} isLogged={isLogged}/>
+                <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>
-            {(isLogged && likes) && <LikesList postID={postID} closeList={closeLikesList}/>}
+            {likes && <LikesList postID={postID} closeList={closeLikesList}/>}
         </>
     )
 }
@@ -76,11 +75,6 @@ const styles = {
         borderRadius:'10px',
         textAlign:'center',
         cursor:'pointer',
-    },
-    loader:{
-        width:'100%',
-        height:'40px',
-        backgroundColor:'#1f1f1f'
     }
 }
 

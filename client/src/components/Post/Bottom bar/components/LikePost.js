@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import LoginPopUp from '../../../Entry/Login/LoginPopUp.js'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-const LikePost = ({postID, userID, isLogged}) => {
+const LikePost = ({postID, userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [liked, setLiked] = useState(false)
-    const [like_post, {error}] = useMutation(LIKE_POST)
+    const [like_post] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
-    const [loginPopUp, setLoginPopUp] = useState(false)
 
     const ifLiked = useQuery(IF_LIKED, {
         variables:{
@@ -20,20 +18,10 @@ const LikePost = ({postID, userID, isLogged}) => {
     })
 
     useEffect(()=>{
-        if(isLogged){
-            ifLiked?.data?.if_liked===true && setLiked(true)
-            return
-        }
-        return
-    }, [ifLiked?.data, isLogged])
-
-    if(ifLiked.loading) return <FontAwesomeIcon icon='heart' size='lg' color='white'/>
-
-    if(error) throw error
-
+        return ifLiked?.data?.if_liked && setLiked(true)
+    }, [ifLiked?.data])
     
     const handleLike = () => {
-        isLogged ?
         like_post({
             variables: {
                 postID: postID,
@@ -43,11 +31,9 @@ const LikePost = ({postID, userID, isLogged}) => {
         }).then(() => {
             setLiked(true)
         })
-        : setLoginPopUp(true)
     }
 
     const handleRemove = () => {
-        isLogged ?
         remove_like({
             variables: {
                 postID: postID,
@@ -56,16 +42,13 @@ const LikePost = ({postID, userID, isLogged}) => {
         }).then(()=>{
             setLiked(false)
         })   
-        : setLoginPopUp(true)
     }
     return (
-        <>
-            <FontAwesomeIcon icon='heart'
-                style={{...styles.likeBtn}}
-                color={liked ? '#a50202' : 'white'}
-                onClick={() => liked ? handleRemove() : handleLike()}/>
-            {loginPopUp && <LoginPopUp/>}
-        </>
+        <FontAwesomeIcon icon='heart'
+            style={{...styles.likeBtn}}
+            color={ifLiked.loading ? 'white' : (liked ? '#a50202' : 'white')}
+            onClick={() => !ifLiked.loading && (liked ? handleRemove() : handleLike())}
+        />
     )
 }
 

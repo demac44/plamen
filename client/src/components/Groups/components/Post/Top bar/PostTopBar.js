@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-const PostTopBar = ({data, refetchPosts, isLogged}) => {
+const PostTopBar = ({data, refetchPosts}) => {
     const [menu, setMenu] = useState(false)
 
     return (
         <>
-            <div className='post-top-bar'>
+            <div className='post-top-bar flex-sb'>
                 <Link to={'/profile/'+data.username} className='flex'>
                     <Avatar size='40px' image={data.pfp}/>
 
@@ -23,7 +23,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
                 </Link >
 
                 <span className='flex'>
-                    <SavePostButton postID={data.postID} groupID={data?.groupID} isLogged={isLogged}/>
+                    <SavePostButton postID={data.postID} groupID={data?.groupID}/>
                     <FontAwesomeIcon
                         icon='ellipsis-v' 
                         style={styles.optionsBtn} 
@@ -31,7 +31,7 @@ const PostTopBar = ({data, refetchPosts, isLogged}) => {
                 </span>
             </div>
 
-            {(isLogged && menu) && <PostMenu 
+            {menu && <PostMenu 
                 refetchPosts={refetchPosts}
                 data={{
                     postID: data.postID,

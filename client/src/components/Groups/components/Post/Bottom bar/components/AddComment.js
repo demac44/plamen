@@ -1,26 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import {useSelector} from 'react-redux'
 
-import LoginPopUp from '../../../../../Entry/Login/LoginPopUp'
 
 const AddComment = ({postID, userID, refetchComments}) => {
     let comment_text;
-    const isLogged = useSelector(state => state?.isAuth.isAuth)
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [loginPopUp, setLoginPopUp] = useState(false)
     const [add_comment] = useMutation(ADD_GP_COMMENT) 
 
     const handleAddComment = (e) => {
         e.preventDefault()
         comment_text = e.target.comment_text.value
 
-        if(!isLogged) {
-            setLoginPopUp(true)
-            return
-        }
-        else if(comment_text.trim()===''){
+        if(comment_text.trim()===''){
             console.log('empty');
         } else{
             add_comment({
@@ -38,13 +30,10 @@ const AddComment = ({postID, userID, refetchComments}) => {
     }
 
     return (
-        <>
-            <form style={styles.form} onSubmit={handleAddComment}>
-                <textarea style={styles.input} id='comment_text' name='comment_text' type="text" placeholder="Add comment..."/>
-                <button className='post-button btn'>POST</button>
-            </form>
-            {loginPopUp && <LoginPopUp/>}
-        </>
+        <form style={styles.form} onSubmit={handleAddComment}>
+            <textarea style={styles.input} id='comment_text' name='comment_text' type="text" placeholder="Add comment..."/>
+            <button className='post-button btn'>POST</button>
+        </form>
     )
 }
 

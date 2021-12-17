@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const CREATE_GROUP = gql`
@@ -47,9 +48,9 @@ const CreateGroupForm = ({closeFormCallback}) => {
       }
 
     return (
-        <div className='container-create-group flex-ctr'>
+        <div className='flex-ctr overlay' style={{backgroundColor: 'rgba(0, 0, 0,0.7)'}}>
             <form className='create-group-form flex-col-ctr' onSubmit={handleSubmit}>
-                <i style={styles.exitBtn} onClick={()=>closeFormCallback()} className='fas fa-times'></i>
+                <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>closeFormCallback()}/>
                 <h3>Community name:</h3>
                 <input placeholder='Community name...' id='name'></input>
 

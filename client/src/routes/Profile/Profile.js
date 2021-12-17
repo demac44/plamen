@@ -8,7 +8,6 @@ import ProfileTopBox from '../../components/Profile/ProfileTopBox'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams, useHistory } from 'react-router'
-import ProfileLoader from '../../components/General components/Loaders/ProfileLoader'
 import Posts from '../../components/Post/Posts'
 
 import '../../components/Groups/groups.css'
@@ -19,6 +18,8 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import SideInfoBox from '../../components/Profile/components/SideInfoBox'
 import InterestsBox from '../../components/Profile/components/InterestsBox'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
+import PostLoader from '../../components/General components/Loaders/PostLoader'
+import ProfileBoxLoader from '../../components/General components/Loaders/ProfileBoxLoader'
 
     
 const Profile = ({isLogged}) => {
@@ -49,11 +50,12 @@ const Profile = ({isLogged}) => {
         return null
     }, [username, ls.username, refetch, history, myprofile])
 
-    
-    if (loading || isLoading) return <ProfileLoader/>
+
+    if(!loading){
+        if(!data?.get_user?.userID) return <Redirect to='/404'/>
+    }
     if(error) throw error 
-    
-    if(!data?.get_user?.username) return <Redirect to='/404'/>
+
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -81,17 +83,26 @@ const Profile = ({isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-profile'>
-                    <ProfileTopBox userID={data.get_user.userID} myprofile={myprofile} postsLength={data.get_profile_posts.length}/>
+                   {loading ? <ProfileBoxLoader/> 
+                            : <ProfileTopBox 
+                                userID={data.get_user.userID} 
+                                myprofile={myprofile} 
+                                postsLength={data.get_profile_posts.length}
+                            />}
                 </div>
                 <div className='container-main'  style={{paddingTop:'10px'}}>
                     <Sidebar/>
                     <div className='container-left'>
-                        {myprofile && <CreatePost refetch={refetch}/>}    
-                        <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
+                        {(loading || isLoading) ? <PostLoader/> :
+                        <>
+                            {myprofile && <CreatePost refetch={refetch}/>}    
+                            <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
+                        </>}
                     </div>
                     <div className='container-right' style={{width:'35%', paddingTop:'10px', display:'block'}}>
-                        <SideInfoBox myprofile={myprofile} userID={data.get_user.userID}/>
-                        <InterestsBox myprofile={myprofile} userID={data.get_user.userID}/>
+                        <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                        <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                        <UserSuggestionsBox/>
                     </div>
                 </div>
             </div>

@@ -87,12 +87,13 @@
     width: 100%;
     padding: 5px;
     cursor: pointer;
+    transition: ease .3s;
 }
 .search-user-box p, .search-user-box h5{
     color: white;
 }
 .search-user-box:hover{
-    background-color: #b8b8b8;
+    background-color: #2f2f2f;
 }
 .see-all-btn{
     width: 100%;

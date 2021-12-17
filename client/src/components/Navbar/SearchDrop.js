@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
+import ChatSearchBarUser from '../Chat/components/ChatSearchBarUser'
 import SearchHistoryDrop from './SearchHistoryDrop'
 import UserSearchBar from './UserSearchBar'
 
@@ -15,7 +16,8 @@ const SearchDrop = ({data, query, chat, searchHistory, dropdownCallback}) => {
     return (
         <div className='search-drop'>
             {(query.length<1 && !chat) && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
-            {users.map(user => <UserSearchBar chat={chat} user={user} key={user.userID}/>)}
+            {chat ? users.map(user => <ChatSearchBarUser user={user} key={user.userID}/>)
+                : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
             {(users.length > 0 && !chat) && <Link to={'/search/'+query}><p style={styles.seeAll}>See all</p></Link>}
         </div>
     )

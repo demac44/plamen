@@ -75,43 +75,45 @@ const NotficationsMenu = ({visible}) => {
         }).then(()=>refetch())
     }
 
-    if(loading) return null
-
     return (
         <div className='notifications-container' style={{visibility:visible}}>
-            {data.get_notifications.length < 1 && <p style={{
-                width:'100%',
-                textAlign:'center',
-                padding:'20px',
-                color:'white'
-            }}>No new notifications</p>}
-            
-
-            <span>
-                {data.get_notifications.length > 0 && <div
-                    style={{
+                {loading ? <div className='flex-ctr' style={{height:'100px'}}><div className='small-spinner'></div></div> 
+                : <>
+                    {(data.get_notifications.length) < 1 && <p style={{
                         width:'100%',
-                        padding:'5px 10px 0 0',
-                        textAlign:'end',
-                        cursor:'pointer',
-                        color:'teal',
-                        fontSize:'14px'
-                    }}
-                    onClick={handleClear}
-                    >Clear all</div>}
-                {data?.get_notifications?.map(notif => 
-                    <NotificationBox notif={notif} key={notif.Nid}/>
-                    )}
-            </span>
+                        textAlign:'center',
+                        padding:'20px',
+                        color:'white'
+                    }}>No new notifications</p>}
+                    
 
-            {data.get_notifications.length > 0 && <div 
-                style={{
-                    width:'100%',
-                    padding:'3px',
-                    textAlign:'center',
-                    cursor:'pointer',
-                    color:'white'
-            }}><h5>See all</h5></div>}
+                    <span>
+                        {(data.get_notifications.length > 0) && 
+                        <div
+                            style={{
+                                width:'100%',
+                                padding:'5px 10px 0 0',
+                                textAlign:'end',
+                                cursor:'pointer',
+                                color:'teal',
+                                fontSize:'14px'
+                            }}
+                            onClick={handleClear}
+                            >Clear all</div>}
+                        {data?.get_notifications?.map(notif => 
+                            <NotificationBox notif={notif} key={notif.Nid}/>
+                            )}
+                    </span>
+
+                    {data.get_notifications.length > 0 && <div 
+                        style={{
+                            width:'100%',
+                            padding:'3px',
+                            textAlign:'center',
+                            cursor:'pointer',
+                            color:'white'
+                    }}><h5>See all</h5></div>}
+            </>}
         </div>
     )
 }

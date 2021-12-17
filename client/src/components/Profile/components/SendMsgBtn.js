@@ -22,8 +22,6 @@ const SendMsgBtn = ({userID}) => {
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:userID}}) 
     
-    if(loading) return <p>loading</p>
-
     const createChat = () => {
         if(data?.chat_exists?.chatID){
             window.location.href = '/chat/'+data.chat_exists.chatID
@@ -38,8 +36,8 @@ const SendMsgBtn = ({userID}) => {
     } 
     
     return (
-        <div className="profile-top-box-buttons send-msg-btn" onClick={createChat}>
-            <p>Send message</p> 
+        <div className="profile-top-box-buttons send-msg-btn" onClick={()=>!loading && createChat()}>
+            <p>{loading ? 'Loading...' : 'Send message'}</p> 
         </div>
     )
 }

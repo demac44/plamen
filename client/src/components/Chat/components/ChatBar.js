@@ -14,7 +14,7 @@ const ChatBar = ({chatID, info}) => {
 
     return (
         <>
-            <div className='chat-bar flex-ac'>
+            <div className='chat-bar flex-sb'>
                 <div className='flex-ctr'>
                     <Link to='/chats'>
                         <FontAwesomeIcon icon='arrow-left' className="chat-back-icon"
@@ -26,9 +26,9 @@ const ChatBar = ({chatID, info}) => {
                             }}
                         />
                     </Link>
-                    <Link to={'/profile/'+info.username} style={{height:'50px'}} className='chat-user-info'>
+                    <Link to={'/profile/'+info.username} style={{height:'50px'}} className='flex-h'>
                         <Avatar size='50px' image={info.profile_picture}/>
-                        <p>{info.first_name+' '+info.last_name}</p>
+                        <p style={{color:'white', marginLeft:'10px'}}>{info.first_name+' '+info.last_name}</p>
                     </Link>
                 </div>
                 <FontAwesomeIcon

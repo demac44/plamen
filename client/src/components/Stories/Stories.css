@@ -188,3 +188,12 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
         width: 100%;
     }
 }
+
+@-webkit-keyframes load {
+    0% {width: 0%;}
+    100% {width: 100%;}
+}
+@keyframes load {
+    0% {width: 0%;}
+    100% {width: 100%;}
+}
