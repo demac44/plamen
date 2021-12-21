@@ -17,7 +17,7 @@ const SearchDrop = ({data, query, chat, searchHistory, dropdownCallback}) => {
         <div className='search-drop'>
             {(query.length<1 && !chat) && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
             {chat ? users.map(user => <ChatSearchBarUser user={user} key={user.userID}/>)
-                : users.map(user => <UserSearchBar user={user} key={user.userID}/>)}
+                : users.map(user => <UserSearchBar user={user} key={user.userID} dropdownCallback={dropdownCallback}/>)}
             {(users.length > 0 && !chat) && <Link to={'/search/'+query}><p style={styles.seeAll}>See all</p></Link>}
         </div>
     )

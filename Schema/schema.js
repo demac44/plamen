@@ -5,7 +5,7 @@ import {
 
 import { pubsub } from "../server.js";
 
-import { CREATE_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_MESSAGE } from "./Mutations/Chat.js";
+import { CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_MESSAGE, MSG_NOTIFICATION, SEEN, SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
@@ -17,7 +17,7 @@ import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
-import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE } from "./Queries/Chat.js";
+import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
@@ -59,6 +59,10 @@ const RootQuery = new GraphQLObjectType({
         last_message: LAST_MESSAGE,
         count_newMsgs: COUNT_ALL_MSGS,
         count_msgs: COUNT_MSGS,
+        // group chat
+        get_group_chats: GET_GROUP_CHATS,
+        get_all_group_chats: GET_ALL_GROUP_CHATS,
+        get_group_messages: GET_GROUP_MESSAGES,
         // stories
         get_stories: GET_STORIES,
         get_user_stories: GET_USER_STORIES,
@@ -118,6 +122,9 @@ const RootMutation = new GraphQLObjectType({
         post_report: POST_REPORT,
         msg_notification: MSG_NOTIFICATION,
         seen: SEEN,
+        // group chat
+        create_group_chat:CREATE_GROUP_CHAT,
+        send_group_message: SEND_GROUP_MESSAGE,
         // notifications
         like_notification: LIKE_NOTIFICATION,
         comment_notification: COMM_NOTIFICATION,
@@ -153,6 +160,10 @@ const RootSubscription = new GraphQLObjectType({
         newMessage: {
             type: ChatMessagesType,
             subscribe: () => pubsub.asyncIterator(["NEW_MESSAGE"])
+        },
+        newGroupMessage: {
+            type: ChatMessagesType,
+            subscribe: () => pubsub.asyncIterator(["NEW_GROUP_MESSAGE"])
         },
         newMsgNotification: {
             type: MsgNotificationType,

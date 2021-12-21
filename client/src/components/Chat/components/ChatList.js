@@ -5,6 +5,7 @@ import ChatsOptions from './ChatsOptions'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import ChatListGroup from './Group chat/ChatListGroup'
 
 const ChatList = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -20,10 +21,13 @@ const ChatList = ({isLogged}) => {
             </div>
             <ChatsOptions/>
             {!loading ?
-            data.get_chats.map(chat => 
+            data?.get_chats?.map(chat => 
                     <ChatListUser data={chat} key={chat.chatID}/>)
                 : <p style={styles.emptyInbox} className='flex-ctr'>Loading...</p>}
             {!loading && (data.get_chats.length === 0 && <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>)}
+            <br/>
+            <p style={styles.title}>Group chats</p>
+            {!loading && data?.get_group_chats?.map(gc => <ChatListGroup data={gc} key={gc.groupChatId}/>)}
         </div>
     )
 }
@@ -36,6 +40,13 @@ const styles = {
         width:'100%',
         height:'100px',
         color:'white',
+    },
+    title:{
+        width:'100%',
+        padding:'5px',
+        color:'white',
+        textAlign:'center',
+        backgroundColor:'#1f1f1f'
     }
 }
 
@@ -48,5 +59,11 @@ const GET_CHATS_LIST = gql`
             username
             profile_picture
             userID
+        }
+        get_group_chats (userID: $userID){
+            groupChatId
+            userID
+            name
+            group_image
         }
 }`

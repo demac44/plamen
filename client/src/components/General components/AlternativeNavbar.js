@@ -7,7 +7,7 @@ const AlternativeNavbar = ({chat}) => {
     return (
         <div className='alternative-navbar' style={chat && styles.nav}>
             <div className='flex-sa' style={{width:'100%', height:'100%'}}>
-                <NavLink exact to="/feed">
+                <NavLink exact to="/">
                     <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                 </NavLink>
                 <NavLink exact to='/explore'>      

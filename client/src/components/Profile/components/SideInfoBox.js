@@ -17,11 +17,15 @@ const SideInfoBox = ({myprofile, userID}) => {
         }
     })
 
-    useEffect(()=>{
-        setDateJoined(calcDateJoined(data?.get_user_info?.date_joined))
+    const setInfo = () => {
         setBirthDate(calcBirthDate(data?.get_user_info?.bDate))
+        setDateJoined(calcDateJoined(data?.get_user_info?.date_joined))
         setAge(calculateAge(data?.get_user_info?.bDate))
         return
+    }
+
+    useEffect(()=>{
+        return setInfo()
     }, [data])
 
     return (
@@ -120,7 +124,7 @@ const styles = {
 
 
 const USER_INFO = gql`
-    query ($userID: Int!){
+    query ($userID: Int){
         get_user_info (userID: $userID){
             job
             university

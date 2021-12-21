@@ -4,20 +4,27 @@ import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
 
 import { ChatList, ChatMsgBox } from '../../components/Chat/export'
+import GroupChatMsgBox from '../../components/Chat/components/Group chat/GroupChatMsgBox'
 
-const Chat = ({isLogged}) => {
+const Chat = ({isLogged, isGroupChat}) => {
     const [chat, setChat] = useState(null)
     const ls = JSON.parse(localStorage.getItem('user'))
     const {chatid} = useParams()
 
-    const {data, loading, error} = useQuery(GET_CHATS, {
+    const {data, loading, error} = useQuery(isGroupChat ? GET_GROUP_CHATS : GET_CHATS, {
         variables:{userID: ls.userID},
     }) 
 
     useEffect(()=>{
-        data?.get_all_user_chats?.map(chat => {
-            if(chat.chatID===parseInt(chatid)) return setChat(chat)
-        })
+        if(isGroupChat){
+            data?.get_all_group_chats?.map(chat => {
+                if(chat.groupChatId===parseInt(chatid)) return setChat(chat)
+            })
+        } else {
+            data?.get_all_user_chats?.map(chat => {
+                if(chat.chatID===parseInt(chatid)) return setChat(chat)
+            })
+        }
     }, [data, chatid])
   
     if(error) console.log(error); 
@@ -26,8 +33,8 @@ const Chat = ({isLogged}) => {
         <>
             {loading ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
                 <>
-                <ChatList chatID={data.get_all_user_chats.chatID} isLogged={isLogged}/>
-                {chat && <ChatMsgBox chat={chat} key={chat?.chatID}/>}
+                <ChatList isLogged={isLogged}/>
+                {chat && (isGroupChat ? <GroupChatMsgBox chat={chat}/> : <ChatMsgBox chat={chat}/>)}
                 </>
             }
         </>
@@ -43,3 +50,11 @@ const GET_CHATS = gql`
             chatID
         }
 }`
+
+const GET_GROUP_CHATS = gql`
+    query ($userID: Int!){
+        get_all_group_chats(userID: $userID){
+            groupChatId
+        }
+    }
+`

@@ -29,17 +29,34 @@ const ChatBar = ({chatID}) => {
                             }}
                         />
                     </Link>
-                    <Link to={'/profile/'+state?.username} style={{height:'50px'}} className='flex-h'>
-                        <Avatar size='50px' image={state?.profile_picture}/>
-                        <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
-                    </Link>
+                    
+                    {state?.isGroupChat 
+                    ?   <div style={{height:'50px'}} className='flex-h'>
+                            <Avatar size='50px' image={state?.group_image}/>
+                            <p style={{color:'white', marginLeft:'10px'}}>{state?.name}</p>
+                        </div>
+                    
+                    :   <Link to={'/profile/'+state?.username} style={{height:'50px'}} className='flex-h'>
+                            <Avatar size='50px' image={state?.profile_picture}/>
+                            <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
+                        </Link>}
                 </div>
-                <FontAwesomeIcon
-                    icon='ellipsis-v' 
-                    className="fp-options-btn"
-                    onClick={handleChatMenu}
-                    style={styles.menuBtn}
-                />
+                <span>
+                    <FontAwesomeIcon
+                        icon='phone'
+                        style={{...styles.menuBtn, marginRight:'30px'}}
+                    />
+                    <FontAwesomeIcon
+                        icon='video'
+                        style={{...styles.menuBtn, marginRight:'30px'}}
+                    />
+                    <FontAwesomeIcon
+                        icon='ellipsis-v' 
+                        className="fp-options-btn"
+                        onClick={handleChatMenu}
+                        style={{...styles.menuBtn, marginRight:'15px'}}
+                        />
+                </span>
                 {showMenu && <ChatMenu chatID={chatID}/>}
             </div>
         </>
@@ -50,9 +67,8 @@ export default memo(ChatBar)
 
 const styles = {
     menuBtn:{
-        fontSize:'25px',
+        fontSize:'20px',
         color:'white',
-        marginRight:'10px',
         cursor:'pointer'
     }
 }

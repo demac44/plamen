@@ -4,12 +4,12 @@ import Avatar from '../General components/Avatar'
 import UserLoader from '../General components/Loaders/UserLoader'
 
 
-const UserSearchBar = ({user}) => {
+const UserSearchBar = ({user, dropdownCallback}) => {
     
     if(!user) return <UserLoader/>
 
     return (
-        <Link exact to={'/profile/'+user.username} className='search-user-box'>
+        <Link to={'/profile/'+user.username} className='search-user-box' onClick={()=>dropdownCallback()}>
             <Avatar size='50px' image={user.profile_picture}/>
             <div style={{marginLeft:'15px'}}>
                 <p>{user.first_name+' '+user.last_name}</p>

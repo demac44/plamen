@@ -11,7 +11,7 @@ export const ChatType = new GraphQLObjectType({
         chatID: {type: GraphQLInt},
         user1_ID: {type: GraphQLInt},
         user2_ID: {type: GraphQLInt},
-        date_created: {type: GraphQLString}
+        date_created: {type: GraphQLString},
     })
 })
 
@@ -26,7 +26,10 @@ export const ChatMessagesType = new GraphQLObjectType({
         url: {type: GraphQLString},
         type: {type: GraphQLString},
         limit: {type: GraphQLInt},
-        offset: {type: GraphQLInt}
+        offset: {type: GraphQLInt},
+        groupChatId: {type: GraphQLInt},
+        username: {type: GraphQLString},
+        profile_picture:{type:GraphQLString}
     })
 })
 
@@ -54,5 +57,18 @@ export const MsgNotificationType = new GraphQLObjectType({
         sender_id: {type: GraphQLInt},
         receiver_id: {type: GraphQLInt},
         msgCount:{type:GraphQLInt}
+    })
+})
+
+export const GroupChatType = new GraphQLObjectType({
+    name:'GroupChat',
+    fields:()=>({
+        groupChatId: {type:GraphQLInt},
+        userID: {type:GraphQLInt},
+        date_created: {type: GraphQLString},
+        admin: {type: GraphQLInt},
+        name: {type:GraphQLString},
+        date_created: {type:GraphQLString},
+        group_image: {type:GraphQLString}
     })
 })

@@ -9,13 +9,12 @@ const ProfileFollowBtn = ({userID}) => {
     const [unfollow] = useMutation(UNFOLLOW)
     const [follow_notification] = useMutation(FOLLOW_NOTIFICATION)
 
-    const {loading, data} = useQuery(IF_FOLLOWING,{
+    const {loading, data, error} = useQuery(IF_FOLLOWING,{
         variables: {followerID: ls.userID, followedID: userID}
     })
     
     useEffect(()=>{ 
-        setIsFollowing(data?.ifFollowing) 
-        return
+        return setIsFollowing(data?.ifFollowing) 
     }, [data])
     
 
@@ -43,6 +42,8 @@ const ProfileFollowBtn = ({userID}) => {
             }
         }).then(()=>setIsFollowing(false))
     }
+
+    if(error) throw error
     return (
         <div className='profile-top-box-buttons btn'
             onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>

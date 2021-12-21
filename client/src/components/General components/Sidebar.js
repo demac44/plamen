@@ -8,7 +8,7 @@ const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="ln-list">
-                <NavLink exact to="/feed" activeClassName='nav-active'>
+                <NavLink exact to="/" activeClassName='nav-active'>
                     <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
                     <p>Feed</p>
                 </NavLink>

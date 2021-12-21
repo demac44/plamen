@@ -39,14 +39,14 @@ const Profile = ({isLogged}) => {
     })
     
     useEffect(()=>{
+        setIsLoading(true)
         if(username===ls.username) {
             setMyProfile(true)
-            setIsLoading(false)
         } else {
             setMyProfile(false)
-            setIsLoading(false)
         }
         window.scrollTo(0,0)
+        setIsLoading(false)
         return null
     }, [username, ls.username, refetch, history, myprofile])
 
@@ -83,7 +83,7 @@ const Profile = ({isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-profile'>
-                   {loading ? <ProfileBoxLoader/> 
+                   {(loading || isLoading) ? <ProfileBoxLoader/> 
                             : <ProfileTopBox 
                                 userID={data.get_user.userID} 
                                 myprofile={myprofile} 
@@ -100,8 +100,12 @@ const Profile = ({isLogged}) => {
                         </>}
                     </div>
                     <div className='container-right' style={{width:'35%', paddingTop:'10px', display:'block'}}>
-                        <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
-                        <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                        {(loading || isLoading) ? '' :
+                        <>
+                            <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                            <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                        </>
+                        }
                     </div>
                 </div>
             </div>

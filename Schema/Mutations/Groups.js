@@ -17,12 +17,12 @@ export const CREATE_GROUP = {
     },
     async resolve(_, args) {
         const {group_name, group_creator_id, closed, group_description, group_tags} = args
-        const sql = `INSERT INTO groups (groupID, group_name, group_creator_id, date_created, closed) 
+        const sql = `INSERT INTO communities (groupID, group_name, group_creator_id, date_created, closed) 
                     VALUES (null, "${group_name}", ${group_creator_id}, null, ${closed})`
         const res = await connection.promise().query(sql).then(res=>{return res[0]})
-        const sql2 = `INSERT INTO group_info (groupID, group_description, group_tags)
+        const sql2 = `INSERT INTO community_info (groupID, group_description, group_tags)
                         VALUES (${res.insertId}, "${group_description}", "${group_tags}")`
-        const sql3 = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
+        const sql3 = `INSERT INTO community_users (groupID, userID, roleID, date_joined)
                         VALUES (${res.insertId}, ${group_creator_id}, 1, null)`
         connection.query(sql2)
         connection.query(sql3)
@@ -41,7 +41,7 @@ export const CREATE_GROUP_POST = {
     },
     resolve (_, args){
         const {userID, post_text, url, groupID, type} = args
-        const sql = `INSERT INTO group_posts (postID, groupID, userID, post_text, date_posted, url, type)
+        const sql = `INSERT INTO community_posts (postID, groupID, userID, post_text, date_posted, url, type)
                     VALUES (null, ${groupID}, ${userID}, "${post_text}", null, "${url}", "${type}")`
         connection.query(sql)
         return args
@@ -54,7 +54,7 @@ export const DELETE_GROUP_POST = {
     },
     resolve(_, args){
         const {postID} = args
-        const sql = `DELETE FROM group_posts WHERE postID=${postID}`
+        const sql = `DELETE FROM community_posts WHERE postID=${postID}`
         connection.query(sql)
         return args
     } 
@@ -69,7 +69,7 @@ export const ADD_GP_COMMENT = {
     },
     resolve(_, args) {
         const {userID, postID, comment_text} = args
-        const sql = `INSERT INTO group_posts_comments (commentID ,postID, userID, comment_text, date_commented)
+        const sql = `INSERT INTO community_posts_comments (commentID ,postID, userID, comment_text, date_commented)
                     VALUES (null, ${postID} ,${userID}, "${comment_text}", null)`
         connection.query(sql)
         return args
@@ -84,7 +84,7 @@ export const REMOVE_GP_COMMENT = {
     },
     resolve(_, args){
         const {commentID} = args
-        const sql = `DELETE FROM group_posts_comments WHERE commentID=${commentID}`
+        const sql = `DELETE FROM community_posts_comments WHERE commentID=${commentID}`
         connection.query(sql)
         return args
     } 
@@ -98,7 +98,7 @@ export const LIKE_GP_POST = {
     },
     resolve(_, args) {
         const {postID, userID} = args
-        const sql = `INSERT INTO group_posts_likes (userID, postID) 
+        const sql = `INSERT INTO community_posts_likes (userID, postID) 
                     VALUES (${userID}, ${postID})`
         connection.query(sql)
         return args
@@ -113,7 +113,7 @@ export const REMOVE_GP_LIKE = {
     }, 
     resolve(_, args){
         const {postID, userID} = args
-        const sql = `DELETE FROM group_posts_likes WHERE postID=${postID} AND userID=${userID}`
+        const sql = `DELETE FROM community_posts_likes WHERE postID=${postID} AND userID=${userID}`
         connection.query(sql)
         return args
     }
@@ -128,7 +128,7 @@ export const SAVE_GP = {
     },
     resolve(_, args) {
         const {postID, userID, groupID} = args
-        const sql = `INSERT INTO group_posts_saved (userID, postID, groupID) 
+        const sql = `INSERT INTO community_posts_saved (userID, postID, groupID) 
                     VALUES (${userID}, ${postID}, ${groupID})`
         connection.query(sql)
         return args
@@ -143,7 +143,7 @@ export const REMOVE_SAVED_GP = {
     }, 
     resolve(_, args){
         const {postID, userID} = args
-        const sql = `DELETE FROM group_posts_saved WHERE postID=${postID} AND userID=${userID}`
+        const sql = `DELETE FROM community_posts_saved WHERE postID=${postID} AND userID=${userID}`
         connection.query(sql)
         return args
     }
@@ -157,7 +157,7 @@ export const JOIN_GROUP = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
+        const sql = `INSERT INTO community_members (groupID, userID, roleID, date_joined)
                     VALUES (${groupID}, ${userID}, 4, null)`
         connection.query(sql)
         return args
@@ -172,7 +172,7 @@ export const LEAVE_GROUP = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM group_users WHERE userID=${userID} AND groupID=${groupID}`
+        const sql = `DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`
         connection.query(sql)
         return args
     }
@@ -186,7 +186,7 @@ export const JOIN_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `INSERT INTO group_join_requests (userID, groupID)
+        const sql = `INSERT INTO community_join_requests (userID, groupID)
                      VALUES (${userID}, ${groupID})`
         connection.query(sql)
         return args
@@ -201,7 +201,7 @@ export const REMOVE_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
         connection.query(sql)
         return args
     }
@@ -216,7 +216,7 @@ export const ACCEPT_REQUEST = {
     resolve(_, args){
         const {userID, groupID} = args
         const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        const sql2 = `INSERT INTO group_users (groupID, userID, roleID, date_joined)
+        const sql2 = `INSERT INTO community_members (groupID, userID, roleID, date_joined)
                         VALUES (${groupID}, ${userID}, 4, null)`
         connection.query(sql)
         connection.query(sql2)
@@ -232,7 +232,7 @@ export const DENY_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
         connection.query(sql)
         return args
     }

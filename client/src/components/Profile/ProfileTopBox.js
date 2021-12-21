@@ -51,12 +51,12 @@ const ProfileInfoBox = ({userID, myprofile, postsLength}) => {
                     <Avatar size='170px' image={info?.user?.profile_picture}/>
                 </div>
                 {(!loading && !getUser.loading) && <ProfileInfo info={info}/>}
-                {(myprofile && !loading) ? <ProfileEditBtn/> : (
+                {!loading && (myprofile ? <ProfileEditBtn/> : (
                 <>
                     <ProfileFollowBtn userID={info?.user?.userID}/>
                     <SendMsgBtn userID={info?.user?.userID}/>
                 </>
-                )} 
+                ))} 
             </div>
             {(!loading && openStory) && <Story 
                 allData={{

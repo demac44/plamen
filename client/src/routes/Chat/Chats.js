@@ -6,14 +6,14 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 
 import '../../components/Chat/Chat.css'
  
-const ChatCont = ({isLogged}) => {
+const ChatCont = ({isLogged, isGroupChat}) => {
     return (
         <>
             {window.innerWidth > 991 && <Navbar isLogged={isLogged}/>}
             <AlternativeNavbar chat={true}/>
             <div className='wrapper'>
                 <div className='container-chat'>
-                    <Chat isLogged={isLogged}/>
+                    <Chat isLogged={isLogged} isGroupChat={isGroupChat}/>
                 </div>
             </div>
         </>

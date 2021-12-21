@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Logo = () => {
     return (
-        <Link to='/feed' className='logo'>
+        <Link to='/' className='logo'>
             <h1>SoMeApp<span>.com</span></h1>
         </Link>
     )

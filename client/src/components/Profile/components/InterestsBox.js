@@ -49,7 +49,7 @@ const styles = {
 }
 
 const USER_INFO = gql`
-    query ($userID: Int!){
+    query ($userID: Int){
         get_user_info (userID: $userID){
             interests
         }

@@ -19,11 +19,11 @@ import('@fortawesome/free-solid-svg-icons').then(i=>{
     core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
       i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
       i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
-      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle)
+      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
+      i.faPhone)
     })
 })
 
-// const Feed = lazy(()=>import('./routes/Feed/Feed'))
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const Groups = lazy(()=>import('./routes/Groups/Groups'))
 const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
@@ -67,14 +67,14 @@ function App() {
       <>
         {(loading) ? <MainLoader/> :
           <Switch>
-            <Route exact path='/feed'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+            <Route exact path='/'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             <Route exact path='/profile/:username'>{isLogged ? <Profile isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             <Suspense fallback={<MainLoader/>}>
-              <Route exact path='/'></Route>
               <Route exact path='/saved'>{isLogged ? <Saved isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/search/:query'>{isLogged ? <Search isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chat/:chatid'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/chat/group/:chatid'>{isLogged ? <Chats isLogged={isLogged} isGroupChat={true}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/post/:postid'><SinglePost isLogged={isLogged}/></Route>
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
