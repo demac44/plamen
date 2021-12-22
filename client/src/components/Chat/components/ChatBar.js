@@ -24,7 +24,7 @@ const ChatBar = ({chatID}) => {
                             style={{
                                 marginRight:'15px',
                                 marginLeft:'5px',
-                                fontSize:'25px',
+                                fontSize:'20px',
                                 color:'white'
                             }}
                         />
@@ -32,7 +32,7 @@ const ChatBar = ({chatID}) => {
                     
                     {state?.isGroupChat 
                     ?   <div style={{height:'50px'}} className='flex-h'>
-                            <Avatar size='50px' image={state?.group_image}/>
+                            <Avatar size='45px' image={state?.group_image}/>
                             <p style={{color:'white', marginLeft:'10px'}}>{state?.name}</p>
                         </div>
                     

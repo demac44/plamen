@@ -46,6 +46,8 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                     send_msg({
                         variables: {
                             userID: ls.userID,
+                            username: ls.username,
+                            profile_picture: ls.profile_picture,
                             chatID: chatID, 
                             msg_text: msg_text,
                             type: media.type.slice(0,5),
@@ -69,6 +71,8 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
             send_msg({
                 variables: {
                     userID: ls.userID,
+                    username: ls.username,
+                    profile_picture: ls.profile_picture,
                     chatID: chatID, 
                     msg_text: msg_text,
                     type:'text',

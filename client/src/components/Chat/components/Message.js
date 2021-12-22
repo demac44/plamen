@@ -4,6 +4,8 @@ import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import OpenMedia from './OpenMedia'
 import SetTime from '../../General components/SetTime'
+import Avatar from '../../General components/Avatar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DELETE_MESSAGE = gql`
     mutation ($msgID: Int!){
@@ -40,14 +42,14 @@ const Message = ({msg}) => {
 
                 {(msg.userID===ls.userID && msgOptions && !deleted) && 
                     <>
-                        <i 
-                            className="fas fa-trash-alt"
+                        <FontAwesomeIcon
+                            icon='trash-alt' 
                             style={styles.deletebtn}
                             onClick={handleDelete}
-                        ></i>
+                        />
                     </>
                     }
-
+                {msg?.userID!==ls.userID && <Avatar size='35px' image={msg?.profile_picture}/>}
                 {msg.userID===ls.userID ?
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
@@ -69,9 +71,10 @@ const Message = ({msg}) => {
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
 
-                        <p>{msg.msg_text.slice(0,8)==='https://' ? 
-                            <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text
-                        }</p>
+                        {msg.msg_text.slice(0,8)==='https://' ? 
+                            <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : 
+                            <p><strong>{msg?.username+' '}</strong>{msg.msg_text}</p>
+                        }      
                         
                         <span><SetTime timestamp={msg.time_sent} fontSize='12px'/></span>
                 </div>}
@@ -89,7 +92,8 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'#aaa',
-        marginTop:'10px'
+        marginTop:'10px',
+        marginRight:'10px'
     },
     link:{
         color:'white',

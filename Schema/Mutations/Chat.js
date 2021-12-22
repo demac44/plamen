@@ -41,15 +41,27 @@ export const SEND_MESSAGE = {
         userID: {type: GraphQLInt},
         msg_text: {type: GraphQLString},
         url: {type: GraphQLString},
-        type: {type:GraphQLString}
+        type: {type:GraphQLString},
+        username: {type: GraphQLString},
+        profile_picture: {type: GraphQLString}
     },
     async resolve(_, args){
-        const {chatID, userID, msg_text, url, type} = args
+        const {chatID, userID, msg_text, url, type, username, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url, type)
                      VALUES (null, ${chatID}, ${userID}, null, "${encrypted}", "${url}", "${type}")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
-        pubsub.publish('NEW_MESSAGE', {newMessage: {chatID, msg_text, userID, url, type, msgID: msg.insertId, time_sent: new Date().getTime()}})  
+        pubsub.publish('NEW_MESSAGE', {newMessage: {
+                                        chatID, 
+                                        msg_text, 
+                                        userID, 
+                                        url, 
+                                        type, 
+                                        msgID: msg.insertId, 
+                                        time_sent: new Date().getTime(),
+                                        username,
+                                        profile_picture
+                                        }})
         return args
     }
 }
@@ -107,10 +119,11 @@ export const CREATE_GROUP_CHAT = {
     type: GroupChatType,
     args: {
         userID: {type: GraphQLInt},
+        name: {type: GraphQLString}
     },
     async resolve(_, args) {
-        const {userID} = args
-        const sql = `INSERT INTO group_chats (admin) VALUES (${userID})`
+        const {userID, name} = args
+        const sql = `INSERT INTO group_chats (admin, name) VALUES (${userID}, "${name}")`
         const result = await connection.promise().query(sql).then(res=>{
             const sql2 = `INSERT INTO group_chats_members (groupChatId, userID, role) 
                             VALUES (${res[0].insertId}, ${userID}, "ADMIN")`

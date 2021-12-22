@@ -123,6 +123,8 @@ const GET_MESSAGES = gql`
             type
             url
             time_sent
+            username
+            profile_picture
         }
     }
 `
@@ -136,6 +138,8 @@ const NEW_MESSAGE = gql`
             url
             type
             time_sent
+            username
+            profile_picture
         }
     }
 `

@@ -17,7 +17,7 @@ import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
-import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES } from "./Queries/Chat.js";
+import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
@@ -63,6 +63,7 @@ const RootQuery = new GraphQLObjectType({
         get_group_chats: GET_GROUP_CHATS,
         get_all_group_chats: GET_ALL_GROUP_CHATS,
         get_group_messages: GET_GROUP_MESSAGES,
+        last_group_message: LAST_MESSAGE_GROUP,
         // stories
         get_stories: GET_STORIES,
         get_user_stories: GET_USER_STORIES,

@@ -78,7 +78,12 @@ export const GET_MESSAGES = {
     },
     async resolve(_, args) {
         const {chatID, limit, offset} = args
-        const sql = `SELECT * FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT ${limit} OFFSET ${offset}`  
+        const sql = `SELECT msgID, msg_text, time_sent, chatID, username, type, url, users.userID, profile_picture  
+                     FROM messages 
+                     JOIN users ON messages.userID=users.userID
+                     WHERE chatID=${chatID} 
+                     ORDER BY time_sent DESC 
+                     LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         await result.map(msg => {
             const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
@@ -197,23 +202,23 @@ export const GET_GROUP_MESSAGES = {
     }
 }
 
-// export const LAST_MESSAGE_GROUP = {
-//     type: ChatMessagesType,
-//     args:{
-//         chatID:{type:GraphQLInt}
-//     },
-//     async resolve(_, args){
-//         const {chatID} = args
-//         const sql = `SELECT msg_text, type, userID FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT 1`
-//         const result = await connection.promise().query(sql).then(res => {return res[0]})
-//         if(result[0]?.msg_text){
-//             const decrypted = CryptoJS.AES.decrypt(result[0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
-//             const res = {...result[0], msg_text: decrypted}
-//             return res
-//         }
-//     }
-// }
- 
+export const LAST_MESSAGE_GROUP = {
+    type: ChatMessagesType,
+    args:{
+        groupChatId:{type:GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupChatId} = args
+        const sql = `SELECT msg_text, type, userID FROM group_chats_messages WHERE groupChatId=${groupChatId} ORDER BY time_sent DESC LIMIT 1`
+        const result = await connection.promise().query(sql).then(res => {return res[0]})
+        if(result[0]?.msg_text){
+            const decrypted = CryptoJS.AES.decrypt(result[0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+            const res = {...result[0], msg_text: decrypted}
+            return res
+        }
+    }
+}
+
 
 // export const GET_CHAT = {
 //     type:ChatType,

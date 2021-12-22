@@ -1,28 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import {gql} from 'graphql-tag'
-import {useMutation} from 'react-apollo'
+import CreateGroupChatBox from './Group chat/CreateGroupChatBox'
 
 const ChatsOptions = () => {
-    const ls = JSON.parse(localStorage.getItem('user'))
-    const [create_group_chat] = useMutation(CREATE_GROUP_CHAT)
+    const [nameBox, setNameBox] = useState(false)
 
-    const handleCreateChat = () => {
-        create_group_chat({
-            variables:{
-                userID: ls.userID
-            }
-        }).then((res)=>console.log(res))
-    }
 
     return (
-        <div className='chats-options flex-h'>
-            <span style={styles.newChat} className='flex-ctr' onClick={handleCreateChat}>
-                <FontAwesomeIcon icon='plus'/>
-            </span>
-            <FontAwesomeIcon icon='ellipsis-v' style={styles.opt}/>
+        <div className='chats-options flex-col'>
+            <div className='chats-options-bar flex-h'>
+                <span style={styles.newChat} className='flex-ctr'>
+                    <FontAwesomeIcon
+                        style={{transform: nameBox ? 'rotate(45deg)' : 'rotate(0)', transition:'ease .3s'}} 
+                        icon='plus' 
+                        onClick={()=>setNameBox(!nameBox)}/>
+                </span>
+                <FontAwesomeIcon icon='ellipsis-v' style={styles.opt}/>
+            </div>
+            {nameBox && <CreateGroupChatBox/>}
         </div>
     )
 }
@@ -45,12 +42,3 @@ const styles = {
         color:'white',
     }
 }
-
-const CREATE_GROUP_CHAT = gql`
-    mutation ($userID: Int!){
-        create_group_chat (userID: $userID){
-            userID
-            groupChatId
-        }
-    }
-`

@@ -25,7 +25,6 @@ const ChatList = ({isLogged}) => {
                     <ChatListUser data={chat} key={chat.chatID}/>)
                 : <p style={styles.emptyInbox} className='flex-ctr'>Loading...</p>}
             {!loading && (data.get_chats.length === 0 && <p style={styles.emptyInbox} className='flex-ctr'>Empty inbox</p>)}
-            <br/>
             <p style={styles.title}>Group chats</p>
             {!loading && data?.get_group_chats?.map(gc => <ChatListGroup data={gc} key={gc.groupChatId}/>)}
         </div>
@@ -46,7 +45,10 @@ const styles = {
         padding:'5px',
         color:'white',
         textAlign:'center',
-        backgroundColor:'#1f1f1f'
+        border:'1px solid #2f2f2f',
+        borderRadius:'10px',
+        backgroundColor:'#1f1f1f',
+        margin:'10px 0 10px 0'
     }
 }
 
