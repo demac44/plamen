@@ -55,6 +55,7 @@ const GET_GROUP_CHATS = gql`
     query ($userID: Int!){
         get_all_group_chats(userID: $userID){
             groupChatId
+            admin
         }
     }
 `

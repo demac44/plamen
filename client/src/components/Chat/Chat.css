@@ -92,12 +92,12 @@
 }
 .msg-current-user{
     background-color:#00633d;
-    text-align: justify;
+    cursor: pointer;
 }
 .msg-other-user{
     background-color: whitesmoke;
     color: #1b1b1b;
-    text-align: justify;
+    cursor: pointer;
 }
 .chat-bar{
     position: relative;

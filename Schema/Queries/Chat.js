@@ -3,6 +3,7 @@ import connection from '../../middleware/db.js'
 import { ChatListType, ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
 import CryptoJS from 'crypto-js'
+import { UserType } from '../TypeDefs/Users.js';
 
 export const CHAT_EXISTS = {
     type: ChatType,
@@ -39,13 +40,13 @@ export const GET_CHAT_LIST = {
     async resolve(_, args){
         const {user1_ID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MIN(time_sent)
         FROM users
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
         JOIN messages ON chats.chatID=messages.chatID
         WHERE disabled=false AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
         GROUP BY chats.chatID
-        ORDER BY time_sent ASC`
+        ORDER BY MAX(time_sent) DESC`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     }  
@@ -157,7 +158,10 @@ export const GET_ALL_GROUP_CHATS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT groupChatId FROM group_chats_members WHERE userID=${userID}`
+        const sql = `SELECT group_chats.groupChatId, admin 
+                     FROM group_chats_members 
+                     JOIN group_chats ON group_chats_members.groupChatId=group_chats.groupChatId
+                     WHERE userID=${userID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     } 
@@ -170,7 +174,8 @@ export const GET_GROUP_CHATS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT group_chats_members.groupChatId, name, group_image FROM group_chats_members
+        const sql = `SELECT group_chats_members.groupChatId, name, group_image 
+                     FROM group_chats_members
                      JOIN group_chats ON group_chats_members.groupChatId=group_chats.groupChatId
                      WHERE userID=${userID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
@@ -187,7 +192,7 @@ export const GET_GROUP_MESSAGES = {
     },
     async resolve(_, args) {
         const {groupChatId, limit, offset} = args
-        const sql = `SELECT msg_text, time_sent, groupChatId, username, type, url, users.userID, profile_picture 
+        const sql = `SELECT msg_text, time_sent, groupChatId, username, type, url, users.userID, profile_picture, msgID 
                      FROM group_chats_messages 
                      JOIN users ON group_chats_messages.userID=users.userID
                      WHERE groupChatId=${groupChatId}
@@ -219,6 +224,39 @@ export const LAST_MESSAGE_GROUP = {
     }
 }
 
+export const GET_GROUP_CHAT_MEMBERS = {
+    type: new GraphQLList(ChatListType),
+    args:{
+        groupChatId: {type:GraphQLInt},
+        limit: {type: GraphQLInt},
+        offset:{type:GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupChatId, limit, offset} = args
+        const sql = `SELECT first_name, last_name, users.userID, username, profile_picture
+                     FROM group_chats_members
+                     JOIN users ON group_chats_members.userID=users.userID
+                     WHERE groupChatId=${groupChatId}
+                     LIMIT ${limit} OFFSET ${offset}
+                     `
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}
+
+export const GET_GROUP_CHAT_MEMBER = {
+    type: ChatListType,
+    args:{
+        groupChatId: {type:GraphQLInt},
+        userID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupChatId, userID} = args
+        const sql = `SELECT * FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
+        return result
+    } 
+}
 
 // export const GET_CHAT = {
 //     type:ChatType,

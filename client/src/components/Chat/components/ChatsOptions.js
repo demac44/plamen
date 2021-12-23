@@ -11,11 +11,11 @@ const ChatsOptions = () => {
     return (
         <div className='chats-options flex-col'>
             <div className='chats-options-bar flex-h'>
-                <span style={styles.newChat} className='flex-ctr'>
+                <span style={styles.newChat} className='flex-ctr' onClick={()=>setNameBox(!nameBox)}>
                     <FontAwesomeIcon
                         style={{transform: nameBox ? 'rotate(45deg)' : 'rotate(0)', transition:'ease .3s'}} 
                         icon='plus' 
-                        onClick={()=>setNameBox(!nameBox)}/>
+                    />
                 </span>
                 <FontAwesomeIcon icon='ellipsis-v' style={styles.opt}/>
             </div>

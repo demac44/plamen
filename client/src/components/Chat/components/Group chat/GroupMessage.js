@@ -7,13 +7,13 @@ import SetTime from '../../../General components/SetTime'
 import Avatar from '../../../General components/Avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-// const DELETE_MESSAGE = gql`
-//     mutation ($msgID: Int!){
-//         delete_message(msgID:$msgID){
-//             msgID
-//         }
-//     }
-// `
+const DELETE_MESSAGE = gql`
+    mutation ($msgID: Int!){
+        delete_group_chat_message(msgID: $msgID){
+            groupChatId
+        }
+    }
+`
 
 
 const GroupMessage = ({msg}) => {
@@ -21,12 +21,15 @@ const GroupMessage = ({msg}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
-    // const [delete_msg] = useMutation(DELETE_MESSAGE, {
-    //     variables:{msgID: msg.msgID}
-    // })
+    const [delete_msg] = useMutation(DELETE_MESSAGE)
+
 
     const handleDelete = () => {
-        // delete_msg().then(()=>{setDeleted(true)})
+        delete_msg({
+            variables:{
+                msgID: msg.msgID
+            }
+        }).then(()=>{setDeleted(true)})
     }  
 
     const closeMediaCallback = useCallback(val => {
@@ -36,8 +39,6 @@ const GroupMessage = ({msg}) => {
     return (
         <>
             <div className={msg.userID===ls.userID ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
-                    onMouseOver={()=>setMsgOptions(true)}
-                    onMouseLeave={()=>setMsgOptions(false)}
                     onClick={()=>setMsgOptions(!msgOptions)}>
 
                 {(msg.userID===ls.userID && msgOptions && !deleted) && 
@@ -92,7 +93,8 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'#aaa',
-        marginTop:'10px'
+        marginTop:'10px',
+        marginRight:'10px'
     },
     link:{
         color:'white',

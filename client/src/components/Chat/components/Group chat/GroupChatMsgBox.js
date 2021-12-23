@@ -2,10 +2,9 @@ import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from '
 
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
-import ChatBar from '../ChatBar'
-import Message from '../Message'
 import SendGroupMsg from './SendGroupMsg'
 import GroupMessage from './GroupMessage'
+import GroupChatBar from './GroupChatBar'
 
 const GroupChatMsgBox = ({chat}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -84,7 +83,7 @@ const GroupChatMsgBox = ({chat}) => {
     return (
         <div className='chat-msg-box'> 
         <>
-            <ChatBar chatID={chat.groupChatId}/>
+            <GroupChatBar chatID={chat.groupChatId} admin={chat.admin}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
                 {!messages.loading && messages?.data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
@@ -126,6 +125,7 @@ const GET_GROUP_MESSAGES = gql`
             time_sent
             username
             profile_picture
+            msgID
         }
     }
 `

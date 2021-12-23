@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLInt} from "graphql"
+import { GraphQLString, GraphQLInt } from "graphql"
 import connection from "../../middleware/db.js"
 import { ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from "../TypeDefs/Chat.js"
 
@@ -125,8 +125,8 @@ export const CREATE_GROUP_CHAT = {
         const {userID, name} = args
         const sql = `INSERT INTO group_chats (admin, name) VALUES (${userID}, "${name}")`
         const result = await connection.promise().query(sql).then(res=>{
-            const sql2 = `INSERT INTO group_chats_members (groupChatId, userID, role) 
-                            VALUES (${res[0].insertId}, ${userID}, "ADMIN")`
+            const sql2 = `INSERT INTO group_chats_members (groupChatId, userID) 
+                            VALUES (${res[0].insertId}, ${userID})`
             connection.query(sql2)
             return res[0]
         })
@@ -138,15 +138,16 @@ export const CREATE_GROUP_CHAT = {
 export const DELETE_GROUP_CHAT = {
     type: GroupChatType,
     args:{
-        chatID:{type:GraphQLInt}
+        groupChatId:{type:GraphQLInt}
     },
     resolve(_ , args){
-        const {chatID} = args
-        const sql = `DELETE FROM group_chats WHERE groupChatId=${chatID}`    
+        const {groupChatId} = args
+        const sql = `DELETE FROM group_chats WHERE groupChatId=${groupChatId}`    
         connection.query(sql)
         return args
     }
 }
+
 export const SEND_GROUP_MESSAGE = {
     type: ChatMessagesType,
     args: {
@@ -163,9 +164,11 @@ export const SEND_GROUP_MESSAGE = {
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const sql = `INSERT INTO group_chats_messages (groupChatId, userID, msg_text, url, type)
                      VALUES (${groupChatId}, ${userID}, "${encrypted}", "${url}", "${type}")`
-        await connection.promise().query(sql).then(res=>{return res[0]})
+        const res = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_GROUP_MESSAGE', 
-                    {newGroupMessage: {groupChatId, 
+                    {newGroupMessage: {
+                                       msgID: res.insertId,
+                                       groupChatId, 
                                        username, 
                                        msg_text, 
                                        userID, 
@@ -178,18 +181,54 @@ export const SEND_GROUP_MESSAGE = {
 }
 
 
-// export const DELETE_MESSAGE = {
-//     type:ChatMessagesType,
-//     args: {
-//         msgID: {type:GraphQLInt}
-//     },
-//     resolve(_, args){
-//         const {msgID} = args
-//         const sql = `DELETE FROM messages WHERE msgID=${msgID}`
-//         connection.query(sql)
-//         return args
-//     }
-// }
+export const DELETE_GROUP_CHAT_MESSAGE = {
+    type:ChatMessagesType,
+    args: {
+        msgID: {type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {msgID} = args
+        const sql = `DELETE FROM group_chats_messages WHERE msgID=${msgID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const LEAVE_GROUP_CHAT_MEMBER = {
+    type: GroupChatType,
+    args:{
+        groupChatId:{type:GraphQLInt},
+        userID: {type: GraphQLInt},
+    },
+    resolve(_, args){
+        const {groupChatId, userID} = args
+        const sql = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
+        const sql2 = `SELECT `
+        connection.query(sql)
+        return args
+    }
+}
+export const LEAVE_GROUP_CHAT_ADMIN = {
+    type: GroupChatType,
+    args:{
+        groupChatId:{type:GraphQLInt},
+        userID: {type: GraphQLInt},
+    },
+    async resolve(_, args){
+        const {groupChatId, userID} = args
+        const removeUser = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
+        const sql = `UPDATE group_chats AS T1,
+                     (SELECT userID FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID<>${userID} LIMIT 1) AS T2
+                     SET T1.admin=T2.userID
+                     WHERE groupChatId=${groupChatId}`
+        await connection.promise().query(sql).then(()=>{
+            connection.query(removeUser)
+            return 0
+        })
+        return args
+    }
+}
+
 
 // export const MSG_NOTIFICATION = {
 //     type:MsgNotificationType,

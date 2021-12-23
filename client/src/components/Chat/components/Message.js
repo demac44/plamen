@@ -36,8 +36,6 @@ const Message = ({msg}) => {
     return (
         <>
             <div className={msg.userID===ls.userID ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
-                    onMouseOver={()=>setMsgOptions(true)}
-                    onMouseLeave={()=>setMsgOptions(false)}
                     onClick={()=>setMsgOptions(!msgOptions)}>
 
                 {(msg.userID===ls.userID && msgOptions && !deleted) && 

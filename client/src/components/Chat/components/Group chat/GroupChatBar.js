@@ -1,19 +1,19 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import ChatMenu from './ChatMenu'
-import Avatar from '../../General components/Avatar'
+import Avatar from '../../../General components/Avatar'
+import GroupChatMenu from './GroupChatMenu'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-const ChatBar = ({chatID}) => {
+
+const GroupChatBar = ({chatID, admin}) => {
     const [showMenu, setShowMenu] = useState(false)
     const {state} = useLocation()
 
 
-
-    const handleChatMenu = () => {
-        setShowMenu(!showMenu)
-    }
+    useEffect(()=>{
+        setShowMenu(false)
+    }, [chatID])
 
     return (
         <>
@@ -29,11 +29,12 @@ const ChatBar = ({chatID}) => {
                             }}
                         />
                     </Link>
-                    
-                    <Link to={'/profile/'+state?.username} style={{height:'50px'}} className='flex-h'>
-                        <Avatar size='45px' image={state?.profile_picture}/>
-                        <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
-                    </Link>
+
+                    <div style={{height:'50px'}} className='flex-h'>
+                        <Avatar size='45px' image={state?.group_image}/>
+                        <p style={{color:'white', marginLeft:'10px'}}>{state?.name}</p>
+                    </div>
+                
                 </div>
                 <span>
                     <FontAwesomeIcon
@@ -47,17 +48,19 @@ const ChatBar = ({chatID}) => {
                     <FontAwesomeIcon
                         icon='ellipsis-v' 
                         className="fp-options-btn"
-                        onClick={handleChatMenu}
+                        onClick={()=>setShowMenu(!showMenu)}
                         style={{...styles.menuBtn, marginRight:'15px'}}
                         />
                 </span>
-                {showMenu && <ChatMenu chatID={chatID}/>}
+                {showMenu && <GroupChatMenu chatID={chatID} admin={admin}/>}
             </div>
         </>
     )
 }
 
-export default memo(ChatBar)
+export default memo(GroupChatBar)
+
+
 
 const styles = {
     menuBtn:{
