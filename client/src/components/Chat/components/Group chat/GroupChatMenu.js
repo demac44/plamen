@@ -8,12 +8,18 @@ import UserBox from '../../../General components/Users list/UserBox'
 const GroupChatMenu = ({chatID, admin}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [chatMedia, setChatMedia] = useState(false)
+    const [addUserValue, setAddUserValue] = useState('')
+    const [addedMsg, setAddedMsg] = useState(null)
+    const [error, setError] = useState(null)
+
     const [delete_chat] = useMutation(DELETE_CHAT)
     const [leave_chat_member] = useMutation(LEAVE_CHAT_MEMBER)
     const [leave_chat_admin] = useMutation(LEAVE_CHAT_ADMIN)
+    const [add_user] = useMutation(ADD_USER)
+
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [confirmLeave, setConfirmLeave] = useState(false)
-    const {data, loading} = useQuery(GET_MEMBERS, {
+    const {data, loading, refetch} = useQuery(GET_MEMBERS, {
         variables:{
             gcId: chatID,
             limit:10,
@@ -58,21 +64,79 @@ const GroupChatMenu = ({chatID, admin}) => {
         }
     }
 
+    const checkIfMember = (username) => {
+        const userFound = data?.get_group_chat_members?.filter(user=>{
+            return user.username===username
+        })
+        if(userFound.length>0) return true
+        else return false
+    }
+
+    const handleAddUser = () => {
+        setAddedMsg(null)
+        setError(null)
+
+        if(checkIfMember(addUserValue)){
+            return setError('User is already a member!')
+        } else {
+            add_user({
+                variables:{
+                    gcId: chatID,
+                    username: addUserValue
+                }
+            }).then(res=>{
+                console.log(res.data.add_group_chat_user.error);
+                if(res?.data?.add_group_chat_user?.error) {
+                    setError(res?.data?.add_group_chat_user?.error)
+                    setAddedMsg(null)
+                    return 
+                } else {
+                    setError(null)
+                    setAddedMsg('User added!')
+                    setAddUserValue('')
+                    refetch()
+                    return 
+                }
+            })
+        }
+    }
+
     return (
         <>
             <div className='chat-menu'>
-                <ul>
+                <ul className='flex-col-ac'>
                     <span style={styles.membersBox} className='flex-col-ctr'>
-                        <p>Chat members</p>
+                        <p style={{marginBottom:'5px'}}>Chat members</p>
                         {!loading && data?.get_group_chat_members?.map(member => <UserBox user={member} key={member.userID}/>)}
                     </span>
+
+                    {ls.userID===admin && 
+                        <div style={{width:'95%'}} className='flex-col-ctr'>
+                            <p style={{color:'white', marginTop:'15px'}}>Add users</p>
+                            <input 
+                                className='input' 
+                                style={styles.input} 
+                                type='text' 
+                                placeholder='Enter username'
+                                value={addUserValue}
+                                onChange={(e)=>{setAddUserValue(e.target.value);setError(null);setAddedMsg(null)}}
+                            />
+                            {error && <p style={styles.errorMsg}>{error}</p>}
+                            {addedMsg && <p style={styles.addedMsg}>{addedMsg}</p>}
+                            {addUserValue.length>0 && <button 
+                                                        style={styles.addBtn} 
+                                                        className='btn'
+                                                        onClick={handleAddUser}
+                                                    >ADD</button>}
+                        </div>
+                    }
 
                     <li onClick={()=>setChatMedia(true)} style={{marginTop:'15px'}}>See chat media</li>
 
                     <li
                         style={{color:'#940a00'}}
                         onClick={()=>setConfirmLeave(!confirmLeave)}
-                    >LEAVE GROUP
+                    >LEAVE CHAT
                     </li>
 
                     {confirmLeave && <div style={styles.confirmBox} className='flex-col-ctr'>
@@ -109,7 +173,7 @@ const styles = {
     confirmBox:{
         marginTop:'15px',
         padding:'10px',
-        textAlign:'center'
+        textAlign:'center',
     },
     btnsBox:{
         marginTop:'10px'
@@ -119,7 +183,33 @@ const styles = {
         padding:'5px 10px'
     },
     membersBox:{
-        color:'white'
+        color:'white',
+        width:'100%'
+    },
+    input:{
+        height:'35px',
+        marginTop:'5px'
+    },
+    addBtn:{
+        padding:'5px 20px',
+        marginTop:'10px',
+        width:'100px'
+    },
+    errorMsg:{
+        padding:'5px 20px',
+        backgroundColor:'#ff5050',
+        color:'white',
+        borderRadius:'10px',
+        fontSize:'14px',
+        marginTop:'5px'
+    },
+    addedMsg:{
+        padding:'5px 20px',
+        backgroundColor:'#006b47',
+        color:'white',
+        borderRadius:'10px',
+        fontSize:'14px',
+        marginTop:'5px'
     }
 }
 
@@ -153,6 +243,14 @@ const LEAVE_CHAT_ADMIN = gql`
     mutation($userID: Int!, $gcId: Int!){
         leave_group_chat_admin(userID: $userID, groupChatId: $gcId){
             groupChatId
+        }
+    }
+`
+
+const ADD_USER = gql`
+    mutation ($username: String!, $gcId: Int!){
+        add_group_chat_user(username:$username, groupChatId: $gcId){
+            error
         }
     }
 `

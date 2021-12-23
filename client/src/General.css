@@ -32,12 +32,6 @@ li{
     display: flex;
     flex-direction: column;
 }
-.flex-col-ctr{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 .flex-sb{
     display: flex;
     align-items: center;
@@ -48,10 +42,21 @@ li{
     align-items: center;
     justify-content: space-around;
 }
+.flex-col-ctr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .flex-col-sb{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
+.flex-col-ac{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
 }
 .btn{
     text-align: center;
@@ -68,7 +73,6 @@ li{
     border-radius: 30px;
     outline: none;
     transition: ease .1s;
-    margin: 5px;
 }
 .wh-100{
     width: 100%;

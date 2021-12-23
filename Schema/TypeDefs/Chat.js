@@ -49,6 +49,7 @@ export const ChatListType = new GraphQLObjectType({
         groupChatId:{type:GraphQLInt},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
+        error: {type: GraphQLString}
     })
 })
 

@@ -22,7 +22,6 @@ const CHAT_EXISTS = gql`
 const ChatSearchBarUser = ({user}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [create_chat] = useMutation(CREATE_CHAT)
-    console.log(user);
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:user.userID}})  
 
     

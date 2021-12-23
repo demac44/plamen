@@ -1,6 +1,6 @@
 import { GraphQLString, GraphQLInt } from "graphql"
 import connection from "../../middleware/db.js"
-import { ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from "../TypeDefs/Chat.js"
+import { ChatMessagesType, ChatType, GroupChatType, MsgNotificationType, ChatListType } from "../TypeDefs/Chat.js"
 
 import { pubsub } from '../../server.js'
 
@@ -229,6 +229,33 @@ export const LEAVE_GROUP_CHAT_ADMIN = {
     }
 }
 
+let error = null;
+
+export const ADD_GROUP_CHAT_USER = {
+    type: ChatListType,
+    args:{
+        groupChatId:{type:GraphQLInt},
+        username: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        error = null
+        const {groupChatId, username} = args
+        const sql = `SELECT userID FROM users WHERE username="${username}"`
+        await connection.promise().query(sql).then(res=>{
+            if(!res[0][0]?.userID) {
+                error = 'User not found!'
+                return
+            } else {
+                const addUser = `INSERT INTO group_chats_members (groupChatId, userID)
+                                    VALUES (${groupChatId}, ${res[0][0].userID})`
+                connection.query(addUser)
+                error=null
+                return
+            }
+        })
+        return {error: error}
+    }
+}
 
 // export const MSG_NOTIFICATION = {
 //     type:MsgNotificationType,

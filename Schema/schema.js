@@ -5,7 +5,7 @@ import {
 
 import { pubsub } from "../server.js";
 
-import { CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, DELETE_MESSAGE, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, SEEN, SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
+import { ADD_GROUP_CHAT_USER, CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, DELETE_MESSAGE, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, SEEN, SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
@@ -132,6 +132,7 @@ const RootMutation = new GraphQLObjectType({
         leave_group_chat_member: LEAVE_GROUP_CHAT_MEMBER,
         leave_group_chat_admin: LEAVE_GROUP_CHAT_ADMIN,
         delete_group_chat_message: DELETE_GROUP_CHAT_MESSAGE,
+        add_group_chat_user: ADD_GROUP_CHAT_USER,
         // notifications
         like_notification: LIKE_NOTIFICATION,
         comment_notification: COMM_NOTIFICATION,
