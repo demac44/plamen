@@ -120,6 +120,7 @@
 .chat-menu ul{
     width: 100%;
     height: 100%;
+    padding: 10px;
 }
 .chat-menu li{
     width: 100%;
@@ -127,6 +128,9 @@
     padding: 10px;
     color: white;
     cursor: pointer;
+    border: 1px solid #2f2f2f;
+    margin-top: 10px;
+    border-radius: 10px;
 }
 .chat-menu li:hover{
     background-color: #3f3f3f;
@@ -185,7 +189,7 @@
 }
 .chats-options{
     width: 100%;
-    margin-top: 10px;
+    margin: 10px 0 5px 0;
 }
 .chats-options-bar{
     width:100%;

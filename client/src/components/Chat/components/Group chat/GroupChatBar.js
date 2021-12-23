@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
-import GroupChatMenu from './GroupChatMenu'
+import GroupChatMenu from './Group chat menu/GroupChatMenu'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
@@ -10,9 +10,16 @@ const GroupChatBar = ({chatID, admin}) => {
     const [showMenu, setShowMenu] = useState(false)
     const {state} = useLocation()
 
+    const addListeners = () => {
+        document.querySelector('.chat-messages').addEventListener('click', ()=>setShowMenu(false))
+        document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
+    }
+
 
     useEffect(()=>{
+        addListeners()
         setShowMenu(false)
+        return
     }, [chatID])
 
     return (

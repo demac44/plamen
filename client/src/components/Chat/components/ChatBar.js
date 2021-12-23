@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
@@ -9,11 +9,16 @@ const ChatBar = ({chatID}) => {
     const [showMenu, setShowMenu] = useState(false)
     const {state} = useLocation()
 
-
-
-    const handleChatMenu = () => {
-        setShowMenu(!showMenu)
+    const addListeners = () => {
+        document.querySelector('.chat-messages').addEventListener('click', ()=>setShowMenu(false))
+        document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
     }
+
+    useEffect(()=>{
+        addListeners()
+        setShowMenu(false)
+        return
+    }, [chatID])
 
     return (
         <>
@@ -47,7 +52,7 @@ const ChatBar = ({chatID}) => {
                     <FontAwesomeIcon
                         icon='ellipsis-v' 
                         className="fp-options-btn"
-                        onClick={handleChatMenu}
+                        onClick={()=>setShowMenu(!showMenu)}
                         style={{...styles.menuBtn, marginRight:'15px'}}
                         />
                 </span>

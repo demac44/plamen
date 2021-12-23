@@ -48,7 +48,7 @@ const styles = {
         border:'1px solid #2f2f2f',
         borderRadius:'10px',
         backgroundColor:'#1f1f1f',
-        margin:'10px 0 10px 0'
+        margin:'5px 0 5px 0'
     }
 }
 

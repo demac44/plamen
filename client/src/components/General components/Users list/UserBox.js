@@ -15,7 +15,7 @@ const UserBox = ({user}) => {
                     <p style={{fontSize:'12px'}}>@{user.username}</p>
                 </div>
             </NavLink>
-            {user.userID === ls.userID ? null : <FollowButton userID={user.userID}/>}
+            {(user && (user.userID !== ls.userID)) && <FollowButton userID={user.userID}/>}
         </div>
     )
 }

@@ -47,37 +47,37 @@ const GroupChatMsgBox = ({chat}) => {
     }, [chat, messages])        
     
     
-    // useEffect(()=>{
-    //     messages?.data?.get_messages?.length>=50 && setFetchBtn(true)
-    //     seen({
-    //         variables:{
-    //             cid: chat.chatID,
-    //             rid: ls.userID
-    //         }
-    //     })
-    // }, [messages?.data, chat, ls.userID, seen])
+    useEffect(()=>{
+        messages?.data?.get_group_messages?.length>=50 && setFetchBtn(true)
+        // seen({
+        //     variables:{
+        //         cid: chat.chatID,
+        //         rid: ls.userID
+        //     }
+        // })
+    }, [messages?.data, chat, ls.userID])
 
 
-    // const handleFetchMore = () => {
-    //     messages?.fetchMore({
-    //         variables:{
-    //             offset: messages?.data?.get_messages?.length,
-    //         },
-    //         updateQuery: (prev, { fetchMoreResult }) => {
-    //             if (!fetchMoreResult) return prev;
-    //             if(fetchMoreResult?.get_messages?.length < 1) {
-    //                 setFetchBtn(false)
-    //                 return
-    //             }
-    //             return Object.assign({}, prev, {
-    //               get_messages: [...messages?.data?.get_messages, ...fetchMoreResult?.get_messages]
-    //             });
-    //         }
-    //     })
-    //     return
-    // }
+    const handleFetchMore = () => {
+        messages?.fetchMore({
+            variables:{
+                offset: messages?.data?.get_group_messages?.length,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if(fetchMoreResult?.get_group_messages?.length < 1) {
+                    setFetchBtn(false)
+                    return
+                }
+                return Object.assign({}, prev, {
+                  get_group_messages: [...messages?.data?.get_group_messages, ...fetchMoreResult?.get_group_messages]
+                });
+            }
+        })
+        return
+    }
       
-    // if(messages.error) console.log(messages.error); 
+    if(messages.error) console.log(messages.error); 
 
 
     return (
@@ -87,7 +87,7 @@ const GroupChatMsgBox = ({chat}) => {
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
                 {!messages.loading && messages?.data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
-                {fetchBtn && <div style={styles.loadMore}>Load more</div>}
+                {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendGroupMsg chatID={chat.groupChatId} info={chat} loaderCallback={loaderCallback}/> 
         </>

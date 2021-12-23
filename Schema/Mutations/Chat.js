@@ -257,6 +257,20 @@ export const ADD_GROUP_CHAT_USER = {
     }
 }
 
+export const REMOVE_GROUP_CHAT_MEMBER = {
+    type: ChatListType,
+    args:{
+        groupChatId: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {groupChatId, userID} = args
+        const sql = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
 // export const MSG_NOTIFICATION = {
 //     type:MsgNotificationType,
 //     args:{
