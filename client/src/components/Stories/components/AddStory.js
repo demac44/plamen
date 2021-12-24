@@ -7,10 +7,12 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 const AddStory = ({refetch}) => {
     const [media, setMedia] = useState(null)
     const [previewMedia, setPreviewMedia] = useState('')
+    const [sizeError, setSizeError] = useState(false)
 
     const exitCallback = useCallback(()=>{
         setMedia(null)
         setPreviewMedia(null)
+        setSizeError(false)
     }, [setMedia, setPreviewMedia])
 
     return (
@@ -22,8 +24,15 @@ const AddStory = ({refetch}) => {
                 </div>
             </label>
             <input type='file' accept='video/*, image/*' id='upload-story' onChange={(e)=>{
-                    setMedia(e.target.files[0])
-                    setPreviewMedia(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
+                    setSizeError(false)
+                    if(e.target.files[0].size>15728640){
+                        setSizeError(true)
+                        setMedia(e.target.files[0])
+                        setPreviewMedia(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
+                    } else {
+                        setMedia(e.target.files[0])
+                        setPreviewMedia(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
+                    }
                 }} style={{display:'none'}}/>
         </div>
         {(previewMedia && media) && 
@@ -32,6 +41,7 @@ const AddStory = ({refetch}) => {
                 media={media} 
                 exitCallback={exitCallback}
                 refetch={refetch}
+                sizeError={sizeError}
             />}
         </>
     )
