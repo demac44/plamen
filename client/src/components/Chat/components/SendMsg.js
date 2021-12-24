@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
@@ -30,6 +30,11 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [preview, setPreview] = useState(null)
     const [msgText, setMsgText] = useState('')
     const [emojis, setEmojis] = useState(false)
+
+    useEffect(()=>{
+        document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
+        document.querySelector('.chat-bar').addEventListener('click', ()=>setEmojis(false))
+    }, [])
 
     const sendMessage = (e) => {
         e.preventDefault()
