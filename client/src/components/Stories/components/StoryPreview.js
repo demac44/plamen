@@ -42,7 +42,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch}) => {
     }
 
     return (
-        <div className='story-overlay flex-col-ctr'>
+        <div className='flex-col-ctr overlay' style={{backgroundColor: '#1b1b1b'}}>
             <div className='story-box'>
                 <StoryBar user={ls} closeStoryCallback={exitCallback}/>
                 {loading ? <div className='flex-ctr wh-100' style={{backgroundColor:'#2f2f2f'}}><div className='small-spinner'></div></div> :

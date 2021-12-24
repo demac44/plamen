@@ -23,7 +23,7 @@ const JoinBtn = ({info, user}) => {
         if(!loading && (data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID)){
             setState('REQUESTED')
         } else if(!loading && user) setState('LEAVE')
-    }, [data, info.groupID, ls.userID, user])
+    }, [data, info.groupID, ls.userID, user, loading])
 
     const handleJoin = () => {
         join_group({

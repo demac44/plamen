@@ -17,15 +17,15 @@ const Chat = ({isLogged, isGroupChat}) => {
 
     useEffect(()=>{
         if(isGroupChat){
-            data?.get_all_group_chats?.map(chat => {
-                if(chat.groupChatId===parseInt(chatid)) return setChat(chat)
+            data?.get_all_group_chats?.forEach(c => {
+                if(c.groupChatId===parseInt(chatid)) return setChat(c)
             })
         } else {
-            data?.get_all_user_chats?.map(chat => {
-                if(chat.chatID===parseInt(chatid)) return setChat(chat)
+            data?.get_all_user_chats?.forEach(c => {
+                if(c.chatID===parseInt(chatid)) return setChat(c)
             })
         }
-    }, [data, chatid])
+    }, [data, chatid, isGroupChat])
   
     if(error) console.log(error); 
 
@@ -48,6 +48,7 @@ const GET_CHATS = gql`
     query ($userID: Int!){
         get_all_user_chats(user1_ID: $userID){
             chatID
+            userID
         }
 }`
 

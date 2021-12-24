@@ -10,7 +10,6 @@ import CreatePost from '../../components/Post/Create post/CreatePost'
 import Stories from '../../components/Stories/Stories'
 import Sidebar from '../../components/General components/Sidebar'
 
-import FeedLoader from '../../components/General components/Loaders/FeedLoader'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'

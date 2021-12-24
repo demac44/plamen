@@ -17,15 +17,12 @@ const SideInfoBox = ({myprofile, userID}) => {
         }
     })
 
-    const setInfo = () => {
+    
+    useEffect(()=>{        
         setBirthDate(calcBirthDate(data?.get_user_info?.bDate))
         setDateJoined(calcDateJoined(data?.get_user_info?.date_joined))
         setAge(calculateAge(data?.get_user_info?.bDate))
         return
-    }
-
-    useEffect(()=>{
-        return setInfo()
     }, [data])
 
     return (

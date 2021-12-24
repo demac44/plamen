@@ -115,6 +115,30 @@
     border-top: 1px solid #3f3f3f !important;
     border-radius: 0 !important;
 }
+
+/* EMOJIS BOX */
+
+.emojis-box{
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    background-color: #1b1b1b;
+    max-height: 300px;
+    overflow: auto;
+    padding: 10px 0 10px 10px;
+    border: 10px solid #1f1f1f;
+}
+.emojis-sub-box{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+}
+.emojis-box p{
+    font-size: 25px;
+    cursor: pointer;
+}
+
 /* MEDIA QUERIES */
 
 
@@ -127,6 +151,14 @@
     }
     .users-list-box{
         width: 50%;
+    }
+    .emojis-sub-box{
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2px;
+    }
+    .emojis-box{
+        width: 100%;
+        left: 0;
     }
 }
 
@@ -146,6 +178,14 @@
         height: 100vh;
         border-radius: 0;
         padding: 5px 0;
+    }
+    .emojis-box{
+        width: 100%;
+        max-height: calc(100vh - 170px);
+    }
+    .emojis-sub-box{
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0;
     }
 }
 

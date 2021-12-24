@@ -31,7 +31,7 @@ const GroupChatMenu = ({chatID, admin}) => {
             return
         }
         return 0
-    }, [data])
+    }, [data, admin, loading])
 
     const closeAllMediaCallback = useCallback(()=>{
         setChatMedia(false)

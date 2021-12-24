@@ -17,7 +17,6 @@ import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import SideInfoBox from '../../components/Profile/components/SideInfoBox'
 import InterestsBox from '../../components/Profile/components/InterestsBox'
-import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import ProfileBoxLoader from '../../components/General components/Loaders/ProfileBoxLoader'
 

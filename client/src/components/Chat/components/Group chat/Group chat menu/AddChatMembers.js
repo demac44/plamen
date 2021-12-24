@@ -104,7 +104,8 @@ const styles = {
         border:'1px solid #2f2f2f', 
         padding:'0 5px 20px 5px',
         marginTop:'10px',
-        borderRadius:'10px'
+        borderRadius:'10px',
+        backgroundColor: '#1b1b1b'
     }
 }
 

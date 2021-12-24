@@ -21,7 +21,7 @@ const ChatListGroup = ({data}) => {
         setMsgData(info?.data)
         info?.refetch()
         return
-    }, [data, info?.data, newMsg?.data])
+    }, [data, info, newMsg?.data])
 
 
     return (
@@ -90,14 +90,14 @@ const NEW_GROUP_MESSAGE = gql`
     }
 `
 
-const styles = {
-    count:{
-        backgroundColor:'white',
-        color:'white',
-        padding:'6px',
-        position:'absolute',
-        top:'25px',
-        right:'20px',
-        borderRadius:'50%',
-    }
-}
+// const styles = {
+//     count:{
+//         backgroundColor:'white',
+//         color:'white',
+//         padding:'6px',
+//         position:'absolute',
+//         top:'25px',
+//         right:'20px',
+//         borderRadius:'50%',
+//     }
+// }

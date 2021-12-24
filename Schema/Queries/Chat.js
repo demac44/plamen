@@ -3,7 +3,6 @@ import connection from '../../middleware/db.js'
 import { ChatListType, ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
 import CryptoJS from 'crypto-js'
-import { UserType } from '../TypeDefs/Users.js';
 
 export const CHAT_EXISTS = {
     type: ChatType,
@@ -26,7 +25,7 @@ export const GET_ALL_USER_CHATS = {
     },
     async resolve(_, args){
         const {user1_ID} = args
-        const sql = `SELECT chatID FROM chats WHERE user1_ID=${user1_ID} OR user2_ID=${user1_ID}`
+        const sql = `SELECT chatID, IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID FROM chats WHERE user1_ID=${user1_ID} OR user2_ID=${user1_ID}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     } 

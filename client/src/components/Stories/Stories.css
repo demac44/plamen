@@ -22,9 +22,6 @@
 .story-head{
     border-radius: 50%;
 }
-.story-overlay{
-    background-color: #1b1b1b;
-}
 .story-box{
     position: relative;
     width: 30%;

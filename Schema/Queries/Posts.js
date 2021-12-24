@@ -15,11 +15,11 @@ export const GET_PROFILE_POSTS = {
     },   
     async resolve(_, args) {
         const {limit, offset, username} = args
-        const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type 
-                     FROM users AS u,posts AS p
+        const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID
+                     FROM posts
+                     JOIN users ON posts.userID IN (SELECT userID FROM users WHERE username="${username}")
                      WHERE username="${username}"
-                     AND u.userID=p.userID
-                     ORDER BY date_posted DESC 
+                     ORDER BY date_posted DESC  
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result

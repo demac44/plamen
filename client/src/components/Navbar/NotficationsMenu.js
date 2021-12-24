@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, memo } from 'react'
+import React, { memo, useEffect } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -42,15 +42,15 @@ const NOTIFICATION = gql`
 const NotficationsMenu = ({visible}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [clear_notifications] = useMutation(CLEAR_NOTIFICATIONS)
-    const {data, loading, refetch, subscribeToMore} = useQuery(GET_NOTIFICATIONS, {
+    const notifications = useQuery(GET_NOTIFICATIONS, {
         variables:{
             uid: ls.userID
         }
     })
-
-    useLayoutEffect(()=>{ 
+    
+    useEffect(()=>{ 
         const subscribeNewNotification = () => {
-            return subscribeToMore && subscribeToMore({
+            return notifications?.subscribeToMore({
                 document: NOTIFICATION,
                 updateQuery: (prev, { subscriptionData }) => {
                     if (!subscriptionData?.data) return prev;
@@ -64,7 +64,7 @@ const NotficationsMenu = ({visible}) => {
             }});
         }
         return subscribeNewNotification()
-    }, [subscribeToMore, ls.userID]) 
+    }, [notifications, ls.userID]) 
 
 
     const handleClear = () => {
@@ -72,14 +72,14 @@ const NotficationsMenu = ({visible}) => {
             variables:{
                 rid: ls.userID
             }
-        }).then(()=>refetch())
+        }).then(()=>notifications?.refetch())
     }
 
     return (
         <div className='notifications-container' style={{visibility:visible}}>
-                {loading ? <div className='flex-ctr' style={{height:'100px'}}><div className='small-spinner'></div></div> 
+                {notifications?.loading ? <div className='flex-ctr' style={{height:'100px'}}><div className='small-spinner'></div></div> 
                 : <>
-                    {(data.get_notifications.length) < 1 && <p style={{
+                    {(notifications?.data?.get_notifications?.length) < 1 && <p style={{
                         width:'100%',
                         textAlign:'center',
                         padding:'20px',
@@ -88,7 +88,7 @@ const NotficationsMenu = ({visible}) => {
                     
 
                     <span>
-                        {(data.get_notifications.length > 0) && 
+                        {(notifications?.data?.get_notifications?.length > 0) && 
                         <div
                             style={{
                                 width:'100%',
@@ -100,12 +100,12 @@ const NotficationsMenu = ({visible}) => {
                             }}
                             onClick={handleClear}
                             >Clear all</div>}
-                        {data?.get_notifications?.map(notif => 
+                        {notifications?.data?.get_notifications?.map(notif => 
                             <NotificationBox notif={notif} key={notif.Nid}/>
                             )}
                     </span>
 
-                    {data.get_notifications.length > 0 && <div 
+                    {notifications?.data?.get_notifications?.length > 0 && <div 
                         style={{
                             width:'100%',
                             padding:'3px',

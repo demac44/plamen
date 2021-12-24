@@ -15,7 +15,7 @@ const FollowButton = ({userID}) => {
     
     useEffect(()=>{ 
         !loading && setIsFollowing(data?.ifFollowing) 
-    }, [data])
+    }, [data, loading])
 
     const handleFollow = () => {
         follow({

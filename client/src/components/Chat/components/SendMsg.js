@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import EmojisBox from '../../General components/Emojis/EmojisBox'
 
 const SEND_MSG = gql`
     mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
@@ -27,12 +28,13 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState(null)
+    const [msgText, setMsgText] = useState('')
+    const [emojis, setEmojis] = useState(false)
 
     const sendMessage = (e) => {
         e.preventDefault()
-        let msg_text = e.target.msg_text.value
 
-        if(msg_text.trim().length < 1 && !media){
+        if(msgText.trim().length < 1 && !media){
             return
         } else if (media) {
             loaderCallback(true)
@@ -49,7 +51,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             username: ls.username,
                             profile_picture: ls.profile_picture,
                             chatID: chatID, 
-                            msg_text: msg_text,
+                            msg_text: msgText,
                             type: media.type.slice(0,5),
                             url: res.data.url
                         }
@@ -63,8 +65,8 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             })
                         }).then(()=>{
                             setMedia(null)
-                            e.target.msg_text.value = ''
                             loaderCallback(false)
+                            setMsgText('')
                         })
             })
         } else {
@@ -74,7 +76,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                     username: ls.username,
                     profile_picture: ls.profile_picture,
                     chatID: chatID, 
-                    msg_text: msg_text,
+                    msg_text: msgText,
                     type:'text',
                     url: 'null'
                 }
@@ -88,7 +90,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                         
                     })
                 }).then(()=>{
-                    e.target.msg_text.value = ''
+                    setMsgText('')
                 })
     }}
 
@@ -96,6 +98,10 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
         setPreview(null)
         setMedia(null)
     }
+
+    const emojiCB = useCallback(val => {
+        setMsgText(msgText+val)
+    })
 
     return (
         <>
@@ -111,8 +117,9 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                         onLoad={()=>URL.revokeObjectURL(preview)}></video>}
                     <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><FontAwesomeIcon icon='times'/></div>
                 </div>}
+            {emojis && <EmojisBox emojiCB={emojiCB}/>}
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
-
+                <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
                 <div>
                     <label htmlFor='file-input'>
                         <FontAwesomeIcon icon='images' style={styles.imgIcon}/>
@@ -123,7 +130,13 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
                     }}></input>
                 </div>
-                <textarea name='msg_text' className='msg_text' placeholder='Send message...'></textarea>
+                <textarea 
+                    name='msg_text' 
+                    value={msgText} 
+                    className='msg_text' 
+                    onChange={(e)=>setMsgText(e.target.value)} 
+                    placeholder='Send message...'
+                ></textarea>
                 <button type='submit' className="post-button btn">SEND</button>
             </form>
         </>
@@ -139,6 +152,12 @@ const styles = {
         color:'white',
         cursor:'pointer',
         marginRight:'10px'
+    },
+    iconsIcon: { 
+        fontSize:'25px',
+        color:'white',
+        cursor:'pointer',
+        marginRight:'15px'
     },
     imgPreviewBar:{
         width:'100%',

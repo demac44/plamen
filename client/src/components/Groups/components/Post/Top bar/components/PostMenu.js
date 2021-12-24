@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -10,8 +10,6 @@ const PostMenu = ({data, refetchPosts}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_GP)
     const [copied, setCopied] = useState(false)
-    const [reportMenu, setReportMenu] = useState(false)
-
 
     const handlePostDelete = () => {
         try {delete_post({
@@ -28,10 +26,6 @@ const PostMenu = ({data, refetchPosts}) => {
         }, 2000)
     }
 
-    const closeReportCallback = useCallback(() => {
-        setReportMenu(false)
-    }, [setReportMenu])
-
     return (
         <>
             <div className='post-options-menu'>
@@ -42,7 +36,7 @@ const PostMenu = ({data, refetchPosts}) => {
                         /> Delete
                     </li>}
 
-                    <li onClick={()=>setReportMenu(true)}><FontAwesomeIcon icon='flag'/> Report</li>
+                    <li><FontAwesomeIcon icon='flag'/> Report</li>
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}

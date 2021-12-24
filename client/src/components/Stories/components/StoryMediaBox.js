@@ -11,31 +11,38 @@ const StoryMediaBox = ({
     const [loadBar, setLoadBar] = useState(false)
     
     const nextStory = () => {
-        clearTimeout(timeout)
+        window.clearTimeout(timeout)
         if(storyData){
             if(index===(isProfile ? 0 : allDataLength-1) && innerIndex===storyData?.stories?.length-1){
+                window.clearTimeout(timeout)
                 closeStoryCallback()
                 return
             } else if (innerIndex===storyData?.stories?.length-1){
                 setIndexCallback(index+1)
                 setInnerIndexCallback(0)
-            } else  setInnerIndexCallback(innerIndex+1)
+                return
+            } else { setInnerIndexCallback(innerIndex+1); return}
         }
+        return
     } 
     
     const prevStory = () => {
-        clearTimeout(timeout)
+        window.clearTimeout(timeout)
         if(storyData){
             if(index===0 && innerIndex===0){
+                window.clearTimeout(timeout)
                 closeStoryCallback()
                 return
             } else if (index>0 && innerIndex===0){
                 setIndexCallback(index-1)
                 setInnerIndexCallback(0)
+                return
             } else if (index>=0 && innerIndex>0){
                 setInnerIndexCallback(innerIndex-1)
+                return
             }
         }
+        return
     }
 
     useEffect(()=>{
@@ -49,9 +56,7 @@ const StoryMediaBox = ({
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
                     setLoadBar(true)
-                    timeout = setTimeout(()=>{
-                        nextStory()
-                    }, 5000)
+                    setTimeout(()=> {nextStory()}, 5000)
                     return
                 }} alt=''/>)
             }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import UserBox from '../../../../General components/Users list/UserBox'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -8,13 +8,12 @@ const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [remove_member] = useMutation(REMOVE_MEMBER)
 
-    const handleRemoveMember = () => {
+    const handleRemoveMember = (userID) => {
         if(ls.userID===admin){
-
             remove_member({
                 variables:{
                     gcId: chatID,
-                    userID: ls.userID
+                    userID: userID
                 }
             }).then(()=>refetch())
         }
@@ -35,7 +34,7 @@ const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
                         <FontAwesomeIcon 
                             icon='times' 
                             style={styles.removeBtn}
-                            onClick={handleRemoveMember}
+                            onClick={()=>handleRemoveMember(member.userID)}
                     />}
                 </div>
             ))}
@@ -52,7 +51,11 @@ const styles = {
         width:'100%',
         paddingTop:'5px',
         border:'1px solid #2f2f2f', 
-        borderRadius:'10px'
+        borderRadius:'10px',
+        maxHeight:'50vh',
+        overflow:'auto',
+        backgroundColor: '#1b1b1b'
+
     },
     userBox:{
         width:'100%',
