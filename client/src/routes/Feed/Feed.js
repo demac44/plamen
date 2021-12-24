@@ -24,7 +24,7 @@ const Feed = ({isLogged}) => {
             limit:20,
             offset:0
         },
-        
+        pollInterval:1500000
     })
 
     useEffect(()=>{

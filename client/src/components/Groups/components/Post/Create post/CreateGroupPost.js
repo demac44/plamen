@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import VideoPreview from './components/VideoPreview'
+import ImagePreview from './components/ImagePreview'
+import UploadImage from './components/UploadImage'
+import UploadVideo from './components/UploadVideo'
 
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
@@ -16,11 +19,12 @@ const NEW_POST = gql`
 
 const CreatePost = ({refetch, groupid}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const [err, setErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
     const [loading, setLoading] = useState(false)
     const [preview, setPreview] = useState(null)
+    const [emptyErr, setEmptyErr] = useState('')
+    const [sizeError, setSizeError] = useState(false)
 
     const [new_post] = useMutation(NEW_POST)
 
@@ -29,14 +33,14 @@ const CreatePost = ({refetch, groupid}) => {
         let text = e.target.text.value
         
         if(text.trim().length < 1 && !image && !video){
-            setErr('2px solid #E82c30')
+            setEmptyErr('2px solid #E82c30')
             return
         } else {
             if (image){
+                setLoading(true)  
                 const data = new FormData()
                 data.append("file", image)
                 data.append("upload_preset", "z8oybloj")
-                setLoading(true)  
                 data.append("folder", "Group posts")
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
                 .then(res => {
@@ -59,11 +63,11 @@ const CreatePost = ({refetch, groupid}) => {
                     )
                 })
             } else if (video) {
+                setLoading(true) 
                 const data = new FormData()
                 data.append("file", video)
                 data.append("upload_preset", "z8oybloj")
                 data.append("folder", "Video posts")
-                setLoading(true) 
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/video/upload`, data)
                 .then(res => {
                     new_post({
@@ -102,95 +106,66 @@ const CreatePost = ({refetch, groupid}) => {
         }
     }
 
+    const imageCB = useCallback(val => {
+        setImage(val)
+    }, [])
+    const videoCB = useCallback(val => {
+        setVideo(val)
+    }, [])
+    const previewCB = useCallback(val => {
+        setPreview(val)
+    }, [])
+    const sizeErrorCB = useCallback(val => {
+        setSizeError(val)
+    }, [])
+
     return (
         <form className="create-post-box" onSubmit={handleSubmit}>
+            {sizeError && <p style={styles.sizeError}>File is too large! Max. size: 30MB</p>}
             {loading ? <div className='flex-ctr' style={{height:'100px'}}>
                             <div className='small-spinner'></div>
                         </div> :
                 <>
                     <textarea 
                         type="text" 
-                        name='text' 
-                        style={{...styles.textArea, border:err}} 
+                        id='text'
+                        style={{...styles.textArea, border:emptyErr}} 
                         placeholder="Add new post..."
-                    ></textarea>
+                        onFocus={()=>{setEmptyErr(false);setSizeError(false)}}
+                    />
 
                     {(video && preview) && 
-                    <div className='post-media-preview flex'>
-                        <video src={preview} 
-                            onLoad={()=>URL.revokeObjectURL(preview)}/>
-                        <div style={styles.removePreview} className='flex-ctr'>
-                            <FontAwesomeIcon
-                                color='white'
-                                icon='times'
-                                onClick={()=>{setVideo(null);setPreview(null)}}
-                            />
-                        </div>
-                    </div>}
-
-                    {(image && preview) &&
-                    <div className='post-media-preview flex'>
-                        <img src={preview} 
-                            onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
-                        <div style={styles.removePreview} className='flex-ctr'>
-                            <FontAwesomeIcon
-                                color='white'
-                                icon='times'
-                                onClick={()=>{setImage(null);setPreview(null)}}
-                            />
-                        </div>
-                    </div>}
-
+                        <VideoPreview 
+                                videoCB={imageCB} 
+                                previewCB={previewCB} 
+                                preview={preview}
+                        />}
+                    {(image && preview) && 
+                        <ImagePreview 
+                            imageCB={videoCB} 
+                            previewCB={previewCB} 
+                            preview={preview}
+                        />}
 
                     <div className="flex-sb" style={{marginTop:'10px'}}>
                         <div className='flex-ctr'>
-                            {/* upload image */}
-                            <>
-                                <label htmlFor='image_upload' className='flex-ctr'>
-                                    <FontAwesomeIcon icon='images' size='lg' color='white'/>
-                                    <p>Image</p>
-                                </label>
-                                <input 
-                                    type='file' 
-                                    id='image_upload' 
-                                    accept="image/*" 
-                                    style={{display:'none'}} 
-                                    onChange={(e)=>{
-                                        setVideo(null)
-                                        setImage(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                        }}
-                                />
-                            </>
-
-                            {/* upload video */}
-                            <>
-                                <label htmlFor='video_upload' className='flex-ctr'>
-                                    <FontAwesomeIcon 
-                                        icon='video' 
-                                        size='lg'
-                                        color='white' 
-                                        style={{marginLeft: "25px"}}
-                                    />
-                                    <p>Video</p>
-                                </label>
-                                <input 
-                                    type='file' 
-                                    id='video_upload' 
-                                    accept="video/*" 
-                                    style={{display:'none'}} 
-                                    onChange={(e)=>{
-                                        setImage(null)
-                                        setVideo(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                        }}
-                                />
-                            </>
+                            <UploadImage 
+                                imageCB={imageCB} 
+                                videoCB={videoCB} 
+                                previewCB={previewCB} 
+                                sizeErrorCB={sizeErrorCB}
+                            />
+                            <UploadVideo 
+                                imageCB={imageCB} 
+                                videoCB={videoCB} 
+                                previewCB={previewCB} 
+                                sizeErrorCB={sizeErrorCB}
+                            />
                         </div>
                         <button type='submit' className="post-button btn">POST</button>
                     </div>
                 </>}
-            </form>
+        </form>
     )
 }
 

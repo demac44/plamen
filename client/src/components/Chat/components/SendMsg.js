@@ -38,7 +38,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 
     const sendMessage = (e) => {
         e.preventDefault()
-
+        setEmojis(false)
         if(msgText.trim().length < 1 && !media){
             return
         } else if (media) {

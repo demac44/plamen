@@ -12,7 +12,7 @@ import UserSuggestionsBox from '../../components/General components/UserSuggesti
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Explore = ({isLogged}) => {
-    const {loading, data, error, refetch} = useQuery(RANDOM_POSTS)
+    const {loading, data, error, refetch} = useQuery(RANDOM_POSTS, {pollInterval:9000000})
 
     useEffect(()=>{
         window.scrollTo(0,0)

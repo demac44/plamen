@@ -11,7 +11,7 @@ const ChatList = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
 
     const {data, loading} = useQuery(GET_CHATS_LIST, {
-        variables:{userID: ls.userID},
+        variables:{userID: ls.userID}
     }) 
 
     return (
