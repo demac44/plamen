@@ -122,7 +122,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                         onLoad={()=>URL.revokeObjectURL(preview)}></video>}
                     <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><FontAwesomeIcon icon='times'/></div>
                 </div>}
-            {emojis && <EmojisBox emojiCB={emojiCB}/>}
+            <EmojisBox emojiCB={emojiCB} visible={emojis}/>
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
                 <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
                 <div>
