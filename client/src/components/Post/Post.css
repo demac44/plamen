@@ -103,6 +103,20 @@
 .create-post-box label{
     cursor: pointer;
 }
+
+.create-post-box .emojis-box{
+    visibility: visible !important;
+    padding: 5px !important;
+    max-height: 150px !important;
+}
+.create-post-box .emojis-sub-box{
+    grid-template-columns: repeat(12, 1fr);
+}
+.create-post-box .emojis-box p{
+    font-size: 20px;
+    cursor: pointer;
+}
+
 /* report post */
 
 .container-report{
@@ -133,6 +147,19 @@
 }
 
 
+@media screen and (max-width:1400px){
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(9, 1fr);
+        gap: 0 !important;
+    }
+}
+
+@media screen and (max-width:768px){
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(10, 1fr);
+        gap: 0 !important;
+    }
+}
 @media screen and (max-width:447px){
     .post{
         margin-top: 10px;
@@ -144,5 +171,8 @@
     }
     .comment{
         padding:5px;
+    }
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(6, 1fr);
     }
 }

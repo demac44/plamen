@@ -37,6 +37,7 @@ const LoginForm = ({popup}) => {
                     localStorage.setItem('token', res?.data.token)
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
                     localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
+                    localStorage.setItem('recent-emojis', JSON.stringify({emojis: []}))
                     undisable_account({
                         variables:{
                             userID: res?.data?.user?.userID

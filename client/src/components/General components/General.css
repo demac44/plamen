@@ -119,9 +119,6 @@
 /* EMOJIS BOX */
 
 .emojis-box{
-    position: absolute;
-    bottom: 50px;
-    left: 10px;
     background-color: #1b1b1b;
     max-height: 300px;
     overflow: auto;
@@ -131,7 +128,6 @@
 .emojis-sub-box{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
     gap: 5px;
 }
 .emojis-box p{
@@ -152,14 +148,6 @@
     .users-list-box{
         width: 50%;
     }
-    .emojis-sub-box{
-        grid-template-columns: repeat(12, 1fr);
-        gap: 2px;
-    }
-    .emojis-box{
-        width: 100%;
-        left: 0;
-    }
 }
 
 @media screen and (max-width:768px){
@@ -178,14 +166,6 @@
         height: 100vh;
         border-radius: 0;
         padding: 5px 0;
-    }
-    .emojis-box{
-        width: 100%;
-        max-height: calc(100vh - 170px);
-    }
-    .emojis-sub-box{
-        grid-template-columns: repeat(7, 1fr);
-        gap: 0;
     }
 }
 

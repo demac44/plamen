@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import EmojisBox from '../../General components/Emojis/EmojisBox'
+import MsgPreviewBox from './MsgPreviewBox'
 
 const SEND_MSG = gql`
     mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
@@ -30,6 +31,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [preview, setPreview] = useState(null)
     const [msgText, setMsgText] = useState('')
     const [emojis, setEmojis] = useState(false)
+    const [lengthErr, setLengthErr] = useState(false)
 
     useEffect(()=>{
         document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
@@ -40,6 +42,9 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
         e.preventDefault()
         setEmojis(false)
         if(msgText.trim().length < 1 && !media){
+            return
+        } else if (msgText.length > 5000){
+            setLengthErr(true)
             return
         } else if (media) {
             loaderCallback(true)
@@ -110,18 +115,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 
     return (
         <>
-            {(preview && media) && 
-                <div style={styles.imgPreviewBar}>
-
-                    {media.type.slice(0,5)==='image' &&
-                    <img style={styles.previewMedia} src={preview} 
-                        onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>}
-
-                    {media.type.slice(0,5)==='video' &&
-                        <video style={styles.previewMedia} src={preview}
-                        onLoad={()=>URL.revokeObjectURL(preview)}></video>}
-                    <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><FontAwesomeIcon icon='times'/></div>
-                </div>}
+            {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
             <EmojisBox emojiCB={emojiCB} visible={emojis}/>
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
                 <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>

@@ -8,6 +8,7 @@ import VideoPreview from './components/VideoPreview'
 import ImagePreview from './components/ImagePreview'
 import UploadImage from './components/UploadImage'
 import UploadVideo from './components/UploadVideo'
+import EmojisBox from '../../../../General components/Emojis/EmojisBox'
 
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
@@ -25,16 +26,20 @@ const CreatePost = ({refetch, groupid}) => {
     const [preview, setPreview] = useState(null)
     const [emptyErr, setEmptyErr] = useState('')
     const [sizeError, setSizeError] = useState(false)
+    const [lengthErr, setLengthErr] = useState(false)
+    const [postText, setPostText] = useState('')
 
     const [new_post] = useMutation(NEW_POST)
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        let text = e.target.text.value
         
-        if(text.trim().length < 1 && !image && !video){
+        if(postText.trim().length < 1 && !image && !video){
             setEmptyErr('2px solid #E82c30')
             return
+        } else if (postText.length > 5000) {
+            setLengthErr(true)
+        return
         } else {
             if (image){
                 setLoading(true)  
@@ -47,7 +52,7 @@ const CreatePost = ({refetch, groupid}) => {
                     new_post({
                         variables: {
                             userID: ls.userID,
-                            text: text,
+                            text: postText,
                             url: res.data.url,
                             type:'image',
                             groupID: parseInt(groupid)
@@ -73,7 +78,7 @@ const CreatePost = ({refetch, groupid}) => {
                     new_post({
                         variables: {
                             userID: ls.userID,
-                            text: text,
+                            text: postText,
                             url: res.data.url,
                             type:'video',
                             groupID: parseInt(groupid)
@@ -85,7 +90,7 @@ const CreatePost = ({refetch, groupid}) => {
                         refetch()
                         setLoading(false)
                         setPreview(null)
-                        e.target.text.value = ''
+                        setPostText('')
                     }
                     )
                 })
@@ -93,14 +98,14 @@ const CreatePost = ({refetch, groupid}) => {
                 new_post({
                     variables: {
                         userID: ls.userID,
-                        text: text,
+                        text: postText,
                         url: '',
                         type:'text',
                         groupID: parseInt(groupid)
                     }
                 }).then(()=>{
                     refetch()
-                    e.target.text.value = ''
+                    setPostText('')
                 })
             }
         }
@@ -118,10 +123,14 @@ const CreatePost = ({refetch, groupid}) => {
     const sizeErrorCB = useCallback(val => {
         setSizeError(val)
     }, [])
+    const emojiCB = useCallback(val => {
+        setPostText(postText+val)
+    })
 
     return (
         <form className="create-post-box" onSubmit={handleSubmit}>
             {sizeError && <p style={styles.sizeError}>File is too large! Max. size: 30MB</p>}
+            {lengthErr && <p style={styles.sizeError}>Post too long! Max. characters: 5000</p>}
             {loading ? <div className='flex-ctr' style={{height:'100px'}}>
                             <div className='small-spinner'></div>
                         </div> :
@@ -131,7 +140,9 @@ const CreatePost = ({refetch, groupid}) => {
                         id='text'
                         style={{...styles.textArea, border:emptyErr}} 
                         placeholder="Add new post..."
+                        value={postText}
                         onFocus={()=>{setEmptyErr(false);setSizeError(false)}}
+                        onChange={(e)=>setPostText(e.target.value)}
                     />
 
                     {(video && preview) && 
@@ -146,6 +157,8 @@ const CreatePost = ({refetch, groupid}) => {
                             previewCB={previewCB} 
                             preview={preview}
                         />}
+                    
+                    <EmojisBox visible={true} emojiCB={emojiCB}/>
 
                     <div className="flex-sb" style={{marginTop:'10px'}}>
                         <div className='flex-ctr'>

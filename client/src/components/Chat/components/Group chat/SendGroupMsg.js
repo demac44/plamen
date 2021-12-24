@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import EmojisBox from '../../../General components/Emojis/EmojisBox'
+import MsgPreviewBox from '../MsgPreviewBox'
 
 const SEND_MSG = gql`
     mutation ($groupChatId: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!, $username: String!){
@@ -113,19 +114,8 @@ const SendGroupMsg = ({chatID, loaderCallback, info}) => {
 
     return (
         <>
-            {(preview && media) && 
-                <div style={styles.imgPreviewBar}>
-
-                    {media.type.slice(0,5)==='image' &&
-                    <img style={styles.previewMedia} src={preview} 
-                        onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>}
-
-                    {media.type.slice(0,5)==='video' &&
-                        <video style={styles.previewMedia} src={preview}
-                        onLoad={()=>URL.revokeObjectURL(preview)}></video>}
-                    <div style={styles.clear} onClick={clearFiles} className='flex-ctr'><FontAwesomeIcon icon='times'/></div>
-                </div>}
-                {emojis && <EmojisBox emojiCB={emojiCB}/>}
+            {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
+            {emojis && <EmojisBox emojiCB={emojiCB} visible={emojis}/>}
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
                 <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
                 <div>
