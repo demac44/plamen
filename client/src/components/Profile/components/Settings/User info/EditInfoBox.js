@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import CountriesSelect from './CountriesSelect'
+
+import { cities } from '../../../../../Assets/cities'
+import CitiesSelect from './CitiesSelect'
 
 const EditInfoBox = ({data}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
     const [update_info] = useMutation(UPDATE_INFO)
+    const [country, setCountry] = useState(data.country)
+    const [city, setCity] = useState(data.city)
+
 
     const handleEditInfo = (e) => {
         e.preventDefault()
@@ -31,6 +38,14 @@ const EditInfoBox = ({data}) => {
         }).then(()=>setUpdated(true))
     }
 
+    const setCountryCB = useCallback(val => {
+        setCountry(val)
+    }, [setCountry]) 
+
+    const setCityCB = useCallback(val => {
+        setCity(val)
+    }, [setCity]) 
+
     return (
         <form style={styles.box} className='flex-col-ctr edit-user-info-box' onSubmit={handleEditInfo}>
             <p style={{padding:'10px', textAlign:'center'}}>Edit info</p>
@@ -39,12 +54,15 @@ const EditInfoBox = ({data}) => {
 
             <div className='flex-ctr'>
                 <h5>Country</h5>
-                <input type='text' className='input' id='country' placeholder='Add country' defaultValue={data.country}/>
-            </div>       
+                <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
+                <CountriesSelect setCountryCB={setCountryCB}/>     
+            </div>  
+
 
             <div className='flex-ctr'>
                 <h5>City</h5>
-                <input type='text' className='input' id='city' placeholder='Add city' defaultValue={data.city}/>
+                <input type='text' className='input' id='city' placeholder='Add city' value={city} readOnly={true}/>
+                <CitiesSelect country={country} setCityCB={setCityCB}/>
             </div>
 
             <div className='flex-ctr'>
