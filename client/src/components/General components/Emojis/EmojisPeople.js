@@ -1,7 +1,9 @@
 import React, {memo} from 'react'
 
+import { emPeople1, emPeople2, emPeople3, emPeople4, emPeople5, } from '../../../Assets/emojis';
+
 const EmojisPeople = ({emojiCB, setRecentEmojis}) => {
-    const emojis = e1+e2+e3+e4+e5
+    const emojis = emPeople1+emPeople2+emPeople3+emPeople4+emPeople5
     let i = 0;
 
     return (
@@ -14,13 +16,7 @@ const EmojisPeople = ({emojiCB, setRecentEmojis}) => {
     )
 }
 
-export default memo(EmojisPeople)
-
-const e1 = '😀 😃 😄 😁 😆 😅 😂 🤣 😇 😉 😊 🙂 🙃 😋 😌 😍 🥰 😘 😗 😙 🤥 😳 😞 😟 😠 😡 🤬 😔 😕 🙁 😬 🥺 😣 😖 😫 😩 🥱 😤 😮 😱 😨 😰 😚 🤪 😜' 
-const e2 = ' 😝 😛 🤑 😎 🤓 🧐 🤠 🥳 🤗 🤡 😏 😶 😐 😑 😒 🙄 🤨 🤔 🤫 🤭 😯 😦 😧 😢 😥 😪 🤤 😓 😭 🤩 😵 🥴 😲 🤯 🤐 😷 🤕 🤒 🤮 🤢 🤧 🥵 🥶 😴 💤' 
-const e3 = ' 😈 👿 👹 👺 💩 👻 💀 ☠ 👽 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🤲 🙌 👏 🙏 🤝 👍 👎 👊 ✊ 🤛 🤜 🤞 ✌ 🤘 🤟 👌 🤌 🤏 👈 👉 👆 👇 ☝ ✋ 🤚 🖐 🖖 👋 🤙 💪 🦾 🖕'
-const e4 = ' 💚 💙 💜 🤎 🖤 🤍 💔 ❣ 💕 💞 💓 💗 💖 💘 💝 ❤️ 💟 💃 🕺 👫 💏 👨 ❤ 🧡 💛' 
-const e5 = ' 🦿 🦶 👄 🦷 👅 👂 🦻 👃 👁 👀 🧠 🦴 👤 👥 🗣 👶 👧 🧒 👦 👩 🧑 👨 👵 🧓 👴 👲 👳 🧕 👼 👸 🤴 👰 🤵 🙇' 
+export default memo(EmojisPeople) 
 
 const styles = {
     title: {

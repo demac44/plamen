@@ -11,6 +11,7 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import UnblockUserBtn from './components/UnblockUserBtn'
 import BlockUserBtn from './components/BlockUserBtn'
+import ActivityStatusBar from './components/ActivityStatusBar'
 
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
@@ -54,7 +55,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 }}>
                     <Avatar size='170px' image={user?.profile_picture}/>
                 </div>
-                {!loading && <ProfileInfo info={info}/>}
+                {!loading && <ProfileInfo info={info} last_seen={user.last_seen} blocked={data?.if_user_blocked}/>}
 
                 {(!loading && !data?.if_user_blocked) && (myprofile ? <ProfileEditBtn/> : (
                 <>
@@ -68,6 +69,8 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 {!myprofile && <FontAwesomeIcon icon='ellipsis-v' style={styles.pfMenuBtn} onClick={()=>setBlockBtn(!blockBtn)}/>}
 
                 {blockBtn && <BlockUserBtn userID={user.userID}/>}
+                
+                {!data?.if_user_blocked && <ActivityStatusBar last_seen={user.last_seen}/>}
             </div>
             
             {(!loading && openStory) && <Story 
@@ -79,6 +82,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 isProfile={true}
                 closeStoryCallback={closeStoryCallback}
                 />}
+            
         </>
     )
 }

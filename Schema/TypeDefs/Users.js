@@ -20,6 +20,7 @@ export const UserType = new GraphQLObjectType({
         profile_picture: {type: GraphQLString},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
+        last_seen: {type:GraphQLString},
     })
 })
 

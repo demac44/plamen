@@ -44,7 +44,7 @@ export const GET_CHAT_LIST = {
     async resolve(_, args){
         const {user1_ID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MIN(time_sent)
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MIN(time_sent), last_seen
         FROM users
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
         JOIN messages ON chats.chatID=messages.chatID

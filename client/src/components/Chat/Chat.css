@@ -243,7 +243,14 @@
 .chat-msg-box .emojis-sub-box{
     grid-template-columns: repeat(8, 1fr);
 }
-
+.activity-status-chat{
+    align-items: flex-start;
+}
+.activity-status-chat div{
+    margin-left: 10px !important;
+    margin-top: 5px;
+    color: #aaa;
+}
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 991px){

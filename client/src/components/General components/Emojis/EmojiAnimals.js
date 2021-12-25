@@ -1,5 +1,7 @@
 import React, {memo} from 'react'
 
+import { emojisAnimals as emojis } from '../../../Assets/emojis';
+
 const EmojiFlags = ({emojiCB, setRecentEmojis}) => {
     let i = 0;
     return (
@@ -10,6 +12,3 @@ const EmojiFlags = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default memo(EmojiFlags)
-
-
-const emojis = '🐶 🐱 🐭 🐹 🐰 🐻 🧸 🐼 🐻 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙈 🙉 🙊 🐒 🦍 🦧 🐔 🐧 🐦 🐤 🐣 🐥 🐺 🦊 🦝 🐗 🐴 🦓 🦒 🦌 🦘 🦥 🦦 🦄 🐝 🐛 🦋 🐌 🐞 🐜 🦗 🕷 🕸 🦂 🦟 🦠 🐢 🐍 🦎 🐙 🦑 🦞 🦀 🦐 🦪 🐠 🐟 🐡 🐬 🦈 🐳 🐋 🐊 🐆 🐅 🐃 🐂 🐄 🐪 🐫 🦙 🐘 🦏 🦛 🐐 🐏 🐑 🐎 🐖 🦇 🐓 🦃 🕊 🦅 🦆 🦢 🦉 🦩 🦚 🦜 🐕 🦮 🐕 🐩 🐈 🐈 🐇 🐀 🐁 🐿 🦨 🦡 🦔 🐾 🐉 🐲 🦕 🦖 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘ 🍀 🎍 🎋 🍃 🍂 🍁 🌾 🌺 🌻 🌹 🥀 🌷 🌼 🌸 💐 🍄 🌰 🐚 🌎 🌍 🌏 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔 🌙 🌚 🌝 🌛 🌜 ⭐ 🌟 💫 ✨ ☄ 🪐 🌞 ☀ 🌤 ⛅ 🌥 🌦 ☁ 🌧 ⛈ 🌩 ⚡ 🔥 💥 ❄ 🌨 ☃ ⛄ 🌬 💨 🌪 🌫 🌈 ☔ 💧 💦 🌊'

@@ -1,5 +1,7 @@
 import React, {memo} from 'react'
 
+import { emojisSymbols as emojis } from '../../../Assets/emojis';
+
 const EmojisSymbols = ({emojiCB, setRecentEmojis}) => {
     let i = 0;
     return (
@@ -10,6 +12,3 @@ const EmojisSymbols = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default memo(EmojisSymbols)
-
-
-const emojis = '☮ ✝ ☪ 🕉 ☸ ✡ 🔯 🕎 ☯ ☦ 🛐 ⛎ ♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑ ♒ ♓ 🆔 ⚛ ⚕ ☢ ☣ 📴 📳 🈶 🈚 🈸 🈺 🈷 ✴ 🆚 🉑 💮 🉐 ㊙ ㊗ 🈴 🈵 🈹 🈲 🅰 🅱 🆎 🆑 🅾 🆘 ⛔ 📛 🚫 ❌ ⭕ 💢 ♨ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗ ❕ ❓ ❔ ‼ ⁉ 💯 🔅 🔆 🔱 ⚜ 〽 ⚠ 🚸 🔰 ♻ 🈯 💹 ❇ ✳ ❎ ✅ 💠 🌀 ➿ 🌐 ♾ Ⓜ 🏧 🚾 ♿ 🅿 🈳 🈂 🛂 🛃 🛄 🛅 🚰 🛗 🚹 ♂ 🚺 ♀ ⚧ 🚼 🚻 🚮 🎦 📶 🈁 🆖 🆗 🆙 🆒 🆕 🆓 0⃣ 1⃣ 2⃣ 3⃣ 4⃣ 5⃣ 6⃣ 7⃣ 8⃣ 9⃣ 🔟 🔢 ▶ ⏸ ⏯ ⏹ ⏺ ⏏ ⏭ ⏮ ⏩ ⏪ 🔀 🔁 🔂 ◀ 🔼 🔽 ⏫ ⏬ ➡ ⬅ ⬆ ⬇ ↗ ↘ ↙ ↖ ↕ ↔ 🔄 ↪ ↩ 🔃 ⤴ ⤵ #⃣ *⃣ ℹ 🔤 🔡 🔠 🔣 🎵 🎶 〰 ➰ ✔ ➕ ➖ ➗ ✖ 💲 💱 © ® ™ 🔚 🔙 🔛 🔝 🔜 ☑ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 🟤 ⚫ ⚪ 🟥 🟧 🟨 🟩 🟦 🟪 🟫 ⬛ ⬜ ◼ ◻ ◾ ◽ ▪ ▫ 🔸 🔹 🔶 🔷 🔺 🔻 🔲 🔳 🔈 🔉 🔊 🔇 📣 📢 🔔 🔕 🃏 🀄 ♠ ♣ ♥ ♦ 🎴 👁‍🗨 🗨 💭 🗯 💬 🕐 🕑 🕒 🕓 🕔 🕕 🕖 🕗 🕘 🕙 🕚 🕛 🕜 🕝 🕞 🕟 🕠 🕡 🕢 🕣 🕤 🕥 🕦 🕧'

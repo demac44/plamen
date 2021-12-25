@@ -30,7 +30,8 @@ const ChatListUser = ({data}) => {
                     first_name: data?.first_name,
                     last_name: data?.last_name,
                     username: data?.username,
-                    profile_picture: data?.profile_picture
+                    profile_picture: data?.profile_picture,
+                    last_seen: data.last_seen
                 }}}     
                 className='chat-user-box flex-h'>
             <Avatar size='45px' image={data?.profile_picture}/>

@@ -2,7 +2,7 @@ import React, {memo} from 'react'
 import { NavLink, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
-const Dropdown = () => {
+const Dropdown = ({closeDropd}) => {
     const history = useHistory()
     const ls = JSON.parse(localStorage.getItem('user'))
 
@@ -17,7 +17,7 @@ const Dropdown = () => {
         })
     }
     return (
-       <div className="tn-dropdown-menu">
+       <div className="tn-dropdown-menu" onClick={()=>closeDropd()}>
             <ul>
                 <h5 style={styles.loggedAs}>Logged in as @{ls.username}</h5>
                 <NavLink to={"/profile/"+ls.username}><li>My profile</li></NavLink>

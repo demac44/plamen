@@ -146,6 +146,7 @@ const FETCH_INFO= gql`
             profile_picture
             username
             userID
+            last_seen
         }
     }
 `

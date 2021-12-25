@@ -1,5 +1,7 @@
 import React, {memo} from 'react'
 
+import { emojisPlaces as emojis } from '../../../Assets/emojis';
+
 const EmojisPlaces = ({emojiCB, setRecentEmojis}) => {
     let i = 0;
     return (
@@ -10,6 +12,3 @@ const EmojisPlaces = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default memo(EmojisPlaces)
-
-
-const emojis = '🚗 🚙 🚕 🛺 🚌 🚎 🏎 🚓 🚑 🚒 🚐 🚚 🚛 🚜 🏍 🛵 🚲 🦼 🦽 🛴 🛹 🛼 🚨 🚔 🚍 🚘 🚖 🚡 🚠 🚟 🚃 🚋 🚝 🚄 🚅 🚈 🚞 🚂 🚆 🚇 🚊 🚉 🚁 🛩 ✈ 🛫 🛬 🪂 💺 🛰 🚀 🛸 🛶 ⛵ 🛥 🚤 ⛴ 🛳 🚢 ⚓ ⛽ 🚧 🚏 🚦 🚥 🛑 🎡 🎢 🎠 🏗 🌁 🗼 🏭 ⛲ 🎑 ⛰ 🏔 🗻 🌋 🗾 🏕 ⛺ 🏞 🛣 🛤 🌅 🌄 🏜 🏖 🏝 🌇 🌆 🏙 🌃 🌉 🌌 🌠 🎇 🎆 🏘 🏰 🏯 🏟 🗽 🏠 🏡 🏚 🏢 🏬 🏣 🏤 🏥 🏦 🏨 🏪 🏫 🏩 💒 🏛 ⛪ 🕌 🛕 🕍 🕋 ⛩'

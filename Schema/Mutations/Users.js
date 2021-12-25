@@ -3,6 +3,19 @@ import connection from "../../middleware/db.js"
 import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 
+export const SET_LAST_SEEN = {
+    type: UserType,
+    args: {
+        userID: {type: GraphQLInt}
+    },
+    resolve (_, args){
+        const {userID} = args
+        const sql = `UPDATE users SET last_seen=NOW() WHERE userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+
 export const CREATE_USER = {
     type: UserType,
     args: {

@@ -61,6 +61,7 @@ const GET_CHATS_LIST = gql`
             username
             profile_picture
             userID
+            last_seen
         }
         get_group_chats (userID: $userID){
             groupChatId

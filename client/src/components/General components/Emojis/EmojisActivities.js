@@ -1,5 +1,7 @@
 import React, {memo} from 'react'
 
+import { emojisActivities as emojis } from '../../../Assets/emojis';
+
 const EmojisActivities = ({emojiCB, setRecentEmojis}) => {
     let i = 0;
     return (
@@ -10,5 +12,3 @@ const EmojisActivities = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default memo(EmojisActivities)
-
-const emojis = '⚽ 🏀 🏈 ⚾ 🥎 🎾 🏐 🏉 🎱 🥏 🏓 🏸 🥅 🏒 🏑 🏏 🥍 🥌 ⛳ 🏹 🎣 🤿 🥊 🥋 ⛸ 🎿 🛷 ⛷ 🏂 🏋️‍♀️ 🏋 🏋️‍♂️ 🤺 🤼‍♀️ 🤼 🤼‍♂️ 🤸‍♀️ 🤸 🤸‍♂️ ⛹️‍♀️ ⛹ ⛹️‍♂️ 🤾‍♀️ 🤾 🤾‍♂️ 🧗‍♀️ 🧗 🧗‍♂️ 🏌️‍♀️ 🏌 🏌️‍♂️ 🧘‍♀️ 🧘 🧘‍♂️ 🧖‍♀️ 🧖 🧖‍♂️ 🏄‍♀️ 🏄 🏄‍♂️ 🏊‍♀️ 🏊 🏊‍♂️ 🤽‍♀️ 🤽 🤽‍♂️ 🚣‍♀️ 🚣 🚣‍♂️ 🏇 🚴‍♀️ 🚴 🚴‍♂️ 🚵‍♀️ 🚵 🚵‍♂️ 🎽 🎖 🏅 🥇 🥈 🥉 🏆 🏵 🎗 🎫 🎟 🎪 🤹‍♀️ 🤹 🤹‍♂️ 🎭 🎨 🎬 🎤 🎧 🎼 🎹 🥁 🎷 🎺 🎸 🪕 🎻 🎲 🧩 ♟ 🎯 🎳 🪀 🪁 🎮 👾 🎰 👮 👮 👮 👷 👷 👷 💂 💂 💂 🕵 🤶 🎅 🦸 🦸 🦹 🧙 🧙 🧙 🧝 🧝 🧝 🧚 🧞 🧞 🧜 🧛 🧛 🧛 🧟 🧟 👪 '

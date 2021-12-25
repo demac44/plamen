@@ -70,6 +70,10 @@ const Navbar = ({isLogged}) => {
         setNotificiations(false)
     }, [])
     
+    const closeDropd = () => {
+        setDropdown(false)
+        return
+    }
     return (
         <>
             <div className="top-navbar">
@@ -90,7 +94,7 @@ const Navbar = ({isLogged}) => {
                     <div className='flex-ac' style={styles.avatar} onClick={handleDropdown}> 
                         <Avatar size='45px' image={ls.profile_picture}/>
                     </div>
-                    {dropdown && <Dropdown/>}
+                    {dropdown && <Dropdown closeDropd={closeDropd}/>}
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
                 </>
                     : <Link to='/login'><button style={styles.loginBtn} className='btn'>LOGIN</button></Link>}

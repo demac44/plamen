@@ -12,7 +12,7 @@ import { authenticate } from './Redux-actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo';
+import { useMutation, useQuery } from 'react-apollo';
 
 import('@fortawesome/free-solid-svg-icons').then(i=>{
   import('@fortawesome/fontawesome-svg-core').then(core =>{
@@ -43,6 +43,7 @@ function App() {
   const uid = useSelector(state => state.isAuth.user?.userID)
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
+  const [set_last_seen] = useMutation(SET_LAST_SEEN)
   
   const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
     skip: user?.userID ? false : true,
@@ -58,6 +59,9 @@ function App() {
       localStorage.clear()
     } else {
       if(data?.get_user_suggestions){
+        setInterval(()=>{
+          set_last_seen({variables:{userID: user.userID}})
+        }, 30000)
           localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
       }
     }
@@ -112,4 +116,13 @@ const GET_FOLLOW_SUGGESTIONS = gql`
       profile_picture
     }
   }
+`
+
+const SET_LAST_SEEN = gql`
+  mutation ($userID: Int!){
+    set_last_seen (userID: $userID){
+      userID
+    }
+  }
+
 `

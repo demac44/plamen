@@ -5,6 +5,8 @@ import Avatar from '../../General components/Avatar'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+import ActivityStatus from '../../General components/ActivityStatus'
+
 const ChatBar = ({chatID}) => {
     const [showMenu, setShowMenu] = useState(false)
     const {state} = useLocation()
@@ -37,7 +39,10 @@ const ChatBar = ({chatID}) => {
                     
                     <Link to={'/profile/'+state?.username} style={{height:'50px'}} className='flex-h'>
                         <Avatar size='45px' image={state?.profile_picture}/>
-                        <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
+                        <span className='activity-status-chat flex-col'>
+                            <p style={{color:'white', marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
+                            <ActivityStatus last_seen={state?.last_seen}/>
+                        </span>
                     </Link>
                 </div>
                 <span>
@@ -50,7 +55,7 @@ const ChatBar = ({chatID}) => {
                         style={{...styles.menuBtn, marginRight:'30px'}}
                     />
                     <FontAwesomeIcon
-                        icon='ellipsis-v' 
+                        icon='ellipsis-v'
                         className="fp-options-btn"
                         onClick={()=>setShowMenu(!showMenu)}
                         style={{...styles.menuBtn, marginRight:'15px'}}
