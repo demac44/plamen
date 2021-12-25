@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const SEARCH_USERS = gql`
-    query ($limit: Int, $offset: Int) {
-         get_users (limit: $limit, offset: $offset){
+    query ($limit: Int, $offset: Int, $userID: Int!) {
+         get_users (limit: $limit, offset: $offset, userID: $userID){
             userID
             first_name
             last_name
@@ -17,14 +17,16 @@ const SEARCH_USERS = gql`
     }
 }`
 
-const SearchBar = ({chat, isLogged}) => {
+const SearchBar = ({chat, isLogged, handleOpen}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [dropdown, setDropdown] = useState(false)
     const [searchHistory, setSearchHistory] = useState([])
     const [query, setQuery] = useState('')
     const {loading, error, data} = useQuery(SEARCH_USERS, {
         variables:{
             limit:10,
-            offset:0
+            offset:0,
+            userID: ls.userID
         }
     })
 
@@ -52,6 +54,7 @@ const SearchBar = ({chat, isLogged}) => {
                     style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0'}} 
                     disabled={!isLogged && true}
                     onFocus={()=>{
+                        handleOpen()
                         setDropdown(true)
                         setSearchHistory(()=>{
                             if(JSON.parse(localStorage.getItem('search-history'))){

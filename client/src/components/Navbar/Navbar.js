@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react'
+import React, { useState, useEffect, memo, useCallback } from 'react'
 
 import '../../App.css'
 import '../../General.css'
@@ -55,9 +55,6 @@ const Navbar = ({isLogged}) => {
     useEffect(()=>{
         isLogged && setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
-        if(count && isLogged){
-            return count?.refetch()
-        }
         return
     }, [count, data, isLogged]) 
 
@@ -67,6 +64,11 @@ const Navbar = ({isLogged}) => {
             setDropdown(false)})
         return
     }
+
+    const handleSearchOpen = useCallback(()=>{
+        setDropdown(false)
+        setNotificiations(false)
+    }, [])
     
     return (
         <>
@@ -74,7 +76,7 @@ const Navbar = ({isLogged}) => {
                 <div className="tn-left">
                     <Logo/>
                 </div>
-                <SearchBar chat={false} isLogged={isLogged}/>
+                <SearchBar chat={false} isLogged={isLogged} handleOpen={handleSearchOpen} />
                 <div className="tn-right">
                 {isLogged ?
                 <>

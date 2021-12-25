@@ -8,6 +8,7 @@ import LikePost from './components/LikePost'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PostBottomBar = ({postID, userID}) => {
     const [likes, setLikes] = useState(false) 
@@ -57,7 +58,7 @@ const PostBottomBar = ({postID, userID}) => {
             />}
             <div className='post-bottom-bar flex'>
                 <LikePost postID={postID} userID={userID}/>
-                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>See likes</p>
+                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}><FontAwesomeIcon icon='heart' color={likes ? 'darkred': 'white'}/></p>
                 <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>
             {likes && <LikesList postID={postID} closeList={closeLikesList}/>}
@@ -69,9 +70,8 @@ export default memo(PostBottomBar)
 
 const styles = {
     seeLikes:{
-        padding:'5px',
+        padding:'5px 8px',
         fontSize:'12px',
-        minWidth:'60px',
         color:'white',
         border:'1px solid #3f3f3f',
         borderRadius:'10px',

@@ -104,15 +104,6 @@ const NotficationsMenu = ({visible}) => {
                             <NotificationBox notif={notif} key={notif.Nid}/>
                             )}
                     </span>
-
-                    {notifications?.data?.get_notifications?.length > 0 && <div 
-                        style={{
-                            width:'100%',
-                            padding:'3px',
-                            textAlign:'center',
-                            cursor:'pointer',
-                            color:'white'
-                    }}><h5>See all</h5></div>}
             </>}
         </div>
     )

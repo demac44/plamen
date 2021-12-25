@@ -14,7 +14,7 @@ import PostLoader from '../../components/General components/Loaders/PostLoader'
 const Saved = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
 
-    const {loading, data, error, fetchMore} = useQuery(GET_SAVED, { 
+    const {loading, data, error, fetchMore, refetch} = useQuery(GET_SAVED, { 
         variables: {
             userID: ls.userID,
             offset:0,
@@ -57,7 +57,7 @@ const Saved = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-left'>
                         <h2 style={styles.title}>Saved posts</h2>
-                        {loading ? <PostLoader/> : (data.get_saved_posts.length > 0 ? <Posts posts={data.get_saved_posts}/>
+                        {loading ? <PostLoader/> : (data.get_saved_posts.length > 0 ? <Posts posts={data.get_saved_posts} refetchPosts={refetch}/>
                             : <NoPosts/>)}
                     </div>
                 </div>

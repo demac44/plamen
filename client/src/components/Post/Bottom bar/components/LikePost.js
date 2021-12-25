@@ -13,14 +13,10 @@ const LikePost = ({postID, userID}) => {
     const ifLiked = useQuery(IF_LIKED, {
         variables:{
             postID: postID,
-            userID: userID
+            userID: ls.userID
         }
     })
 
-    useEffect(()=>{
-        return ifLiked?.data?.if_liked && setLiked(true)
-    }, [ifLiked?.data])
-    
     const handleLike = () => {
         like_post({
             variables: {
@@ -46,8 +42,8 @@ const LikePost = ({postID, userID}) => {
     return (
         <FontAwesomeIcon icon='heart'
             style={{...styles.likeBtn}}
-            color={ifLiked.loading ? 'white' : (liked ? '#a50202' : 'white')}
-            onClick={() => !ifLiked.loading && (liked ? handleRemove() : handleLike())}
+            style={{...styles.likeBtn, color: ifLiked.loading ? 'white' : (ifLiked?.data?.if_liked || liked) ? '#a50202' : 'white'}}
+            onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
         />
     )
 }
@@ -84,7 +80,7 @@ const REMOVE_LIKE = gql`
     }
 `
 const IF_LIKED = gql`
-    query ($postID: Int, $userID: Int){
+    query ($postID: Int!, $userID: Int!){
         if_liked(postID: $postID, userID: $userID)
     }
 `

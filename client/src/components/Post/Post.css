@@ -146,6 +146,17 @@
     height: 100%;
 }
 
+.likes-list{
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    overflow-x: hidden;
+    background-color: #1f1f1f;
+    padding: 10px 20px;
+}
+.likes-list-box{
+    width: 100%;
+}
 
 @media screen and (max-width:1400px){
     .create-post-box .emojis-sub-box{
@@ -174,5 +185,8 @@
     }
     .create-post-box .emojis-sub-box{
         grid-template-columns: repeat(6, 1fr);
+    }
+    .likes-list{
+        padding: 10px 0;
     }
 }

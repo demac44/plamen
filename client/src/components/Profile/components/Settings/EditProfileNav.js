@@ -7,6 +7,7 @@ const EditProfileNav = () => {
             <ul>
                <NavLink to='/settings/account'><li>Account settings</li></NavLink>
                <NavLink to='/settings/info'><li>User info</li> </NavLink>    
+               <NavLink to='/settings/blocked_users'><li>Blocked users</li></NavLink>    
             </ul>
         </div>
     )

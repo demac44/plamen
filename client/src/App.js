@@ -58,7 +58,7 @@ function App() {
       localStorage.clear()
     } else {
       if(data?.get_user_suggestions){
-        localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
+          localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
       }
     }
   },[isLogged, user, uid, token, data, dispatch])

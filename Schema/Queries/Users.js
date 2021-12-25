@@ -1,16 +1,23 @@
-import { GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
+import { GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
 import { UserInfoType, UserType } from '../TypeDefs/Users.js';
 
 export const GET_ALL_USERS = {
     type: new GraphQLList(UserType),
     args:{
+        userID: {type: GraphQLInt},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt}
     },
     async resolve(_, args){
-        const {limit, offset} = args
-        const sql = `SELECT * FROM users WHERE disabled=false LIMIT ${limit} OFFSET ${offset}`
+        const {limit, offset, userID} = args
+        const sql = `SELECT * FROM users 
+                     WHERE disabled=false 
+                     AND userID NOT IN (SELECT blockerId 
+                                        FROM blocked_users 
+                                        WHERE blockedId=${userID} 
+                                        AND blockerId=userID)
+                     LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result
     }    
@@ -23,7 +30,13 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const sql = `SELECT * FROM users WHERE disabled=false AND username="${username}"`
+        const sql = `SELECT * FROM users 
+                     WHERE disabled=false
+                     AND username="${username}"
+                     AND userID NOT IN (SELECT blockerId 
+                                        FROM blocked_users 
+                                        WHERE blockedId=${userID} 
+                                        AND blockerId=userID)`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }    
@@ -57,7 +70,13 @@ export const USER_SUGGESTIONS = {
                             university="${user_info.university}" OR
                             city="${user_info.city}" OR
                             high_school="${user_info.high_school}"
-                            AND users.disabled=false
+                            AND (users.disabled=false
+                            AND users.userID NOT IN 
+                                        (SELECT followedID FROM followings
+                                            WHERE followerID=${userID} AND followedID=users.userID)
+                            AND users.userID NOT IN (SELECT blockedId 
+                                                        FROM blocked_users 
+                                                        WHERE blockedId=users.userID AND blockerId=${userID}))
                         ORDER BY RAND() LIMIT 20`
 
         const result = await connection.promise().query(sugg1).then(res=>{return res[0]})
@@ -69,15 +88,32 @@ export const USER_SUGGESTIONS = {
                                         city="${user_info.city}" OR
                                         high_school="${user_info.high_school}" OR
                                         country="${user_info.country}") 
-                                        AND disabled=false
+                                        AND (disabled=false
                                         AND users.userID!=${userID}
                                         AND users.userID NOT IN 
                                             (SELECT followedID FROM followings
                                                 WHERE followerID=${userID} AND followedID=users.userID)
+                                        AND users.userID NOT IN (SELECT blockedId 
+                                                    FROM blocked_users 
+                                                    WHERE blockedId=users.userID AND blockerId=${userID}))
                                     ORDER BY RAND() LIMIT 20`
-            const additional_result = await connection.promise().query(additional).then(res=>{return res[0]})
-            return additional_result
-        }
+            return await connection.promise().query(additional).then(res=>{return res[0]})
+        } 
         return result
+    }
+}
+
+export const IF_USER_BLOCKED = {
+    type: GraphQLBoolean,
+    args:{
+        blockerId: {type: GraphQLInt},
+        blockedId: {type: GraphQLInt}
+    },
+    async resolve (_, args){
+        const {blockedId, blockerId} = args
+        const sql = `SELECT EXISTS(SELECT 1 FROM blocked_users WHERE blockerId=${blockerId} AND blockedId=${blockedId} LIMIT 1) AS isBlocked`
+        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
+        if(result.isBlocked===1) return true
+        return false
     }
 }

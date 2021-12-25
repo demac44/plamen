@@ -17,7 +17,7 @@ const ChatList = ({isLogged}) => {
     return (
         <div className='all-chats-box flex-col'>
             <div className='chat-search'>
-                <SearchBar isLogged={isLogged} chat={true}/>
+                <SearchBar isLogged={isLogged} chat={true} handleOpen={()=>{return}}/>
             </div>
             <ChatsOptions/>
             {!loading ?

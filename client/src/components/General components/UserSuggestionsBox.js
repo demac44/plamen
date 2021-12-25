@@ -8,7 +8,7 @@ const UserSuggestionsBox = () => {
         <>
             <h4 style={styles.title}>Suggestions</h4>  
             <div style={styles.box}>
-                {user_suggestions.map(user => <UserBox user={user} key={user.userID}/>)}
+                {user_suggestions?.map(user => <UserBox user={user} key={user.userID}/>)}
             </div>
         </>
     )

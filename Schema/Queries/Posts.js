@@ -34,11 +34,10 @@ export const GET_FEED_POSTS = {
     }, 
     async resolve(_, args){
         const {userID, limit, offset} = args
-        const sql = `SELECT postID,posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID
+        const sql = `SELECT postID,users.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type
                      FROM posts 
                      JOIN users ON posts.userID=users.userID 
-                     WHERE disabled=false 
-                     AND (users.userID=${userID} OR users.userID IN 
+                     WHERE (users.userID=${userID} OR users.userID IN 
                      (SELECT followedID FROM followings WHERE followerID=${userID})) 
                      AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`

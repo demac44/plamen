@@ -16,6 +16,7 @@ const CHAT_EXISTS = gql`
         chat_exists (user1_ID: $user1, user2_ID: $user2){ 
             chatID
         }
+        if_user_blocked(blockedId: $user2, blockerId: $user1)
     }
 `
 
@@ -30,17 +31,21 @@ const ChatSearchBarUser = ({user}) => {
 
     
     const createChat = () => {
-        if(data?.chat_exists?.chatID){
-            window.location.href = '/chat/'+data.chat_exists.chatID
+        if(data?.if_user_blocked){
+            window.location.href='/profile/'+user.username
         } else {
-            create_chat({
-                variables: { 
-                    user1: ls.userID,
-                    user2: user.userID
-                }
-            }).then(res=>{
-                window.location.href = '/chat/'+res.data.create_chat.chatID
-            })
+            if(data?.chat_exists?.chatID){
+                window.location.href = '/chat/'+data.chat_exists.chatID
+            } else {
+                create_chat({
+                    variables: { 
+                        user1: ls.userID,
+                        user2: user.userID
+                    }
+                }).then(res=>{
+                    window.location.href = '/chat/'+res.data.create_chat.chatID
+                })
+            }
         }
     } 
     return (

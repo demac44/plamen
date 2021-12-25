@@ -15,10 +15,10 @@ const LikesList = ({postID, closeList}) => {
     })
 
     return (
-        <div className='container-users-list flex-col-ctr'>
-            <div className='users-list-box'>
+        <div className='likes-list flex-col-ctr'>
+            <div className='likes-list-box'>
                 <div className='users-list-top-bar'>
-                    <h2 style={{color:'white'}}>Likes</h2>
+                    <h2 style={{color:'white', backgroundColor:'#2f2f2f'}}>Likes</h2>
                     <i onClick={()=>closeList()} style={styles.closeBtn} className='fas fa-times'></i>
                 </div>
                 

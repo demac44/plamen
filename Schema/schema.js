@@ -16,14 +16,14 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
-import { CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
-import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
+import { BLOCK_USER, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
+import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
 import { GET_GROUP, GET_GROUPS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
-import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS } from "./Queries/Users.js";
+import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { NotificationType } from "./TypeDefs/Notifications.js";
 
@@ -38,6 +38,7 @@ const RootQuery = new GraphQLObjectType({
         get_following: GET_FOLLOWING,
         get_user_info: GET_USER_INFO,
         get_user_suggestions: USER_SUGGESTIONS,
+        if_user_blocked: IF_USER_BLOCKED,
         // posts
         get_post: GET_POST,
         get_profile_posts: GET_PROFILE_POSTS,
@@ -55,7 +56,6 @@ const RootQuery = new GraphQLObjectType({
         get_all_user_chats: GET_ALL_USER_CHATS,
         get_messages: GET_MESSAGES,
         get_chat_media: GET_CHAT_MEDIA,
-        get_chat: GET_CHAT,
         last_message: LAST_MESSAGE,
         count_newMsgs: COUNT_ALL_MSGS,
         count_msgs: COUNT_MSGS,
@@ -106,6 +106,8 @@ const RootMutation = new GraphQLObjectType({
         edit_user_info: EDIT_USER_INFO,
         edit_bdate: EDIT_BDATE,
         edit_gender: EDIT_GENDER,
+        block_user: BLOCK_USER,
+        unblock_user: UNBLOCK_USER,
         // posts
         delete_post: DELETE_POST,
         like_post: LIKE_POST,

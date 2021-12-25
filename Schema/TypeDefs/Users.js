@@ -51,3 +51,11 @@ export const UserInfoType = new GraphQLObjectType({
         city: {type: GraphQLString}
     })
 })
+
+export const BlockUserType = new GraphQLObjectType({
+    name:'BlockUser',
+    fields:()=>({
+        blockerId: {type:GraphQLInt},
+        blockedId: {type:GraphQLInt}
+    })
+})

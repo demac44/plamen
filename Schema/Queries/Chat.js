@@ -25,7 +25,12 @@ export const GET_ALL_USER_CHATS = {
     },
     async resolve(_, args){
         const {user1_ID} = args
-        const sql = `SELECT chatID, IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID FROM chats WHERE user1_ID=${user1_ID} OR user2_ID=${user1_ID}`
+        const sql = `SELECT chatID, 
+                    IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID 
+                    FROM chats 
+                    WHERE (user1_ID=${user1_ID} OR user2_ID=${user1_ID})
+                    AND user1_ID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${user1_ID} AND blockedId=user1_ID)
+                    AND user1_ID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${user1_ID} AND blockerId=user1_ID)`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result    
     } 
@@ -43,7 +48,11 @@ export const GET_CHAT_LIST = {
         FROM users
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
         JOIN messages ON chats.chatID=messages.chatID
-        WHERE disabled=false AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
+        WHERE 
+        disabled=false 
+        AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
+        AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${user1_ID} AND blockedId=users.userID)
+        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${user1_ID} AND blockerId=users.userID)
         GROUP BY chats.chatID
         ORDER BY MAX(time_sent) DESC`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
@@ -92,21 +101,6 @@ export const GET_MESSAGES = {
         return result
     }
 }
-
-export const GET_CHAT = {
-    type:ChatType,
-    args: {
-        chatID: {type: GraphQLInt} 
-    },
-    async resolve(_, args){
-        const {chatID} = args
-        const sql = `SELECT * FROM chats WHERE chatID=${chatID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result[0]
-    }
-
-}
-
 
 export const GET_CHAT_MEDIA = {
     type: new GraphQLList(ChatMessagesType),

@@ -1,6 +1,6 @@
 import { GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
-import { PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
+import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 
 export const CREATE_USER = {
@@ -174,5 +174,34 @@ export const EDIT_GENDER= {
                 return {error: null}
             }
         } else if (result.gender_changed===1) return {error: "You already changed you gender once!"}
+    }
+}
+
+export const BLOCK_USER = {
+    type: BlockUserType,
+    args:{
+        blockerId: {type: GraphQLInt},
+        blockedId: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {blockedId, blockerId} = args
+        const sql = `INSERT INTO blocked_users (blockerId, blockedId) 
+                     VALUES (${blockerId}, ${blockedId})`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const UNBLOCK_USER = {
+    type: BlockUserType,
+    args:{
+        blockerId: {type: GraphQLInt},
+        blockedId: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {blockedId, blockerId} = args
+        const sql = `DELETE FROM blocked_users WHERE ${blockerId} AND ${blockedId}`
+        connection.query(sql)
+        return args
     }
 }

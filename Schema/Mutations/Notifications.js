@@ -13,24 +13,27 @@ export const LIKE_NOTIFICATION = {
     },
     async resolve(_, args) {
         const {postID, sender_id, receiver_id} = args
-        const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                        VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "like")`
-        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
-        const user = await connection.promise().query(usr).then(res=>{return res[0]})
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        pubsub.publish('NOTIFICATION', {newNotification: {
-            sender_id, 
-            receiver_id, 
-            postID, 
-            Nid:result.insertId, 
-            type:"like", 
-            username: user[0].username,
-            profile_picture: user[0].profile_picture,
-            time_sent: new Date().getTime()
-        }})
+        if(sender_id!==receiver_id){
+            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
+                            VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "like")`
+            const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+            const user = await connection.promise().query(usr).then(res=>{return res[0]})
+            const result = await connection.promise().query(sql).then(res=>{return res[0]})
+            pubsub.publish('NOTIFICATION', {newNotification: {
+                sender_id, 
+                receiver_id, 
+                postID, 
+                Nid:result.insertId, 
+                type:"like", 
+                username: user[0].username,
+                profile_picture: user[0].profile_picture,
+                time_sent: new Date().getTime()
+            }
+        })
         return args
     }
-}
+}}
+
 
 export const COMM_NOTIFICATION = {
     type: NotificationType,
@@ -41,21 +44,23 @@ export const COMM_NOTIFICATION = {
     },
     async resolve(_, args) {
         const {postID, sender_id, receiver_id} = args
-        const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                        VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`   
-        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
-        const user = await connection.promise().query(usr).then(res=>{return res[0]})
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        pubsub.publish('NOTIFICATION', {newNotification: {
-            sender_id, 
-            receiver_id, 
-            postID, 
-            Nid:result.insertId, 
-            type:"comment", 
-            username: user[0].username,
-            profile_picture: user[0].profile_picture,
-            time_sent: new Date().getTime()
-        }})
+        if(sender_id!==receiver_id){
+            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
+                            VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`   
+            const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+            const user = await connection.promise().query(usr).then(res=>{return res[0]})
+            const result = await connection.promise().query(sql).then(res=>{return res[0]})
+            pubsub.publish('NOTIFICATION', {newNotification: {
+                sender_id, 
+                receiver_id, 
+                postID, 
+                Nid:result.insertId, 
+                type:"comment", 
+                username: user[0].username,
+                profile_picture: user[0].profile_picture,
+                time_sent: new Date().getTime()
+            }})
+        }
         return args
     }
 }
@@ -68,20 +73,22 @@ export const FOLLOW_NOTIFICATION = {
     },
     async resolve(_, args) {
         const {sender_id, receiver_id} = args
-        const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                        VALUES (null, ${sender_id}, ${receiver_id}, null, null, "follow")`
-        const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
-        const user = await connection.promise().query(usr).then(res=>{return res[0]})
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        pubsub.publish('NOTIFICATION', {newNotification: {
-            sender_id, 
-            receiver_id, 
-            Nid:result.insertId, 
-            type:"follow", 
-            username: user[0].username,
-            profile_picture: user[0].profile_picture,
-            time_sent: new Date().getTime()
-        }})
+        if(sender_id!==receiver_id){
+            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
+                            VALUES (null, ${sender_id}, ${receiver_id}, null, null, "follow")`
+            const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+            const user = await connection.promise().query(usr).then(res=>{return res[0]})
+            const result = await connection.promise().query(sql).then(res=>{return res[0]})
+            pubsub.publish('NOTIFICATION', {newNotification: {
+                sender_id, 
+                receiver_id, 
+                Nid:result.insertId, 
+                type:"follow", 
+                username: user[0].username,
+                profile_picture: user[0].profile_picture,
+                time_sent: new Date().getTime()
+            }})
+        }
         return args
     }
 }
