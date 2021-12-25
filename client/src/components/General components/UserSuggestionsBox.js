@@ -21,9 +21,11 @@ const styles = {
     box:{
         width:'100%',
         borderRadius:'0 0 10px 10px',
+        border:'1px solid #2f2f2f',
         borderTop:'none',
         overflow:'auto',
-        marginTop:'20px'
+        maxHeight:'60vh',
+        padding:'10px 5px'
     },
     title:{
         width:'100%',
@@ -33,7 +35,8 @@ const styles = {
         backgroundColor:'#1b1b1b',
         zIndex:'11',
         borderRadius:'10px 10px 0 0',
+        border:'1px solid #2f2f2f',
         borderBottom:'none',
-        marginTop:'20px'
+        marginTop:'30px',
     }
 }

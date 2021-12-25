@@ -61,7 +61,7 @@ const EditInfoBox = ({data}) => {
 
             <div className='flex-ctr'>
                 <h5>City</h5>
-                <input type='text' className='input' id='city' placeholder='Add city' value={city} readOnly={true}/>
+                <input type='text' id='city' className='input' placeholder='Add city' value={city} readOnly={true}/>
                 <CitiesSelect country={country} setCityCB={setCityCB}/>
             </div>
 

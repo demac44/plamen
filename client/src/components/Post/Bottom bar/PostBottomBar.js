@@ -18,10 +18,6 @@ const PostBottomBar = ({postID, userID}) => {
         }
     })
     
-    const closeLikesList = useCallback(()=>{
-        setLikes(false)
-    }, [setLikes])
-
     if(error) throw error
     
     const seeMore = async () => {
@@ -59,7 +55,7 @@ const PostBottomBar = ({postID, userID}) => {
                 <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}><FontAwesomeIcon icon='heart' color={likes ? 'darkred': 'white'}/></p>
                 <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>
-            {likes && <LikesList postID={postID} closeList={closeLikesList}/>}
+            {likes && <LikesList postID={postID}/>}
         </>
     )
 }

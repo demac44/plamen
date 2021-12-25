@@ -10,6 +10,7 @@
     background-color: #1b1b1b;
     padding: 10px;
     border-radius: 10px;
+    border: 1px solid #2f2f2f;
 }
 .sidebar{
     position: fixed;
@@ -22,7 +23,7 @@
     z-index: 10000;
 }
 .nav-active{
-    background-color: #292929;
+    background: linear-gradient(to bottom right,#1f1f1f, #2f2f2f);
 }
 .ln-list a{
     width: 100%;
@@ -36,6 +37,7 @@
     color: white;
     font-size: 16px;
     padding-left: 15px;
+    border-radius: 5px;
 }
 .ln-list a:hover, .tn-dropdown-menu a li:hover{
     background-color: #1f1f1f;
@@ -95,6 +97,7 @@
     padding: 5px 15px 5px 5px;
     cursor: pointer;
     transition: ease .3s;
+    border-radius: 5px;
 }
 .users-list-user-box:hover{
     background-color: #2f2f2f;
