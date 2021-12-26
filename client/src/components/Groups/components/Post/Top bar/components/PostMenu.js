@@ -6,7 +6,7 @@ import { useMutation } from 'react-apollo'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
-const PostMenu = ({data, refetchPosts}) => {
+const PostMenu = ({data, refetchPosts, handleReport}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [delete_post] = useMutation(DELETE_GP)
     const [copied, setCopied] = useState(false)
@@ -36,7 +36,7 @@ const PostMenu = ({data, refetchPosts}) => {
                         /> Delete
                     </li>}
 
-                    <li><FontAwesomeIcon icon='flag'/> Report</li>
+                    <li onClick={()=>handleReport(true)}><FontAwesomeIcon icon='flag'/> Report</li>
                 </ul>
             </div>
             {copied && <div style={styles.copied}>Link copied!</div>}

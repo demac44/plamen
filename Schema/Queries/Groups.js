@@ -3,6 +3,7 @@ import connection from '../../middleware/db.js'
 import { CommentType } from '../TypeDefs/Comments.js';
 import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from '../TypeDefs/Likes.js';
+import { GroupReportedPost } from '../TypeDefs/Report.js';
 
 export const GET_GROUPS = {
     type: new GraphQLList(GroupType),
@@ -199,3 +200,21 @@ export const IF_REQUESTED = {
     }
 }
 
+export const GET_GROUP_REPORTED_POSTS = {
+    type: new GraphQLList(GroupReportedPost),
+    args: {
+        groupID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupID} = args
+        const sql = `SELECT first_name,last_name,username,users.userID,profile_picture,community_posts.postID,
+                            reasons,post_text,url,reportID,community_posts.groupID,date_posted,date_reported,type
+                     FROM community_posts_reports
+                     JOIN community_posts ON community_posts.postID=community_posts_reports.postID
+                     JOIN users ON community_posts.userID=users.userID
+                     WHERE community_posts_reports.groupID=${groupID}
+                     ORDER BY date_reported DESC`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}

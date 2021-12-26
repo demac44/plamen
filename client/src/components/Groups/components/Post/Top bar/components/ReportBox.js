@@ -2,18 +2,17 @@ import React, { useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const REPORT_POST = gql`
-    mutation ($postID:Int!, $userPostedID:Int!, $userReportedID:Int!, $reasons: String!){
-        post_report(postID: $postID, userPostedID: $userPostedID, userReportedID: $userReportedID, reasons: $reasons){
+    mutation ($postID:Int!, $groupID:Int!, $reporterId:Int!, $reasons: String!){
+        report_group_post (postID: $postID, reporterId: $reporterId, groupID: $groupID, reasons: $reasons){
             postID
         }
     }
 ` 
 
-const ReportBox = ({data, closeReportCallback}) => {
+const ReportBox = ({data, handleReportClose}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [report_post] = useMutation(REPORT_POST)
     const [reportSent, setReportSent] = useState(false)
@@ -51,14 +50,14 @@ const ReportBox = ({data, closeReportCallback}) => {
         report_post({
             variables:{
                 postID: data.postID,
-                userPostedID: data.userID,
-                userReportedID: ls.userID,
+                groupID: data.groupID,
+                reporterId: ls.userID,
                 reasons: reasons
             }
         }).then(()=>{
             setReportSent(true)
             setTimeout(()=>{
-                closeReportCallback()
+                handleReportClose(false)
             }, 1000)
         })
     }
@@ -68,8 +67,8 @@ const ReportBox = ({data, closeReportCallback}) => {
     return (
         <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
-                <h3 style={styles.title}>Report post
-                    <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>closeReportCallback()}/>
+                <h3 style={styles.title}>Report
+                    <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>handleReportClose(false)}/>    
                 </h3>
                 {reportSent && <h4 style={{...styles.title, marginTop:'10px'}}>Your report has been sent!</h4>}
                 <p style={{...styles.title, marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
@@ -117,7 +116,7 @@ export default ReportBox
 const styles = {
     exitBtn:{
         position:'absolute',
-        top:'20px',
+        top:'10px',
         right:'15px',
         color:'white',
         fontSize:'25px',

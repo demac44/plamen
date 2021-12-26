@@ -1,20 +1,13 @@
-import React, { useState, memo, useCallback } from 'react'
-import SetTime from '../../../../General components/SetTime'
-import SavePostButton from './components/SavePostButton'
-import PostMenu from './components/PostMenu'
-import Avatar from '../../../../General components/Avatar'
+import React, { useCallback, useState, memo } from 'react'
+import SetTime from '../../../General components/SetTime'
+import Avatar from '../../../General components/Avatar'
 import { Link } from 'react-router-dom'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import ReportBox from './components/ReportBox'
+import ReportedPostMenu from './components/ReportedPostMenu'
 
-const PostTopBar = ({data, refetchPosts}) => {
-    const [reportMenu, setReportMenu] = useState(false)
+
+const ReportedPostTopBar = ({data, refetchPosts}) => {
     const [menu, setMenu] = useState(false)
-
-    const handleReport = useCallback((val) => {
-        setReportMenu(val)
-    }, [setReportMenu])
 
     return (
         <>
@@ -29,7 +22,6 @@ const PostTopBar = ({data, refetchPosts}) => {
                 </Link >
 
                 <span className='flex'>
-                    <SavePostButton postID={data.postID} groupID={data?.groupID}/>
                     <FontAwesomeIcon
                         icon='ellipsis-v' 
                         style={styles.optionsBtn} 
@@ -38,20 +30,18 @@ const PostTopBar = ({data, refetchPosts}) => {
             </div>
 
             {menu && <span onClick={()=>setMenu(false)}>
-                <PostMenu 
+                <ReportedPostMenu 
                 refetchPosts={refetchPosts}
-                handleReport={handleReport}
                 data={{
                     postID: data.postID,
                     userID: data.userID,
                 }}/>
             </span>}
-            {reportMenu && <ReportBox data={data} handleReportClose={handleReport}/>}
         </>
     )
 }
 
-export default memo(PostTopBar)
+export default memo(ReportedPostTopBar)
 
 
 const styles = {

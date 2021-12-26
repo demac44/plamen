@@ -4,6 +4,7 @@ import { CommentType } from "../TypeDefs/Comments.js"
 import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from "../TypeDefs/Likes.js"
 import { PostType } from "../TypeDefs/Posts.js"
+import {ReportType} from '../TypeDefs/Report.js'
 
 
 export const CREATE_GROUP = {
@@ -318,3 +319,54 @@ export const CHANGE_GROUP_TAGS= {
         return args
     }
 }
+
+export const REPORT_GROUP_POST = {
+    type: ReportType,
+    args:{
+        postID:{type: GraphQLInt},
+        reporterId:{type: GraphQLInt},
+        groupID:{type: GraphQLInt},
+        reasons:{type: GraphQLString},
+    },
+    resolve(_, args){
+        const {postID, reporterId, groupID, reasons} = args
+        const sql = `INSERT INTO community_posts_reports (postID, reporterId, groupID, reasons)
+                        VALUES (${postID}, ${reporterId}, ${groupID}, "${reasons}")`
+        connection.query(sql)
+        return args
+    }
+}
+
+
+export const ALLOW_REPORTED_POST = {
+    type: ReportType,
+    args:{
+        reportID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {reportID} = args
+        const sql = `DELETE FROM community_posts_reports WHERE reportID=${reportID}`
+        connection.query(sql)
+        return args
+    }
+}
+
+
+export const REMOVE_REPORTED_POST = {
+    type: ReportType,
+    args:{
+        postID:{type: GraphQLInt},
+        reportID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {postID, reportID} = args
+        const sql = `DELETE FROM community_posts WHERE postID=${postID}`
+        const sql2 = `DELETE FROM community_posts_reports WHERE reportID=${reportID}`
+        await connection.promise().query(sql).then(()=>{
+            connection.query(sql2)
+            return
+        })
+        return args
+    }
+}
+
