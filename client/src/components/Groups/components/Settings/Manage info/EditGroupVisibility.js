@@ -18,11 +18,11 @@ const EditGroupVisibility = ({visibility, groupid, refetch}) => {
 
     return (
         <div style={styles.box} className='flex-h'>
-            <p>Change group visibility: </p>
+            <p>Change community visibility: </p>
             <div style={styles.switchBox} onClick={handleChange}>
                 <div style={{...styles.switch, 
                             left: visib ? '32px' : '0',
-                            backgroundColor: visib ? 'darkgreen' : 'darkred'
+                            backgroundColor: visib ? '#00752d' : '#861b1b'
                 }}></div>
             </div>
         </div>

@@ -251,3 +251,70 @@ export const CHANGE_VISIBILITY = {
         return args
     }
 }
+
+
+export const CHANGE_GROUP_INFO = {
+    type: GroupType,
+    args: {
+        groupID:{type:GraphQLInt},
+        group_description: {type:GraphQLString},
+        group_rules: {type:GraphQLString},
+    },
+    resolve(_, args){
+        const {groupID, group_description, group_rules} = args
+        const sql = `UPDATE community_info 
+                     SET
+                        group_description="${group_description}",
+                        group_rules="${group_rules}"
+                     WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+export const CHANGE_GROUP_NAME = {
+    type: GroupType,
+    args: {
+        groupID:{type:GraphQLInt},
+        group_name: {type: GraphQLString}
+    },
+    resolve(_, args){
+        const {groupID, group_name} = args
+        const sql = `UPDATE communities
+                     SET group_name="${group_name}"
+                     WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+export const CHANGE_GROUP_BANNER_IMG = {
+    type: GroupType,
+    args: {
+        groupID:{type:GraphQLInt},
+        banner_image: {type:GraphQLString}
+    },
+    resolve(_, args){
+        const {groupID, banner_image} = args
+        const sql = `UPDATE community_info 
+                     SET
+                        banner_image="${banner_image}"
+                     WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+export const CHANGE_GROUP_TAGS= {
+    type: GroupType,
+    args: {
+        groupID:{type:GraphQLInt},
+        group_tags: {type:GraphQLString},
+    },
+    resolve(_, args){
+        const {groupID, group_tags} = args
+        const sql = `UPDATE community_info 
+                     SET
+                        group_tags="${group_tags}"
+                     WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}

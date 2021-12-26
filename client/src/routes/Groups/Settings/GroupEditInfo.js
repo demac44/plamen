@@ -12,6 +12,8 @@ import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
 import EditGroupVisibility from '../../../components/Groups/components/Settings/Manage info/EditGroupVisibility'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import EditGroupInfo from '../../../components/Groups/components/Settings/Manage info/EditGroupInfo'
+import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
@@ -41,17 +43,23 @@ const GroupEditInfo = ({isLogged}) => {
                 </div>
                 {roles.includes(data?.get_group_user?.role) && <div className='container-main' style={{paddingTop:'20px'}}>
                         <div className='container-left'>
+
                             <div style={styles.title}>
                                 <Link to={'/community/'+groupid+'/settings'}>
                                     <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
                                 </Link>
-                                <h3>Edit group info</h3>
+                                <h3>Community settings</h3>
                             </div>
+
                             <EditGroupVisibility 
                                 visibility={data?.get_group?.closed} 
                                 groupid={groupid}
                                 refetch={refetch}
                             />
+
+                            <EditGroupName data={data?.get_group} refetch={refetch}/>
+
+                            <EditGroupInfo data={data?.get_group} refetch={refetch}/>
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
                             <SettingsMenu groupid={groupid}/>
@@ -70,6 +78,8 @@ const GET_GROUP = gql`
             groupID
             group_name
             banner_image
+            group_description
+            group_rules
             closed
         }
         get_group_user (groupID: $gid, userID: $uid){
