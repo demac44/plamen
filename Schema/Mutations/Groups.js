@@ -370,3 +370,16 @@ export const REMOVE_REPORTED_POST = {
     }
 }
 
+export const REMOVE_GROUP_USER = {
+    type: GroupUserType,
+    args:{
+        userID: {type:GraphQLInt},
+        groupID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID} = args
+        const sql = `DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}

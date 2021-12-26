@@ -33,8 +33,8 @@ const ReportedPostTopBar = ({data, refetchPosts}) => {
                 <ReportedPostMenu 
                 refetchPosts={refetchPosts}
                 data={{
-                    postID: data.postID,
                     userID: data.userID,
+                    groupID: data.groupID
                 }}/>
             </span>}
         </>

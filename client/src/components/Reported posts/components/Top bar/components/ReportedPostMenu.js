@@ -7,20 +7,22 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const ReportedPostMenu = ({data, refetchPosts}) => {
-    const [delete_post] = useMutation(DELETE_POST)
+    const [remove_user] = useMutation(REMOVE_USER)
 
     const handleRemove = () => {
-        try {delete_post({
-            variables: {postID: data.postID}
-        }).then(()=>refetchPosts())}
-        catch{}
+        remove_user({
+            variables: {
+                userID: data.userID,
+                groupID:data.groupID
+            }
+        }).then(()=>refetchPosts())
     }
 
     return (
         <>
             <div className='post-options-menu' style={{width:'fit-content'}}>
                 <ul>
-                    <li onClick={()=>handleRemove()}><FontAwesomeIcon icon='times' /> Remove user</li>
+                    <li onClick={handleRemove}><FontAwesomeIcon icon='times' /> Remove user</li>
                 </ul>
             </div>
         </>
@@ -30,10 +32,10 @@ const ReportedPostMenu = ({data, refetchPosts}) => {
 export default ReportedPostMenu
 
 
-const DELETE_POST = gql`
-    mutation delete_post($postID: Int!){
-        delete_post(postID: $postID){
-            postID
+const REMOVE_USER = gql`
+    mutation($userID: Int!, $groupID: Int!){
+        remove_group_user(userID: $userID, groupID: $groupID){
+            userID
         }
     }
 `

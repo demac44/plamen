@@ -14,9 +14,9 @@ const ReportedPost = ({post, refetchPosts}) => {
                     name: post.first_name+' '+post.last_name,
                     pfp:post.profile_picture,
                     timestamp: post.date_posted,
-                    postID: post.postID,
                     userID: post.userID,
-                    username: post.username
+                    username: post.username,
+                    groupID: post.groupID
             }}/>
             <PostMedia data={{
                 url:post.url,

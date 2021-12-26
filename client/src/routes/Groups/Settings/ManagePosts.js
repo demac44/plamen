@@ -53,7 +53,8 @@ const ManagePosts = ({isLogged}) => {
 
                             <div className='container-posts'>
                                 {data?.get_group_reported_posts.length > 0 
-                                    && data?.get_group_reported_posts?.map(post => <ReportedPost refetchPosts={refetch} post={post} key={post.postID}/>)}
+                                    ? data?.get_group_reported_posts?.map(post => <ReportedPost refetchPosts={refetch} post={post} key={post.postID}/>)
+                                    : <p style={styles.noPosts}>No reported posts</p>}
                             </div>
 
                         </div>
@@ -114,5 +115,10 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'white'
+    },
+    noPosts:{
+        color:'white',
+        textAlign:'center',
+        marginTop:'100px'
     }
 }
