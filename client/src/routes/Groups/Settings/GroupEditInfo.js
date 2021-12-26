@@ -14,6 +14,7 @@ import EditGroupVisibility from '../../../components/Groups/components/Settings/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import EditGroupInfo from '../../../components/Groups/components/Settings/Manage info/EditGroupInfo'
 import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
+import EditTags from '../../../components/Groups/components/Settings/Manage info/EditTags'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
@@ -57,9 +58,22 @@ const GroupEditInfo = ({isLogged}) => {
                                 refetch={refetch}
                             />
 
-                            <EditGroupName data={data?.get_group} refetch={refetch}/>
+                            <EditGroupName 
+                                group_name={data?.get_group?.group_name} 
+                                groupid={groupid}
+                                refetch={refetch}/>
 
-                            <EditGroupInfo data={data?.get_group} refetch={refetch}/>
+                            <EditGroupInfo 
+                                group_description={data?.get_group?.group_description} 
+                                group_rules={data?.get_group?.group_rules} 
+                                groupid={groupid}
+                                refetch={refetch}/>
+
+                            <EditTags 
+                                gTags={data?.get_group?.group_tags} 
+                                refetch={refetch}
+                                groupid={groupid}
+                            />
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
                             <SettingsMenu groupid={groupid}/>
@@ -80,6 +94,7 @@ const GET_GROUP = gql`
             banner_image
             group_description
             group_rules
+            group_tags
             closed
         }
         get_group_user (groupID: $gid, userID: $uid){

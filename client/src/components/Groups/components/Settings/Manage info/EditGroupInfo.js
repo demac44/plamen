@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
-const EditGroupInfo = ({data, refetch}) => {
+const EditGroupInfo = ({group_description, group_rules, groupid, refetch}) => {
     const [change_info] = useMutation(CHANGE_INFO)
     const [updated, setUpdated] = useState(false)
 
@@ -15,7 +15,7 @@ const EditGroupInfo = ({data, refetch}) => {
 
         change_info({
             variables:{
-                gid: data.groupID,
+                gid: parseInt(groupid),
                 desc,
                 rules
             }
@@ -37,7 +37,8 @@ const EditGroupInfo = ({data, refetch}) => {
                         id='desc'
                         style={styles.textarea} 
                         placeholder='Community description'
-                    >{data.group_description}</textarea>
+                        defaultValue={group_description}
+                    />
                 </span>
 
                 <span>
@@ -47,7 +48,8 @@ const EditGroupInfo = ({data, refetch}) => {
                         id='rules'
                         style={styles.textarea} 
                         placeholder='Community rules'
-                    >{data.group_rules}</textarea>
+                        defaultValue={group_rules}
+                    />
                 </span>
 
             </div>
