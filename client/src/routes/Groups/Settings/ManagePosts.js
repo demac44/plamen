@@ -44,7 +44,7 @@ const ManagePosts = ({isLogged}) => {
                 {roles.includes(data?.get_group_user?.role) && <div className='container-main' style={{paddingTop:'20px'}}>
                         <div className='container-left'>
 
-                            <div style={styles.title}>
+                            <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
                                     <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
                                 </Link>
@@ -99,15 +99,6 @@ const GET_GROUP = gql`
     }
 `
 const styles = {
-    title:{
-        position:'relative',
-        width:'100%',
-        padding:'10px',
-        boxShadow:'5px 5px 10px black',
-        borderRadius:'10px',
-        color:'white',
-        textAlign:'center'
-    },
     arrowBack:{
         position:'absolute',
         top:'13px',

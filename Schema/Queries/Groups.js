@@ -218,3 +218,19 @@ export const GET_GROUP_REPORTED_POSTS = {
         return result
     }
 }
+
+export const GET_GROUP_JOIN_REQUESTS = {
+    type: new GraphQLList(GroupUserType),
+    args:{
+        groupID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {groupID} = args
+        const sql = `SELECT users.userID, first_name,last_name,username,profile_picture,groupID 
+                     FROM community_join_requests 
+                     JOIN users ON community_join_requests.userID=users.userID
+                     WHERE groupID=${groupID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}

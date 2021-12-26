@@ -21,7 +21,7 @@ const EditGroupName = ({group_name, groupid, refetch}) => {
     }
 
     return (
-        <form style={styles.box} className='flex-col-ctr' onSubmit={handleSubmit}>
+        <form style={styles.box} className='box flex-col-ctr' onSubmit={handleSubmit}>
             <p style={styles.p}>Change community name</p>
         
             {updated && <p style={styles.updated}>Updated!</p>}
@@ -57,12 +57,7 @@ const CHANGE_NAME = gql`
 
 const styles = {
     box:{
-        width:'100%',
-        padding:'10px',
-        boxShadow:'5px 5px 10px black',
-        borderRadius:'10px',
         color:'#aaa',
-        marginTop:'15px'
     },
     input:{
         height:'35px',

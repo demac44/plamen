@@ -10,15 +10,12 @@ import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
-import EditGroupVisibility from '../../../components/Groups/components/Settings/Manage info/EditGroupVisibility'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import EditGroupInfo from '../../../components/Groups/components/Settings/Manage info/EditGroupInfo'
-import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
-import EditTags from '../../../components/Groups/components/Settings/Manage info/EditTags'
+import JoinRequestsBox from '../../../components/Groups/components/Settings/Manage users/Join requests/JoinRequestsBox'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
-const GroupEditInfo = ({isLogged}) => {
+const GroupSettings = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -44,36 +41,18 @@ const GroupEditInfo = ({isLogged}) => {
                 </div>
                 {roles.includes(data?.get_group_user?.role) && <div className='container-main' style={{paddingTop:'20px'}}>
                         <div className='container-left'>
-
                             <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
                                     <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
                                 </Link>
-                                <h3>Community settings</h3>
+                                <h3>Join requests</h3>
                             </div>
 
-                            <EditGroupVisibility 
-                                visibility={data?.get_group?.closed} 
-                                groupid={groupid}
+                            <JoinRequestsBox 
+                                requests={data?.get_group_join_requests}
                                 refetch={refetch}
                             />
 
-                            <EditGroupName 
-                                group_name={data?.get_group?.group_name} 
-                                groupid={groupid}
-                                refetch={refetch}/>
-
-                            <EditGroupInfo 
-                                group_description={data?.get_group?.group_description} 
-                                group_rules={data?.get_group?.group_rules} 
-                                groupid={groupid}
-                                refetch={refetch}/>
-
-                            <EditTags 
-                                gTags={data?.get_group?.group_tags} 
-                                refetch={refetch}
-                                groupid={groupid}
-                            />
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
                             <SettingsMenu groupid={groupid}/>
@@ -84,7 +63,7 @@ const GroupEditInfo = ({isLogged}) => {
     )
 }
 
-export default GroupEditInfo
+export default GroupSettings
 
 const GET_GROUP = gql`
     query($gid: Int!, $uid: Int!){
@@ -92,13 +71,18 @@ const GET_GROUP = gql`
             groupID
             group_name
             banner_image
-            group_description
-            group_rules
-            group_tags
-            closed
         }
         get_group_user (groupID: $gid, userID: $uid){
             role
+        }
+        get_group_join_requests(groupID: $gid){
+            userID
+            groupID
+            first_name
+            last_name
+            username
+            groupID
+            profile_picture
         }
     }
 `
@@ -110,5 +94,10 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'white'
+    },
+    noPosts:{
+        color:'white',
+        textAlign:'center',
+        marginTop:'100px'
     }
 }

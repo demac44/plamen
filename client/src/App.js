@@ -39,6 +39,7 @@ const UserInfo = lazy(()=>import('./routes/Profile/Settings/UserInfo'))
 const GroupSettings = lazy(()=>import('./routes/Groups/Settings/GroupSettings'))
 const GroupEditInfo = lazy(()=>import('./routes/Groups/Settings/GroupEditInfo'))
 const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
+const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
               <Route exact path='/community/:groupid/settings'>{isLogged ? <GroupSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/edit_info'>{isLogged ? <GroupEditInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/manage_posts'>{isLogged ? <ManagePosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/community/:groupid/settings/join_requests'>{isLogged ? <JoinRequests isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </Suspense>
           </Switch>}
       </div>

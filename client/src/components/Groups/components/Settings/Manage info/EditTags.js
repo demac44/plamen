@@ -28,7 +28,7 @@ const EditTags = ({gTags, groupid}) => {
     }
 
     return (
-        <div className='flex-col-ctr' style={styles.box}>
+        <div className='box flex-col-ctr' style={styles.box}>
             <p style={{fontSize:'18px'}}>Edit community tags</p>
 
             {updated && <p style={styles.updated}>Updated!</p>}
@@ -64,12 +64,7 @@ export default EditTags
 
 const styles = {
     box:{
-        width:'100%',
-        padding:'10px',
-        boxShadow:'5px 5px 10px black',
-        borderRadius:'10px',
         color:'#aaa',
-        marginTop:'15px'
     },
     tag:{
         padding:'5px 10px',

@@ -214,13 +214,15 @@ export const ACCEPT_REQUEST = {
         userID:{type:GraphQLInt},
         groupID:{type:GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM group_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        const sql2 = `INSERT INTO community_members (groupID, userID, roleID, date_joined)
-                        VALUES (${groupID}, ${userID}, 4, null)`
-        connection.query(sql)
-        connection.query(sql2)
+        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
+        const sql2 = `INSERT INTO community_members (groupID, userID, roleID)
+                        VALUES (${groupID}, ${userID}, 4)`
+        await connection.promise().query(sql2).then(()=>{
+            connection.query(sql)
+            return
+        })
         return args
     }
 }

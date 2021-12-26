@@ -86,7 +86,15 @@ li{
     left: 0;
     z-index: 100000000000000000000;
 }
-
+.box{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 5px 5px 10px black;
+    border-radius: 10px;
+    color: white;
+    margin-top: 15px;
+}
 
 /* SEARCH PAGE */
 

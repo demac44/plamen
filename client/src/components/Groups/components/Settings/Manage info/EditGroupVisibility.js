@@ -17,7 +17,7 @@ const EditGroupVisibility = ({visibility, groupid, refetch}) => {
     }
 
     return (
-        <div style={styles.box} className='flex-h'>
+        <div style={styles.box} className='box flex-h'>
             <p>Change community visibility: </p>
             <div style={styles.switchBox} onClick={handleChange}>
                 <div style={{...styles.switch, 
@@ -41,12 +41,7 @@ const CHANGE_VISIBILITY = gql`
 
 const styles = {
     box:{
-        width:'100%',
-        padding:'10px',
-        boxShadow:'5px 5px 10px black',
-        borderRadius:'10px',
         color:'#aaa',
-        marginTop:'15px'
     },
     switchBox:{
         position:'relative',

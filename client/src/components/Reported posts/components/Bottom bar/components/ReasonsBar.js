@@ -14,7 +14,7 @@ export default ReasonsBar
 const styles = {
     tag:{
         padding:'5px 10px',
-        backgroundColor:'darkred',
+        backgroundColor:'#91211e',
         fontSize:'14px',
         color:'white',
         height:'fit-content',
