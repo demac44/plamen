@@ -237,3 +237,17 @@ export const DENY_REQUEST = {
         return args
     }
 }
+
+export const CHANGE_VISIBILITY = {
+    type: GroupType,
+    args: {
+        groupID:{type:GraphQLInt},
+        closed: {type: GraphQLBoolean}
+    },
+    resolve(_, args){
+        const {groupID, closed} = args
+        const sql = `UPDATE communities SET closed=${!closed} WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}

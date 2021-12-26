@@ -9,7 +9,7 @@ import { ADD_GROUP_CHAT_USER, CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELET
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
-import { ACCEPT_REQUEST, ADD_GP_COMMENT, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_REQUEST, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
+import { ACCEPT_REQUEST, ADD_GP_COMMENT, CHANGE_VISIBILITY, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_REQUEST, REMOVE_SAVED_GP, SAVE_GP } from "./Mutations/Groups.js";
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
@@ -147,6 +147,7 @@ const RootMutation = new GraphQLObjectType({
         remove_comment_notif: REMOVE_COMMENT_NOTIF,
         // groups
         create_group: CREATE_GROUP,
+        change_group_visibility: CHANGE_VISIBILITY,
         // group posts
         create_group_post: CREATE_GROUP_POST,
         delete_group_post: DELETE_GROUP_POST,

@@ -13,6 +13,7 @@ import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
@@ -44,15 +45,20 @@ const GroupMembers = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-profile'>
                         {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data?.get_group_user}/>}
-                        <GroupNavbar/>
+                        <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
                         {!loading && <TagsBox tags={tags}/>}                        
                     </div>
                         <div className='container-main'>
                             <div className='container-left'>
                                 {!loading &&
-                                ((!data.get_group.closed || data.get_group_user) ?
-                                <MembersBox members={data.get_group_members}/>
-                                : <p style={styles.p}><i className='fas fa-lock'></i> Join to see community members</p>)}
+                                ((data.get_group_user) ?
+
+                                    <MembersBox members={data.get_group_members}/>
+
+                                    : <span className='flex-ctr' style={styles.locked}>
+                                        <FontAwesomeIcon icon='lock' color='white'/>
+                                        <p style={{marginLeft:'10px'}}>Join to see community members!</p>
+                                    </span>)}
                             </div>
                             <div className='container-right'>
                                {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
@@ -95,8 +101,9 @@ const GET_GROUP = gql`
     }
 `
 const styles = {
-    p: {marginTop:'60px', 
-        color:'white', 
-        textAlign:'center', 
-        width:'100%'}
+    locked:{
+        color:'white',
+        width:'100%',
+        height:'100px'
+    }
 }

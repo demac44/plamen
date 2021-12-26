@@ -18,6 +18,7 @@ import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
 import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
@@ -50,16 +51,24 @@ const Group = ({isLogged}) => {
                 <Sidebar/>
                 <div className='container-profile'>
                     {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
-                    <GroupNavbar groupid={groupid}/>
+                    <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
                     {!loading && <TagsBox tags={tags}/>}                        
                 </div>
                 <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
+                            {(data?.get_group?.closed && !data?.get_group_user) && 
+                                <span className='flex-ctr' style={styles.locked}>
+                                    <FontAwesomeIcon icon='lock' color='white'/>
+                                    <p style={{marginLeft:'10px'}}>Join community to see posts!</p>
+                                </span>}
+                    
                             {loading ? <PostLoader/> : 
                             <>
                                 {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
-                                {data.get_group_posts.length > 0 ? <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
-                                    : <NoPosts/>}
+                                {(!data?.get_group?.closed || data?.get_group_user) && 
+                                    (data.get_group_posts.length > 0
+                                    ? <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
+                                    : <NoPosts/>)}
                             </>}
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
@@ -101,16 +110,16 @@ const GET_GROUP = gql`
         }
         get_group_user (groupID: $gid, userID: $uid){
             role
-            permissions
         }
         get_group_members(groupID:$gid){
-            username
-            first_name
-            last_name
             userID
-            profile_picture
-            date_joined
-            role
         }
     }
 `
+const styles = {
+    locked:{
+        color:'white',
+        width:'100%',
+        height:'200px'
+    }
+}
