@@ -23,7 +23,12 @@ const ReportedPost = ({post, refetchPosts}) => {
                 type:post.type
             }}/>
             <PostTextBar post_text={post.post_text}/>
-            <ReportedPostBBar postID={post.postID} reportID={post.reportID} refetchPosts={refetchPosts}/>
+            <ReportedPostBBar 
+                postID={post.postID} 
+                reportID={post.reportID} 
+                refetchPosts={refetchPosts}
+                reasons={post.reasons}
+            />
         </div>
     )
 }
