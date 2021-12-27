@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MemberBoxMNG from './MemberBoxMNG'
 
 const UsersContainer = ({members, refetch, currentUserRole}) => {
+    const [list, setList] = useState([...members])
+    const [query, setQuery] = useState('')
+
+
+    useEffect(()=>{
+        setList(filterUsers(members, query))
+    }, [query, members])
+
     return (
         <div className='box'>
-            {members.map(member => <MemberBoxMNG 
+            <input 
+                type='text' 
+                className='input' 
+                placeholder='Search community members'
+                style={styles.input}
+                value={query}
+                onChange={(e)=>setQuery(e.target.value)}
+            />
+
+            {list.map(member => <MemberBoxMNG 
                                         member={member} 
                                         key={member.userID}
                                         refetch={refetch}
@@ -17,8 +34,7 @@ const UsersContainer = ({members, refetch, currentUserRole}) => {
 export default UsersContainer
 
 const filterUsers = (data, query) => {
-    if(query.length <= 0) return []
-    return data.get_users.filter((user)=> {
+    return data.filter((user)=> {
         const str1 = user.first_name+user.last_name+user.username
         const str2 = user.first_name+user.username+user.last_name
 
@@ -36,4 +52,14 @@ const filterUsers = (data, query) => {
                 || query.includes(user.username.toLowerCase())
             
     })
+}
+
+const styles = {
+    input:{
+        height:'35px',
+        marginBottom:'10px',
+        backgroundColor:'#1f1f1f',
+        border:'1px solid #2f2f2f',
+        color:'#aaa'
+    }
 }

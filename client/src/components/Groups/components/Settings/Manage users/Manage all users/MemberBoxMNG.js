@@ -1,5 +1,5 @@
+import React, { useCallback, useEffect, useState, memo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../../../../../General components/Avatar'
 import RemoveBtn from './RemoveBtn'
@@ -60,7 +60,7 @@ const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
     )
 }
 
-export default MemberBoxMNG
+export default memo(MemberBoxMNG)
 
 
 const styles = {
