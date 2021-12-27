@@ -6,25 +6,14 @@ import SearchDrop from './SearchDrop'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const SEARCH_USERS = gql`
-    query ($limit: Int, $offset: Int, $userID: Int!) {
-         get_users (limit: $limit, offset: $offset, userID: $userID){
-            userID
-            first_name
-            last_name
-            username
-            profile_picture
-    }
-}`
-
 const SearchBar = ({chat, isLogged, handleOpen}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const [dropdown, setDropdown] = useState(false)
     const [searchHistory, setSearchHistory] = useState([])
     const [query, setQuery] = useState('')
-    const {loading, error, data} = useQuery(SEARCH_USERS, {
+    const {loading, error, data} = useQuery(SEARCH, {
         variables:{
-            limit:10,
+            limit:5,
             offset:0,
             userID: ls.userID
         }
@@ -90,3 +79,20 @@ const styles ={
         cursor:'pointer'
     }
 }
+
+const SEARCH = gql`
+    query ($limit: Int, $offset: Int, $userID: Int!) {
+         get_users (limit: $limit, offset: $offset, userID: $userID){
+            userID
+            first_name
+            last_name
+            username
+            profile_picture
+        }
+        get_all_groups (limit: $limit, offset: $offset) {
+            groupID
+            group_name
+            banner_image
+        }
+    }
+`

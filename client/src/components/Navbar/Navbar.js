@@ -2,6 +2,8 @@ import React, { useState, useEffect, memo, useCallback } from 'react'
 
 import '../../App.css'
 import '../../General.css'
+import './Navbar.css'
+
 import Logo from '../General components/Logo'
 import Dropdown from './Dropdown'
 import SearchBar from './SearchBar'
@@ -10,32 +12,12 @@ import Avatar from '../General components/Avatar'
 
 import {Link} from 'react-router-dom'
 
-import './Navbar.css'
 
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
 import NotficationsMenu from './NotficationsMenu'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
-const NEW_MESSAGE = gql`
-    subscription {
-        newMsgNotification {
-            chatID
-            sender_id
-            receiver_id
-            Nid
-        }
-    }
-`
-
-const COUNT_MSGS = gql`
-    query($rid:Int!){
-        count_newMsgs(receiver_id: $rid){
-            msgCount 
-        }
-    }
-`
 
 const Navbar = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
@@ -136,3 +118,22 @@ const styles = {
         fontSize:'13px'
     }
 }
+
+const NEW_MESSAGE = gql`
+    subscription {
+        newMsgNotification {
+            chatID
+            sender_id
+            receiver_id
+            Nid
+        }
+    }
+`
+
+const COUNT_MSGS = gql`
+    query($rid:Int!){
+        count_newMsgs(receiver_id: $rid){
+            msgCount 
+        }
+    }
+`

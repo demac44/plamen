@@ -19,7 +19,7 @@ import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
 import { BLOCK_USER, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_REPORTED_POSTS, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
+import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_REPORTED_POSTS, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
@@ -71,15 +71,16 @@ const RootQuery = new GraphQLObjectType({
         get_user_stories: GET_USER_STORIES,
         // notifications
         get_notifications: GET_NOTIFICATIONS,
-        //groups
+        //communities
         get_groups:GET_GROUPS,
         get_group: GET_GROUP,
-        // group users
+        get_all_groups: GET_ALL_GROUPS,
+        // community users
         get_group_members: GET_GROUP_MEMBERS,
         get_group_user: GET_GROUP_USER,
         if_requested: IF_REQUESTED,
         get_group_join_requests: GET_GROUP_JOIN_REQUESTS,
-        //group posts
+        //community posts
         get_group_posts: GET_GROUP_POSTS,
         get_group_post_comments: GET_GROUP_POST_COMMENTS,
         get_group_post_likes: GET_GROUP_POST_LIKES,

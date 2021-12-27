@@ -11,34 +11,29 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import MyGroupsList from '../../components/General components/MyGroupsList.js'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
 import UserLoader from '../../components/General components/Loaders/UserLoader.js'
-
-const SEARCH_USERS = gql`
-    query ($limit: Int, $offset: Int) {
-         get_users (limit: $limit, offset: $offset){
-            userID
-            first_name
-            last_name
-            username
-            profile_picture
-    }
-}`
+import CommunitySearchBar from '../../components/Navbar/CommunitySearchBar'
 
 
 const Search = ({isLogged}) => {
+    const ls = JSON.parse(localStorage.getItem('user'))
     const {query} = useParams()
     const [users, setUsers] = useState([])
     const [fetch, setFetch] = useState(true)
+    const [fetchComm, setFetchComm] = useState(true)
+    const [communities, setCommunities] = useState([])
 
     const {loading, data, error, fetchMore} = useQuery(SEARCH_USERS, {
         variables:{
             limit:15,
-            offset:0
+            offset:0,
+            userID: ls.userID
         }
     })
 
     useEffect(()=>{
         handleSearchHistory(query)
-        data?.get_users && setUsers(filterUsers(data, query))
+        setUsers(filterUsers(data?.get_users, query))
+        setCommunities(filterCommunities(data?.get_all_groups, query))
     }, [data, query])
     
     if(error) throw error 
@@ -46,16 +41,34 @@ const Search = ({isLogged}) => {
     const loadMore = () => {
         fetchMore({
             variables:{
-                offset:users.length,
+                offset:data?.get_users?.length,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
-                if(fetchMoreResult.get_users.length < 1) {
+                if(fetchMoreResult?.get_users?.length < 1) {
                     setFetch(false)
                     return
                 }
                 return Object.assign({}, prev, {
-                  users: [...users, ...fetchMoreResult.get_users]
+                  get_users: [...data?.get_users, ...fetchMoreResult?.get_users]
+                });
+              }
+        })
+    }
+
+    const loadMoreComm = () => {
+        fetchMore({
+            variables:{
+                offset:data?.get_all_groups?.length,
+            },
+            updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if(fetchMoreResult?.get_all_groups?.length < 1) {
+                    setFetchComm(false)
+                    return
+                }
+                return Object.assign({}, prev, {
+                    get_all_groups: [...data?.get_all_groups, ...fetchMoreResult?.get_all_groups]
                 });
               }
         })
@@ -68,8 +81,10 @@ const Search = ({isLogged}) => {
             <div className='wrapper'>
                 <Sidebar/>
                 <div className='container-main'>
-                    <div className='container-left'>
-                        <p style={styles.title}>Search results</p>
+                    <div className='container-left flex-col-ctr'>
+                        <p style={{marginBottom:'20px'}} className='box flex-ctr'>Search results</p>
+
+                        {(users?.length>0) && <h4 style={{...styles.commTitle}}>Users</h4>}
 
                         {loading ? (
                             <>
@@ -79,10 +94,23 @@ const Search = ({isLogged}) => {
                                 <UserLoader key='4'/>
                             </>
                         )
-                        : (users.length < 1 ? <p style={{color:'white'}}>No results</p>
-                            : users.map(user => <UserSearchBar user={user} key={user.userID}/>))}
+                        : (users?.length < 1 ? <p style={{color:'white'}}>No results</p>
+                            : users?.map(user => <UserSearchBar user={user} key={user.userID}/>))}
 
-                        {(!loading && fetch) && <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
+                        {(!loading && fetch && users?.length>=15) && 
+                            <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
+
+                        {(communities?.length>0) && <h4 style={{...styles.commTitle}}>Communities</h4>}
+
+
+                        {!loading && communities?.map(community => <CommunitySearchBar 
+                                                                        comm={community} 
+                                                                        key={community.groupID}
+                                                                        dropdownCallback={()=>{return}}
+                                                                    />)}
+
+                        {(!loading && fetchComm && communities?.length>=15) && 
+                            <div style={styles.loadMore} onClick={loadMoreComm}>Load more</div>}
 
                     </div>
                     <div className='container-right' style={styles.containerRight}>
@@ -98,37 +126,39 @@ const Search = ({isLogged}) => {
 export default Search
 
 const styles = {
-    title:{
-        marginBottom:'20px',
-        color:'white',
-        width:'100%',
-        padding:'20px',
-        backgroundColor:'#1b1b1b',
-        textAlign:'center',
-        borderRadius:'10px'
-    },
     loadMore:{
-        width:'100%',
+        width:'150px',
         padding:'5px',
         textAlign:'center',
-        backgroundColor:'#1b1b1b',
         color:'white',
         cursor:'pointer',
-        marginTop:'10px',
-        borderRadius:'10px'
+        margin:'10px 0 10px 0',
+        borderRadius:'10px',
+        border:'1px solid #2f2f2f',
+        fontSize:'14px'
     },
     containerRight:{
         position:'fixed', 
         top:'80px', 
         right:'20px', 
         padding:'0 10px'
+    },
+    commTitle:{
+        width:'100%',
+        textAlign:'center',
+        color:'white',
+        padding:'5px',
+        backgroundColor:'#1f1f1f', 
+        border: '1px solid #2f2f2f',
+        marginBottom:'5px',
+        borderRadius:'10px'
     }
 }
 
 
 const filterUsers = (data, query) => {
     if(query.length <= 0) return []
-    return data.get_users.filter((user)=> {
+    return data?.filter((user)=> {
         const str1 = user.first_name+user.last_name+user.username
         const str2 = user.first_name+user.username+user.last_name
 
@@ -157,3 +187,28 @@ const handleSearchHistory = (query) => {
     localStorage.setItem('search-history', JSON.stringify({search_history:[...sh.search_history, query].filter(onlyUnique)}))
     return null
 }
+
+const filterCommunities = (data, query) => {
+    if(query.length <= 0) return []
+    return data?.filter(community => {
+        return community.group_name.toLowerCase().includes(query.toLowerCase()) 
+                || query.toLowerCase().includes(community.group_name.toLowerCase())
+    })
+}
+
+const SEARCH_USERS = gql`
+    query ($limit: Int!, $offset: Int!, $userID: Int!) {
+         get_users (limit: $limit, offset: $offset, userID: $userID){
+            userID
+            first_name
+            last_name
+            username
+            profile_picture
+        }
+        get_all_groups (limit: $limit, offset: $offset) {
+            groupID
+            group_name
+            banner_image
+        }
+    }
+`

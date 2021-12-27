@@ -5,6 +5,24 @@ import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from '../TypeDefs/Likes.js';
 import { GroupReportedPost } from '../TypeDefs/Report.js';
 
+export const GET_ALL_GROUPS = {
+    type: new GraphQLList(GroupType),
+    args:{
+        limit: {type: GraphQLInt},
+        offset: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {limit, offset} = args
+        const sql = `SELECT communities.groupID, group_name, banner_image
+                     FROM communities
+                     JOIN community_info ON community_info.groupID=communities.groupID
+                     LIMIT ${limit} OFFSET ${offset}`
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        return result
+    }   
+}
+
+
 export const GET_GROUPS = {
     type: new GraphQLList(GroupType),
     args:{
@@ -16,10 +34,8 @@ export const GET_GROUPS = {
                      FROM community_members 
                      JOIN communities ON community_members.groupID=communities.groupID 
                      WHERE community_members.userID=${userID}`
-        const result = await connection.promise().query(sql).then((res)=>{
-            return res
-        })
-        return result[0]
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        return result
     }    
 }      
 

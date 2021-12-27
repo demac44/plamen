@@ -88,6 +88,7 @@
     padding: 5px;
     cursor: pointer;
     transition: ease .3s;
+    border-radius: 5px;
 }
 .search-user-box p, .search-user-box h5{
     color: white;
