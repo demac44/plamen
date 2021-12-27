@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react'
+import React, { memo, useCallback } from 'react'
 import EmojiAnimals from './EmojiAnimals'
 import EmojisActivities from './EmojisActivities'
 import EmojisFood from './EmojisFood'
@@ -16,7 +16,7 @@ const EmojisBox = ({emojiCB, visible}) => {
         } else {
             localStorage.setItem('recent-emojis', JSON.stringify({emojis: [val, ...lsEmojis.emojis].filter(onlyUnique)}))
         }
-    })
+    }, [])
 
     return (
         <div className='emojis-box' style={{visibility: visible ? 'visible' : 'hidden'}}>

@@ -16,7 +16,7 @@ const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 const GroupSettings = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const {groupid} = useParams()
-    const {data, loading, refetch} = useQuery(GET_GROUP, {
+    const {data, loading} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
             uid: ls.userID

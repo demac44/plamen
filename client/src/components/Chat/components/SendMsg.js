@@ -43,7 +43,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
         setEmojis(false)
         if(msgText.trim().length < 1 && !media){
             return
-        } else if (msgText.length > 5000){
+        } else if (msgText.length > 6000){
             setLengthErr(true)
             return
         } else if (media) {
@@ -111,13 +111,14 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 
     const emojiCB = useCallback(val => {
         setMsgText(msgText+val)
-    })
+    }, [msgText])
 
     return (
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
             <EmojisBox emojiCB={emojiCB} visible={emojis}/>
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
+                {lengthErr && <p style={styles.lenErrMsg}>Message too long! Max. characters allowed: 6000</p>}
                 <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
                 <div>
                     <label htmlFor='file-input'>
@@ -179,5 +180,13 @@ const styles = {
         fontSize:'20px',
         color:'white',
         cursor:'pointer'
+    },
+    lenErrMsg:{
+        position:'absolute',
+        top:'-30px',
+        padding:'5px 10px',
+        backgroundColor:'#1b1b1b',
+        color:'red',
+        borderRadius:'10px 10px 0 0'
     }
 }

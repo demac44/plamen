@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
@@ -41,7 +41,6 @@ const LikePost = ({postID, userID}) => {
     }
     return (
         <FontAwesomeIcon icon='heart'
-            style={{...styles.likeBtn}}
             style={{...styles.likeBtn, color: ifLiked.loading ? 'white' : (ifLiked?.data?.if_liked || liked) ? '#a50202' : 'white'}}
             onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
         />

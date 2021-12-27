@@ -4,7 +4,6 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const EditTags = ({gTags, groupid}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
     const [tags, setTags] = useState(gTags.split(','))
     const [updated, setUpdated] = useState(false)
     const [edit_tags] = useMutation(EDIT_TAGS)
@@ -95,7 +94,6 @@ const styles = {
     },
     updated:{
         padding:'5px 10px',
-        marginTop:'10px',
         backgroundColor:'#00752d',
         borderRadius:'10px',
         marginTop:'15px',

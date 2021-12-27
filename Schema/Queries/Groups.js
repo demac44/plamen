@@ -175,7 +175,7 @@ export const GET_GROUP_MEMBERS = {
     },
     async resolve(_, args){
         const {groupID} = args
-        const sql = `SELECT username,first_name,last_name,community_members.userID, profile_picture, date_joined, role
+        const sql = `SELECT username,first_name,last_name,community_members.userID, profile_picture, date_joined, role, groupID
                      FROM community_members
                      JOIN users ON community_members.userID=users.userID
                      JOIN community_roles ON community_roles.roleID=community_members.roleID

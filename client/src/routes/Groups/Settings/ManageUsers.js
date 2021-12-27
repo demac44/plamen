@@ -11,7 +11,6 @@ import { Link, Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ReportedPost from '../../../components/Reported posts/ReportedPost'
 import UsersContainer from '../../../components/Groups/components/Settings/Manage users/Manage all users/UsersContainer'
 
 
@@ -52,7 +51,11 @@ const ManageUsers = ({isLogged}) => {
                                 <h3>Manage users</h3>
                             </div>
 
-                            <UsersContainer members={data?.get_group_members}/>
+                            <UsersContainer 
+                                members={data?.get_group_members} 
+                                refetch={refetch}
+                                currentUserRole={data?.get_group_user}
+                            />
 
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
@@ -85,6 +88,7 @@ const GET_GROUP = gql`
             profile_picture
             date_joined
             role
+            groupID
         }
     }
 `

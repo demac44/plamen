@@ -1,10 +1,15 @@
 import React from 'react'
 import MemberBoxMNG from './MemberBoxMNG'
 
-const UsersContainer = ({members}) => {
+const UsersContainer = ({members, refetch, currentUserRole}) => {
     return (
         <div className='box'>
-            {members.map(member => <MemberBoxMNG member={member} key={member.userID}/>)}
+            {members.map(member => <MemberBoxMNG 
+                                        member={member} 
+                                        key={member.userID}
+                                        refetch={refetch}
+                                        currentUserRole={currentUserRole}
+                                    />)}
         </div>
     )
 }

@@ -125,7 +125,7 @@ const CreatePost = ({refetch}) => {
     }, [])
     const emojiCB = useCallback(val => {
         setPostText(postText+val)
-    })
+    }, [postText])
 
     return (
         <form className="create-post-box" onSubmit={handleSubmit}>

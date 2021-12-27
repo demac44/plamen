@@ -5,7 +5,7 @@ import Avatar from '../../../../../General components/Avatar'
 import RemoveBtn from './RemoveBtn'
 import RolesMenu from './RolesMenu'
 
-const MemberBoxMNG = ({member}) => {
+const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
     const [rolesMenu, setRolesMenu] = useState(false)
     const [tagColor, setTagColor] = useState('')
     const [role, setRole] = useState(member.role)
@@ -20,6 +20,7 @@ const MemberBoxMNG = ({member}) => {
 
     const setRoleCb = useCallback(val => {
         setRole(val)
+        setRolesMenu(false)
     }, [])
 
     return (
@@ -33,16 +34,27 @@ const MemberBoxMNG = ({member}) => {
             </Link>
 
             <div style={styles.rightBox} className='flex-ctr'>
-                {rolesMenu && <RolesMenu setRoleCb={setRoleCb}/>}
+                {rolesMenu && 
+                    <RolesMenu 
+                        setRoleCb={setRoleCb}
+                        userID={member.userID}
+                        groupID={member.groupID} 
+                    />}
 
-                <span className='flex-ctr' style={styles.rolesBox} onClick={()=>setRolesMenu(!rolesMenu)}>
+                <span className='flex-ctr' style={styles.rolesBox} onClick={()=> role!=='CREATOR' && setRolesMenu(!rolesMenu)}>
                     <p style={{...styles.roleTag, backgroundColor: tagColor}}>{role}</p>
-                    <FontAwesomeIcon icon='sort-down' size='lg' style={{marginTop:'-7px'}}/>
+                    {role!=='CREATOR' && <FontAwesomeIcon icon='sort-down' size='lg' style={{marginTop:'-7px'}}/>}
                 </span>
 
             </div>
             
-            <RemoveBtn/>
+            {role!=='CREATOR' &&
+                ((currentUserRole.role==='CREATOR' || (currentUserRole.role==='ADMIN' && role!=='ADMIN')) &&
+                <RemoveBtn 
+                    userID={member.userID} 
+                    groupID={member.groupID} 
+                    refetch={refetch}
+                />)}
 
         </div>
     )

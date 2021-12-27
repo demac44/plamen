@@ -110,7 +110,7 @@ const SendGroupMsg = ({chatID, loaderCallback, info}) => {
 
     const emojiCB = useCallback(val => {
         setMsgText(msgText+val)
-    })
+    }, [msgText])
 
     return (
         <>

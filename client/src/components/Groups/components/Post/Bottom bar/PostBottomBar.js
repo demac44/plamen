@@ -1,4 +1,4 @@
-import React, { useCallback, useState, memo } from 'react'
+import React, { useState, memo } from 'react'
 import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'

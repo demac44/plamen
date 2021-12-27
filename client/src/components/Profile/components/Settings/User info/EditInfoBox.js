@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import CountriesSelect from './CountriesSelect'
 
-import { cities } from '../../../../../Assets/cities'
 import CitiesSelect from './CitiesSelect'
 
 const EditInfoBox = ({data}) => {

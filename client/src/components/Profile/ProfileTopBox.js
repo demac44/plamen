@@ -30,7 +30,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
             isBlockedCB(data?.if_user_blocked)
         }
         return
-    }, [data])
+    }, [data, isBlockedCB, loading])
 
     const closeStoryCallback = useCallback(()=>{
         setOpenStory(false)

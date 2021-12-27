@@ -385,3 +385,21 @@ export const REMOVE_GROUP_USER = {
         return args
     }
 }
+
+export const CHANGE_MEMBER_ROLE = {
+    type: GroupUserType,
+    args:{
+        userID:{type: GraphQLInt},
+        groupID: {type: GraphQLInt},
+        roleID: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {userID, groupID, roleID} = args
+        const sql = `UPDATE community_members 
+                     SET roleID=${roleID} 
+                     WHERE groupID=${groupID} 
+                     AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}

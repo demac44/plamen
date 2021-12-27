@@ -59,6 +59,7 @@ export const GroupUserType = new GraphQLObjectType({
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
         role:{type:GraphQLString},
+        roleID:{type:GraphQLInt},
         permissions:{type:GraphQLString}
     })
 })

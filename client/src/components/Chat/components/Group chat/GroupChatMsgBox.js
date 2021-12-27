@@ -132,6 +132,7 @@ const GET_GROUP_MESSAGES = gql`
 const NEW_MESSAGE = gql`
     subscription {
         newGroupMessage {
+            msgID
             groupChatId
             msg_text
             userID

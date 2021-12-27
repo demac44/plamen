@@ -41,7 +41,7 @@ const Profile = ({isLogged}) => {
 
     const isBlockedCB = useCallback(val => {
         setUserBlocked(val)
-    })
+    }, [])
 
     
     useEffect(()=>{
