@@ -5,6 +5,7 @@ import { useMutation } from 'react-apollo'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+const roles = ['CREATOR', 'ADMIN', 'MODERATOR']
 
 const PostMenu = ({data, refetchPosts, handleReport}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -31,7 +32,7 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
             <div className='post-options-menu'>
                 <ul>
                     <li onClick={copyToClipboard}><FontAwesomeIcon icon='share' /> Share</li>
-                    {data.userID===ls.userID && <li onClick={handlePostDelete}>
+                    {(data.userID===ls.userID || roles.includes(data.role))&& <li onClick={handlePostDelete}>
                         <FontAwesomeIcon icon='trash-alt' 
                         /> Delete
                     </li>}

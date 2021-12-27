@@ -54,10 +54,6 @@
     padding: 5px;
     height: 70px;
 }
-
-
-
-
 /* group cards */
 .groups-grid{
     width: 100%;
@@ -179,6 +175,30 @@
     background-color: #2f2f2f;
     cursor: pointer;
 }
+
+
+.roles-menu{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: fit-content;
+    background-color: #1b1b1b;
+    z-index: 1000;
+    padding: 5px;
+    border: 1px solid #2f2f2f;
+}
+.roles-menu ul{
+    width: 100%;
+}
+.roles-menu li{
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+}
+.roles-menu li:hover{
+    background-color: #2f2f2f;
+}
+
 
 /* MEDIA QUERIES */
 

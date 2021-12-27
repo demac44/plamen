@@ -67,7 +67,10 @@ const Group = ({isLogged}) => {
                                 {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
                                 {(!data?.get_group?.closed || data?.get_group_user) && 
                                     (data.get_group_posts.length > 0
-                                    ? <GroupPosts posts={data.get_group_posts} refetchPosts={refetch}/>
+                                    ? <GroupPosts posts={data.get_group_posts} 
+                                                  role={data?.get_group_user?.role} 
+                                                  refetchPosts={refetch}
+                                                />
                                     : <NoPosts/>)}
                             </>}
                         </div>

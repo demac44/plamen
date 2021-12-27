@@ -14,16 +14,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo';
 
-import('@fortawesome/free-solid-svg-icons').then(i=>{
-  import('@fortawesome/fontawesome-svg-core').then(core =>{
-    core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
-      i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
-      i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
-      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-      i.faPhone, i.faIcons, i.faLock)
-    })
-})
-
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const Groups = lazy(()=>import('./routes/Groups/Groups'))
 const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
@@ -40,7 +30,17 @@ const GroupSettings = lazy(()=>import('./routes/Groups/Settings/GroupSettings'))
 const GroupEditInfo = lazy(()=>import('./routes/Groups/Settings/GroupEditInfo'))
 const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
 const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
+const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
 
+import('@fortawesome/free-solid-svg-icons').then(i=>{
+  import('@fortawesome/fontawesome-svg-core').then(core =>{
+    core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
+      i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
+      i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
+      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
+      i.faPhone, i.faIcons, i.faLock)
+    })
+})
 
 function App() {
   const dispatch = useDispatch()
@@ -101,6 +101,7 @@ function App() {
               <Route exact path='/community/:groupid/settings/edit_info'>{isLogged ? <GroupEditInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/manage_posts'>{isLogged ? <ManagePosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/join_requests'>{isLogged ? <JoinRequests isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/community/:groupid/settings/manage_users'>{isLogged ? <ManageUsers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
             </Suspense>
           </Switch>}
       </div>

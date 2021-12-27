@@ -44,6 +44,7 @@ const PostTopBar = ({data, refetchPosts}) => {
                 data={{
                     postID: data.postID,
                     userID: data.userID,
+                    role: data.role
                 }}/>
             </span>}
             {reportMenu && <ReportBox data={data} handleReportClose={handleReport}/>}

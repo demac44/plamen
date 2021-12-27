@@ -87,7 +87,6 @@ const GET_GROUP = gql`
         }
         get_group_user (groupID: $gid, userID: $uid){
             role
-            permissions
         }
         get_group_members(groupID:$gid){
             username
