@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
             last_name: result[0].last_name, 
             username: result[0].username,
             profile_picture: result[0].profile_picture,
+            status: result[0].show_status===1 ? true : false,
             currentUser: true,
         }
         bcrypt.compare(password, hashedPass).then(response => {

@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLString } from "graphql"
+import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
 import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
@@ -214,6 +214,20 @@ export const UNBLOCK_USER = {
     resolve(_, args){
         const {blockedId, blockerId} = args
         const sql = `DELETE FROM blocked_users WHERE ${blockerId} AND ${blockedId}`
+        connection.query(sql)
+        return args
+    }
+}
+
+export const CHANGE_ACTIVITY_STATUS = {
+    type: UserType,
+    args:{
+        userID: {type: GraphQLInt},
+        show_status: {type: GraphQLBoolean}
+    },
+    resolve(_, args){
+        const {userID, show_status} = args
+        const sql = `UPDATE users SET show_status=${show_status} WHERE userID=${userID}`
         connection.query(sql)
         return args
     }

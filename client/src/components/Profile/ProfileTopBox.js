@@ -17,6 +17,7 @@ import ActivityStatusBar from './components/ActivityStatusBar'
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
     const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const userLS = JSON.parse(localStorage.getItem('user'))
     const [blockBtn, setBlockBtn] = useState(false)
     const {loading, error, data} = useQuery(FETCH_INFO, {
         variables: {
@@ -55,7 +56,12 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 }}>
                     <Avatar size='170px' image={user?.profile_picture}/>
                 </div>
-                {!loading && <ProfileInfo info={info} last_seen={user.last_seen} blocked={data?.if_user_blocked}/>}
+                {!loading && <ProfileInfo 
+                                info={info} 
+                                last_seen={user.last_seen} 
+                                mystatus={userLS?.status}
+                                blocked={data?.if_user_blocked}
+                            />}
 
                 {(!loading && !data?.if_user_blocked) && (myprofile ? <ProfileEditBtn/> : (
                 <>
@@ -70,7 +76,8 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
 
                 {blockBtn && <BlockUserBtn userID={user.userID}/>}
                 
-                {!data?.if_user_blocked && <ActivityStatusBar last_seen={user.last_seen}/>}
+                {(!data?.if_user_blocked && userLS?.status && user?.show_status) 
+                    && <ActivityStatusBar last_seen={user.last_seen}/>}
             </div>
             
             {(!loading && openStory) && <Story 

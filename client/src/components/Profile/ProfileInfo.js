@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, memo } from 'react'
 import ActivityStatus from '../General components/ActivityStatus.js'
 import UsersList from '../General components/Users list/UsersList.js'
 
-const ProfileInfo = ({info, last_seen, blocked}) => {  
+const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {  
     const [follows, setFollows] = useState([])
     const [title, setTitle] = useState('')
     const [showList, setShowList] = useState(false)
@@ -31,14 +31,18 @@ const ProfileInfo = ({info, last_seen, blocked}) => {
                 
                 <span className='name-and-status-pf'>
                     <h4 style={styles.name}>{info.user.first_name+' '+info.user.last_name}</h4>    
-                    {!blocked && <ActivityStatus last_seen={last_seen}/>}
+                    
+                    {(!blocked && mystatus && info?.user?.show_status) && 
+                        <ActivityStatus last_seen={last_seen}
+                    />}
                 </span>
 
                 <h5 style={styles.username}>@{info.user.username}</h5>
 
-                {!blocked && <div className='status-991px'>
-                    <ActivityStatus last_seen={last_seen}/>
-                </div>}
+                {(!blocked && mystatus && info?.user?.show_status) && 
+                    <div className='status-991px'>
+                        <ActivityStatus last_seen={last_seen}/>
+                    </div>}
 
                 <div className='profile-top-box-stats flex-sb'>
                     <div 
