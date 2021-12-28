@@ -44,7 +44,7 @@ const ChangePassBox = ({uid}) => {
 
 
     return (
-        <div className='change-pass-box'>
+        <div className='change-pass-box box'>
             <p style={styles.title}>Change password</p>
             {errorr && <p style={styles.errorMsg}>{errorr}</p>}
             <form className='flex-col-ctr' onSubmit={handleChangePassword}>

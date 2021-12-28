@@ -17,7 +17,6 @@ const ShowActivity = () => {
                 status: !status
             }
         }).then(()=>{
-            localStorage.setItem('user', JSON.stringify({...user, status: !status}))
             setStatus(!status)
         })
     }

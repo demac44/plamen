@@ -74,16 +74,6 @@
     margin-left: 8px;
     word-wrap: normal;
 }
-/* my interests */
-
-.profile-interests-box{
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #2f2f2f;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    color: white;
-}
 .name-and-status-pf{
     display: flex;
     align-items: center;
@@ -130,13 +120,6 @@
 .edit-pfp-menu li:hover{
     background-color: #2f2f2f;
 }
-.change-pass-box{
-    width:100%;
-    padding:10px;
-    border:1px solid #2f2f2f;
-    border-radius:5px;
-    box-shadow:5px 5px 10px;
-}
 .change-pass-box input{
     width: 60%;
     height: 35px;
@@ -149,7 +132,7 @@
 .settings-arrow-back{
     position: absolute;
     left:15px;
-    top:14px;
+    top:13px;
     font-size: 20px;
     color: white;
     display: none;
@@ -213,7 +196,6 @@
 .select-city-drop p:hover{
     background-color: #3f3f3f;
 }
-
 
 /* MEDIA QUERIES */
 

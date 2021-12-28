@@ -8,6 +8,7 @@ import {useMutation} from 'react-apollo'
 import Avatar from '../../../../General components/Avatar'
 import { Link } from 'react-router-dom'
 import ShowActivity from './ShowActivity'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -76,14 +77,14 @@ const EditForm = ({handleMenu, uid}) => {
         <>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
 
-            <span style={{position:'relative'}}>
+            <div className='box flex-ctr'>
                 <Link to='/settings'>
-                    <i className='fas fa-arrow-left settings-arrow-back'/>
+                    <FontAwesomeIcon icon='arrow-left' className='settings-arrow-back'/>
                 </Link>
-                <h3 className='box flex-ctr'>
+                <h3>
                     Account settings
                 </h3>
-            </span>
+            </div>
 
             <ShowActivity/>
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CountriesSelect = ({setCountryCB}) => {
     return (
-        <select onChange={(e)=>setCountryCB(e.target.value)}>
+        <select className='country-select' onChange={(e)=>setCountryCB(e.target.value)}>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Albania">Albania</option>
             <option value="Algeria">Algeria</option>

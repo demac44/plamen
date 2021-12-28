@@ -28,7 +28,7 @@ const EditInterests = ({data, uid}) => {
     if(error) console.log(error);
 
     return (
-        <div className='profile-interests-box flex-col-ctr'>
+        <div className='flex-col-ctr box'>
             <p>Edit your interests</p>
 
             {updated && <p style={styles.updated}>Your interests are updated!</p>}

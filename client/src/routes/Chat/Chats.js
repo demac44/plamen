@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import Chat from './Chat'
@@ -9,7 +9,7 @@ import '../../components/Chat/Chat.css'
 const ChatCont = ({isLogged, isGroupChat}) => {
     return (
         <>
-            {window.innerWidth > 991 && <Navbar isLogged={isLogged}/>}
+            {window.innerWidth>991 && <Navbar isLogged={isLogged}/>}
             <AlternativeNavbar chat={true}/>
             <div className='wrapper'>
                 <div className='container-chat'>

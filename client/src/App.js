@@ -27,6 +27,7 @@ const Search = lazy(()=>import('./routes/Search/Search'))
 const AccountSettings = lazy(()=>import('./routes/Profile/Settings/AccountSettings'))
 const Settings = lazy(()=>import('./routes/Profile/Settings/Settings'))
 const UserInfo = lazy(()=>import('./routes/Profile/Settings/UserInfo'))
+const BlockedUsers = lazy(()=>import('./routes/Profile/Settings/BlockedUsers'))
 const GroupSettings = lazy(()=>import('./routes/Groups/Settings/GroupSettings'))
 const GroupEditInfo = lazy(()=>import('./routes/Groups/Settings/GroupEditInfo'))
 const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
@@ -101,6 +102,7 @@ function App() {
               <Route exact path='/settings'>{isLogged ? <Settings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/settings/account'>{isLogged ? <AccountSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/settings/info'>{isLogged ? <UserInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/settings/blocked_users'>{isLogged ? <BlockedUsers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               {/* chats */}
               <Route exact path='/chats'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/chat/:chatid'>{isLogged ? <Chats isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

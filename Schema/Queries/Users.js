@@ -117,3 +117,18 @@ export const IF_USER_BLOCKED = {
         return false
     }
 }
+
+export const GET_BLOCKED_USERS = {
+    type: new GraphQLList(UserType),
+    args: {
+        userID:{type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID} = args
+        const sql = `SELECT first_name,last_name,username,profile_picture,blockedId as userID FROM blocked_users
+                     JOIN users ON blockedId=users.userID 
+                     WHERE blockerId=${userID} AND disabled=false`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}

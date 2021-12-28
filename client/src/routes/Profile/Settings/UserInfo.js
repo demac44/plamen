@@ -12,6 +12,7 @@ import EditInterests from '../../../components/Profile/components/Settings/User 
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UserInfo = ({isLogged}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -29,14 +30,14 @@ const UserInfo = ({isLogged}) => {
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <span style={{position:'relative'}}>
+                        <div className='box flex-ctr'>
                             <Link to='/settings'>
-                                <i className='fas fa-arrow-left settings-arrow-back'/>
+                                <FontAwesomeIcon icon='arrow-left' className='settings-arrow-back'/>
                             </Link>
-                            <h3 style={{...styles.box, textAlign:'center', color:'white'}}>
+                            <h3>
                                 User info
                             </h3>
-                        </span>
+                        </div>
 
                         {!loading && <EditInterests data={data?.get_user_info?.interests} uid={uid}/>}
 
@@ -64,18 +65,6 @@ const UserInfo = ({isLogged}) => {
 }
 
 export default UserInfo
-
-
-const styles = {
-    box:{
-        position:'relative',
-        border:'1px solid #2f2f2f',
-        boxShadow:'5px 5px 10px black',
-        padding:'10px',
-        marginBottom:'15px',
-        borderRadius:'5px'
-    }
-}
 
 const USER_INFO = gql`
     query ($userID: Int!){
