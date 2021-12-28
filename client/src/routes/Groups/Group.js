@@ -19,17 +19,18 @@ import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
             limit:20,
             offset:0,
-            uid: ls.userID
+            uid
         }
     })
 

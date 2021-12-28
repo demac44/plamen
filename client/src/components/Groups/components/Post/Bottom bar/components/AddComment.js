@@ -1,16 +1,16 @@
 import React from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import { useSelector } from 'react-redux';
 
 
 const AddComment = ({postID, userID, refetchComments}) => {
-    let comment_text;
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [add_comment] = useMutation(ADD_GP_COMMENT) 
 
     const handleAddComment = (e) => {
         e.preventDefault()
-        comment_text = e.target.comment_text.value
+        const comment_text = e.target.comment_text.value
 
         if(comment_text.trim()===''){
             console.log('empty');
@@ -18,7 +18,7 @@ const AddComment = ({postID, userID, refetchComments}) => {
             add_comment({
                 variables:{
                     postID: postID,
-                    userID: ls.userID,
+                    userID: uid,
                     comment_text: comment_text,
                     rid: userID,
                 }

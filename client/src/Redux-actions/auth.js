@@ -1,13 +1,14 @@
+import axios from "axios"
 import jwt from "jsonwebtoken"
 
 export const authenticate = () => {
-    const token = localStorage.getItem("token")
+    const token = getCookie()
     let isAuth = false
     let user = {}
     if(token){
         jwt.verify(token, process.env.REACT_APP_JWT_SECRET, (err, res) =>{
             if (err) {
-                localStorage.removeItem('token')
+                logout()
                 isAuth = false
             }
             else {
@@ -21,3 +22,19 @@ export const authenticate = () => {
 
 
 }
+
+function getCookie() {
+    const cookie = document?.cookie?.split('; ')?.find(row => row.startsWith('x-auth-token='))?.split('=')[1];
+    return cookie
+}
+const logout = async () => {
+    await axios({
+        method:'post',
+        url:'http://localhost:8000/api/logout',
+        withCredentials: true
+    }).then(()=>{
+        localStorage.clear()
+        window.location.href = '/login'
+    })
+}
+  

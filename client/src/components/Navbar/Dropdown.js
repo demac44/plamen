@@ -1,10 +1,11 @@
 import React, {memo} from 'react'
+import { useSelector } from 'react-redux';
 import { NavLink, useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 const Dropdown = ({closeDropd}) => {
     const history = useHistory()
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
 
     const logout = async () => {
         await axios({
@@ -19,8 +20,8 @@ const Dropdown = ({closeDropd}) => {
     return (
        <div className="tn-dropdown-menu" onClick={()=>closeDropd()}>
             <ul>
-                <h5 style={styles.loggedAs}>Logged in as @{ls.username}</h5>
-                <NavLink to={"/profile/"+ls.username}><li>My profile</li></NavLink>
+                <h5 style={styles.loggedAs}>Logged in as @{usernm}</h5>
+                <NavLink to={"/profile/"+usernm}><li>My profile</li></NavLink>
                 <NavLink to="/login"><li>Change accounts</li></NavLink>
                 <NavLink to="/settings"><li>Settings</li></NavLink>
                 <NavLink to="/login"><li onClick={logout}>Log out</li></NavLink>

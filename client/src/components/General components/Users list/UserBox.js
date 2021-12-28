@@ -2,9 +2,10 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import Avatar from '../Avatar';
 import FollowButton from '../FollowButton';
+import { useSelector } from 'react-redux';
 
 const UserBox = ({user}) => {
-    const ls =JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
 
     return (
         <div className='users-list-user-box flex-sb'>
@@ -15,7 +16,7 @@ const UserBox = ({user}) => {
                     <p style={{fontSize:'12px'}}>@{user.username}</p>
                 </div>
             </NavLink>
-            {(user && (user.userID !== ls.userID)) && <FollowButton userID={user.userID}/>}
+            {(user && (user.userID !== uid)) && <FollowButton userID={user.userID}/>}
         </div>
     )
 }

@@ -54,7 +54,7 @@ const EditTags = ({gTags, groupid}) => {
                 {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
             </select>
 
-            <button style={styles.editBtn} onClick={handleEditTags} className='btn'>EDIT</button>
+            <button style={styles.editBtn} onClick={handleEditTags} className='btn'>SAVE</button>
         </div>
     )
 }

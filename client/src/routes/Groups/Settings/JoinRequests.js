@@ -12,16 +12,17 @@ import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import JoinRequestsBox from '../../../components/Groups/components/Settings/Manage users/Join requests/JoinRequestsBox'
+import { useSelector } from 'react-redux'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
 const GroupSettings = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
-            uid: ls.userID
+            uid
         }
     })
 

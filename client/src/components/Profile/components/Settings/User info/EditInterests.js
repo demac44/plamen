@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
-const EditInterests = ({data}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const EditInterests = ({data, uid}) => {
     const [tags, setTags] = useState(data.split(','))
     const [updated, setUpdated] = useState(false)
     const [edit_interests, {error}] = useMutation(EDIT_INTERESTS)
@@ -20,7 +19,7 @@ const EditInterests = ({data}) => {
 
         edit_interests({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 interests: tagsStr.slice(0,-1)
             }
         }).then(()=>setUpdated(true))

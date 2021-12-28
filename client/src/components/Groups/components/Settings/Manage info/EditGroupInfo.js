@@ -54,7 +54,7 @@ const EditGroupInfo = ({group_description, group_rules, groupid, refetch}) => {
 
             </div>
 
-            <button type='submit' className='btn' style={styles.btn}>EDIT</button>
+            <button type='submit' className='btn' style={styles.btn}>SAVE</button>
         </form>
     )
 }

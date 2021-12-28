@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
+import { useSelector } from 'react-redux';
 
 const ProfileFollowBtn = ({userID}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [isFollowing, setIsFollowing] = useState(false) 
     const [follow] = useMutation(FOLLOW)
     const [unfollow] = useMutation(UNFOLLOW)
     const [follow_notification] = useMutation(FOLLOW_NOTIFICATION)
 
     const {loading, data, error} = useQuery(IF_FOLLOWING,{
-        variables: {followerID: ls.userID, followedID: userID}
+        variables: {followerID: uid, followedID: userID}
     })
     
     useEffect(()=>{ 
@@ -21,7 +22,7 @@ const ProfileFollowBtn = ({userID}) => {
     const handleFollow = () => {
         follow({
             variables: {
-                followerID: ls.userID,
+                followerID: uid,
                 followedID: userID
             }
         })
@@ -29,7 +30,7 @@ const ProfileFollowBtn = ({userID}) => {
         .then(()=>follow_notification({
             variables:{
                 rid: userID,
-                sid: ls.userID
+                sid: uid
             }
         }))
     }
@@ -37,7 +38,7 @@ const ProfileFollowBtn = ({userID}) => {
     const handleUnfollow = () => {
         unfollow({
             variables: {
-                followerID: ls.userID,
+                followerID: uid,
                 followedID: userID
             }
         }).then(()=>setIsFollowing(false))

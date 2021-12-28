@@ -2,18 +2,19 @@ import React, { useEffect, useState, memo } from 'react'
 import {Link} from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import { useSelector } from 'react-redux';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const SideInfoBox = ({myprofile, userID}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [dateJoined, setDateJoined] = useState(null)
     const [birthDate, setBirthDate] = useState(null)
     const [age, setAge] = useState(null)
     const {data} = useQuery(USER_INFO, {
         variables:{
-            userID: myprofile ? ls.userID : userID
+            userID: myprofile ? uid : userID
         }
     })
 

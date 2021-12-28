@@ -5,7 +5,10 @@ import logo from '../../../images/logo.png'
 const MainLoader = () => {
     return (
         <div style={{...styles.loaderContainer, position:'relative'}} className='flex-ctr'>
-            <img src={logo} style={styles.logo}/>
+            <div style={{position:'relative'}}>
+                <img src={logo} style={styles.logo}/>
+                <div className='aaa'></div>
+            </div>
         </div>
     )
 }

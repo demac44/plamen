@@ -1,4 +1,5 @@
 import React, {useEffect, memo} from 'react'
+import { useSelector } from 'react-redux';
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
@@ -12,11 +13,10 @@ import UserSuggestionsBox from '../../components/General components/UserSuggesti
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Saved = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
-
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {loading, data, error, fetchMore, refetch} = useQuery(GET_SAVED, { 
         variables: {
-            userID: ls.userID,
+            userID: uid,
             offset:0,
             limit:15
         },
@@ -25,8 +25,6 @@ const Saved = ({isLogged}) => {
     useEffect(()=>{
         window.scrollTo(0,0)
     }, [])
-
-    if(error) console.log(error);
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{

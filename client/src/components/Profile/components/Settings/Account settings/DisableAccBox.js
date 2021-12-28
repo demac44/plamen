@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
+import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
-const DisableAccBox = () => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const DisableAccBox = ({uid}) => {
     const [disable, setDisable] = useState(false)
     const [deleteAcc, setDeleteAcc] = useState(false)
     const [disable_account] = useMutation(DISABLE_ACCOUNT)
@@ -17,7 +17,7 @@ const DisableAccBox = () => {
     const handleDisable = () => {
         disable_account({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 pass: passDisable
             }
         }).then(res=>{
@@ -33,7 +33,7 @@ const DisableAccBox = () => {
     const handleDelete = () => {
         delete_account({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 pass: passDelete
             }
         }).then(res=>{
@@ -48,7 +48,7 @@ const DisableAccBox = () => {
 
 
     return (
-        <div style={styles.box} className='disable-acc-box flex-col-ctr'>
+        <div className='disable-acc-box flex-col-ctr box'>
 
             <div style={styles.opt} className='flex-col-ctr' onClick={()=>setDisable(!disable)}>
                 <h4>Temporarily disable account</h4>
@@ -118,20 +118,13 @@ export default DisableAccBox
 
 
 const styles = {
-    box:{
-        width:'100%',
-        boxShadow:'5px 5px 10px',
-        border:'1px solid #2f2f2f',
-        marginTop:'15px',
-        borderRadius:'5px',
-        cursor:'pointer'
-    },
     opt:{
         width:'100%',
         color:'darkred',
         padding:'15px',
         textAlign:'center',
-        transition:'ease .3s'
+        transition:'ease .3s',
+        cursor:'pointer'
     },
     btns:{
         padding:'5px 10px',

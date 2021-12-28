@@ -5,26 +5,14 @@ import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import EmojisBox from '../../General components/Emojis/EmojisBox'
 import MsgPreviewBox from './MsgPreviewBox'
+import { useSelector } from 'react-redux';
 
-const SEND_MSG = gql`
-    mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
-        send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url, type: $type){
-            msgID
-        }
-    }
-`
-
-const MSG_NOTIFICATION = gql`
-    mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
-        msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
-            chatID
-        }
-    }
-`
 
 
 const SendMsg = ({chatID, loaderCallback, info}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
     const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
@@ -32,7 +20,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [msgText, setMsgText] = useState('')
     const [emojis, setEmojis] = useState(false)
     const [lengthErr, setLengthErr] = useState(false)
-
+    
     useEffect(()=>{
         document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
         document.querySelector('.chat-bar').addEventListener('click', ()=>setEmojis(false))
@@ -57,18 +45,18 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
             .then(res => {
                     send_msg({
                         variables: {
-                            userID: ls.userID,
-                            username: ls.username,
+                            userID: uid,
+                            username: usernm,
                             profile_picture: ls.profile_picture,
                             chatID: chatID, 
                             msg_text: msgText,
                             type: media.type.slice(0,5),
                             url: res.data.url
                         }
-                        }).then(()=>{
-                            msg_notification({
-                                variables:{
-                                    sid: ls.userID,
+                    }).then(()=>{
+                        msg_notification({
+                            variables:{
+                                    sid: uid,
                                     rid: info.userID,
                                     chatID: chatID
                                 }
@@ -78,41 +66,41 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             loaderCallback(false)
                             setMsgText('')
                         })
-            })
-        } else {
-            send_msg({
-                variables: {
-                    userID: ls.userID,
-                    username: ls.username,
-                    profile_picture: ls.profile_picture,
-                    chatID: chatID, 
-                    msg_text: msgText,
-                    type:'text',
-                    url: 'null'
-                }
-                }).then(()=>{
-                    msg_notification({
-                        variables:{
-                            sid: ls.userID,
-                            rid: info.userID,
-                            chatID: chatID
-                        },
-                        
                     })
-                }).then(()=>{
-                    setMsgText('')
-                })
-    }}
-
+                } else {
+                    send_msg({
+                        variables: {
+                            userID: uid,
+                            username: usernm,
+                            profile_picture: ls.profile_picture,
+                            chatID: chatID, 
+                            msg_text: msgText,
+                            type:'text',
+                            url: 'null'
+                        }
+                    }).then(()=>{
+                        msg_notification({
+                            variables:{
+                                sid: uid,
+                                rid: info.userID,
+                                chatID: chatID
+                            },
+                            
+                        })
+                    }).then(()=>{
+                        setMsgText('')
+                    })
+                }}
+                
     const clearFiles = () => {
         setPreview(null)
         setMedia(null)
     }
-
+    
     const emojiCB = useCallback(val => {
         setMsgText(msgText+val)
     }, [msgText])
-
+    
     return (
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
@@ -128,7 +116,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                         onChange={(e)=>{
                             setMedia(e.target.files[0])
                             setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
-                    }}></input>
+                        }}></input>
                 </div>
                 <textarea 
                     name='msg_text' 
@@ -136,7 +124,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                     className='msg_text' 
                     onChange={(e)=>setMsgText(e.target.value)} 
                     placeholder='Send message...'
-                ></textarea>
+                    ></textarea>
                 <button type='submit' className="post-button btn">SEND</button>
             </form>
         </>
@@ -145,6 +133,21 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 
 export default SendMsg
 
+const SEND_MSG = gql`
+    mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
+        send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url, type: $type){
+            msgID
+        }
+    }
+`
+
+const MSG_NOTIFICATION = gql`
+    mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
+        msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
+            chatID
+        }
+    }
+`
 
 const styles = {
     imgIcon: { 

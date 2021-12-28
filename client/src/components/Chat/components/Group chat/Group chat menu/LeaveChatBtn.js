@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 
+import { useSelector } from 'react-redux';
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const LeaveChatBtn = ({data, admin, chatID}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
 
     const [delete_chat] = useMutation(DELETE_CHAT)
     const [leave_chat_member] = useMutation(LEAVE_CHAT_MEMBER)
@@ -13,7 +14,7 @@ const LeaveChatBtn = ({data, admin, chatID}) => {
     const [confirmLeave, setConfirmLeave] = useState(false)
 
     const handleChatDelete = () => {
-        if(ls.userID===admin)
+        if(uid===admin)
             delete_chat({
                 variables:{
                     gcId: chatID
@@ -25,18 +26,18 @@ const LeaveChatBtn = ({data, admin, chatID}) => {
         if(data?.get_group_chat_members?.length<=1){
             handleChatDelete()
         } else {
-            if (ls.userID===admin){
+            if (uid===admin){
                 leave_chat_admin({
                     variables:{
                         gcId: chatID,
-                        userID: ls.userID
+                        userID: uid
                     }
                 }).then(()=>window.location.href = '/chats')
             } else {
                 leave_chat_member({
                     variables:{
                         gcId: chatID,
-                        userID: ls.userID
+                        userID: uid
                     }
                 }).then(()=>window.location.href = '/chats')
             }

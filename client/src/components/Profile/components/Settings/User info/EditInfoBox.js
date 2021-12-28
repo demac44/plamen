@@ -7,7 +7,6 @@ import CountriesSelect from './CountriesSelect'
 import CitiesSelect from './CitiesSelect'
 
 const EditInfoBox = ({data}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
     const [updated, setUpdated] = useState(false)
     const [update_info] = useMutation(UPDATE_INFO)
     const [country, setCountry] = useState(data.country)
@@ -26,7 +25,7 @@ const EditInfoBox = ({data}) => {
 
         update_info({
             variables:{
-                userID: ls.userID,
+                userID: data.userID,
                 job,
                 uni,
                 hs,

@@ -2,9 +2,10 @@ import React from 'react'
 
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
+import { useSelector } from 'react-redux';
 
 const CreateGroupChatBox = () => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [create_group_chat] = useMutation(CREATE_GROUP_CHAT)
 
 
@@ -15,11 +16,11 @@ const CreateGroupChatBox = () => {
 
         create_group_chat({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 name:groupname
             }
         }).then(res=>{
-            window.location.href = '/chat/group/'+res.data.create_group_chat.groupChatId
+            window.location.href = '/chat/group/'+res?.data?.create_group_chat?.groupChatId
         })
     }
 

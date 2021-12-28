@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation} from 'react-apollo'
 
-const EditGender = ({data}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const EditGender = ({data, uid}) => {
     const [edit_gender] = useMutation(EDIT_GENDER)
     const [updated, setUpdated] = useState(false)
 
@@ -18,7 +17,7 @@ const EditGender = ({data}) => {
 
         edit_gender({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 gender
             }
         }).then(res=>{

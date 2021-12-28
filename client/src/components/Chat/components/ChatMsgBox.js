@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from 'react'
+import { useSelector } from 'react-redux';
 import SendMsg from './SendMsg'
 import Message from './Message'
 
@@ -7,7 +8,7 @@ import { useQuery, useMutation } from 'react-apollo'
 import ChatBar from './ChatBar'
 
 const ChatMsgBox = ({chat}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     const [seen] = useMutation(SEEN)
@@ -51,11 +52,11 @@ const ChatMsgBox = ({chat}) => {
         messages?.data?.get_messages?.length>=50 && setFetchBtn(true)
         seen({
             variables:{
-                cid: chat.chatID,
-                rid: ls.userID
+                cid: chat?.chatID,
+                rid: uid
             }
         })
-    }, [messages?.data, chat, ls.userID, seen])
+    }, [messages?.data, chat, seen])
 
 
     const handleFetchMore = () => {

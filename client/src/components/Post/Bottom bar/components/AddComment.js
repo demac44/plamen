@@ -1,10 +1,11 @@
 import React from 'react'
 import {gql} from 'graphql-tag'
+import { useSelector } from 'react-redux';
 import { useMutation } from 'react-apollo'
 
 const AddComment = ({postID, userID, refetchComments}) => {
     let comment_text;
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [add_comment] = useMutation(ADD_COMMENT) 
 
     const handleAddComment = (e) => {
@@ -17,7 +18,7 @@ const AddComment = ({postID, userID, refetchComments}) => {
             add_comment({
                 variables:{
                     postID: postID,
-                    userID: ls.userID,
+                    userID: uid,
                     comment_text: comment_text,
                     rid: userID,
                 }

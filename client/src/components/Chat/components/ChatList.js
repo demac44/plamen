@@ -2,16 +2,17 @@ import React, {memo} from 'react'
 import SearchBar from '../../Navbar/SearchBar'
 import ChatListUser from './ChatListUser'
 import ChatsOptions from './ChatsOptions'
+import { useSelector } from 'react-redux';
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import ChatListGroup from './Group chat/ChatListGroup'
 
 const ChatList = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
 
     const {data, loading} = useQuery(GET_CHATS_LIST, {
-        variables:{userID: ls.userID}
+        variables:{userID: uid}
     }) 
 
     return (

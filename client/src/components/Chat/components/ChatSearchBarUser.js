@@ -3,27 +3,12 @@ import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import Avatar from '../../General components/Avatar'
 import UserLoader from '../../General components/Loaders/UserLoader'
-
-const CREATE_CHAT = gql`
-    mutation ($user1: Int!, $user2: Int!){
-        create_chat(user1_ID: $user1, user2_ID: $user2){
-            chatID
-        }
-    }
-`
-const CHAT_EXISTS = gql`
-    query ($user1:Int!,$user2:Int!){
-        chat_exists (user1_ID: $user1, user2_ID: $user2){ 
-            chatID
-        }
-        if_user_blocked(blockedId: $user2, blockerId: $user1)
-    }
-`
+import { useSelector } from 'react-redux';
 
 const ChatSearchBarUser = ({user}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [create_chat] = useMutation(CREATE_CHAT)
-    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:ls.userID, user2:user.userID}})  
+    const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:uid, user2:user.userID}})  
 
     
     if(loading) return <UserLoader/>
@@ -35,15 +20,15 @@ const ChatSearchBarUser = ({user}) => {
             window.location.href='/profile/'+user.username
         } else {
             if(data?.chat_exists?.chatID){
-                window.location.href = '/chat/'+data.chat_exists.chatID
+                window.location.href = '/chat/'+data?.chat_exists?.chatID
             } else {
                 create_chat({
                     variables: { 
-                        user1: ls.userID,
+                        user1: uid,
                         user2: user.userID
                     }
                 }).then(res=>{
-                    window.location.href = '/chat/'+res.data.create_chat.chatID
+                    window.location.href = '/chat/'+res?.data?.create_chat?.chatID
                 })
             }
         }
@@ -61,3 +46,18 @@ const ChatSearchBarUser = ({user}) => {
 
 export default memo(ChatSearchBarUser)
 
+const CREATE_CHAT = gql`
+    mutation ($user1: Int!, $user2: Int!){
+        create_chat(user1_ID: $user1, user2_ID: $user2){
+            chatID
+        }
+    }
+`
+const CHAT_EXISTS = gql`
+    query ($user1:Int!,$user2:Int!){
+        chat_exists (user1_ID: $user1, user2_ID: $user2){ 
+            chatID
+        }
+        if_user_blocked(blockedId: $user2, blockerId: $user1)
+    }
+`

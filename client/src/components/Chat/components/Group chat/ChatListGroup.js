@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
+import { useSelector } from 'react-redux';
 
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'
 
 const ChatListGroup = ({data}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const newMsg = useSubscription(NEW_GROUP_MESSAGE)
     // const [count, setCount] = useState(0)
     const [msgData, setMsgData] = useState([])
@@ -38,8 +39,8 @@ const ChatListGroup = ({data}) => {
            
                 {!info.loading &&
                 <p style={{fontSize:'12px', 
-                            color:info?.data?.last_group_message?.userID===ls.userID ? 'gray' : 'white', 
-                            fontWeight: info?.data?.last_group_message?.userID===ls.userID ? 'lighter' : 'bold'}}>
+                            color:info?.data?.last_group_message?.userID===uid ? 'gray' : 'white', 
+                            fontWeight: info?.data?.last_group_message?.userID===uid ? 'lighter' : 'bold'}}>
 
                     {(newMsg && newMsg?.data && newMsg?.data?.newGroupMessage?.groupChatId===data?.groupChatId) ? 
                         (newMsg?.data?.newGroupMessage?.msg_text.length>25 ? newMsg?.data?.newGroupMessage?.msg_text.slice(0,22)+'...' 
@@ -48,13 +49,13 @@ const ChatListGroup = ({data}) => {
                             : msgData?.last_group_message?.msg_text)}
 
                     {(msgData?.last_group_message?.type==='image' && !msgData?.last_group_message?.msg_text) && 
-                        (info?.data.last_group_message?.userID===ls.userID ? 'You sent an image' : data?.username+' sent an image')}
+                        (info?.data.last_group_message?.userID===uid ? 'You sent an image' : data?.username+' sent an image')}
                     {(msgData?.last_group_message?.type==='video' && !msgData?.last_group_message?.msg_text) && 
-                        (info?.data.last_group_message?.userID===ls.userID ? 'You sent a video' : data?.username+' sent a video')}
+                        (info?.data.last_group_message?.userID===uid ? 'You sent a video' : data?.username+' sent a video')}
                 </p>}
 
             </div>  
-            {/* {(count > 0 || (newMsg?.data?.newGroupMessage?.userID!==ls.userID
+            {/* {(count > 0 || (newMsg?.data?.newGroupMessage?.userID!==uid
                 && newMsg?.data?.newGroupMessage?.groupChatId===data?.groupChatId))
                 && <div style={styles.count}></div>} */}
 

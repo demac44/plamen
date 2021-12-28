@@ -130,6 +130,23 @@
     font-size: 25px;
     cursor: pointer;
 }
+.aaa{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #1b1b1b;
+    z-index: 10000;
+    animation-name: logoo;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+@keyframes logoo{
+    0%{top: 0;left: -50px;}
+    100%{top:-100%;left: 0;}
+}
+
 
 
 /* MEDIA QUERIES */

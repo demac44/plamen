@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 
 
+import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
@@ -22,7 +23,7 @@ const NEW_POST = gql`
 `
 
 const CreatePost = ({refetch}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [emptyErr, setEmptyErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
@@ -54,7 +55,7 @@ const CreatePost = ({refetch}) => {
                 .then(res => {
                     new_post({
                         variables: {
-                            userID: ls.userID,
+                            userID: uid,
                             text: postText,
                             url: res.data.url,
                             type:'image'
@@ -79,7 +80,7 @@ const CreatePost = ({refetch}) => {
                 .then(res => {
                     new_post({
                         variables: {
-                            userID: ls.userID,
+                            userID: uid,
                             text: postText,
                             url: res.data.url,
                             type:'video'
@@ -97,7 +98,7 @@ const CreatePost = ({refetch}) => {
             } else {
                 new_post({
                     variables: {
-                        userID: ls.userID,
+                        userID: uid,
                         text: postText,
                         url: '',
                         type:'text'

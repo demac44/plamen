@@ -1,31 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 
 import {gql} from 'graphql-tag'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
 
 const SavePostButton = ({postID, groupID}) => {
     const [saved, setSaved] = useState(false)
-    const ls= JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [save_post] = useMutation(SAVE_GP)
     const [remove_saved] = useMutation(REMOVE_SAVED_GP)
 
     const ifSaved = useQuery(IF_GP_SAVED, {
         variables:{
-            userID: ls?.userID,
+            userID: uid,
             postID: postID
         }
     })
     
-    if(ifSaved.loading) return <i style={{...styles.saveBtn, color:'white'}} className="fas fa-bookmark"></i>
+    useEffect(()=>{
+        if(ifSaved?.data?.if_saved) setSaved(true)
+    }, [ifSaved?.data])
     
     const handleSave = () => {
         save_post({
             variables: {
                 postID: postID,
-                userID: ls.userID,
+                userID: uid,
                 gid: groupID
             }
         }).then(() => setSaved(true))
@@ -35,7 +38,7 @@ const SavePostButton = ({postID, groupID}) => {
         remove_saved({
             variables: {
                 postID: postID,
-                userID: ls.userID
+                userID: uid
             }
         }).then(()=>setSaved(false))
     }
@@ -43,8 +46,8 @@ const SavePostButton = ({postID, groupID}) => {
     return (
         <FontAwesomeIcon
             icon='bookmark'
-            onClick={()=> !ifSaved.loading && (ifSaved?.data?.if_group_post_saved || saved) ? handleRemove() : handleSave()} 
-            style={{...styles.saveBtn, color: ifSaved.loading ? 'white' : (ifSaved?.data?.if_group_post_saved || saved) ? '#ffbb00' : 'white'}}
+            onClick={()=> !ifSaved.loading && (saved ? handleRemove() : handleSave())} 
+            style={{...styles.saveBtn, color: ifSaved.loading ? 'white' : (saved ? '#ffbb00' : 'white')}}
         />
     )
 }

@@ -14,15 +14,16 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
-            uid: ls.userID
+            uid
         }
     })
 

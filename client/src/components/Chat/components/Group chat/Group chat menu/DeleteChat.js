@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 
+import { useSelector } from 'react-redux';
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const DeleteChat = ({chatID, admin}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [delete_chat] = useMutation(DELETE_CHAT)
 
     const [confirmDelete, setConfirmDelete] = useState(false)
 
     const handleChatDelete = () => {
-        if(ls.userID===admin)
+        if(uid===admin)
             delete_chat({
                 variables:{
                     gcId: chatID

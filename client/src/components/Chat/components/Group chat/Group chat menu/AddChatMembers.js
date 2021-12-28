@@ -51,6 +51,7 @@ const AddChatMembers = ({data, chatID, refetch}) => {
     return (
         <div style={styles.box} className='flex-col-ctr'>
             <p style={{color:'white', marginTop:'15px'}}>Add users</p>
+            
             <input 
                 className='input' 
                 style={styles.input} 
@@ -60,7 +61,9 @@ const AddChatMembers = ({data, chatID, refetch}) => {
                 onChange={(e)=>{setAddUserValue(e.target.value);setError(null);setAddedMsg(null)}}
             />
             {error && <p style={styles.errorMsg}>{error}</p>}
+
             {addedMsg && <p style={styles.addedMsg}>{addedMsg}</p>}
+
             {addUserValue.length>0 && <button 
                                         style={styles.addBtn} 
                                         className='btn'

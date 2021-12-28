@@ -1,16 +1,17 @@
 import React from 'react'
 
+import { useSelector } from 'react-redux';
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const UnblockUserBtn = ({blockedId}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [unblock_user] = useMutation(UNBLOCK_USER)
 
     const handleUnblock = () => {
         unblock_user({
             variables:{
-                blockerId: ls.userID,
+                blockerId: uid,
                 blockedId: blockedId
             }
         }).then(()=>window.location.reload())

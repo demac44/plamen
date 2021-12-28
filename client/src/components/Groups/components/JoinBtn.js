@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
@@ -6,11 +7,11 @@ import { useMutation, useQuery } from 'react-apollo'
 
 const JoinBtn = ({info, user}) => {
     const [state, setState] = useState('JOIN')
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading, refetch} = useQuery(IF_REQUESTED, {
         variables:{
             gid: info.groupID,
-            uid: ls.userID
+            uid: uid
         }
     })
     const [leave_group] = useMutation(LEAVE)
@@ -20,15 +21,15 @@ const JoinBtn = ({info, user}) => {
 
 
     useEffect(()=>{
-        if(!loading && (data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID)){
+        if(!loading && (data?.if_requested?.userID===uid && data?.if_requested?.groupID===info.groupID)){
             setState('REQUESTED')
         } else if(!loading && user) setState('LEAVE')
-    }, [data, info.groupID, ls.userID, user, loading])
+    }, [data, info.groupID, uid, user, loading])
 
     const handleJoin = () => {
         join_group({
             variables:{
-                uid: ls.userID,
+                uid: uid,
                 gid: info.groupID
             }
         }).then(()=>{window.location.reload()})
@@ -37,24 +38,24 @@ const JoinBtn = ({info, user}) => {
     const handleLeave = () => {
         leave_group({
             variables:{
-                uid: ls.userID,
+                uid: uid,
                 gid: info.groupID
             }
         }).then(()=>{window.location.reload()})
     }
 
     const handleRequest = () => {
-        if(data?.if_requested?.userID===ls.userID && data?.if_requested?.groupID===info.groupID){
+        if(data?.if_requested?.userID===uid && data?.if_requested?.groupID===info.groupID){
             remove_request({
                 variables:{
-                    uid: ls.userID,
+                    uid: uid,
                     gid: info.groupID
                 }
             }).then(()=>{setState('JOIN');refetch()})
         } else {
             request({
                 variables:{
-                    uid: ls.userID,
+                    uid: uid,
                     gid: info.groupID
                 }
             }).then(()=>{setState('REQUESTED');refetch()})

@@ -19,10 +19,12 @@ import SideInfoBox from '../../components/Profile/components/SideInfoBox'
 import InterestsBox from '../../components/Profile/components/InterestsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import ProfileBoxLoader from '../../components/General components/Loaders/ProfileBoxLoader'
+import { useSelector } from 'react-redux'
 
     
 const Profile = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user')) 
+    const uid = useSelector(state => state.isAuth.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [myprofile, setMyProfile] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [userBlocked, setUserBlocked] = useState(false)
@@ -32,10 +34,10 @@ const Profile = ({isLogged}) => {
     
     const {loading, error, data, refetch, fetchMore} = useQuery(FETCH_INFO, {
         variables: {
-            username: username===ls.username ? ls.username : username,
+            username: username===usernm ? usernm : username,
             limit:20,
             offset:0,
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -46,7 +48,7 @@ const Profile = ({isLogged}) => {
     
     useEffect(()=>{
         setIsLoading(true)
-        if(username===ls.username) {
+        if(username===usernm) {
             setMyProfile(true)
         } else {
             setMyProfile(false)
@@ -54,7 +56,7 @@ const Profile = ({isLogged}) => {
         window.scrollTo(0,0)
         setIsLoading(false)
         return null
-    }, [username, ls.username, refetch, history, myprofile])
+    }, [username, usernm, refetch, history, myprofile])
 
 
     if(!loading){

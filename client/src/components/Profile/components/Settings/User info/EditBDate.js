@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation} from 'react-apollo'
 
-const EditBDate = ({data}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const EditBDate = ({data, uid}) => {
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
     const [bDate, setBDate] = useState(null)
@@ -27,7 +26,7 @@ const EditBDate = ({data}) => {
 
         change_bdate({
             variables:{
-                userID: ls.userID,
+                userID: uid,
                 bDate
             }
         }).then(res => {

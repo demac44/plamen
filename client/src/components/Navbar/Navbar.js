@@ -9,6 +9,7 @@ import Dropdown from './Dropdown'
 import SearchBar from './SearchBar'
 
 import Avatar from '../General components/Avatar'
+import { useSelector } from 'react-redux';
 
 import {Link} from 'react-router-dom'
 
@@ -21,12 +22,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const Navbar = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
     const {data} = useSubscription(NEW_MESSAGE)
     const [NotNo, setNotNo] = useState(0)
     const count = useQuery(COUNT_MSGS, {
-        variables:{rid: ls?.userID}
+        variables:{rid: uid}
     })
 
     const handleDropdown = () => {

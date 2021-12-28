@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux';
 
 const REPORT_POST = gql`
     mutation ($postID:Int!, $groupID:Int!, $reporterId:Int!, $reasons: String!){
@@ -13,7 +14,7 @@ const REPORT_POST = gql`
 ` 
 
 const ReportBox = ({data, handleReportClose}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [report_post] = useMutation(REPORT_POST)
     const [reportSent, setReportSent] = useState(false)
 
@@ -51,7 +52,7 @@ const ReportBox = ({data, handleReportClose}) => {
             variables:{
                 postID: data.postID,
                 groupID: data.groupID,
-                reporterId: ls.userID,
+                reporterId: uid,
                 reasons: reasons
             }
         }).then(()=>{

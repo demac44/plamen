@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux';
 
 
 const CREATE_GROUP = gql`
@@ -14,7 +15,7 @@ const CREATE_GROUP = gql`
 
 
 const CreateGroupForm = ({closeFormCallback}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [tags, setTags] = useState([])
     const [create_group] = useMutation(CREATE_GROUP)
 
@@ -34,7 +35,7 @@ const CreateGroupForm = ({closeFormCallback}) => {
 
         create_group({
             variables:{
-                uid: ls.userID,
+                uid,
                 gname,
                 closed,
                 desc,

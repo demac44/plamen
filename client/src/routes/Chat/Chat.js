@@ -5,14 +5,15 @@ import { useParams } from 'react-router'
 
 import { ChatList, ChatMsgBox } from '../../components/Chat/export'
 import GroupChatMsgBox from '../../components/Chat/components/Group chat/GroupChatMsgBox'
+import { useSelector } from 'react-redux'
 
 const Chat = ({isLogged, isGroupChat}) => {
     const [chat, setChat] = useState(null)
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {chatid} = useParams()
 
     const {data, loading, error} = useQuery(isGroupChat ? GET_GROUP_CHATS : GET_CHATS, {
-        variables:{userID: ls.userID},
+        variables:{userID: uid},
     }) 
 
     useEffect(()=>{

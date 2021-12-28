@@ -3,14 +3,15 @@ import React, {memo} from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
  
 import './General.css'
 
 const MyGroupsList = () => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(GET_MY_GROUPS, {
         variables:{
-            uid: ls.userID
+            uid
         }
     })
 

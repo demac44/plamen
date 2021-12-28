@@ -2,10 +2,12 @@ import React, {useState} from 'react'
 import { validateNames, validateUsername } from '../../../../Entry/Register/RegisterForm'
 import ErrorMsg from '../../../../Entry/ErrorMsg'
 
+import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 import Avatar from '../../../../General components/Avatar'
 import { Link } from 'react-router-dom'
+import ShowActivity from './ShowActivity'
 
 
 
@@ -18,11 +20,11 @@ const EDIT_INFO = gql`
 `
 
 
-const EditForm = ({handleMenu}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const EditForm = ({handleMenu, uid}) => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [errorMsg, setErrorMsg] = useState('')
     const [edit_info] = useMutation(EDIT_INFO)
-    const user = JSON.parse(localStorage.getItem('user'))
 
     const handleEdit = (e) => {
         e.preventDefault()
@@ -52,7 +54,7 @@ const EditForm = ({handleMenu}) => {
             try {
                 edit_info({
                     variables: {
-                        userID: user.userID,
+                        userID: uid,
                         fname,
                         lname,
                         username,
@@ -73,22 +75,27 @@ const EditForm = ({handleMenu}) => {
     return (
         <>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
+
             <span style={{position:'relative'}}>
                 <Link to='/settings'>
                     <i className='fas fa-arrow-left settings-arrow-back'/>
                 </Link>
-                <h3 style={{...styles.box, textAlign:'center', color:'white'}}>
+                <h3 className='box flex-ctr'>
                     Account settings
                 </h3>
             </span>
-            <span style={styles.box} className='flex-col-ctr'>
+
+            <ShowActivity/>
+
+            <span className='flex-col-ctr box'>
                 <p style={styles.title}>Change profile picture</p>
                 <span className='flex-ctr'>
-                    <Avatar size='70px' image={ls.profile_picture}/>
+                    <Avatar size='70px' image={user.profile_picture}/>
                     <p onClick={()=>handleMenu(true)} style={styles.pfpBtn}>Change</p>
                 </span>
             </span>
-            <form className='entry-form flex-col-ctr' onSubmit={handleEdit} style={styles.box}>
+
+            <form className='entry-form flex-col-ctr box' onSubmit={handleEdit}>
                 <p style={styles.title}>Change name and username</p>
                 <div className="reg-names-box">
                     <input 
@@ -111,9 +118,9 @@ const EditForm = ({handleMenu}) => {
                     id='username' 
                     name='username' 
                     placeholder="Change username" 
-                    defaultValue={user.username}
+                    defaultValue={usernm}
                 />
-                <button style={{marginTop:'15px'}} className="post-button btn" type="submit">EDIT</button>
+                <button style={{marginTop:'15px', alignSelf:'flex-end'}} className="post-button btn" type="submit">SAVE</button>
             </form>
         </>
     )
@@ -130,14 +137,6 @@ const styles = {
         border:'1px solid #2f2f2f',
         borderRadius:'10px',
         cursor:'pointer'
-    },
-    box:{
-        position:'relative',
-        border:'1px solid #2f2f2f',
-        boxShadow:'5px 5px 10px black',
-        padding:'10px',
-        marginBottom:'15px',
-        borderRadius:'5px'
     },
     title:{
         color:'white',

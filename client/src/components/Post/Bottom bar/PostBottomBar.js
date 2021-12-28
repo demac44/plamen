@@ -8,8 +8,6 @@ import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import logo from '../../../images/logo.png'
-
 const PostBottomBar = ({postID, userID}) => {
     const [likes, setLikes] = useState(false) 
     const {data, loading, error, refetch, fetchMore} = useQuery(GET_COMMENTS, {

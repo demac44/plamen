@@ -1,29 +1,23 @@
 import React, { useState } from 'react'
 
 import {gql} from 'graphql-tag'
-import { useMutation} from 'react-apollo';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useMutation } from 'react-apollo'
 
-const EditGroupVisibility = ({visibility, groupid, refetch}) => {
+const ShowActivity = ({visibility}) => {
     const [change_visibility] = useMutation(CHANGE_VISIBILITY)
     const [visib, setVisib] = useState(visibility)
 
     const handleChange = () => {
-        change_visibility({
-            variables:{
-                gid: parseInt(groupid),
-                closed: visib
-            }
-        }).then(()=>{setVisib(!visib);refetch()})
+    
     }
 
     return (
-        <div style={styles.box} className='box flex-h'>
-            <p>Community visibility: </p>
+        <div style={{color:'#aaa'}} className='box flex-h'>
+            <p>Activity status: </p>
 
             <div style={styles.switchBox} onClick={handleChange}>
-                <FontAwesomeIcon icon='lock' style={{...styles.locks, right:'8px'}} />
-                <FontAwesomeIcon icon='lock-open' style={{...styles.locks, left:'5px'}}/>
+                <p style={{...styles.locks, left:'6px'}}>ON</p>
+                <p style={{...styles.locks, right:'5px'}}>OFF</p>
                 <div style={{...styles.switch, 
                             left: visib ? '0' : '32px',
                             backgroundColor: visib ? '#861b1b' : '#00752d'
@@ -34,7 +28,7 @@ const EditGroupVisibility = ({visibility, groupid, refetch}) => {
     )
 }
 
-export default EditGroupVisibility
+export default ShowActivity
 
 const CHANGE_VISIBILITY = gql`
     mutation ($gid: Int!, $closed: Boolean!){
@@ -45,9 +39,6 @@ const CHANGE_VISIBILITY = gql`
 `
 
 const styles = {
-    box:{
-        color:'#aaa',
-    },
     switchBox:{
         position:'relative',
         width:'60px',
@@ -69,7 +60,8 @@ const styles = {
     },
     locks:{
         position:'absolute',
-        top:'3px',
-        color:'#4f4f4f'
+        top:'4px',
+        color:'#4f4f4f',
+        fontSize:'12px'
     }
 }

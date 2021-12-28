@@ -10,16 +10,17 @@ import { useQuery } from 'react-apollo'
 import { Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
+import { useSelector } from 'react-redux'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
 const GroupSettings = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
-            uid: ls.userID
+            uid
         }
     })
 

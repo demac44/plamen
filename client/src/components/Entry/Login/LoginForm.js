@@ -34,7 +34,6 @@ const LoginForm = ({popup}) => {
             }).then(res => {
                 if(res?.data.error) setErrorMsg(res.data.error)    
                 else {
-                    localStorage.setItem('token', res?.data.token)
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
                     localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
                     localStorage.setItem('recent-emojis', JSON.stringify({emojis: []}))

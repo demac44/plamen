@@ -1,4 +1,5 @@
 import React, {memo, useState} from 'react'
+import { useSelector } from 'react-redux';
 import StoryBar from './StoryBar'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -14,7 +15,8 @@ const ADD_STORY = gql`
 
 
 const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const user = JSON.parse(localStorage.getItem('user'))
     const [loading, setLoading] = useState(false)
     const [new_story] = useMutation(ADD_STORY)
 
@@ -28,7 +30,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) =
         .then(res => {
                 new_story({
                     variables: {
-                        uid: ls.userID,
+                        uid,
                         type: media.type.slice(0,5),
                         url: res.data.url
                     }
@@ -44,7 +46,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) =
     return (
         <div className='flex-col-ctr overlay' style={{backgroundColor: '#1b1b1b'}}>
             <div className='story-box'>
-                <StoryBar user={ls} closeStoryCallback={exitCallback}/>
+                <StoryBar user={user} closeStoryCallback={exitCallback}/>
                 {sizeError && <p style={styles.sizeError}>File is too large! Max.size: 15MB</p>}
                 {loading ? <div className='flex-ctr wh-100' style={{backgroundColor:'#2f2f2f'}}><div className='small-spinner'></div></div> :
                 <div className='story-media flex-ctr'>

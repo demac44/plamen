@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import { useSelector } from 'react-redux';
 
 import { validatePassword, confirmPass } from '../../../../Entry/Register/RegisterForm'
 
-const ChangePassBox = () => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+const ChangePassBox = ({uid}) => {
     const [errorr, setError] = useState(null)
     const [change_password, {error}] = useMutation(CHANGE_PASSWORD)
 
@@ -27,7 +27,7 @@ const ChangePassBox = () => {
         } else {
             change_password({
                 variables: {
-                    userID: ls.userID,
+                    userID: uid,
                     oldPass: oldPassword,
                     newPass: newPassword
                 }

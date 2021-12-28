@@ -6,18 +6,10 @@ import OpenMedia from './OpenMedia'
 import SetTime from '../../General components/SetTime'
 import Avatar from '../../General components/Avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-const DELETE_MESSAGE = gql`
-    mutation ($msgID: Int!){
-        delete_message(msgID:$msgID){
-            msgID
-        }
-    }
-`
-
+import { useSelector } from 'react-redux';
 
 const Message = ({msg}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
@@ -28,27 +20,27 @@ const Message = ({msg}) => {
     const handleDelete = () => {
         delete_msg().then(()=>{setDeleted(true)})
     }  
-
+    
     const closeMediaCallback = useCallback(val => {
         setOpenMedia(val)
     }, [setOpenMedia])
     
     return (
         <>
-            <div className={msg.userID===ls.userID ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
+            <div className={msg.userID===uid ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
                     onClick={()=>setMsgOptions(!msgOptions)}>
 
-                {(msg.userID===ls.userID && msgOptions && !deleted) && 
+                {(msg.userID===uid && msgOptions && !deleted) && 
                     <>
                         <FontAwesomeIcon
                             icon='trash-alt' 
                             style={styles.deletebtn}
                             onClick={handleDelete}
-                        />
+                            />
                     </>
                     }
-                {msg?.userID!==ls.userID && <Avatar size='35px' image={msg?.profile_picture}/>}
-                {msg.userID===ls.userID ?
+                {msg?.userID!==uid && <Avatar size='35px' image={msg?.profile_picture}/>}
+                {msg.userID===uid ?
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
                     <>
@@ -82,8 +74,17 @@ const Message = ({msg}) => {
     )
 }
 
+
+
 export default memo(Message)
 
+const DELETE_MESSAGE = gql`
+    mutation ($msgID: Int!){
+        delete_message(msgID:$msgID){
+            msgID
+        }
+    }
+`
 
 const styles = {
     deletebtn:{

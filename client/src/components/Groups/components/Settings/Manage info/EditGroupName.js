@@ -40,7 +40,7 @@ const EditGroupName = ({group_name, groupid, refetch}) => {
                 </span>
         
             </div>
-            <button type='submit' className='btn' style={styles.btn}>EDIT</button>
+            <button type='submit' className='btn' style={styles.btn}>SAVE</button>
         </form>
     )
 }

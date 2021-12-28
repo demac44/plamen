@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
 import Sidebar from '../../../components/General components/Sidebar'
@@ -13,10 +14,10 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
 const UserInfo = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(USER_INFO, {
         variables:{
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -37,7 +38,7 @@ const UserInfo = ({isLogged}) => {
                             </h3>
                         </span>
 
-                        {!loading && <EditInterests data={data?.get_user_info?.interests}/>}
+                        {!loading && <EditInterests data={data?.get_user_info?.interests} uid={uid}/>}
 
                         {!loading &&<EditInfoBox data={{
                             job:data?.get_user_info?.job,
@@ -46,11 +47,12 @@ const UserInfo = ({isLogged}) => {
                             phone_number:data?.get_user_info?.phone_number,
                             country:data?.get_user_info?.country,
                             city:data?.get_user_info?.city,
+                            uid: uid
                         }}/>}
 
-                        {!loading && <EditBDate data={data?.get_user_info?.bDate}/>}
+                        {!loading && <EditBDate data={data?.get_user_info?.bDate} uid={uid}/>}
 
-                        {!loading && <EditGender data={data?.get_user_info?.gender}/>}
+                        {!loading && <EditGender data={data?.get_user_info?.gender} uid={uid}/>}
                     </div>
                     <div className='container-right'>
                         <EditProfileNav/>

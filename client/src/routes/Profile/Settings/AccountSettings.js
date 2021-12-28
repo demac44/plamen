@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import Navbar from '../../../components/Navbar/Navbar'
+import { useSelector } from 'react-redux';
 
 import EditForm from '../../../components/Profile/components/Settings/Account settings/EditForm'
 import Sidebar from '../../../components/General components/Sidebar'
@@ -12,6 +13,7 @@ import DisableAccBox from '../../../components/Profile/components/Settings/Accou
 
 
 const AccountSettings = ({isLogged}) => {
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [pfpMenu, setPfpMenu] = useState(false)
 
     const handleMenu = useCallback(val => {
@@ -23,14 +25,14 @@ const AccountSettings = ({isLogged}) => {
         <>
             <Navbar callback={()=>{return}} isLogged={isLogged}/>
             <AlternativeNavbar/>
-            {pfpMenu && <EditPfpMenu closeMenu={handleMenu}/>}
+            {pfpMenu && <EditPfpMenu closeMenu={handleMenu} uid={uid}/>}
             <div className='wrapper'> 
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <EditForm handleMenu={handleMenu}/>
-                        <ChangePassBox/>
-                        <DisableAccBox/>
+                        <EditForm handleMenu={handleMenu} uid={uid}/>
+                        <ChangePassBox uid={uid}/>
+                        <DisableAccBox uid={uid}/>
                     </div>
                     <div className='container-right'>
                         <EditProfileNav/>

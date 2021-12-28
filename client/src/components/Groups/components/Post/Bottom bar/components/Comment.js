@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 import Avatar from '../../../../../General components/Avatar'
 import SetTime from '../../../../../General components/SetTime'
@@ -10,7 +11,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 
 const Comment = ({comment, refetchComments}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [readMore, setReadMore] = useState(true)
 
     const [delete_comment] = useMutation(DELETE_GP_COMMENT)
@@ -20,7 +21,7 @@ const Comment = ({comment, refetchComments}) => {
         delete_comment({
             variables:{
                 cmtID: comment.commentID,
-                senderID: ls.userID,
+                senderID: uid,
                 postID: comment.postID
             }
         }).then(()=>refetchComments())
@@ -50,7 +51,7 @@ const Comment = ({comment, refetchComments}) => {
                 : <p><strong>{comment.username}</strong>{' '+comment.comment_text}</p>}
                 <SetTime timestamp={comment.date_commented} fontSize='12px'/>
             </div>
-            {comment.userID===ls.userID && 
+            {comment.userID===uid && 
                 <FontAwesomeIcon
                     icon='trash-alt' 
                     style={styles.deleteBtn} 

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
-import logo from '../../../../images/logo.png'
-import logoBlank from '../../../../images/logoBlank.png'
+import logo from '../../../../images/logo-min.png'
+import logoBlank from '../../../../images/logoBlank-min.png'
 
 const LikePost = ({postID, userID}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [liked, setLiked] = useState(false)
     const [like_post] = useMutation(LIKE_POST)
     const [remove_like] = useMutation(REMOVE_LIKE)
@@ -14,7 +15,7 @@ const LikePost = ({postID, userID}) => {
     const ifLiked = useQuery(IF_LIKED, {
         variables:{
             postID: postID,
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -26,7 +27,7 @@ const LikePost = ({postID, userID}) => {
         like_post({
             variables: {
                 postID: postID,
-                userID: ls.userID,
+                userID: uid,
                 rid: userID
             }
         }).then(() => {
@@ -38,7 +39,7 @@ const LikePost = ({postID, userID}) => {
         remove_like({
             variables: {
                 postID: postID,
-                userID: ls.userID
+                userID: uid
             }
         }).then(()=>{
             setLiked(false)

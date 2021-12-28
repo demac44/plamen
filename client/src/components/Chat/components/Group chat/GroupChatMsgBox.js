@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from 'react'
+import { useSelector } from 'react-redux';
 
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from 'react-apollo'
@@ -7,7 +8,7 @@ import GroupMessage from './GroupMessage'
 import GroupChatBar from './GroupChatBar'
 
 const GroupChatMsgBox = ({chat}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     // const [seen] = useMutation(SEEN)
@@ -55,7 +56,7 @@ const GroupChatMsgBox = ({chat}) => {
         //         rid: ls.userID
         //     }
         // })
-    }, [messages?.data, chat, ls.userID])
+    }, [messages?.data, chat, uid])
 
 
     const handleFetchMore = () => {

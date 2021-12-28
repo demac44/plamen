@@ -4,11 +4,12 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux';
 
 const roles = ['CREATOR', 'ADMIN', 'MODERATOR']
 
 const PostMenu = ({data, refetchPosts, handleReport}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [delete_post] = useMutation(DELETE_GP)
     const [copied, setCopied] = useState(false)
 
@@ -32,7 +33,7 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
             <div className='post-options-menu'>
                 <ul>
                     <li onClick={copyToClipboard}><FontAwesomeIcon icon='share' /> Share</li>
-                    {(data.userID===ls.userID || roles.includes(data.role))&& <li onClick={handlePostDelete}>
+                    {(data.userID===uid || roles.includes(data.role))&& <li onClick={handlePostDelete}>
                         <FontAwesomeIcon icon='trash-alt' 
                         /> Delete
                     </li>}

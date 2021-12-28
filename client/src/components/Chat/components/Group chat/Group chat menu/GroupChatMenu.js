@@ -6,10 +6,11 @@ import ChatMembersBox from './ChatMembersBox'
 import AddChatMembers from './AddChatMembers'
 import LeaveChatBtn from './LeaveChatBtn'
 import DeleteChat from './DeleteChat'
+import { useSelector } from 'react-redux';
 
  
 const GroupChatMenu = ({chatID, admin}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [chatMedia, setChatMedia] = useState(false)
     const [adminMember, setAdminMember] = useState({})
 
@@ -18,7 +19,7 @@ const GroupChatMenu = ({chatID, admin}) => {
             gcId: chatID,
             limit:10,
             offset:0,
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -49,7 +50,7 @@ const GroupChatMenu = ({chatID, admin}) => {
                                     adminMember={adminMember}
                                 />}
 
-                    {ls.userID===admin && 
+                    {uid===admin && 
                         <AddChatMembers 
                             data={data} 
                             chatID={chatID} 
@@ -67,7 +68,7 @@ const GroupChatMenu = ({chatID, admin}) => {
                         admin={admin}
                     />
 
-                    {ls.userID===admin && <DeleteChat 
+                    {uid===admin && <DeleteChat 
                         chatID={chatID} 
                         admin={admin}
                     />}

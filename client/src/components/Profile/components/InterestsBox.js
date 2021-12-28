@@ -3,15 +3,16 @@ import React, { useEffect, useState, memo } from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
+import { useSelector } from 'react-redux';
 import TagsBox from '../../Groups/components/TagsBox'
 import { Link } from 'react-router-dom'
 
 const InterestsBox = ({myprofile, userID}) => {
     const [tags, setTags] = useState([])
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(USER_INFO, {
         variables:{
-            userID: myprofile ? ls.userID : userID
+            userID: myprofile ? uid : userID
         }
     })
 

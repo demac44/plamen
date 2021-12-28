@@ -1,19 +1,20 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import UserBox from '../../../../General components/Users list/UserBox'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [remove_member] = useMutation(REMOVE_MEMBER)
 
     const handleRemoveMember = (userID) => {
-        if(ls.userID===admin){
+        if(uid===admin){
             remove_member({
                 variables:{
                     gcId: chatID,
-                    userID: userID
+                    userID: uid
                 }
             }).then(()=>refetch())
         }
@@ -30,7 +31,7 @@ const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
                 member.userID!==admin &&
                 <div className='flex-h' style={styles.userBox} key={member.userID}>
                     <UserBox user={member}/>
-                    {(ls.userID===admin) && 
+                    {(uid===admin) && 
                         <FontAwesomeIcon 
                             icon='times' 
                             style={styles.removeBtn}

@@ -15,12 +15,13 @@ import NoPosts from '../../components/General components/NoPosts'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 import StoriesLoader from '../../components/General components/Loaders/StoriesLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
+import { useSelector } from 'react-redux'
 
 const Feed = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
-            userID: ls.userID,
+            userID: uid,
             limit:20,
             offset:0
         },

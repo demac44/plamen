@@ -15,16 +15,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import EditGroupInfo from '../../../components/Groups/components/Settings/Manage info/EditGroupInfo'
 import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
 import EditTags from '../../../components/Groups/components/Settings/Manage info/EditTags'
+import { useSelector } from 'react-redux'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
 const GroupEditInfo = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
-            uid: ls.userID
+            uid
         }
     })
 

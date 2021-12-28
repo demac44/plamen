@@ -26,7 +26,7 @@ const Sidebar = () => {
                 </NavLink>
                 <NavLink exact to='/someapptube' activeClassName='nav-active'>
                     <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
-                    <p>SomeAppTube</p>
+                    <p>plamenTube</p>
                 </NavLink>
             </div>
         </div>

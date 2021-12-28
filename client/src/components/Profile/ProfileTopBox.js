@@ -1,4 +1,8 @@
 import React, { useCallback, useState, memo, useEffect } from 'react'
+import { useSelector } from 'react-redux';
+import gql from 'graphql-tag'
+import { useQuery } from 'react-apollo'
+
 import ProfileFollowBtn from './components/ProfileFollowBtn'
 import ProfileEditBtn from './components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
@@ -6,22 +10,18 @@ import SendMsgBtn from './components/SendMsgBtn'
 import Avatar from '../General components/Avatar'
 import Story from '../Stories/components/Story'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
-import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
 import UnblockUserBtn from './components/UnblockUserBtn'
 import BlockUserBtn from './components/BlockUserBtn'
 import ActivityStatusBar from './components/ActivityStatusBar'
 
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
-    const ls = JSON.parse(localStorage.getItem('user')) 
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [blockBtn, setBlockBtn] = useState(false)
-
     const {loading, error, data} = useQuery(FETCH_INFO, {
         variables: {
-            userID: myprofile ? ls.userID : user.userID,
-            blockerId: ls.userID
+            userID: myprofile ? uid : user.userID,
+            blockerId: uid
         }
     })
 

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
+import { useSelector } from 'react-redux';
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -15,7 +16,7 @@ import CommunitySearchBar from '../../components/Navbar/CommunitySearchBar'
 
 
 const Search = ({isLogged}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const {query} = useParams()
     const [users, setUsers] = useState([])
     const [fetch, setFetch] = useState(true)
@@ -26,7 +27,7 @@ const Search = ({isLogged}) => {
         variables:{
             limit:15,
             offset:0,
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -35,9 +36,7 @@ const Search = ({isLogged}) => {
         setUsers(filterUsers(data?.get_users, query))
         setCommunities(filterCommunities(data?.get_all_groups, query))
     }, [data, query])
-    
-    if(error) throw error 
-    
+        
     const loadMore = () => {
         fetchMore({
             variables:{

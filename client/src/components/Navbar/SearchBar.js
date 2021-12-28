@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
+import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useQuery} from 'react-apollo'
 import SearchDrop from './SearchDrop'
@@ -7,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const SearchBar = ({chat, isLogged, handleOpen}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [dropdown, setDropdown] = useState(false)
     const [searchHistory, setSearchHistory] = useState([])
     const [query, setQuery] = useState('')
@@ -15,7 +16,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
         variables:{
             limit:5,
             offset:0,
-            userID: ls.userID
+            userID: uid
         }
     })
 
@@ -33,14 +34,15 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
     return (
         <>
             <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+query}}>
-                <div className="search-icon"><FontAwesomeIcon icon='search' color='#1f1f1f'/></div>
+                <div className="search-icon"><FontAwesomeIcon icon='search' color='#aaa'/></div>
                 <input 
                     type="text" 
                     className="tn-search-input" 
                     onChange={(e)=>setQuery(e.target.value)} 
                     placeholder='Search'
                     value={query}
-                    style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0'}} 
+                    style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0', 
+                            borderRight: query.length < 1 ? '1px solid #3f3f3f' : 'none'}} 
                     disabled={!isLogged && true}
                     onFocus={()=>{
                         handleOpen()
@@ -56,7 +58,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
                     }}/>
                 {query.length>0 && 
                 <div style={styles.closeIcon} className='flex-ctr'>
-                    <FontAwesomeIcon icon='times' onClick={()=>setQuery('')} size='lg'/>
+                    <FontAwesomeIcon icon='times' onClick={()=>setQuery('')} size='lg' color='#aaa'/>
                 </div>}
                 {(!loading && dropdown) && <SearchDrop 
                                 dropdownCallback={dropdownCallback} 
@@ -72,11 +74,13 @@ export default SearchBar
 
 const styles ={
     closeIcon:{
-        backgroundColor:'white',
+        backgroundColor:'#1f1f1f',
         height:'80%',
         width:'50px',
         borderRadius:'0 50px 50px 0',
-        cursor:'pointer'
+        cursor:'pointer',
+        border:'1px solid #3f3f3f',
+        borderLeft:'none'
     }
 }
 

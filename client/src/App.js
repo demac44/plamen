@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react';
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect, useHistory} from 'react-router-dom'
 
 import './App.css';
 import './General.css'
@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo';
+import axios from 'axios';
 
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const Groups = lazy(()=>import('./routes/Groups/Groups'))
@@ -32,49 +33,60 @@ const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
 const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
 
-import('@fortawesome/free-solid-svg-icons').then(i=>{
-  import('@fortawesome/fontawesome-svg-core').then(core =>{
+import('@fortawesome/free-solid-svg-icons').then(async i=>{
+  await import('@fortawesome/fontawesome-svg-core').then(core =>{
     core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
       i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
       i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
       i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-      i.faPhone, i.faIcons, i.faLock)
+      i.faPhone, i.faIcons, i.faLock, i.faLockOpen)
     })
 })
 
 function App() {
   const dispatch = useDispatch()
-  const isLogged = useSelector(state => state?.isAuth.isAuth)
-  const uid = useSelector(state => state.isAuth.user?.userID)
+  const isLogged = useSelector(state => state?.isAuth?.isAuth)
+  const uid = useSelector(state => state?.isAuth?.user?.userID)
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
   const [set_last_seen] = useMutation(SET_LAST_SEEN)
+  const history = useHistory()
   
+  const logout = async () => {
+    await axios({
+        method:'post',
+        url:'http://localhost:8000/api/logout',
+        withCredentials: true
+    }).then(()=>{
+        localStorage.clear()
+        history.push('/login')
+    })
+  }
+
   const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
-    skip: user?.userID ? false : true,
     variables:{
-      userID: user?.userID
+      userID: uid
     }
   })
 
   useEffect(()=>{
     dispatch(authenticate())
     
-    if(checkUser(token, user, uid)){
-      localStorage.clear()
+    if(checkUser(getCookie(isLogged), user)){
+      logout()
     } else {
-      if(data?.get_user_suggestions){
-        // setInterval(()=>{
-        //   set_last_seen({variables:{userID: user.userID}})
+        if(data?.get_user_suggestions){
+          // setInterval(()=>{
+        //   set_last_seen({variables:{userID: uid}})
         // }, 120000)
-          localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
-      }
+        localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
+        }
     }
   },[isLogged, user, uid, token, data, dispatch])
   
-  // onFocus={()=>set_last_seen({variables:{userID: user.userID}})}
+  // <div onFocus={()=>set_last_seen({variables:{userID: uid}})}>
   return (
-    <div>
+      <div>
         {(loading) ? <MainLoader/> :
           <Switch>
             <Route exact path='/'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
@@ -110,18 +122,19 @@ function App() {
 
 export default App;
 
-const checkUser = (token, user, uid) => {
-  if(!token) return true
-  else if(!user) return true
-  else if (uid && user.userID !== uid){
-    return true
-  }
+const checkUser = (token, user) => {
+  if(!token || !user) return true
   return false
+}
+
+function getCookie(isLogged) {
+    const cookie = document?.cookie?.split('; ')?.find(row => row.startsWith('x-auth-token='))?.split('=')[1];
+    return cookie
 }
 
 
 const GET_FOLLOW_SUGGESTIONS = gql`
-  query ($userID: Int!) {
+  query ($userID: Int) {
     get_user_suggestions (userID: $userID){
       first_name
       last_name

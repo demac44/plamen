@@ -6,24 +6,18 @@ import OpenMedia from '../OpenMedia'
 import SetTime from '../../../General components/SetTime'
 import Avatar from '../../../General components/Avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux';
 
-const DELETE_MESSAGE = gql`
-    mutation ($msgID: Int!){
-        delete_group_chat_message(msgID: $msgID){
-            groupChatId
-        }
-    }
-`
 
 
 const GroupMessage = ({msg}) => {
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [openMedia, setOpenMedia] = useState(false)
     const [delete_msg] = useMutation(DELETE_MESSAGE)
-
-
+    
+    
     const handleDelete = () => {
         delete_msg({
             variables:{
@@ -35,13 +29,13 @@ const GroupMessage = ({msg}) => {
     const closeMediaCallback = useCallback(val => {
         setOpenMedia(val)
     }, [setOpenMedia])
-
+    
     return (
         <>
-            <div className={msg.userID===ls.userID ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
+            <div className={msg.userID===uid ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
                     onClick={()=>setMsgOptions(!msgOptions)}>
 
-                {(msg.userID===ls.userID && msgOptions && !deleted) && 
+                {(msg.userID===uid && msgOptions && !deleted) && 
                     <>
                         <FontAwesomeIcon
                             icon='trash-alt' 
@@ -50,8 +44,8 @@ const GroupMessage = ({msg}) => {
                         />
                     </>
                     }
-                {msg.userID!==ls.userID && <Avatar size='35px' image={msg?.profile_picture}/>}
-                {msg.userID===ls.userID ?
+                {msg.userID!==uid && <Avatar size='35px' image={msg?.profile_picture}/>}
+                {msg.userID===uid ?
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
                     <>
@@ -74,7 +68,7 @@ const GroupMessage = ({msg}) => {
 
                         {msg.msg_text.slice(0,8)==='https://' ? 
                             <a href={msg.msg_text} target='_blank' rel="noreferrer">{msg.msg_text}</a> : 
-                                <p><strong>{msg.username+' '}</strong>{msg.msg_text}</p>
+                            <p><strong>{msg.username+' '}</strong>{msg.msg_text}</p>
                         }
                         
                         <span><SetTime timestamp={msg.time_sent} fontSize='12px'/></span>
@@ -87,6 +81,13 @@ const GroupMessage = ({msg}) => {
 
 export default memo(GroupMessage)
 
+const DELETE_MESSAGE = gql`
+    mutation ($msgID: Int!){
+        delete_group_chat_message(msgID: $msgID){
+            groupChatId
+        }
+    }
+`
 
 const styles = {
     deletebtn:{

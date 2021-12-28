@@ -6,8 +6,7 @@ import jwt from 'jsonwebtoken'
 const router = express.Router()
 
 const options =  {
-    maxAge: 3600000*24*30*12,
-    httpOnly: true
+    maxAge: 3600000*24*30*12
 }
 router.post('/', async (req, res) => {
     const {username, password} = req.body
@@ -19,7 +18,6 @@ router.post('/', async (req, res) => {
         const userID = result[0].userID
         const hashedPass = result[0].pass
         const obj = {
-            userID: userID,
             first_name: result[0].first_name,
             last_name: result[0].last_name, 
             username: result[0].username,
@@ -30,7 +28,7 @@ router.post('/', async (req, res) => {
             if (!response) {
                 res.send({error: 'Incorrect password!'})
             } else {
-                const token = jwt.sign({userID: userID, username: username}, process.env.JWT_SECRET) 
+                const token = jwt.sign({userID: userID, username: result[0].username}, process.env.JWT_SECRET) 
                 res.cookie("x-auth-token", token, options)
                 res.json({
                     token,

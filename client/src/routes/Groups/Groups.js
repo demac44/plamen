@@ -6,23 +6,24 @@ import { useQuery } from 'react-apollo'
 import GroupsGrid from '../../components/Groups/components/GroupsGrid'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import { useSelector } from 'react-redux'
 
 const GET_GROUPS = gql`
-    query ($uid: Int!){
-        get_groups(userID: $uid){
-            group_name
+query ($uid: Int!){
+    get_groups(userID: $uid){
+        group_name
             groupID
         }
     }
-`
-
+    `
+    
 const Groups = ({isLogged}) => {
     const [leftnav, setLeftnav] = useState(false)
-    const ls = JSON.parse(localStorage.getItem('user'))
+    const uid = useSelector(state => state.isAuth.user?.userID)
 
     const {data, loading} = useQuery(GET_GROUPS, {
         variables:{
-            uid: ls.userID
+            uid
         }
     })
 

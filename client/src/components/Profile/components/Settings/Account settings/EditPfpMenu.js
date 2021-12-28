@@ -13,7 +13,7 @@ const EDIT_PFP = gql`
 `
 
 
-const EditPfpMenu = ({closeMenu}) => {
+const EditPfpMenu = ({closeMenu, uid}) => {
     const [showDropzone, setShowDropzone] = useState(false)
     const [image, setImage] = useState(null);
     const [edit_pfp] = useMutation(EDIT_PFP)
@@ -29,7 +29,7 @@ const EditPfpMenu = ({closeMenu}) => {
         .then(res => {
             edit_pfp({
                 variables: {
-                    userID: user.userID,
+                    userID: uid,
                     pfp: res.data.url
                 }
             }).then(()=>{
@@ -43,7 +43,7 @@ const EditPfpMenu = ({closeMenu}) => {
     const handlePfpRemove = () => {
         edit_pfp({
             variables:{
-                userID: user.userID,
+                userID: uid,
                 pfp: ""
             }
         }).then(()=>{
