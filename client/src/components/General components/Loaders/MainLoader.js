@@ -1,9 +1,11 @@
 import React from 'react'
 
+import logo from '../../../images/logo.png'
+
 const MainLoader = () => {
     return (
         <div style={{...styles.loaderContainer, position:'relative'}} className='flex-ctr'>
-            <h1 className='loader-logo' style={{color:'white'}}>SoMeApp.com</h1>
+            <img src={logo} style={styles.logo}/>
         </div>
     )
 }
@@ -18,5 +20,8 @@ const styles = {
         height:'100vh',
         backgroundColor:'#1b1b1b',
         zIndex:'100000000000000000000000000000000000000000'
+    },
+    logo:{
+        height:'80px'
     }
 }

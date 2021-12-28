@@ -66,7 +66,7 @@ function App() {
       if(data?.get_user_suggestions){
         // setInterval(()=>{
         //   set_last_seen({variables:{userID: user.userID}})
-        // }, 30000)
+        // }, 120000)
           localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
       }
     }

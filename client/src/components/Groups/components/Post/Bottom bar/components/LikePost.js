@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
+import logo from '../../../../../../images/logo.png'
+import logoBlank from '../../../../../../images/logoBlank.png'
 
 const LikePost = ({postID, userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -45,15 +47,18 @@ const LikePost = ({postID, userID}) => {
         })   
     }
     return (
-        <FontAwesomeIcon  
-            icon='heart'
-            style={{...styles.likeBtn, color: ifLiked.loading ? 'white' 
-                        : liked ? '#a50202' : 'white'}}
-            onClick={() => liked ? handleRemove() : handleLike()}/>
+        <>
+            <img 
+                src={(ifLiked?.data?.if_liked || liked) ? logo : logoBlank} 
+                onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
+                style={styles.logo}
+            />
+        </>
     )
 }
 
 export default LikePost
+    
 
 const styles = {
     likeBtn:{
@@ -61,17 +66,22 @@ const styles = {
         minWidth:'40px',
         textAlign:'center',
         cursor:'pointer'
+    },
+    logo:{
+        height:'100%',
+        margin:'0 10px 0 5px',
+        cursor:'pointer'
     }
 }
 
 const LIKE_GP = gql`
-    mutation ($postID: Int!, $userID: Int!){
-        like_group_post (postID: $postID, userID: $userID){
+mutation ($postID: Int!, $userID: Int!){
+    like_group_post (postID: $postID, userID: $userID){
             postID
         }
     }
-`
-const REMOVE_GP_LIKE = gql`
+    `
+    const REMOVE_GP_LIKE = gql`
     mutation ($postID: Int!, $userID: Int!){
         remove_group_post_like (postID: $postID, userID: $userID){
             postID
@@ -79,7 +89,12 @@ const REMOVE_GP_LIKE = gql`
     }
 `
 const IF_LIKED_GP = gql`
-    query ($postID: Int, $userID: Int){
-        if_group_post_liked (postID: $postID, userID: $userID)
-    }
+query ($postID: Int, $userID: Int){
+    if_group_post_liked (postID: $postID, userID: $userID)
+}
 `
+// <FontAwesomeIcon  
+//     icon='heart'
+//     style={{...styles.likeBtn, color: ifLiked.loading ? 'white' 
+//                 : liked ? '#a50202' : 'white'}}
+//     onClick={() => liked ? handleRemove() : handleLike()}/>

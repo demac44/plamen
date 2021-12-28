@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import logo from '../../../../images/logo.png'
+import logoBlank from '../../../../images/logoBlank.png'
 
 const LikePost = ({postID, userID}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
@@ -40,14 +41,18 @@ const LikePost = ({postID, userID}) => {
         })   
     }
     return (
-        <FontAwesomeIcon icon='heart'
-            style={{...styles.likeBtn, color: ifLiked.loading ? 'white' : (ifLiked?.data?.if_liked || liked) ? '#a50202' : 'white'}}
-            onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
-        />
+        <>
+            <img 
+                src={ifLiked?.loading ? logoBlank : (ifLiked?.data?.if_liked || liked) ? logo : logoBlank} 
+                onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
+                style={styles.logo}
+            />
+        </>
     )
 }
 
 export default LikePost
+
 
 const styles = {
     likeBtn:{
@@ -55,31 +60,40 @@ const styles = {
         minWidth:'40px',
         textAlign:'center',
         cursor:'pointer'
+    },
+    logo:{
+        height:'100%',
+        margin:'0 10px 0 5px',
+        cursor:'pointer'
     }
 }
 
 const LIKE_POST = gql`
-    mutation ($postID: Int!, $userID: Int!, $rid: Int!){
-        like_post(postID: $postID, userID: $userID){
-            postID
-        }
-        like_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
-            postID
-        }
+mutation ($postID: Int!, $userID: Int!, $rid: Int!){
+    like_post(postID: $postID, userID: $userID){
+        postID
     }
-    `
+    like_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+        postID
+    }
+}
+`
 const REMOVE_LIKE = gql`
-    mutation remove_like($postID: Int!, $userID: Int!){
-        remove_like(postID: $postID, userID: $userID){
-            postID
-        }
-        remove_like_notif(postID: $postID, sender_id: $userID){
-            postID
-        }
+mutation remove_like($postID: Int!, $userID: Int!){
+    remove_like(postID: $postID, userID: $userID){
+        postID
     }
+    remove_like_notif(postID: $postID, sender_id: $userID){
+        postID
+    }
+}
 `
 const IF_LIKED = gql`
-    query ($postID: Int!, $userID: Int!){
-        if_liked(postID: $postID, userID: $userID)
-    }
+query ($postID: Int!, $userID: Int!){
+    if_liked(postID: $postID, userID: $userID)
+}
 `
+// <FontAwesomeIcon icon='heart'
+//     style={{...styles.likeBtn, color: ifLiked.loading ? 'white' : (ifLiked?.data?.if_liked || liked) ? '#a50202' : 'white'}}
+//     onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
+// />

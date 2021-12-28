@@ -54,7 +54,11 @@ const PostBottomBar = ({postID, userID}) => {
             />}
             <div className='post-bottom-bar flex'>
                 <LikePost postID={postID} userID={userID}/>
-                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}><FontAwesomeIcon icon='heart' color={likes ? 'darkred': 'white'}/></p>
+
+                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>
+                    <FontAwesomeIcon icon='sort-down' color='white' size='lg'
+                /></p>
+                
                 <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>
             {likes && <LikesList postID={postID}/>}
@@ -66,18 +70,13 @@ export default memo(PostBottomBar)
 
 const styles = {
     seeLikes:{
-        padding:'5px 8px',
-        fontSize:'12px',
-        color:'white',
+        padding:'0 6px 5px 6px',
+        fontSize:'14px',
         border:'1px solid #3f3f3f',
-        borderRadius:'10px',
+        borderRadius:'2px',
         textAlign:'center',
         cursor:'pointer',
-    },
-    loader:{
-        width:'100%',
-        height:'40px',
-        backgroundColor:'#1f1f1f'
+        marginTop:'5px'
     }
 }
 
