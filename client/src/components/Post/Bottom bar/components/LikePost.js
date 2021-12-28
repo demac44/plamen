@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 
@@ -17,6 +17,10 @@ const LikePost = ({postID, userID}) => {
             userID: ls.userID
         }
     })
+
+    useEffect(()=>{
+        return ifLiked?.data?.if_liked && setLiked(true)
+    }, [ifLiked?.data])
 
     const handleLike = () => {
         like_post({
@@ -40,11 +44,12 @@ const LikePost = ({postID, userID}) => {
             setLiked(false)
         })   
     }
+
     return (
         <>
             <img 
-                src={ifLiked?.loading ? logoBlank : (ifLiked?.data?.if_liked || liked) ? logo : logoBlank} 
-                onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
+                src={ifLiked?.loading ? logoBlank : (liked ? logo : logoBlank)} 
+                onClick={() => liked ? handleRemove() : handleLike()}
                 style={styles.logo}
             />
         </>

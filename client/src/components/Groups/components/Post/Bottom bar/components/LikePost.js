@@ -14,7 +14,7 @@ const LikePost = ({postID, userID}) => {
     const ifLiked = useQuery(IF_LIKED_GP, {
         variables:{
             postID: postID,
-            userID: userID
+            userID: ls.userID
         }
     })
 
@@ -49,8 +49,8 @@ const LikePost = ({postID, userID}) => {
     return (
         <>
             <img 
-                src={(ifLiked?.data?.if_liked || liked) ? logo : logoBlank} 
-                onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
+                src={ifLiked?.loading ? logoBlank : (liked ? logo : logoBlank)} 
+                onClick={() => liked ? handleRemove() : handleLike()}
                 style={styles.logo}
             />
         </>
