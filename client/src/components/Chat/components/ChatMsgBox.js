@@ -82,7 +82,6 @@ const ChatMsgBox = ({chat}) => {
 
     return (
         <div className='chat-msg-box'> 
-        <>
             <ChatBar chatID={chat.chatID} info={chat}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
@@ -90,7 +89,6 @@ const ChatMsgBox = ({chat}) => {
                 {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendMsg chatID={chat.chatID} info={chat} loaderCallback={loaderCallback}/> 
-        </>
         </div>
     )
 }

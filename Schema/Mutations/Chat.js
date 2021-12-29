@@ -48,8 +48,8 @@ export const SEND_MESSAGE = {
     async resolve(_, args){
         const {chatID, userID, msg_text, url, type, username, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO messages (msgID, chatID, userID, time_sent, msg_text, url, type)
-                     VALUES (null, ${chatID}, ${userID}, null, "${encrypted}", "${url}", "${type}")`
+        const sql = `INSERT INTO messages (chatID, userID, msg_text, url, type)
+                     VALUES (${chatID}, ${userID}, "${encrypted}", "${url}", "${type}")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {
                                         chatID, 

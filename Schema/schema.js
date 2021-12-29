@@ -5,26 +5,47 @@ import {
 
 import { pubsub } from "../server.js";
 
-import { ADD_GROUP_CHAT_USER, CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, DELETE_MESSAGE, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, REMOVE_GROUP_CHAT_MEMBER, SEEN, SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
+import { ADD_GROUP_CHAT_USER, CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, 
+        DELETE_MESSAGE, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, REMOVE_GROUP_CHAT_MEMBER, SEEN, 
+        SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
+        
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
-import { ACCEPT_REQUEST, ADD_GP_COMMENT, ALLOW_REPORTED_POST, CHANGE_GROUP_BANNER_IMG, CHANGE_GROUP_INFO, CHANGE_GROUP_NAME, CHANGE_GROUP_TAGS, CHANGE_MEMBER_ROLE, CHANGE_VISIBILITY, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, REMOVE_GP_LIKE, REMOVE_GROUP_USER, REMOVE_REPORTED_POST, REMOVE_REQUEST, REMOVE_SAVED_GP, REPORT_GROUP_POST, SAVE_GP } from "./Mutations/Groups.js";
+
+import { ACCEPT_REQUEST, ADD_GP_COMMENT, ALLOW_REPORTED_POST, CHANGE_GROUP_BANNER_IMG, 
+        CHANGE_GROUP_INFO, CHANGE_GROUP_NAME, CHANGE_GROUP_TAGS, CHANGE_MEMBER_ROLE, 
+        CHANGE_VISIBILITY, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, 
+        DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, 
+        REMOVE_GP_LIKE, REMOVE_GROUP_USER, REMOVE_REPORTED_POST, REMOVE_REQUEST, REMOVE_SAVED_GP, 
+        REPORT_GROUP_POST, SAVE_GP, SEND_COMMUNITY_MESSAGE } from "./Mutations/Groups.js";
+
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
-import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
+import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, 
+        REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
-import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
-import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
+import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
+        EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
+
+import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, 
+        GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, 
+        GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
+
 import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings.js";
-import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GROUP_MEMBERS, GET_GROUP_POSTS, GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_REPORTED_POSTS, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED } from "./Queries/Groups.js";
+
+import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GROUP_MEMBERS, GET_GROUP_POSTS,
+         GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_REPORTED_POSTS, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, 
+         IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED, GET_COMMUNITY_MESSAGES } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
-import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
+import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
+        IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
+import { CommunityChatMessagesType } from "./TypeDefs/Groups.js";
 import { NotificationType } from "./TypeDefs/Notifications.js";
 
 const RootQuery = new GraphQLObjectType({
@@ -88,7 +109,9 @@ const RootQuery = new GraphQLObjectType({
         get_saved_group_posts: GET_SAVED_GROUP_POSTS,
         if_group_post_saved: IF_GROUP_POST_SAVED,
         if_group_post_liked: IF_GROUP_POST_LIKED,
-        get_group_reported_posts: GET_GROUP_REPORTED_POSTS
+        get_group_reported_posts: GET_GROUP_REPORTED_POSTS,
+        // community messages
+        get_community_messages: GET_COMMUNITY_MESSAGES
     }
 })    
 
@@ -150,14 +173,14 @@ const RootMutation = new GraphQLObjectType({
         remove_like_notif: REMOVE_LIKE_NOTIF,
         remove_follow_notif: REMOVE_FOLLOW_NOTIF,
         remove_comment_notif: REMOVE_COMMENT_NOTIF,
-        // groups
+        // communities
         create_group: CREATE_GROUP,
         change_group_visibility: CHANGE_VISIBILITY,
         change_group_info: CHANGE_GROUP_INFO,
         change_group_banner: CHANGE_GROUP_BANNER_IMG,
         change_group_tags: CHANGE_GROUP_TAGS,
         change_group_name: CHANGE_GROUP_NAME,
-        // group posts
+        // community posts
         create_group_post: CREATE_GROUP_POST,
         delete_group_post: DELETE_GROUP_POST,
         like_group_post: LIKE_GP_POST,
@@ -169,7 +192,7 @@ const RootMutation = new GraphQLObjectType({
         report_group_post: REPORT_GROUP_POST,
         allow_group_reported_post: ALLOW_REPORTED_POST,
         remove_group_reported_post: REMOVE_REPORTED_POST,
-        // group users
+        // community users
         join_group: JOIN_GROUP,
         leave_group: LEAVE_GROUP,
         join_request: JOIN_REQUEST,
@@ -177,7 +200,9 @@ const RootMutation = new GraphQLObjectType({
         accept_join_request: ACCEPT_REQUEST,
         deny_join_request: DENY_REQUEST,
         remove_group_user: REMOVE_GROUP_USER,
-        change_member_role: CHANGE_MEMBER_ROLE
+        change_member_role: CHANGE_MEMBER_ROLE,
+        // community chat
+        send_community_message: SEND_COMMUNITY_MESSAGE
     }
 })
 
@@ -199,6 +224,10 @@ const RootSubscription = new GraphQLObjectType({
         newNotification: {
             type: NotificationType,
             subscribe: () => pubsub.asyncIterator(["NOTIFICATION"]) 
+        },
+        newCommunityMessage: {
+            type: CommunityChatMessagesType,
+            subscribe: () => pubsub.asyncIterator(["NEW_COMMUNITY_MESSAGE"]) 
         }
     }
 })

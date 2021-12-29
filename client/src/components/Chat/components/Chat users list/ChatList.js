@@ -1,12 +1,12 @@
 import React, {memo} from 'react'
-import SearchBar from '../../Navbar/SearchBar'
+import SearchBar from '../../../Navbar/SearchBar'
 import ChatListUser from './ChatListUser'
 import ChatsOptions from './ChatsOptions'
 import { useSelector } from 'react-redux';
+import ChatListGroup from '../Group chat/ChatListGroup'
 
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import ChatListGroup from './Group chat/ChatListGroup'
 
 const ChatList = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)

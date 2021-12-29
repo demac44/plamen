@@ -16,6 +16,7 @@ import { useMutation, useQuery } from 'react-apollo';
 import axios from 'axios';
 
 const Group = lazy(()=>import('./routes/Groups/Group'))
+const CommunityChat = lazy(()=>import('./routes/Groups/CommunityChat'))
 const Groups = lazy(()=>import('./routes/Groups/Groups'))
 const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
 const Explore = lazy(()=>import('./routes/Explore/Explore'))
@@ -33,6 +34,7 @@ const GroupEditInfo = lazy(()=>import('./routes/Groups/Settings/GroupEditInfo'))
 const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
 const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
+
 
 import('@fortawesome/free-solid-svg-icons').then(async i=>{
   await import('@fortawesome/fontawesome-svg-core').then(core =>{
@@ -110,6 +112,7 @@ function App() {
               {/* communities */}
               <Route exact path='/communities'>{isLogged ? <Groups isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid'>{isLogged ? <Group isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
+              <Route exact path='/community/:groupid/chat'>{isLogged ? <CommunityChat isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/members'>{isLogged ? <GroupMembers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings'>{isLogged ? <GroupSettings isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/edit_info'>{isLogged ? <GroupEditInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

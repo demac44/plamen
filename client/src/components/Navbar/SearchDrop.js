@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
-import ChatSearchBarUser from '../Chat/components/ChatSearchBarUser'
+import ChatSearchBarUser from '../Chat/components/Chat users list/ChatSearchBarUser'
 import CommunitySearchBar from './CommunitySearchBar'
 import SearchHistoryDrop from './SearchHistoryDrop'
 import UserSearchBar from './UserSearchBar'

@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import logoTube from '../../images/logo-red-min.png'
+import logoStream from '../../images/logo-green-min.png'
 
 const Sidebar = () => {
 
@@ -27,9 +28,12 @@ const Sidebar = () => {
                     <p>Communities</p>
                 </NavLink>
                 <NavLink exact to='/someapptube' activeClassName='nav-active'>
-                    {/* <FontAwesomeIcon icon='play' color='darkred' fixedWidth/> */}
                     <img src={logoTube} style={styles.logoTube}/>
                     <p>plamenTube</p>
+                </NavLink>
+                <NavLink exact to='/someapptube' activeClassName='nav-active'>
+                    <img src={logoStream} style={styles.logoTube}/>
+                    <p>plamenStream</p>
                 </NavLink>
             </div>
         </div>

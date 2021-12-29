@@ -1,7 +1,7 @@
 import React, { useEffect, useState, memo } from 'react'
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
-import Avatar from '../../General components/Avatar'
+import Avatar from '../../../General components/Avatar'
 
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'

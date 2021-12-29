@@ -1,10 +1,15 @@
 /* CHATS */
-
+.container-chat{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
 .all-chats-box{
-    position: fixed;
+    position: sticky;
     top: 60px;
     left: 0;
-    width: 350px;
+    min-width: 350px;
     overflow:auto;
     height: calc(100vh - 60px);
     z-index: 1000;
@@ -31,18 +36,19 @@
 .chat-msg-box{
     position: relative;
     height: 100vh;
+    width: 100%;
     padding-bottom:110px;
     padding-top: 60px;
-    margin:0 0 0 350px;
     z-index: 999;
 }
 .msg-input-box{
     position: relative;
-    position: fixed;
+    position: absolute;
+    width: 100%;
     bottom: 0;
     left: 0;
     height: 50px;
-    padding: 5px 20px 5px 370px;
+    padding: 5px 10px;
     width: 100%;
     z-index: 1000;
     background-color: #1b1b1b;
@@ -254,16 +260,6 @@
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 991px){
-    /* CHATS */
-    .all-chats-box{
-        width: 250px;
-    }
-    .chat-msg-box{
-        margin-left: 250px;
-    }
-    .msg-input-box{
-        padding: 5px 20px 5px 270px;
-    }
     /* ALL CHAT MEDIA */
     .chat-all-media-container{
         padding: 60px 0 0 250px;

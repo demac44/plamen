@@ -3,18 +3,18 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import EmojisBox from '../../General components/Emojis/EmojisBox'
-import MsgPreviewBox from './MsgPreviewBox'
 import { useSelector } from 'react-redux';
 
+import MsgPreviewBox from '../../../Chat/components/MsgPreviewBox'
+import EmojisBox from '../../../General components/Emojis/EmojisBox'
 
 
-const SendMsg = ({chatID, loaderCallback, info}) => {
+
+const CommSendMsg = ({groupID, loaderCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const uid = useSelector(state => state.isAuth.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
-    const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState(null)
     const [msgText, setMsgText] = useState('')
@@ -22,8 +22,8 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [lengthErr, setLengthErr] = useState(false)
     
     useEffect(()=>{
-        document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
-        document.querySelector('.chat-bar').addEventListener('click', ()=>setEmojis(false))
+        // document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
+        // document.querySelector('.chat-bar').addEventListener('click', ()=>setEmojis(false))
     }, [])
 
     const sendMessage = (e) => {
@@ -40,28 +40,20 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
             const data = new FormData()
             data.append("file", media)
             data.append("upload_preset", "z8oybloj")
-            data.append("folder", "Messages media")
+            data.append("folder", "Community messages media")
             axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/${media.type.slice(0,5)}/upload`, data)
             .then(res => {
                     send_msg({
                         variables: {
                             userID: uid,
                             username: usernm,
-                            profile_picture: ls.profile_picture,
-                            chatID: chatID, 
+                            pfp: ls.profile_picture,
+                            groupID, 
                             msg_text: msgText,
                             type: media.type.slice(0,5),
                             url: res.data.url
                         }
                     }).then(()=>{
-                        msg_notification({
-                            variables:{
-                                    sid: uid,
-                                    rid: info.userID,
-                                    chatID: chatID
-                                }
-                            })
-                        }).then(()=>{
                             setMedia(null)
                             loaderCallback(false)
                             setMsgText('')
@@ -72,21 +64,12 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                         variables: {
                             userID: uid,
                             username: usernm,
-                            profile_picture: ls.profile_picture,
-                            chatID: chatID, 
+                            pfp: ls.profile_picture,
+                            groupID, 
                             msg_text: msgText,
                             type:'text',
                             url: 'null'
                         }
-                    }).then(()=>{
-                        msg_notification({
-                            variables:{
-                                sid: uid,
-                                rid: info.userID,
-                                chatID: chatID
-                            },
-                            
-                        })
                     }).then(()=>{
                         setMsgText('')
                     })
@@ -104,8 +87,10 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     return (
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
+
             <EmojisBox emojiCB={emojiCB} visible={emojis}/>
-            <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
+
+            <form className='comm-msg-input-box flex-sb' onSubmit={sendMessage}>
                 {lengthErr && <p style={styles.lenErrMsg}>Message too long! Max. characters allowed: 6000</p>}
                 <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
                 <div>
@@ -121,7 +106,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                 <textarea 
                     name='msg_text' 
                     value={msgText} 
-                    className='msg_text' 
+                    className='comm_msg_text' 
                     onChange={(e)=>setMsgText(e.target.value)} 
                     placeholder='Send message...'
                     ></textarea>
@@ -131,20 +116,13 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     )
 }
 
-export default SendMsg
+export default CommSendMsg
 
 const SEND_MSG = gql`
-    mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
-        send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url, type: $type){
+    mutation ($groupID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!, $username: String!, $pfp: String!){
+        send_community_message (groupID: $groupID, userID: $userID, msg_text: $msg_text, 
+                                url: $url, type: $type, username: $username, profile_picture: $pfp){
             msgID
-        }
-    }
-`
-
-const MSG_NOTIFICATION = gql`
-    mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
-        msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
-            chatID
         }
     }
 `

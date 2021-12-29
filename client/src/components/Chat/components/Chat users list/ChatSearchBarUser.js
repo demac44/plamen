@@ -1,8 +1,8 @@
 import React, {memo} from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
-import Avatar from '../../General components/Avatar'
-import UserLoader from '../../General components/Loaders/UserLoader'
+import Avatar from '../../../General components/Avatar'
+import UserLoader from '../../../General components/Loaders/UserLoader'
 import { useSelector } from 'react-redux';
 
 const ChatSearchBarUser = ({user}) => {

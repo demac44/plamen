@@ -1,9 +1,11 @@
 import { GraphQLBoolean, GraphQLInt, GraphQLList } from 'graphql';
 import connection from '../../middleware/db.js'
 import { CommentType } from '../TypeDefs/Comments.js';
-import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
+import { GroupPostType, GroupType, GroupUserType, CommunityChatMessagesType } from "../TypeDefs/Groups.js"
 import { LikesType } from '../TypeDefs/Likes.js';
 import { GroupReportedPost } from '../TypeDefs/Report.js';
+
+import CryptoJS from 'crypto-js';
 
 export const GET_ALL_GROUPS = {
     type: new GraphQLList(GroupType),
@@ -247,6 +249,29 @@ export const GET_GROUP_JOIN_REQUESTS = {
                      JOIN users ON community_join_requests.userID=users.userID
                      WHERE groupID=${groupID}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        return result
+    }
+}
+
+export const GET_COMMUNITY_MESSAGES = {
+    type: new GraphQLList(CommunityChatMessagesType),
+    args:{
+        groupID:{type: GraphQLInt},
+        limit:{type: GraphQLInt},
+        offset:{type: GraphQLInt}
+    }, 
+    async resolve(_,args){
+        const {groupID, limit, offset} = args
+        const sql = `SELECT msgID, msg_text, time_sent, groupID, username, type, url, users.userID, profile_picture
+                     FROM community_chat_messages
+                     JOIN users ON community_chat_messages.userID=users.userID
+                     WHERE groupID=${groupID}
+                     LIMIT ${limit} OFFSET ${offset}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0]})
+        await result.map(msg => {
+            const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+            Object.assign(msg, {msg_text: decrypted})
+        })
         return result
     }
 }

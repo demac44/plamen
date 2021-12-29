@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import CreateGroupChatBox from './Group chat/CreateGroupChatBox'
+import CreateGroupChatBox from '../Group chat/CreateGroupChatBox'
 
 const ChatsOptions = () => {
     const [nameBox, setNameBox] = useState(false)

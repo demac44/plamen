@@ -1,11 +1,14 @@
 import { GraphQLInt, GraphQLString, GraphQLBoolean} from "graphql"
 import connection from "../../middleware/db.js"
 import { CommentType } from "../TypeDefs/Comments.js"
-import { GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
+import { CommunityChatMessagesType, GroupPostType, GroupType, GroupUserType } from "../TypeDefs/Groups.js"
 import { LikesType } from "../TypeDefs/Likes.js"
 import { PostType } from "../TypeDefs/Posts.js"
 import {ReportType} from '../TypeDefs/Report.js'
 
+import {pubsub} from '../../server.js'
+
+import CryptoJS from "crypto-js"
 
 export const CREATE_GROUP = {
     type: GroupType,
@@ -399,6 +402,54 @@ export const CHANGE_MEMBER_ROLE = {
                      SET roleID=${roleID} 
                      WHERE groupID=${groupID} 
                      AND userID=${userID}`
+        connection.query(sql)
+        return args
+    }
+}
+export const SEND_COMMUNITY_MESSAGE = {
+    type: CommunityChatMessagesType,
+    args: {
+        groupID: {type: GraphQLInt},
+        userID: {type: GraphQLInt},
+        msg_text: {type: GraphQLString},
+        url: {type: GraphQLString},
+        type: {type:GraphQLString},
+        username: {type: GraphQLString},
+        profile_picture: {type: GraphQLString},
+        username: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {groupID, userID, msg_text, url, type, username, profile_picture} = args
+        const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
+
+        const sql = `INSERT INTO community_chat_messages (groupID, userID, msg_text, url, type)
+                     VALUES (${groupID}, ${userID}, "${encrypted}", "${url}", "${type}")`
+
+        const msg = await connection.promise().query(sql).then(res=>{return res[0]})
+        pubsub.publish('NEW_COMMUNITY_MESSAGE', {newCommunityMessage: {
+                                        groupID, 
+                                        msg_text, 
+                                        userID, 
+                                        url, 
+                                        type, 
+                                        msgID: msg.insertId, 
+                                        time_sent: new Date().getTime(),
+                                        username,
+                                        profile_picture
+                                        }})
+        return args
+    }
+}
+
+
+export const DELETE_COMMUNITY_MESSAGE = {
+    type: CommunityChatMessagesType,
+    args: {
+        msgID: {type:GraphQLInt}
+    },
+    resolve(_, args){
+        const {msgID} = args
+        const sql = `DELETE FROM community_chat_messages WHERE msgID=${msgID}`
         connection.query(sql)
         return args
     }

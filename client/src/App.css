@@ -12,6 +12,7 @@ body{
     animation-fill-mode:backwards;
 }
 .container-main{
+    position: relative;
     display: flex;
     width: 100vw;
     min-height: 100vh;

@@ -63,3 +63,20 @@ export const GroupUserType = new GraphQLObjectType({
         permissions:{type:GraphQLString}
     })
 })
+
+export const CommunityChatMessagesType = new GraphQLObjectType({
+    name:'CommunityChatMessages',
+    fields: ()=>({
+        msgID: {type: GraphQLInt},
+        groupID: {type: GraphQLInt},
+        userID: {type: GraphQLInt},
+        time_sent: {type: GraphQLString},
+        msg_text: {type: GraphQLString},
+        url: {type: GraphQLString},
+        type: {type: GraphQLString},
+        limit: {type: GraphQLInt},
+        offset: {type: GraphQLInt},
+        username: {type: GraphQLString},
+        profile_picture:{type:GraphQLString}
+    })
+})
