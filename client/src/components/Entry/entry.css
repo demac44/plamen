@@ -5,7 +5,8 @@
     border-radius: 20px;
 }
 .entry-form-box h1{
-    color: #ffbb00;
+    /* color: #ffbb00; */
+    color: white;
     margin-left: 10px;
 }
 .entry-form-box p{
@@ -21,7 +22,7 @@
     font-size: 14px;
     margin-left: 5px;
     text-decoration: none;
-    color: #ffbb00;
+    color: #19abff;
     align-self: flex-start;
 }
 .entry-form input, .birthdt-reg-box select{
@@ -33,18 +34,18 @@
     font-size: 14px;
     outline: none;
     padding: 5px 10px;
-    border: 1px solid #ffbb00;
 }
 .entry-btn{
     padding: 10px 65px;
-    background-color: #ec9a00;
+    background-color: #0e7ab9;
     color: white;
     font-size: 18px;
-    box-shadow: 4px 4px 20px #ec9a00;
+    box-shadow: 4px 4px 20px #169fdf;
+    background: linear-gradient(to bottom right,#1a92d8,#012675);
     margin-top: 25px;
 }
 .entry-btn:hover{
-    background-color: #f3b645;
+    background: linear-gradient(to bottom right,#249ce2,#023ab3);
 }
 .entry-link{
     width: 100%;

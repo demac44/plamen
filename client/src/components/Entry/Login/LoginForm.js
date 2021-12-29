@@ -6,6 +6,8 @@ import ErrorMsg from '../ErrorMsg';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo';
 
+import logo from '../../../images/logo-min.png'
+
 const LoginForm = ({popup}) => {
     let password, username;
     const [errorMsg, setErrorMsg] = useState('')
@@ -53,7 +55,10 @@ const LoginForm = ({popup}) => {
     return (
         <div className='entry-form-box flex-col-ctr'>
             <span style={{alignSelf:'flex-start'}}> 
-                <h1>Login</h1>
+                <div className='flex-h' style={{margin:'0 0 5px 10px'}}>
+                    <img src={logo}/>
+                    <h1>Login</h1>
+                </div>
                 <p>Enter your details below to continue</p>
             </span>
             {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}

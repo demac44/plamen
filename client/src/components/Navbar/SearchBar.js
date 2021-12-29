@@ -34,7 +34,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
     return (
         <>
             <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+query}}>
-                <div className="search-icon"><FontAwesomeIcon icon='search' color='#aaa'/></div>
+                <div className="search-icon"><FontAwesomeIcon icon='search' color='#bbb'/></div>
                 <input 
                     type="text" 
                     className="tn-search-input" 
@@ -74,7 +74,7 @@ export default SearchBar
 
 const styles ={
     closeIcon:{
-        backgroundColor:'#1f1f1f',
+        backgroundColor:'#2f2f2f',
         height:'80%',
         width:'50px',
         borderRadius:'0 50px 50px 0',

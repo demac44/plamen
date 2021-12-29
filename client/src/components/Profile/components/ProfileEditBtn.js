@@ -1,11 +1,14 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const ProfileEditBtn = () => {
     return (
-        <NavLink exact to='/settings' className="profile-top-box-buttons">
-            <p>Settings</p>
-        </NavLink>
+        <Link to='/settings' className="profile-top-box-buttons flex-ctr">
+            <FontAwesomeIcon icon='cogs'/>
+            <p style={{marginLeft:'5px'}}>Settings</p>
+        </Link>
     )
 }
 

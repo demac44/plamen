@@ -27,7 +27,7 @@ const SideInfoBox = ({myprofile, userID}) => {
     }, [data])
 
     return (
-        <div className='profile-side-info-box'>
+        <div className='profile-side-info-box box' style={{margin:'0'}}>
            <span className='flex-sb' style={styles.title}>
                <h3>User information</h3>
                {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}

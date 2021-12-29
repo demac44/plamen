@@ -16,7 +16,7 @@ const MyGroupsList = () => {
     })
 
     return (
-        <div className='my-groups-box'>
+        <div className='my-groups-box box' style={{margin:'0'}}>
             <div className='flex-sb' style={styles.descTitle}>
                 <h2>My communities</h2>
                 <Link to='/communities' style={styles.seeAllBtn}>See all</Link>

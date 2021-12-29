@@ -22,7 +22,7 @@ const InterestsBox = ({myprofile, userID}) => {
     }, [data, userID, myprofile])
 
     return (
-        <div className='profile-interests-box'>
+        <div className='box'>
             <div style={styles.title} className='flex-sb'>
                 <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
                 {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}

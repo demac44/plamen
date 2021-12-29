@@ -12,6 +12,9 @@ const GroupNavbar = ({groupid, role}) => {
                 <NavLink exact to={'/community/'+groupid}>
                     <FontAwesomeIcon icon='newspaper' color='darkgreen'/>
                 </NavLink>
+                <NavLink exact to={'/community/'+groupid+'/chat'}>
+                    <FontAwesomeIcon icon='comment-dots' color='teal'/>
+                </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/saved'}>
                     <FontAwesomeIcon icon='bookmark' color='#ffbb00'/>
                 </NavLink>
