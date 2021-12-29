@@ -122,7 +122,9 @@ export const COUNT_ALL_MSGS = {
     },
     async resolve(_, args){
         const {receiver_id} = args
-        const sql = `SELECT COUNT(Nid) AS msgCount FROM msg_notifications WHERE receiver_id=${receiver_id}`
+        const sql = `SELECT COUNT(Nid) AS msgCount 
+                     FROM msg_notifications 
+                     WHERE receiver_id=${receiver_id}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }

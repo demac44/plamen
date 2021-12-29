@@ -4,8 +4,6 @@ body{
 }
 .wrapper{
     position: relative;
-    min-width: 100vw;
-    min-height: 100vh;
     overflow: hidden;
     animation-name: logo;
     animation-duration: .5s;

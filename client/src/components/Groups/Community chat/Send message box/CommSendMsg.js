@@ -47,7 +47,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
                         variables: {
                             userID: uid,
                             username: usernm,
-                            pfp: ls.profile_picture,
+                            pfp: ls.profile_picture || '',
                             groupID, 
                             msg_text: msgText,
                             type: media.type.slice(0,5),
@@ -64,7 +64,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
                         variables: {
                             userID: uid,
                             username: usernm,
-                            pfp: ls.profile_picture,
+                            pfp: ls.profile_picture || '',
                             groupID, 
                             msg_text: msgText,
                             type:'text',
@@ -88,7 +88,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
 
-            <EmojisBox emojiCB={emojiCB} visible={emojis}/>
+            {emojis && <EmojisBox emojiCB={emojiCB} visible={emojis}/>}
 
             <form className='comm-msg-input-box flex-sb' onSubmit={sendMessage}>
                 {lengthErr && <p style={styles.lenErrMsg}>Message too long! Max. characters allowed: 6000</p>}
