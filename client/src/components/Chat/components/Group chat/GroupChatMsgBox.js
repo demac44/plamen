@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from '
 import { useSelector } from 'react-redux';
 
 import gql from 'graphql-tag'
-import { useQuery, useMutation } from 'react-apollo'
+import { useQuery } from 'react-apollo'
 import SendGroupMsg from './SendGroupMsg'
 import GroupMessage from './GroupMessage'
 import GroupChatBar from './GroupChatBar'

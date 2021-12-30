@@ -2,7 +2,7 @@ import React, { useCallback, useState, memo } from 'react'
 
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import OpenMedia from './OpenMedia'
+import { OpenMedia } from '../export'
 import SetTime from '../../General components/SetTime'
 import Avatar from '../../General components/Avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

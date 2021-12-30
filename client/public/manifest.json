@@ -1,6 +1,18 @@
 {
-  "short_name": "Social Media App",
-  "name": "Social Media App",
+  "short_name": "plamen",
+  "name": "plamen",
   "start_url": ".",
-  "display": "standalone"
+  "display": "standalone",
+  "icons":[
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo-min.png",
+      "sizes": "50x50",
+      "type": "image/x-icon"
+    }
+  ]
 }

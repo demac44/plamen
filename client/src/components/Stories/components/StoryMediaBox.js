@@ -15,7 +15,7 @@ const StoryMediaBox = ({
         if(storyData){
             if(index===(isProfile ? 0 : allDataLength-1) && innerIndex===storyData?.stories?.length-1){
                 window.clearTimeout(timeout)
-                closeStoryCallback()
+                closeStoryCallback(false)
                 return
             } else if (innerIndex===storyData?.stories?.length-1){
                 setIndexCallback(index+1)
@@ -31,7 +31,7 @@ const StoryMediaBox = ({
         if(storyData){
             if(index===0 && innerIndex===0){
                 window.clearTimeout(timeout)
-                closeStoryCallback()
+                closeStoryCallback(false)
                 return
             } else if (index>0 && innerIndex===0){
                 setIndexCallback(index-1)

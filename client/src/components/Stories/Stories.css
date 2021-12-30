@@ -26,6 +26,7 @@
     position: relative;
     width: 30%;
     height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -54,9 +55,9 @@
     justify-content: space-evenly;
 }   
 .story-media img, .story-media video{
-    min-width: 100%;
-    max-height: 100%;
-    border-radius: 20px;
+    max-width: 100%;
+    max-height: calc(100vh - 110px);
+    border-radius: 10px;
 }
 .story-upload-btn{
     width: 130px;
@@ -163,11 +164,13 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
 @media screen and (max-width: 991px){
     .story-box{
         width: 50%;
+        max-height: 100vh;
     }
 }
 @media screen and (max-width: 768px){
     .story-box{
         width: 80%;
+        max-height: 100vh;
     }
 }   
 @media screen and (max-width:580px){

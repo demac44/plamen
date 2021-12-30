@@ -3,10 +3,10 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import EmojisBox from '../../General components/Emojis/EmojisBox'
-import MsgPreviewBox from './MsgPreviewBox'
 import { useSelector } from 'react-redux';
 
+import EmojisBox from '../../General components/Emojis/EmojisBox'
+import MsgPreviewBox from './MsgPreviewBox'
 
 
 const SendMsg = ({chatID, loaderCallback, info}) => {

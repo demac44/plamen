@@ -13,7 +13,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build",
     "start": "node server.js",
-    "build": "npm run build"
+    "build": "npm run build",
+    "bld": "cd client && npm run build"
   },
   "author": "Demir Umejr",
   "license": "ISC",

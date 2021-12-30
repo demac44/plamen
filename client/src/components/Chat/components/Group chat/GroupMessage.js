@@ -2,12 +2,11 @@ import React, { useCallback, useState, memo } from 'react'
 
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import OpenMedia from '../OpenMedia'
 import SetTime from '../../../General components/SetTime'
 import Avatar from '../../../General components/Avatar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
-
+import {OpenMedia} from '../../export'
 
 
 const GroupMessage = ({msg}) => {

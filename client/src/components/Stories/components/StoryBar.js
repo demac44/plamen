@@ -19,7 +19,7 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
                 <FontAwesomeIcon
                     icon='times'
                     style={{...styles.btns, marginRight:'10px'}} 
-                    onClick={()=>closeStoryCallback()}
+                    onClick={()=>closeStoryCallback(false)}
                 />
             </span>
         </div>

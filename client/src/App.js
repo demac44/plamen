@@ -42,7 +42,7 @@ import('@fortawesome/free-solid-svg-icons').then(async i=>{
       i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
       i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
       i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-      i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs)
+      i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera)
     })
 })
 

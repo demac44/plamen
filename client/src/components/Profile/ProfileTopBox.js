@@ -13,6 +13,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import UnblockUserBtn from './components/UnblockUserBtn'
 import BlockUserBtn from './components/BlockUserBtn'
 import ActivityStatusBar from './components/ActivityStatusBar'
+import ProfilePfp from './components/ProfilePfp';
 
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
@@ -33,8 +34,8 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
         return
     }, [data, isBlockedCB, loading])
 
-    const closeStoryCallback = useCallback(()=>{
-        setOpenStory(false)
+    const setStoryCallback = useCallback(val=>{
+        setOpenStory(val)
     }, [setOpenStory])
     
     if(error) throw error
@@ -51,11 +52,11 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     return (
         <>
             <div className="profile-top-box">
-                <div style={{border: (data?.get_user_stories?.length>0 && !data?.if_user_blocked) && '3px solid #ffbb00', borderRadius:'50%'}} 
-                    onClick={()=>{(data?.get_user_stories?.length>0 && !data?.if_user_blocked) && setOpenStory(true)
-                }}>
-                    <Avatar size='170px' image={user?.profile_picture}/>
-                </div>
+                <ProfilePfp length={data?.get_user_stories?.length}
+                            blockedUser={data?.if_user_blocked}
+                            pfp={user?.profile_picture}
+                            openStory={setStoryCallback}/>
+
                 {!loading && <ProfileInfo 
                                 info={info} 
                                 last_seen={user.last_seen} 
@@ -87,7 +88,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 }} 
                 i={0} 
                 isProfile={true}
-                closeStoryCallback={closeStoryCallback}
+                closeStoryCallback={setStoryCallback}
                 />}
             
         </>

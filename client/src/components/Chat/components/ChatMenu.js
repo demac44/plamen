@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import AllChatMedia from './AllChatMedia'
+import { AllChatMedia } from '../export'
 
 const DELETE_CHAT = gql`
     mutation ($chatID:Int!){

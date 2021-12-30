@@ -1,13 +1,12 @@
 import React, { useCallback, useState, memo, useEffect } from 'react'
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import AllChatMedia from '../../AllChatMedia'
+import { useSelector } from 'react-redux';
 import ChatMembersBox from './ChatMembersBox'
 import AddChatMembers from './AddChatMembers'
 import LeaveChatBtn from './LeaveChatBtn'
 import DeleteChat from './DeleteChat'
-import { useSelector } from 'react-redux';
-
+import {AllChatMedia} from '../../../export'
  
 const GroupChatMenu = ({chatID, admin}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
