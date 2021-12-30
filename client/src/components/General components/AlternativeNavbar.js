@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+import logoTube from '../../images/logo-red-min.png'
+import logoStream from '../../images/logo-green-min.png'
+
 const AlternativeNavbar = ({chat}) => {
     return (
         <div className='alternative-navbar' style={chat && styles.nav}>
@@ -19,8 +22,11 @@ const AlternativeNavbar = ({chat}) => {
                 <NavLink exact to='/communities'>
                     <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                 </NavLink>
-                <NavLink exact to='/someapptube'>
-                    <FontAwesomeIcon icon='play' color='darkred' fixedWidth/>
+                <NavLink exact to='/plamentube'>
+                    <img src={logoTube} style={styles.logoTube}/>
+                </NavLink>
+                <NavLink exact to='/plamenstream'>
+                    <img src={logoStream} style={styles.logoTube}/>
                 </NavLink>
             </div>
         </div>
@@ -33,5 +39,8 @@ const styles = {
     nav:{
         position:'fixed',
         top:'-60px',
+    },
+    logoTube:{
+        height:'25px'
     }
 }

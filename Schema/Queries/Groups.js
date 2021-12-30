@@ -201,17 +201,14 @@ export const GET_GROUP_MEMBERS = {
     type: new GraphQLList(GroupUserType),
     args:{
         groupID:{type: GraphQLInt},
-        userID: {type: GraphQLInt}
     },
     async resolve(_, args){
-        const {groupID, userID} = args
+        const {groupID} = args
         const sql = `SELECT username,first_name,last_name,community_members.userID, profile_picture, date_joined, role, groupID
                      FROM community_members
                      JOIN users ON community_members.userID=users.userID
                      JOIN community_roles ON community_roles.roleID=community_members.roleID
                      WHERE users.disabled=false
-                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID) 
                      AND community_members.groupID=${groupID}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result

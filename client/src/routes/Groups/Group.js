@@ -115,7 +115,7 @@ const GET_GROUP = gql`
         get_group_user (groupID: $gid, userID: $uid){
             role
         }
-        get_group_members(groupID:$gid, userID: $uid){
+        get_group_members(groupID:$gid){
             userID
         }
     }

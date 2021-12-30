@@ -27,11 +27,11 @@ const Sidebar = () => {
                     <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                     <p>Communities</p>
                 </NavLink>
-                <NavLink exact to='/someapptube' activeClassName='nav-active'>
+                <NavLink exact to='/plamentube' activeClassName='nav-active'>
                     <img src={logoTube} style={styles.logoTube}/>
                     <p>plamenTube</p>
                 </NavLink>
-                <NavLink exact to='/someapptube' activeClassName='nav-active'>
+                <NavLink exact to='/plamenstream' activeClassName='nav-active'>
                     <img src={logoStream} style={styles.logoTube}/>
                     <p>plamenStream</p>
                 </NavLink>
