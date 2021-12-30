@@ -124,7 +124,7 @@ export const COUNT_ALL_MSGS = {
         const {receiver_id} = args
         const sql = `SELECT COUNT(Nid) AS msgCount 
                      FROM msg_notifications 
-                     WHERE receiver_id=${receiver_id}`
+                        WHERE receiver_id=${receiver_id}`
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         return result[0]
     }
@@ -184,13 +184,16 @@ export const GET_GROUP_MESSAGES = {
         groupChatId: {type: GraphQLInt},
         limit: {type: GraphQLInt},
         offset: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args) {
-        const {groupChatId, limit, offset} = args
+        const {groupChatId, limit, offset, userID} = args
         const sql = `SELECT msg_text, time_sent, groupChatId, username, type, url, users.userID, profile_picture, msgID 
                      FROM group_chats_messages 
                      JOIN users ON group_chats_messages.userID=users.userID
                      WHERE groupChatId=${groupChatId}
+                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      ORDER BY time_sent DESC 
                      LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
@@ -224,14 +227,17 @@ export const GET_GROUP_CHAT_MEMBERS = {
     args:{
         groupChatId: {type:GraphQLInt},
         limit: {type: GraphQLInt},
-        offset:{type:GraphQLInt}
+        offset:{type:GraphQLInt},
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args){
-        const {groupChatId, limit, offset} = args
+        const {groupChatId, limit, offset, userID} = args
         const sql = `SELECT first_name, last_name, users.userID, username, profile_picture
                      FROM group_chats_members
                      JOIN users ON group_chats_members.userID=users.userID
                      WHERE groupChatId=${groupChatId}
+                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      LIMIT ${limit} OFFSET ${offset}
                      `
         const result = await connection.promise().query(sql).then(res=>{return res[0]})

@@ -14,11 +14,12 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 
 import MyGroupsList from '../../components/General components/MyGroupsList'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
+import { useSelector } from 'react-redux'
 
 
 const GET_POST = gql`
-    query ($postID: Int!){
-        get_post (postID: $postID){
+    query ($postID: Int!, $uid: Int){
+        get_post (postID: $postID, userID: $uid){
             postID
             post_text
             date_posted
@@ -35,8 +36,9 @@ const GET_POST = gql`
 
 const SinglePost = ({isLogged}) => {
     const {postid} = useParams()
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(GET_POST, {
-        variables:{postID: parseInt(postid)}
+        variables:{postID: parseInt(postid), uid}
     })
 
     if(!loading){

@@ -16,7 +16,8 @@ const GroupChatMsgBox = ({chat}) => {
         variables: {
             groupChatId: chat.groupChatId,
             limit:50,
-            offset:0        
+            offset:0,
+            uid        
         },
     })
 
@@ -116,8 +117,8 @@ const styles = {
 }
 
 const GET_GROUP_MESSAGES = gql`
-    query ($groupChatId: Int!, $limit: Int, $offset: Int){
-        get_group_messages (groupChatId: $groupChatId, limit: $limit, offset: $offset){
+    query ($groupChatId: Int!, $limit: Int, $offset: Int, $uid: Int!){
+        get_group_messages (groupChatId: $groupChatId, limit: $limit, offset: $offset, userID: $uid){
             groupChatId
             msg_text
             userID

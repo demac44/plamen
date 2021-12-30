@@ -19,7 +19,7 @@ const GroupChatMenu = ({chatID, admin}) => {
             gcId: chatID,
             limit:10,
             offset:0,
-            userID: uid
+            uid
         }
     })
 
@@ -89,8 +89,8 @@ export default memo(GroupChatMenu)
 
 
 const GET_MEMBERS = gql`
-    query ($gcId: Int!, $limit: Int!, $offset: Int!){
-        get_group_chat_members (groupChatId: $gcId, limit: $limit, offset: $offset){
+    query ($gcId: Int!, $limit: Int!, $offset: Int!, $uid: Int!){
+        get_group_chat_members (groupChatId: $gcId, limit: $limit, offset: $offset, userID: $uid){
             first_name
             last_name
             username

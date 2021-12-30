@@ -23,12 +23,12 @@ const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
     return (
         <span style={styles.membersBox} className='flex-col-ctr'>
             <p style={{marginBottom:'5px'}}>Chat members</p>
-            {adminMember.userID && <span style={{width:'100%'}} className='flex-h'>
+            {adminMember?.userID && <span style={{width:'100%'}} className='flex-h'>
                 <UserBox user={adminMember}/>
                 <p style={styles.adminTag}>ADMIN</p>
             </span>}
             {data?.get_group_chat_members?.map(member => (
-                member.userID!==admin &&
+                member?.userID!==admin &&
                 <div className='flex-h' style={styles.userBox} key={member.userID}>
                     <UserBox user={member}/>
                     {(uid===admin) && 

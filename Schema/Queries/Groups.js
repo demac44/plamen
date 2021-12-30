@@ -61,14 +61,17 @@ export const GET_GROUP_POSTS = {
     args: {
         groupID: {type: GraphQLInt},
         limit: {type: GraphQLInt},
-        offset: {type: GraphQLInt}
+        offset: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
     }, 
     async resolve(_, args){
-        const {groupID, limit, offset} = args
+        const {groupID, limit, offset, userID} = args
         const sql = `SELECT postID,community_posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,groupID
                      FROM community_posts
                      JOIN users ON community_posts.userID=users.userID 
-                     WHERE users.disabled=false 
+                     WHERE users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     AND users.disabled=false
                      AND community_posts.groupID=${groupID}
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -91,6 +94,8 @@ export const GET_SAVED_GROUP_POSTS = {
                         JOIN community_posts ON community_posts.postID=community_posts_saved.postID 
                         JOIN users ON users.userID=community_posts_saved.userID 
                         WHERE users.disabled=false 
+                        AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                         AND community_posts_saved.userID=${userID} 
                         ORDER BY date_posted DESC 
                         LIMIT ${limit} OFFSET ${offset};`
@@ -119,14 +124,17 @@ export const GET_GROUP_POST_COMMENTS = {
     args:{
         postID:{type:GraphQLInt},
         limit: {type: GraphQLInt},
-        offset: {type: GraphQLInt}
+        offset: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args) {
-        const {postID, limit, offset} = args
+        const {postID, limit, offset, userID} = args
         const sql = `SELECT commentID,username,community_posts_comments.userID,comment_text,date_commented,profile_picture,postID 
                      FROM community_posts_comments 
                      JOIN users ON community_posts_comments.userID=users.userID 
                      WHERE users.disabled=false 
+                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      AND postID=${postID} 
                      ORDER BY date_commented DESC 
                      LIMIT ${limit} OFFSET ${offset}`
@@ -139,13 +147,16 @@ export const GET_GROUP_POST_LIKES = {
     args:{
         postID:{type:GraphQLInt},
         limit: {type: GraphQLInt},
-        offset: {type: GraphQLInt}
+        offset: {type: GraphQLInt},
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args) {
-        const {postID, limit, offset} = args
+        const {postID, limit, offset, userID} = args
         const sql = `SELECT first_name,last_name,users.userID,username,profile_picture FROM community_posts_likes 
                      JOIN users ON community_posts_likes.userID=users.userID 
                      WHERE users.disabled=false 
+                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      AND postID=${postID} 
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -189,15 +200,18 @@ export const GET_GROUP_USER = {
 export const GET_GROUP_MEMBERS = {
     type: new GraphQLList(GroupUserType),
     args:{
-        groupID:{type: GraphQLInt}
+        groupID:{type: GraphQLInt},
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args){
-        const {groupID} = args
+        const {groupID, userID} = args
         const sql = `SELECT username,first_name,last_name,community_members.userID, profile_picture, date_joined, role, groupID
                      FROM community_members
                      JOIN users ON community_members.userID=users.userID
                      JOIN community_roles ON community_roles.roleID=community_members.roleID
-                     WHERE users.disabled=false 
+                     WHERE users.disabled=false
+                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID) 
                      AND community_members.groupID=${groupID}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
@@ -258,14 +272,18 @@ export const GET_COMMUNITY_MESSAGES = {
     args:{
         groupID:{type: GraphQLInt},
         limit:{type: GraphQLInt},
-        offset:{type: GraphQLInt}
+        offset:{type: GraphQLInt},
+        userID: {type: GraphQLInt}
     }, 
     async resolve(_,args){
-        const {groupID, limit, offset} = args
+        const {groupID, limit, offset, userID} = args
         const sql = `SELECT msgID, msg_text, time_sent, groupID, username, type, url, users.userID, profile_picture
                      FROM community_chat_messages
                      JOIN users ON community_chat_messages.userID=users.userID
-                     WHERE groupID=${groupID}
+                     WHERE 
+                     users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     AND groupID=${groupID}
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         await result.map(msg => {

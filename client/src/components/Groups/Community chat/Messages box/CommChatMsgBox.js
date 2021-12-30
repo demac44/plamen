@@ -3,15 +3,18 @@ import CommMessage from './CommMessage'
 
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import { useSelector } from 'react-redux'
 
 const CommChatMsgBox = ({groupID}) => {
+    const uid = useSelector(state => state.isAuth.user?.userID)
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     const {data, loading, subscribeToMore, fetchMore} = useQuery(GET_COMM_MESSAGES, {
         variables:{
             gid: groupID,
             limit:50,
-            offset:0
+            offset:0,
+            uid
         }
     })
     const loaderCallback = useCallback(val => {
@@ -74,8 +77,8 @@ const CommChatMsgBox = ({groupID}) => {
 export default CommChatMsgBox
 
 const GET_COMM_MESSAGES = gql`
-    query($gid: Int!, $limit: Int!, $offset: Int!){
-        get_community_messages(groupID: $gid, limit: $limit, offset:$offset){
+    query($gid: Int!, $limit: Int!, $offset: Int!, $uid: Int!){
+        get_community_messages(groupID: $gid, limit: $limit, offset:$offset, userID: $uid){
             groupID
             msgID
             msg_text

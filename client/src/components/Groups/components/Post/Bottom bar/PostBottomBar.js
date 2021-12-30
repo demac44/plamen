@@ -9,14 +9,17 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
 const PostBottomBar = ({postID, userID}) => {
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [likes, setLikes] = useState(false) 
     const {data, loading, error, refetch, fetchMore} = useQuery(GET_GP_COMMENTS, {
         variables:{
             postID,
             limit:1,
-            offset:0
+            offset:0,
+            uid
         }
     })
     
@@ -81,8 +84,8 @@ const styles = {
 }
 
 const GET_GP_COMMENTS = gql`
-    query($postID: Int!, $limit: Int, $offset: Int){
-        get_group_post_comments (postID: $postID, limit: $limit, offset: $offset){
+    query($postID: Int!, $limit: Int, $offset: Int, $uid: Int!){
+        get_group_post_comments (postID: $postID, limit: $limit, offset: $offset, userID: $uid){
             commentID
             userID
             profile_picture

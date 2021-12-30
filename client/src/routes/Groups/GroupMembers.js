@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux'
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
-    const uid = useSelector(state => state.isAuth.user?.userID)
+    const uid = useSelector(state => state?.isAuth.user?.userID)
     const {data, loading, refetch} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
@@ -89,7 +89,7 @@ const GET_GROUP = gql`
         get_group_user (groupID: $gid, userID: $uid){
             role
         }
-        get_group_members(groupID:$gid){
+        get_group_members(groupID:$gid, userID: $uid){
             username
             first_name
             last_name

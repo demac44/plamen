@@ -199,8 +199,20 @@ export const BLOCK_USER = {
     resolve(_, args){
         const {blockedId, blockerId} = args
         const sql = `INSERT INTO blocked_users (blockerId, blockedId) 
-                     VALUES (${blockerId}, ${blockedId})`
+                     VALUES (${blockerId}, ${blockedId});`
+        const del1 = `DELETE FROM notifications 
+                        WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
+                        OR (sender_id=${blockerId} AND receiver_id=${blockedId});`
+        const del2 = `DELETE FROM msg_notifications 
+                    WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
+                    OR (sender_id=${blockerId} AND receiver_id=${blockedId});`
+        const del3 = `DELETE FROM followings
+                        WHERE (followerID=${blockedId} AND followedID=${blockerId})
+                        OR (followerID=${blockerId} AND followedID=${blockedId});`
         connection.query(sql)
+        connection.query(del1)
+        connection.query(del2)
+        connection.query(del3)
         return args
     }
 }

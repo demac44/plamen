@@ -4,13 +4,16 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 
 import UserBox from '../../../General components/Users list/UserBox'
+import { useSelector } from 'react-redux'
 
 const LikesList = ({postID}) => {
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(GET_LIKES, {
         variables:{
             postID,
             limit: 20,
-            offset:0
+            offset:0,
+            uid
         }
     })
 
@@ -59,8 +62,8 @@ const styles = {
 }
 
 const GET_LIKES = gql`
-    query($postID: Int!, $limit: Int, $offset: Int){
-        get_post_likes(postID: $postID, limit: $limit, offset: $offset){
+    query($postID: Int!, $limit: Int, $offset: Int, $uid: Int!){
+        get_post_likes(postID: $postID, limit: $limit, offset: $offset, userID: $uid){
             first_name
             last_name
             profile_picture

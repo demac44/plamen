@@ -9,10 +9,10 @@ import { useSelector } from 'react-redux';
 
 
 
-const SendGroupMsg = ({chatID, loaderCallback, info}) => {
+const SendGroupMsg = ({chatID, loaderCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const uid = useSelector(state => state?.isAuth?.user?.userID)
-    const usernm = useSelector(state => state?.isAuth?.user?.usernmae)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
     // const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)

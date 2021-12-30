@@ -10,9 +10,11 @@ import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
+import { useSelector } from 'react-redux'
 
 const Explore = ({isLogged}) => {
-    const {loading, data, error, refetch} = useQuery(RANDOM_POSTS, {pollInterval:9000000})
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const {loading, data, error, refetch} = useQuery(RANDOM_POSTS, {pollInterval:9000000, variables:{uid}})
 
     useEffect(()=>{
         window.scrollTo(0,0)
@@ -57,8 +59,8 @@ export default Explore
 
 
 const RANDOM_POSTS = gql`
-    query{
-        random_posts{
+    query($uid: Int!){
+        random_posts(userID: $uid){
             postID
             post_text
             date_posted

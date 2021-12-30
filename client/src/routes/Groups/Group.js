@@ -99,7 +99,7 @@ const GET_GROUP = gql`
             group_description
             banner_image
         }
-        get_group_posts (groupID: $gid, limit: $limit, offset: $offset){
+        get_group_posts (groupID: $gid, limit: $limit, offset: $offset, userID: $uid){
             groupID
             postID
             post_text
@@ -115,7 +115,7 @@ const GET_GROUP = gql`
         get_group_user (groupID: $gid, userID: $uid){
             role
         }
-        get_group_members(groupID:$gid){
+        get_group_members(groupID:$gid, userID: $uid){
             userID
         }
     }

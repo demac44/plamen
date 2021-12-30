@@ -70,13 +70,12 @@ export const USER_SUGGESTIONS = {
                             university="${user_info.university}" OR
                             city="${user_info.city}" OR
                             high_school="${user_info.high_school}"
-                            AND (users.disabled=false
+                            AND users.disabled=false
                             AND users.userID NOT IN 
                                         (SELECT followedID FROM followings
                                             WHERE followerID=${userID} AND followedID=users.userID)
-                            AND users.userID NOT IN (SELECT blockedId 
-                                                        FROM blocked_users 
-                                                        WHERE blockedId=users.userID AND blockerId=${userID}))
+                            AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                            AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                         ORDER BY RAND() LIMIT 20`
 
         const result = await connection.promise().query(sugg1).then(res=>{return res[0]})
@@ -88,14 +87,13 @@ export const USER_SUGGESTIONS = {
                                         city="${user_info.city}" OR
                                         high_school="${user_info.high_school}" OR
                                         country="${user_info.country}") 
-                                        AND (disabled=false
-                                        AND users.userID!=${userID}
+                                        AND disabled=false
+                                        AND users.userID<>${userID}
                                         AND users.userID NOT IN 
-                                            (SELECT followedID FROM followings
-                                                WHERE followerID=${userID} AND followedID=users.userID)
-                                        AND users.userID NOT IN (SELECT blockedId 
-                                                    FROM blocked_users 
-                                                    WHERE blockedId=users.userID AND blockerId=${userID}))
+                                                (SELECT followedID FROM followings
+                                                    WHERE followerID=${userID} AND followedID=users.userID)
+                                        AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                                        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                                     ORDER BY RAND() LIMIT 20`
             return await connection.promise().query(additional).then(res=>{return res[0]})
         } 
