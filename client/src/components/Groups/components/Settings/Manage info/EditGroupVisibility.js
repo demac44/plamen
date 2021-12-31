@@ -18,16 +18,15 @@ const EditGroupVisibility = ({visibility, groupid, refetch}) => {
     }
 
     return (
-        <div style={styles.box} className='box flex-h'>
+        <div className='box flex-ac'>
             <p>Community visibility: </p>
 
-            <div style={styles.switchBox} onClick={handleChange}>
-                <FontAwesomeIcon icon='lock' style={{...styles.locks, right:'8px'}} />
-                <FontAwesomeIcon icon='lock-open' style={{...styles.locks, left:'5px'}}/>
-                <div style={{...styles.switch, 
+            <div className='switch-box' onClick={handleChange}>
+                <FontAwesomeIcon icon='lock' className='lock-icon'/>
+                <FontAwesomeIcon icon='lock-open' className='lock-icon'/>
+                <div className='switch' style={{ 
                             left: visib ? '0' : '32px',
-                            backgroundColor: visib ? '#861b1b' : '#00752d'
-                }}></div>
+                            backgroundColor: visib ? '#861b1b' : '#00752d'}}></div>
             </div>
 
         </div>
@@ -43,33 +42,3 @@ const CHANGE_VISIBILITY = gql`
         }
     }
 `
-
-const styles = {
-    box:{
-        color:'#aaa',
-    },
-    switchBox:{
-        position:'relative',
-        width:'60px',
-        height:'25px',
-        borderRadius:'20px',
-        border:'1px solid #2f2f2f',
-        cursor:'pointer',
-        marginLeft:'20px'
-    },
-    switch:{
-        position:'absolute',
-        top:'0',
-        width:'25px',
-        height:'100%',
-        backgroundColor:'white',
-        borderRadius:'50%',
-        border:'2px solid #2f2f2f',
-        transition:'ease .3s'
-    },
-    locks:{
-        position:'absolute',
-        top:'3px',
-        color:'#4f4f4f'
-    }
-}

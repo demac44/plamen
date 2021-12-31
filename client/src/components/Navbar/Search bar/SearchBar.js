@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
-
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useQuery} from 'react-apollo'
-import SearchDrop from './SearchDrop'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import SearchDrop from './SearchDrop'
+import './style.css'
 
 const SearchBar = ({chat, isLogged, handleOpen}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -29,7 +28,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
         query.trim().length > 0 ? setDropdown(true) : setDropdown(false)  
     }, [query, chat])
 
-    if (error) console.log(error.message);
+    if (error) throw error
 
     return (
         <>
@@ -57,7 +56,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
                         })
                     }}/>
                 {query.length>0 && 
-                <div style={styles.closeIcon} className='flex-ctr'>
+                <div className='flex-ctr clear-search-query'>
                     <FontAwesomeIcon icon='times' onClick={()=>setQuery('')} size='lg' color='#aaa'/>
                 </div>}
                 {(!loading && dropdown) && <SearchDrop 
@@ -69,20 +68,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
         </>
     )
 }
-
 export default SearchBar
-
-const styles ={
-    closeIcon:{
-        backgroundColor:'#2f2f2f',
-        height:'80%',
-        width:'50px',
-        borderRadius:'0 50px 50px 0',
-        cursor:'pointer',
-        border:'1px solid #3f3f3f',
-        borderLeft:'none'
-    }
-}
 
 const SEARCH = gql`
     query ($limit: Int, $offset: Int, $userID: Int!) {

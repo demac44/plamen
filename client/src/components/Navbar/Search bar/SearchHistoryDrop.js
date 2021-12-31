@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const SearchHistoryDrop = ({searchHistory, dropdownCallback}) => {
-
     const handleClear = () => {
         localStorage.removeItem('search-history')
         localStorage.setItem('search-history', JSON.stringify({search_history:[]}))

@@ -8,7 +8,7 @@ const EmojisPeople = ({emojiCB, setRecentEmojis}) => {
 
     return (
         <>
-            <p style={styles.title}>Emojis</p>
+            <p className='emojis-title'>Emojis</p>
             <div className='emojis-sub-box'>
                 {emojis.split(' ').map(em => <p onClick={()=>{emojiCB(em);setRecentEmojis(em)}} key={i++}>{em}</p>)}
             </div>
@@ -17,14 +17,3 @@ const EmojisPeople = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default memo(EmojisPeople) 
-
-const styles = {
-    title: {
-        color:'#aaa',
-        fontSize:'16px',
-        backgroundColor:'#1f1f1f',
-        padding:'2px',
-        marginBottom:'10px',
-        marginTop:'5px'
-    }
-}

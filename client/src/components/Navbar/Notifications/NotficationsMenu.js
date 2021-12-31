@@ -1,10 +1,9 @@
 import React, { memo, useEffect } from 'react'
 import { useSelector } from 'react-redux';
-
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import NotificationBox from './NotificationBox'
-
+import './style.css'
 
 const NotficationsMenu = ({visible}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -33,7 +32,6 @@ const NotficationsMenu = ({visible}) => {
         return subscribeNewNotification()
     }, [notifications, uid]) 
     
-    
     const handleClear = () => {
         clear_notifications({
             variables:{
@@ -46,27 +44,12 @@ const NotficationsMenu = ({visible}) => {
         <div className='notifications-container' style={{visibility:visible}}>
                 {notifications?.loading ? <div className='flex-ctr' style={{height:'100px'}}><div className='small-spinner'></div></div> 
                 : <>
-                    {(notifications?.data?.get_notifications?.length) < 1 && <p style={{
-                        width:'100%',
-                        textAlign:'center',
-                        padding:'20px',
-                        color:'white'
-                    }}>No new notifications</p>}
-                    
-
+                    {(notifications?.data?.get_notifications?.length) < 1 && <p className='no-notif'>No new notifications</p>}
+                
                     <span>
                         {(notifications?.data?.get_notifications?.length > 0) && 
-                        <div
-                        style={{
-                            width:'100%',
-                            padding:'5px 10px 0 0',
-                            textAlign:'end',
-                            cursor:'pointer',
-                            color:'teal',
-                            fontSize:'14px'
-                        }}
-                        onClick={handleClear}
-                        >Clear all</div>}
+                        <div className='clear-notif' onClick={handleClear}>Clear all</div>}
+
                         {notifications?.data?.get_notifications?.map(notif => 
                             <NotificationBox notif={notif} key={notif.Nid}/>
                             )}

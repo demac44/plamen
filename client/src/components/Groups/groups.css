@@ -1,39 +1,3 @@
-.create-group-form{
-    position: relative;
-    width: 40%;
-    background-color: #1b1b1b;
-    padding: 30px 20px;
-    border-radius: 20px;
-}
-
-.create-group-form input, .create-group-form select{
-    height: 40px;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    font-size: 16px;
-    margin: 10px;
-}
-.create-group-form input{
-    width: 100%;
-    padding: 5px 10px;
-}
-.create-group-form select{
-    width: 50%;
-    cursor: pointer;
-}
-.create-group-form h3{
-    color: white;
-    background-color: transparent !important;
-    margin-top: 5px;
-}
-.create-group-form button{
-    padding: 10px 60px;
-    margin-top: 30px;    
-}
-.create-group-form button:hover{
-    background-color: #b8b8b8;
-}
 .tags-box{
     display: flex;
     width: 100%;
@@ -46,13 +10,14 @@
     overflow: auto;
     max-height: 100px;
 }
-.create-group-form textarea{
-    width: 100%;
-    resize: none;
-    margin-top: 10px;
-    border-radius: 10px;
-    padding: 5px;
-    height: 70px;
+.tag{
+    padding: 5px 10px;
+    background-color: #13306e;
+    font-size: 14px;
+    color: white;
+    height: fit-content;
+    border-radius: 20px;
+    margin: 5px 0 0 5px;
 }
 /* group cards */
 .groups-grid{
@@ -108,6 +73,23 @@
     box-shadow: 5px 5px 10px;
     border: 1px solid #1b1b1b;
 }
+.group-banner img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+}
+.group-banner-name-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 120px 10px 15px;
+    background-color: rgba(0, 0, 0,0.9);
+    color: white;
+    z-index: 10;
+    word-wrap: break-word;
+}
 .group-join-btn{
     font-size: 20px;
     padding: 8px 20px;
@@ -127,6 +109,27 @@
     padding: 10px 15px;
     border: 1px solid #2f2f2f;
     margin-top: 10px;
+}
+.info-box-add-btn{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #2f2f2f;
+    cursor: pointer;
+}
+.info-box-text{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #4f4f4f;
+    color: white;
+    cursor: pointer;
+    word-wrap: break-word;
+    height: fit-content;
+}
+.info-box h3{
+    color: white;
+    padding: 5px;
 }
 .group-members-box{
     width: 100%;
@@ -154,51 +157,15 @@
     z-index: 100000;
     box-shadow: 2px 2px 5px;
 }
-
-/* SETTINGS */
-
-.group-settings-menu{
-    width: 100%;
-    border: 1px solid #2f2f2f;
-    border-radius: 10px;
-}
-.group-settings-menu ul{
-    width: 100%;
-}
-.group-settings-menu li{
-    width: 100%;
-    padding: 15px;
+.cmnty-role-tag{
+    font-size: 12px;
+    padding: 3px 8px;
     color: white;
-    transition: ease .3s;
-}
-.group-settings-menu li:hover{
-    background-color: #2f2f2f;
-    cursor: pointer;
-}
-
-
-.roles-menu{
+    border-radius: 20px;
     position: absolute;
-    top: 30px;
-    left: 0;
-    width: fit-content;
-    background-color: #1b1b1b;
-    z-index: 1000;
-    padding: 5px;
-    border: 1px solid #2f2f2f;
+    top: 8px;
+    right: 10px;
 }
-.roles-menu ul{
-    width: 100%;
-}
-.roles-menu li{
-    width: 100%;
-    padding: 5px;
-    font-size: 14px;
-}
-.roles-menu li:hover{
-    background-color: #2f2f2f;
-}
-
 
 /* MEDIA QUERIES */
 

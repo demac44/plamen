@@ -7,7 +7,7 @@ const EmojisRecent = ({emojiCB, setRecentEmojis}) => {
         <>
         {lsEmojis?.emojis.length>0 && 
             <>
-                <p style={styles.title}>Recently used</p>
+                <p className='emojis-title'>Recently used</p>
                 <div className='emojis-sub-box'>
                     {lsEmojis?.emojis?.slice(0,20).map(em => <p onClick={()=>{emojiCB(em);setRecentEmojis(em)}} key={i++}>{em}</p>)}
                 </div>
@@ -17,14 +17,3 @@ const EmojisRecent = ({emojiCB, setRecentEmojis}) => {
 }
 
 export default EmojisRecent
-
-
-const styles = {
-    title: {
-        color:'#aaa',
-        fontSize:'16px',
-        backgroundColor:'#1f1f1f',
-        padding:'2px',
-        marginBottom:'5px'
-    }
-}

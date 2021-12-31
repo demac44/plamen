@@ -1,10 +1,8 @@
 import React, { useEffect, useState, memo } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../../General components/Avatar'
-
 const GroupMemberBox = ({member}) => {
     const [date, setDate] = useState('')
-
 
     useEffect(()=>{
         setDate(getDateJoined(member.date_joined))
@@ -22,27 +20,15 @@ const GroupMemberBox = ({member}) => {
                     <p style={{fontSize:'12px'}}>Member since {date}</p>
                 </div>
             </div>
-            {member.role==='CREATOR' && <div style={{...styles.roleTag, backgroundColor:'#771d1d'}}>CREATOR</div>}
-            {member.role==='ADMIN' && <div style={{...styles.roleTag, backgroundColor:'#572157'}}>ADMIN</div>}
-            {member.role==='MODERATOR' && <div style={{...styles.roleTag, backgroundColor:'#0b2670'}}>MOD</div>}
-            {member.role==='MEMBER' && <div style={{...styles.roleTag, backgroundColor:'#252a38'}}>MEMBER</div>}
+            {member.role==='CREATOR' && <div className='cmnty-role-tag' style={{backgroundColor:'#771d1d'}}>CREATOR</div>}
+            {member.role==='ADMIN' && <div className='cmnty-role-tag' style={{backgroundColor:'#572157'}}>ADMIN</div>}
+            {member.role==='MODERATOR' && <div className='cmnty-role-tag' style={{backgroundColor:'#0b2670'}}>MOD</div>}
+            {member.role==='MEMBER' && <div className='cmnty-role-tag' style={{backgroundColor:'#252a38'}}>MEMBER</div>}
         </Link>
     )
 }
 
 export default memo(GroupMemberBox)
-
-const styles = {
-    roleTag:{
-        fontSize:'12px',
-        padding:'3px 8px',
-        color:'white',
-        borderRadius:'20px',
-        position:'absolute',
-        top:'8px',
-        right:'10px'
-    }
-}
 
 const getDateJoined = (timestamp) => {
     let date = new Date(parseInt(timestamp))

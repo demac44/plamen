@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
@@ -16,7 +16,7 @@ const AcceptBtn = ({userID, groupID, refetch}) => {
     }
 
     return (
-        <div style={styles.btn} onClick={handleAccept}>
+        <div className='req-btn req-btn-accept' onClick={handleAccept}>
             <p>ACCEPT</p>
         </div>
     )
@@ -31,14 +31,3 @@ const ACCEPT_REQUEST = gql`
         }
     }
 `
-
-const styles = {
-    btn:{
-        padding:'5px 10px',
-        color:'white',
-        backgroundColor:'#0f7743',
-        borderRadius:'10px',
-        cursor:'pointer',
-        margin:'5px'
-    }
-}

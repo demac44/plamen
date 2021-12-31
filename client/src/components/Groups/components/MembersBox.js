@@ -1,6 +1,5 @@
 import React, {memo} from 'react'
 import GroupMemberBox from './GroupMemberBox'
-
 const MembersBox = ({members}) => {
     return (
         <div className='group-members-box'>
@@ -8,5 +7,4 @@ const MembersBox = ({members}) => {
         </div>
     )
 }
-
 export default memo(MembersBox)

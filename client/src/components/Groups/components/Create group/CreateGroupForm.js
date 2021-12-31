@@ -3,7 +3,7 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
-
+import './style.css'
 
 const CREATE_GROUP = gql`
     mutation ($uid: Int!, $gname: String!, $closed: Boolean!, $desc:String!, $tags: String!){
@@ -51,12 +51,12 @@ const CreateGroupForm = ({closeFormCallback}) => {
     return (
         <div className='flex-ctr overlay' style={{backgroundColor: 'rgba(0, 0, 0,0.7)'}}>
             <form className='create-group-form flex-col-ctr' onSubmit={handleSubmit}>
-                <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>closeFormCallback()}/>
+                <FontAwesomeIcon icon='times' className='cg-box-exit-btn' onClick={()=>closeFormCallback()}/>
                 <h3>Community name:</h3>
                 <input placeholder='Community name...' id='name'></input>
 
                 <h3>Visibility:</h3>
-                <p style={{color:'white', fontSize:'12px'}}>You change this later</p>
+                <p>You change this later</p>
                 <select id='closed'>
                     <option value='private'>Private</option>
                     <option value='public'>Public</option>
@@ -66,10 +66,10 @@ const CreateGroupForm = ({closeFormCallback}) => {
                 <textarea placeholder='Description...' id='description'></textarea>
                 
                 <h3>Add community tags:</h3>
-                {tags.length > 0 && <p style={{color:'white', fontSize:'12px', marginTop:'10px'}}>Click on tag to remove it</p>}
-                <div className='tags-box' style={{backgroundColor:'white'}}>
+                {tags.length > 0 && <p>Click on tag to remove it</p>}
+                <div className='tags-box'>
                     {tags.map(tag => <div
-                        style={styles.tag}
+                        className='tag'
                         onClick={()=>{tags.splice(tags.indexOf(tag), 1);setTags([...tags])}}
                         key={tag}
                     >{tag}</div>)}
@@ -89,26 +89,5 @@ const CreateGroupForm = ({closeFormCallback}) => {
 }
 
 export default CreateGroupForm
-
-const styles = {
-    exitBtn:{
-        fontSize:'25px',
-        color:'white',
-        position:'absolute',
-        top:'10px',
-        right:'15px',
-        cursor:'pointer'
-    },
-    tag:{
-        padding:'5px 10px',
-        backgroundColor:'#13306e',
-        fontSize:'14px',
-        color:'white',
-        height:'fit-content',
-        borderRadius:'20px',
-        marginTop:'5px',
-        marginLeft:'5px'
-    }
-}
 
 const allTags = ['Sport', 'Programming', 'Politics', 'Photography', 'Computers', 'DIY', 'Reading', 'Gaming', 'Comedy', 'Memes', 'Movies']

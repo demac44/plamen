@@ -1,0 +1,92 @@
+.create-group-form{
+    position: relative;
+    width: 40%;
+    background-color: #1b1b1b;
+    padding: 30px 20px;
+    border-radius: 20px;
+}
+
+.create-group-form input, .create-group-form select{
+    height: 40px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    margin: 10px;
+}
+.create-group-form input{
+    width: 100%;
+    padding: 5px 10px;
+}
+.create-group-form select{
+    width: 50%;
+    cursor: pointer;
+}
+.create-group-form h3{
+    color: white;
+    background-color: transparent !important;
+    margin-top: 5px;
+}
+.create-group-form button{
+    padding: 10px 60px;
+    margin-top: 30px;    
+}
+.create-group-form button:hover{
+    background-color: #b8b8b8;
+}
+.create-group-form textarea{
+    width: 100%;
+    resize: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    height: 70px;
+}
+.create-group-form p{
+    font-size: 12px;
+    margin-top: 10px;
+}
+.cg-box-exit-btn{
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+.create-group-form .tags-box{
+    background-color: white;
+}
+
+@media screen and (max-width: 1200px){
+    .create-group-form{
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .create-group-form{
+        width: 60%;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .create-group-form{
+        width: 70%;
+    }
+}   
+
+@media screen and (max-width:580px){
+    .create-group-form{
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width: 447px){
+    .create-group-form{
+        padding: 5px;
+    }
+}

@@ -1,6 +1,6 @@
 import React, {memo} from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../General components/Avatar'
+import Avatar from '../../General components/Avatar'
 
 const CommunitySearchBar = ({comm, dropdownCallback}) => {
     return (
@@ -12,5 +12,4 @@ const CommunitySearchBar = ({comm, dropdownCallback}) => {
         </Link> 
     )
 }
-
 export default memo(CommunitySearchBar)

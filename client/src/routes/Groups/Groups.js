@@ -1,12 +1,11 @@
 import React, { useCallback, useState, memo } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-
+import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import Navbar from '../../components/Navbar/Navbar'
 import GroupsGrid from '../../components/Groups/components/GroupsGrid'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-import { useSelector } from 'react-redux'
 
 const GET_GROUPS = gql`
 query ($uid: Int!){

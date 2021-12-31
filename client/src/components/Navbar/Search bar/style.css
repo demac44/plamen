@@ -1,0 +1,116 @@
+.tn-search-input{
+    width: 100%;
+    height: 80%;
+    border: none;
+    outline: none;
+    padding: 5px 0;
+    font-size: 15px;
+    background-color: #2f2f2f;
+    border: 1px solid #3f3f3f;
+    border-left: none;
+    color: white;
+}
+.search-icon{
+    width: 35px;
+    height: 80%;
+    border: 1px solid #3f3f3f;
+    background-color: #2f2f2f;
+    border-right: none;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50px 0 0 50px;
+}
+.search-drop{
+    position: absolute;
+    top: 55px;
+    width: 100%;
+    background-color: #1b1b1b;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 5px;
+}
+.search-user-box{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    padding: 5px;
+    cursor: pointer;
+    transition: ease .3s;
+    border-radius: 5px;
+}
+.search-user-box p, .search-user-box h5{
+    color: white;
+}
+.search-user-box:hover{
+    background-color: #2f2f2f;
+}
+.search-wrapper{
+    width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.search-results{
+    width: 45%;
+    height: auto;
+    padding: 50px;
+    text-align: center;
+}
+.searchHis-drop{
+    width: 100%;
+}
+.search-history-box{
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    color:white;
+}
+.search-history-box:hover{
+    background-color: #2f2f2f;
+}
+.clear-search-query{
+    background-color: #2f2f2f;
+    height: 80%;
+    width: 50px;
+    border-radius: 0 50px 50px 0;
+    cursor: pointer;
+    border: 1px solid #3f3f3f;
+    border-left: none;
+}
+.sb-cmnty-title{
+    width: 100%;
+    color: #aaa;
+    padding: 5px;
+    background-color: #1f1f1f;
+    border: 1px solid #2f2f2f;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+.sb-see-all-btn{
+    padding:3px;
+    background-color: #1f1f1f;
+    cursor: pointer;
+    transition: ease .2s;
+    margin-top: 5px;
+}
+.sb-see-all-btn:hover{
+    background-color: #2f2f2f;
+}
+@media screen and (max-width: 768px){
+    .search-drop{
+        width: 60vw ;
+    }
+}
+@media screen and (max-width: 447px){
+    .search-drop{
+        position: fixed;
+        left: 0;
+        top: 55px;
+        width: 100vw;
+        height: 100vh;
+    }
+}

@@ -1,19 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux';
-
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
 import Navbar from '../../components/Navbar/Navbar.js'
-import UserSearchBar from '../../components/Navbar/UserSearchBar'
+import UserSearchBar from '../../components/Navbar/Search bar/UserSearchBar'
 import Sidebar from '../../components/General components/Sidebar.js'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar.js'
 import MyGroupsList from '../../components/General components/MyGroupsList.js'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
 import UserLoader from '../../components/General components/Loaders/UserLoader.js'
-import CommunitySearchBar from '../../components/Navbar/CommunitySearchBar'
-
+import CommunitySearchBar from '../../components/Navbar/Search bar/CommunitySearchBar'
 
 const Search = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)

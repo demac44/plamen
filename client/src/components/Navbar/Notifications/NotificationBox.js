@@ -1,21 +1,19 @@
 import React, {memo} from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../General components/Avatar'
-import FollowButton from '../General components/FollowButton'
-import SetTime from '../General components/SetTime'
-
+import Avatar from '../../General components/Avatar'
+import FollowButton from '../../General components/FollowButton'
+import SetTime from '../../General components/SetTime'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const NotificationBox = ({notif}) => {
-
     return (
         <div className='notification-box' key={notif.Nid}>
             <Link to={notif.type==='follow' ? '/profile/'+notif.username : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
                     <Avatar size='50px' image={notif.profile_picture}/>
-                    {notif.type==='like' && <FontAwesomeIcon icon='heart' style={styles.typeIconLike}/>}
-                    {notif.type==='comment' && <FontAwesomeIcon icon='comment' style={styles.typeIconComm}/>}
-                    {notif.type==='follow' && <FontAwesomeIcon icon='user' style={styles.typeIconFoll}/>}
+                    {notif.type==='like' && <FontAwesomeIcon icon='heart' className='notif-type like-notif'/>}
+                    {notif.type==='comment' && <FontAwesomeIcon icon='comment' className='notif-type comment-notif'/>}
+                    {notif.type==='follow' && <FontAwesomeIcon icon='user' className='notif-type foll-notif'/>}
                 </span>
                 <span className='notif-text'>
                     {notif.type==='like' && <p>{'@'+notif.username+' liked your post'}</p>}
@@ -30,30 +28,4 @@ const NotificationBox = ({notif}) => {
         </div>
     )
 }
-
 export default memo(NotificationBox)
-
-
-const styles = {
-    typeIconLike:{
-        position:'absolute',
-        top:'0',
-        right:'-5px',
-        fontSize:'20px',
-        color:'#c00303'
-    },
-    typeIconComm:{
-        position:'absolute',
-        top:'0',
-        right:'-5px',
-        fontSize:'20px',
-        color:'#14578d'
-    },
-    typeIconFoll:{
-        position:'absolute',
-        top:'0',
-        right:'-5px',
-        fontSize:'20px',
-        color:'#008607'
-    },
-}

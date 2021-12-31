@@ -14,9 +14,8 @@ const UsersContainer = ({members, refetch, currentUserRole}) => {
         <div className='box'>
             <input 
                 type='text' 
-                className='input' 
+                className='input search-grp-members' 
                 placeholder='Search community members'
-                style={styles.input}
                 value={query}
                 onChange={(e)=>setQuery(e.target.value)}
             />
@@ -52,14 +51,4 @@ const filterUsers = (data, query) => {
                 || query.includes(user.username.toLowerCase())
             
     })
-}
-
-const styles = {
-    input:{
-        height:'35px',
-        marginBottom:'10px',
-        backgroundColor:'#1f1f1f',
-        border:'1px solid #2f2f2f',
-        color:'#aaa'
-    }
 }

@@ -1,9 +1,11 @@
 import React, { useEffect, useState, memo } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
 import { Redirect, useParams } from 'react-router-dom'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
+import Navbar from '../../components/Navbar/Navbar'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/Groups/components/TagsBox'
@@ -18,8 +20,6 @@ import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
 import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
 
 const Group = ({isLogged}) => {
     const {groupid} = useParams()

@@ -112,7 +112,7 @@
 .create-post-box .emojis-sub-box{
     grid-template-columns: repeat(12, 1fr);
 }
-.create-post-box .emojis-box p{
+.create-post-box .emojis-sub-box p{
     font-size: 20px;
     cursor: pointer;
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import './style.css'
 const SettingsMenu = ({groupid}) => {
     return (
         <div className='group-settings-menu'>

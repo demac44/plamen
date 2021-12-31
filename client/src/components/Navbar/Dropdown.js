@@ -20,7 +20,7 @@ const Dropdown = ({closeDropd}) => {
     return (
        <div className="tn-dropdown-menu" onClick={()=>closeDropd()}>
             <ul>
-                <h5 style={styles.loggedAs}>Logged in as @{usernm}</h5>
+                <h5 className='logged-as'>Logged in as @{usernm}</h5>
                 <NavLink to={"/profile/"+usernm}><li>My profile</li></NavLink>
                 <NavLink to="/login"><li>Change accounts</li></NavLink>
                 <NavLink to="/settings"><li>Settings</li></NavLink>
@@ -31,12 +31,3 @@ const Dropdown = ({closeDropd}) => {
 }
 
 export default memo(Dropdown)
-
-
-const styles = {
-    loggedAs:{
-        width:'100%',
-        padding:'10px 15px',
-        color:'white'
-    }
-}

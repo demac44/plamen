@@ -1,5 +1,6 @@
 import React, {useState, useEffect, memo} from 'react'
 import { Link } from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const InfoBox = ({data, user, membersCount}) => {
     const [dateCreated, setDateCreated] = useState('')
@@ -13,68 +14,38 @@ const InfoBox = ({data, user, membersCount}) => {
     return (
         <>
             <div className='info-box'>
-                <div style={styles.descTitle}><h2>Information</h2></div>
+                <div className='flex-ctr'><h3>Information</h3></div>
                 <div className='flex-sb' style={{padding:'5px', color:'white'}}>
                     <p>{membersCount} members</p>
-                    <Link to={'/community/'+data.groupID+'/members'} style={styles.seeAllBtn}>See all</Link>
+                    <Link to={'/community/'+data.groupID+'/members'} className='btn side-box-link-btn'>See all</Link>
                 </div>
-                <p style={{color:'white', padding:'5px'}}>Created on {dateCreated}</p>
+                <p style={{padding:'5px'}}>Created on {dateCreated}</p>
             </div>
 
             <div className='info-box flex-col-ctr'>
-                <div style={styles.descTitle}><h2>Description</h2></div>
+                <div><h3>Description</h3></div>
                 {data?.group_description ? 
-                <div style={styles.textBoxDesc}>{data?.group_description}</div>
+                <div className='info-box-text'>{data?.group_description}</div>
                     :  
                     ((user && (user?.role==='CREATOR' || user?.role==='ADMIN')) &&
-                    <div className='flex-ctr' style={styles.addInfoBtn}>
-                        <i style={{marginRight:'5px'}} className='fas fa-plus'></i><h3>Add description</h3></div>)}               
+                    <div className='flex-ctr info-box-add-btn'>
+                        <FontAwesomeIcon icon='plus' color='white' style={{marginRight:'5px'}}/>
+                        <p>Add description</p>
+                    </div>)}               
             </div>
 
             <div className='info-box flex-col-ctr'>
-                <div style={styles.descTitle}><h2>Community rules</h2></div>
+                <div><h3>Community rules</h3></div>
                 {data?.group_rules ? 
-                <div style={styles.textBoxDesc}><p>{data?.group_rules}</p></div>
+                <div className='info-box-text'><p>{data?.group_rules}</p></div>
                     : 
                     ((user && (user?.role==='CREATOR' || user?.role==='ADMIN')) &&
-                    <div className='flex-ctr' style={styles.addInfoBtn}>
-                        <i style={{marginRight:'5px'}} className='fas fa-plus'></i><h3>Add rules</h3></div>)}
+                    <div className='flex-ctr info-box-add-btn'>
+                        <FontAwesomeIcon icon='plus' color='white' style={{marginRight:'5px'}}/>
+                        <p>Add rules</p>
+                    </div>)}
             </div>
         </>
     )
 }
-
 export default memo(InfoBox)
-
-
-const styles = {
-    descTitle:{
-        width:'100%',
-        padding:'5px',
-        textAlign:'center',
-        color:'white'
-    },
-    textBoxDesc:{
-        width:'100%',
-        height:'fit-content',
-        backgroundColor:'white',
-        padding:'5px',
-        wordWrap:'break-word'
-    },
-    addInfoBtn:{
-        width:'100%',
-        padding:'10px',
-        borderRadius:'10px',
-        backgroundColor:'#2f2f2f',
-        textAlign:'center',
-        color:'white',
-        cursor:'pointer'
-    },
-    seeAllBtn:{
-        padding:'5px 10px',
-        backgroundColor:'#2f2f2f',
-        borderRadius:'10px',
-        fontSize:'14px',
-        color:'white'
-    }
-}

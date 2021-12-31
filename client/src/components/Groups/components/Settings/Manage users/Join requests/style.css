@@ -1,0 +1,13 @@
+.req-btn{
+    padding: 5px 10px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+}
+.req-btn-accept{
+    background-color: #0f7743;
+}
+.req-btn-deny{
+    background-color:#91211e,
+}

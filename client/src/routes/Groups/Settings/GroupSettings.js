@@ -1,16 +1,15 @@
 import React from 'react'
+import { Redirect, useParams } from 'react-router-dom'
+import {gql} from 'graphql-tag'
+import { useQuery } from 'react-apollo'
+import { useSelector } from 'react-redux'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
 import BannerLoader from '../../../components/General components/Loaders/BannerLoader'
 import GroupBanner from '../../../components/Groups/components/GroupBanner'
 import GroupNavbar from '../../../components/Groups/components/GroupNavbar'
 import Navbar from '../../../components/Navbar/Navbar'
-
-import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
-import { Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
-import { useSelector } from 'react-redux'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../../../../General components/Avatar'
 import RemoveBtn from './RemoveBtn'
 import RolesMenu from './RolesMenu'
+import './style.css'
 
 const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
     const [rolesMenu, setRolesMenu] = useState(false)
@@ -27,13 +28,13 @@ const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
         <div className='users-list-user-box flex-sb'>
             <Link to={'/profile/'+member.username} className='flex-ctr'>
                 <Avatar size='40px' image={member.profile_picture}/>
-                <div style={styles.namesBox}>
-                    <p style={{fontSize:'14px'}}>{member.first_name+' '+member.last_name}</p>
-                    <p style={{fontSize:'12px'}}>@{member.username}</p>
+                <div className='users-list-names'>
+                    <p>{member.first_name+' '+member.last_name}</p>
+                    <p>@{member.username}</p>
                 </div>
             </Link>
 
-            <div style={styles.rightBox} className='flex-ctr'>
+            <div className='flex-ctr'>
                 {rolesMenu && 
                     <RolesMenu 
                         setRoleCb={setRoleCb}
@@ -41,8 +42,8 @@ const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
                         groupID={member.groupID} 
                     />}
 
-                <span className='flex-ctr' style={styles.rolesBox} onClick={()=> role!=='CREATOR' && setRolesMenu(!rolesMenu)}>
-                    <p style={{...styles.roleTag, backgroundColor: tagColor}}>{role}</p>
+                <span className='flex-ctr' onClick={()=> role!=='CREATOR' && setRolesMenu(!rolesMenu)}>
+                    <p style={{backgroundColor: tagColor}} className='mng-memb-role-tag'>{role}</p>
                     {role!=='CREATOR' && <FontAwesomeIcon icon='sort-down' size='lg' style={{marginTop:'-7px'}}/>}
                 </span>
 
@@ -61,24 +62,3 @@ const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
 }
 
 export default memo(MemberBoxMNG)
-
-
-const styles = {
-    namesBox:{
-        color:'white',
-        marginLeft:'15px'
-    },
-    rightBox:{
-        position:'relative'
-    },
-    roleTag:{
-        fontSize:'12px',
-        padding:'3px 8px',
-        color:'white',
-        borderRadius:'20px',
-        marginRight:'5px'
-    },
-    rolesBox:{
-    },
-}
-

@@ -1,0 +1,18 @@
+.group-settings-menu{
+    width: 100%;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+}
+.group-settings-menu ul{
+    width: 100%;
+}
+.group-settings-menu li{
+    width: 100%;
+    padding: 15px;
+    color: white;
+    transition: ease .3s;
+}
+.group-settings-menu li:hover{
+    background-color: #2f2f2f;
+    cursor: pointer;
+}

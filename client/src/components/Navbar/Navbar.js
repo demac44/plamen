@@ -1,24 +1,15 @@
 import React, { useState, useEffect, memo, useCallback } from 'react'
-
-import '../../App.css'
-import '../../General.css'
 import './Navbar.css'
-
-import Logo from '../General components/Logo'
-import Dropdown from './Dropdown'
-import SearchBar from './SearchBar'
-
-import Avatar from '../General components/Avatar'
 import { useSelector } from 'react-redux';
-
 import {Link} from 'react-router-dom'
-
-
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
-import NotficationsMenu from './NotficationsMenu'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Logo from '../General components/Logo'
+import Dropdown from './Dropdown'
+import SearchBar from './Search bar/SearchBar'
+import Avatar from '../General components/Avatar'
+import NotficationsMenu from './Notifications/NotficationsMenu'
 
 const Navbar = ({isLogged}) => {
     const ls = JSON.parse(localStorage.getItem('user')) 
@@ -68,20 +59,20 @@ const Navbar = ({isLogged}) => {
                 <div className="tn-right">
                 {isLogged ?
                 <>
-                    <FontAwesomeIcon icon='sort-down' style={{...styles.inboxBtn, marginTop:'-13px'}} 
+                    <FontAwesomeIcon icon='sort-down' className='tn-icons' style={{marginTop:'-13px'}} 
                         onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
                     <Link to='/chats' style={{position:'relative'}}>
                         {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
-                        <div className='flex-ctr' style={styles.count}>{NotNo}</div>))}
-                        <FontAwesomeIcon icon='inbox' style={styles.inboxBtn}/>
+                        <div className='flex-ctr tn-msgs-count'>{NotNo}</div>))}
+                        <FontAwesomeIcon icon='inbox' className='tn-icons'/>
                     </Link>
-                    <div className='flex-ac' style={styles.avatar} onClick={handleDropdown}> 
+                    <div onClick={handleDropdown}> 
                         <Avatar size='45px' image={ls.profile_picture}/>
                     </div>
                     {dropdown && <Dropdown closeDropd={closeDropd}/>}
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
                 </>
-                    : <Link to='/login'><button style={styles.loginBtn} className='btn'>LOGIN</button></Link>}
+                    : <Link to='/login'><button className='btn navbar-login-btn'>LOGIN</button></Link>}
                 </div>
             </div>
         </>
@@ -89,37 +80,6 @@ const Navbar = ({isLogged}) => {
 }
 
 export default memo(Navbar)
-
-
-const styles = {
-    inboxBtn: {
-        fontSize: '25px',
-        color:'white',
-        marginRight: '20px',
-        cursor:'pointer'
-    },
-    avatar: {
-        height:'100%',
-    },
-    loginBtn: {
-        backgroundColor:'#ffbb00',
-        padding:'10px 20px',
-        color:'#1f1f1f',
-        fontSize:'16px',
-        fontWeight:'bold'
-    },
-    count:{
-        backgroundColor:'red',
-        color:'white',
-        width:'20px',
-        height:'20px',
-        position:'absolute',
-        top:'-5px',
-        right:'15px',
-        borderRadius:'50%',
-        fontSize:'13px'
-    }
-}
 
 const NEW_MESSAGE = gql`
     subscription {

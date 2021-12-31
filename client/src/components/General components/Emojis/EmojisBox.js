@@ -6,6 +6,7 @@ import EmojisPeople from './EmojisPeople'
 import EmojisPlaces from './EmojisPlaces'
 import EmojisRecent from './EmojisRecent'
 import EmojisSymbols from './EmojisSymbols'
+import './style.css'
 
 const EmojisBox = ({emojiCB, visible}) => {
 

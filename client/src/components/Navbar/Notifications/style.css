@@ -1,0 +1,99 @@
+.notifications-container{
+    position: absolute;
+    top: 60px;
+    right: 50px;
+    width:30vw;
+    height: auto;
+    background-color: #1b1b1b;
+    max-height: 70vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 5px 5px 10px;
+    border: 1px solid #2f2f2f;
+}
+.notification-box{
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    padding-right: 55px;
+}
+.notification-box:hover{
+    background-color: #2f2f2f;
+}
+.notif-text p{
+    margin-left: 10px;
+    font-size: 14px;
+    color: white;
+}
+.nb-right{
+    position: absolute;
+    top: 21px;
+    right: 5px;
+}
+.nb-right .set-time-p{
+    color: white;
+}
+.nb-right .follow-button{
+    margin-right: 10px;
+}
+.no-notif{
+    padding: 20px;
+    text-align: center;
+}
+.clear-notif{
+    width: 100%;
+    padding: 5px 10px 0 0;
+    text-align: end;
+    cursor: pointer;
+    color: teal;
+    font-size: 14px;
+}
+.notif-type{
+    position: absolute;
+    top: 0;
+    right: -5px;
+    font-size: 20px;
+}
+.like-notif{
+    color:#c00303
+}
+.comment-notif{
+    color:#14578d
+}
+.foll-notif{
+    color:#008607
+}
+
+
+@media screen and (max-width: 1200px){
+    /* NOTIFICATIONS */
+    .notifications-container{
+        width: 35vw;
+    }
+}
+
+@media screen and (max-width: 991px){
+    .notifications-container{
+        width:40vw;
+    }
+}
+
+
+@media screen and (max-width: 768px){
+    .notifications-container{
+        width: 60vw;
+    }
+}   
+
+@media screen and (max-width:580px){
+    .notifications-container{
+        right: 0;
+        width: 100vw;  
+        min-height: calc(100vh - 60px);
+    }
+}

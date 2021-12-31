@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import './style.css'
 
 const EditGroupInfo = ({group_description, group_rules, groupid, refetch}) => {
     const [change_info] = useMutation(CHANGE_INFO)
@@ -23,38 +24,36 @@ const EditGroupInfo = ({group_description, group_rules, groupid, refetch}) => {
     }
 
     return (
-        <form style={styles.box} className='box flex-col-ctr' onSubmit={handleSubmit}>
-            <p style={{fontSize:'18px'}}>Description and rules</p>
+        <form className='box flex-col-ctr' onSubmit={handleSubmit}>
+            <p>Description and rules</p>
 
-            {updated && <p style={styles.updated}>Updated!</p>}
+            {updated && <p className='updated-msg'>Updated!</p>}
 
-            <div style={{width:'100%', marginTop:'15px'}}>
-
+            <div className='wh-100'>
                 <span>
-                    <p style={{minWidth:'90px', marginTop:'10px'}}>Description: </p>
+                    <p className='edit-gp-info-stitle'>Description: </p>
                     <textarea
                         type='text' 
                         id='desc'
-                        style={styles.textarea} 
+                        className='edit-gp-info-textarea' 
                         placeholder='Community description'
                         defaultValue={group_description}
                     />
                 </span>
 
                 <span>
-                    <p style={{minWidth:'90px', marginTop:'10px'}}>Rules: </p>
+                    <p className='edit-gp-info-stitle'>Rules: </p>
                     <textarea 
                         type='text' 
                         id='rules'
-                        style={styles.textarea} 
+                        className='edit-gp-info-textarea' 
                         placeholder='Community rules'
                         defaultValue={group_rules}
                     />
                 </span>
-
             </div>
 
-            <button type='submit' className='btn' style={styles.btn}>SAVE</button>
+            <button type='submit' className='btn edit-form-btn'>SAVE</button>
         </form>
     )
 }
@@ -68,32 +67,3 @@ const CHANGE_INFO = gql`
         }
     }
 `
-
-const styles = {
-    box:{
-        color:'#aaa',
-    },
-    textarea:{
-        width:'100%',
-        minHeight:'100px',
-        resize:'none',
-        marginTop:'5px',
-        padding:'5px',
-        borderRadius:'10px',
-        border:'none',
-        outline:'none',
-        fontSize:'14px'
-    },
-    btn:{
-        padding:'7px 23px',
-        marginTop:'20px',
-        alignSelf:'flex-end'
-    },
-    updated:{
-        padding:'5px 10px',
-        backgroundColor:'#00752d',
-        borderRadius:'10px',
-        marginTop:'15px',
-        color:'white'
-    }
-}

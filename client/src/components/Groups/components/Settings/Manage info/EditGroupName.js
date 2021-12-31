@@ -21,26 +21,25 @@ const EditGroupName = ({group_name, groupid, refetch}) => {
     }
 
     return (
-        <form style={styles.box} className='box flex-col-ctr' onSubmit={handleSubmit}>
-            <p style={styles.p}>Change community name</p>
+        <form className='box flex-col-ctr' onSubmit={handleSubmit}>
+            <p>Change community name</p>
         
-            {updated && <p style={styles.updated}>Updated!</p>}
+            {updated && <p className='updated-msg'>Updated!</p>}
         
-            <div style={{width:'100%'}}>
+            <div className='wh-100'>
                 <span>
-                    <p style={{minWidth:'90px', marginTop:'10px'}}>Name: </p>
+                    <p className='edit-gp-info-stitle'>Name: </p>
                     <input 
                         type='text' 
                         id='name'
                         className='input' 
-                        style={styles.input} 
                         placeholder='Community name'
                         defaultValue={group_name}
                         />
                 </span>
         
             </div>
-            <button type='submit' className='btn' style={styles.btn}>SAVE</button>
+            <button type='submit' className='btn edit-form-btn'>SAVE</button>
         </form>
     )
 }
@@ -54,31 +53,3 @@ const CHANGE_NAME = gql`
         }
     }
 `
-
-const styles = {
-    box:{
-        color:'#aaa',
-    },
-    input:{
-        height:'35px',
-        marginTop:'5px',
-        padding:'5px'
-    },
-    btn:{
-        padding:'7px 23px',
-        marginTop:'20px',
-        alignSelf:'flex-end'
-    },
-    updated:{
-        padding:'5px 10px',
-        backgroundColor:'#00752d',
-        borderRadius:'10px',
-        marginTop:'15px',
-        color:'white',
-        width:'fit-content'
-    },
-    p:{
-        fontSize:'18px',
-        textAlign:'center'
-    }
-}

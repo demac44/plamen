@@ -1,8 +1,6 @@
 import React, {memo} from 'react'
-import CreateGroupCard from './CreateGroupCard'
+import CreateGroupCard from './Create group/CreateGroupCard'
 import GroupCard from './GroupCard'
-
-
 const GroupsGrid = ({groups}) => {
     return (
         <div className='groups-grid'>
@@ -11,5 +9,4 @@ const GroupsGrid = ({groups}) => {
         </div>
     )
 }
-
 export default memo(GroupsGrid)

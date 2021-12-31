@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
@@ -16,7 +16,7 @@ const DenyBtn = ({userID, groupID, refetch}) => {
     }
 
     return (
-        <div style={styles.btn} onClick={handleDeny}>
+        <div className='req-btn req-btn-deny' onClick={handleDeny}>
             <p>DENY</p>
         </div>
     )
@@ -31,15 +31,3 @@ const DENY_REQUEST = gql`
         }
     }
 `
-
-
-const styles = {
-    btn:{
-        padding:'5px 10px',
-        color:'white',
-        backgroundColor:'#91211e',
-        borderRadius:'10px',
-        cursor:'pointer',
-        margin:'5px'
-    }
-}
