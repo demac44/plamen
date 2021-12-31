@@ -1,23 +1,14 @@
 import React, { useCallback, useState } from 'react'
 import axios from 'axios'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import { useSelector } from 'react-redux';
-
+import './style.css'
 import VideoPreview from './components/VideoPreview'
 import ImagePreview from './components/ImagePreview'
 import UploadImage from './components/UploadImage'
 import UploadVideo from './components/UploadVideo'
 import EmojisBox from '../../../../General components/Emojis/EmojisBox'
-
-const NEW_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
-        create_group_post(userID: $userID, post_text: $text, url: $url, type: $type, groupID: $groupID){
-            userID
-        }
-    }
-`
 
 const CreatePost = ({refetch, groupid}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -130,8 +121,8 @@ const CreatePost = ({refetch, groupid}) => {
 
     return (
         <form className="create-post-box" onSubmit={handleSubmit}>
-            {sizeError && <p style={styles.sizeError}>File is too large! Max. size: 30MB</p>}
-            {lengthErr && <p style={styles.sizeError}>Post too long! Max. characters: 5000</p>}
+            {sizeError && <p className='size-err-msg'>File is too large! Max. size: 30MB</p>}
+            {lengthErr && <p className='size-err-msg'>Post too long! Max. characters: 5000</p>}
             {loading ? <div className='flex-ctr' style={{height:'100px'}}>
                             <div className='small-spinner'></div>
                         </div> :
@@ -139,7 +130,8 @@ const CreatePost = ({refetch, groupid}) => {
                     <textarea 
                         type="text" 
                         id='text'
-                        style={{...styles.textArea, border:emptyErr}} 
+                        className='create-post-textarea'
+                        style={{border:emptyErr}} 
                         placeholder="Add new post..."
                         value={postText}
                         onFocus={()=>{setEmptyErr(false);setSizeError(false)}}
@@ -185,21 +177,10 @@ const CreatePost = ({refetch, groupid}) => {
 
 export default CreatePost
 
-
-const styles = {
-    textArea:{
-        width:'100%',
-        minHeight:'70px',
-        resize:'none',
-        padding:'5px',
-        border:'none',
-        outline:'none',
-        fontSize:'14px'
-    },
-    removePreview:{
-        height:'100%', 
-        padding:'7px',
-        backgroundColor:'#2f2f2f',
-        cursor:'pointer'
+const NEW_POST = gql`
+    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $groupID: Int!){
+        create_group_post(userID: $userID, post_text: $text, url: $url, type: $type, groupID: $groupID){
+            userID
+        }
     }
-}
+`

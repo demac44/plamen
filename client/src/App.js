@@ -36,14 +36,14 @@ const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
 
 
-import('@fortawesome/free-solid-svg-icons').then(async i=>{
-  await import('@fortawesome/fontawesome-svg-core').then(core =>{
-    core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
-      i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
-      i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
-      i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-      i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera)
-    })
+import('@fortawesome/free-solid-svg-icons').then(i=>{
+    import('@fortawesome/fontawesome-svg-core').then(core =>{
+      core.library.add(i.faNewspaper, i.faCompass, i.faBookmark, i.faUsers, i.faPlay, i.faPlus, i.faInbox, 
+        i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
+        i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
+        i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
+        i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera)
+      })
 })
 
 function App() {

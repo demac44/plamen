@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
-
 
 const PostMenu = ({data, refetchPosts, handleReport}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -40,13 +36,12 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
                     <li onClick={()=>handleReport(true)}><FontAwesomeIcon icon='flag' /> Report</li>
                 </ul>
             </div>
-            {copied && <div style={styles.copied}>Link copied!</div>}
+            {copied && <div className='link-copied-msg'>Link copied!</div>}
         </>
     )
 }
 
 export default PostMenu
-
 
 const DELETE_POST = gql`
     mutation delete_post($postID: Int!){
@@ -55,19 +50,3 @@ const DELETE_POST = gql`
         }
     }
 `
-
-const styles = {
-    copied:{
-        position:'fixed',
-        bottom:'30px',
-        left:'50%',
-        transform:'translateX(-50%)',
-        width:'200px',
-        padding:'10px',
-        backgroundColor:'#1f1f1f',
-        color:'white',
-        zIndex:'100000000000000000000000000000000',
-        textAlign:'center',
-        borderRadius:'10px'
-    }
-}

@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
 
@@ -41,7 +39,7 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
                     <li onClick={()=>handleReport(true)}><FontAwesomeIcon icon='flag'/> Report</li>
                 </ul>
             </div>
-            {copied && <div style={styles.copied}>Link copied!</div>}
+            {copied && <div className='link-copied-msg'>Link copied!</div>}
         </>
     )
 }
@@ -55,18 +53,3 @@ const DELETE_GP = gql`
         }
     }
 `
-const styles = {
-    copied:{
-        position:'fixed',
-        bottom:'30px',
-        left:'50%',
-        transform:'translateX(-50%)',
-        width:'200px',
-        padding:'10px',
-        backgroundColor:'#1f1f1f',
-        color:'white',
-        zIndex:'100000000000000000000000000000000',
-        textAlign:'center',
-        borderRadius:'10px'
-    }
-}

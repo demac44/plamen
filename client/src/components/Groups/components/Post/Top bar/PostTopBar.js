@@ -4,9 +4,9 @@ import SavePostButton from './components/SavePostButton'
 import PostMenu from './components/PostMenu'
 import Avatar from '../../../../General components/Avatar'
 import { Link } from 'react-router-dom'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import ReportBox from './components/ReportBox'
+// import './style.css'
 
 const PostTopBar = ({data, refetchPosts}) => {
     const [reportMenu, setReportMenu] = useState(false)
@@ -22,9 +22,9 @@ const PostTopBar = ({data, refetchPosts}) => {
                 <Link to={'/profile/'+data.username} className='flex'>
                     <Avatar size='40px' image={data.pfp}/>
 
-                    <span className='flex-col-sb' style={styles.nameAndTime}>
-                        <p style={styles.name}>{data.name}</p>
-                        <SetTime timestamp={data.timestamp} fontSize='12px'/>
+                    <span className='flex-col-sb users-list-names'>
+                        <p style={{fontSize:'16px'}}>{data.name}</p>
+                        <SetTime fontSize='12px'/>
                     </span>
                 </Link >
 
@@ -32,7 +32,8 @@ const PostTopBar = ({data, refetchPosts}) => {
                     <SavePostButton postID={data.postID} groupID={data?.groupID}/>
                     <FontAwesomeIcon
                         icon='ellipsis-v' 
-                        style={styles.optionsBtn} 
+                        color='white'
+                        className='post-menu-btn'
                         onClick={()=>setMenu(!menu)}/>
                 </span>
             </div>
@@ -53,21 +54,3 @@ const PostTopBar = ({data, refetchPosts}) => {
 }
 
 export default memo(PostTopBar)
-
-
-const styles = {
-    name:{
-        fontSize:'16px'
-    },
-    optionsBtn:{
-        fontSize:'25px',
-        color:'white',
-        marginRight:'5px',
-        cursor:'pointer'
-    },
-    nameAndTime:{
-        height:'100%',
-        marginLeft:'10px',
-        color:'white'
-    }
-}

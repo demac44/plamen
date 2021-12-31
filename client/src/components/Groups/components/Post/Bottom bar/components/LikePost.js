@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
-
 import logo from '../../../../../../images/logo-min.png'
 import logoBlank from '../../../../../../images/logoBlank-min.png'
 
@@ -52,7 +51,7 @@ const LikePost = ({postID, userID}) => {
             <img 
                 src={ifLiked?.loading ? logoBlank : (liked ? logo : logoBlank)} 
                 onClick={() => liked ? handleRemove() : handleLike()}
-                style={styles.logo}
+                className='like-post-btn'
             />
         </>
     )
@@ -60,21 +59,6 @@ const LikePost = ({postID, userID}) => {
 
 export default LikePost
     
-
-const styles = {
-    likeBtn:{
-        fontSize:'30px',
-        minWidth:'40px',
-        textAlign:'center',
-        cursor:'pointer'
-    },
-    logo:{
-        height:'100%',
-        margin:'0 10px 0 5px',
-        cursor:'pointer'
-    }
-}
-
 const LIKE_GP = gql`
 mutation ($postID: Int!, $userID: Int!){
     like_group_post (postID: $postID, userID: $userID){

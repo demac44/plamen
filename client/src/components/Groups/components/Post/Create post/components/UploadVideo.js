@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const UploadVideo = ({videoCB, imageCB, previewCB, sizeErrorCB}) => {
@@ -32,5 +31,4 @@ const UploadVideo = ({videoCB, imageCB, previewCB, sizeErrorCB}) => {
         </>
     )
 }
-
 export default UploadVideo

@@ -1,23 +1,13 @@
 import React, { useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
 
-const REPORT_POST = gql`
-    mutation ($postID:Int!, $groupID:Int!, $reporterId:Int!, $reasons: String!){
-        report_group_post (postID: $postID, reporterId: $reporterId, groupID: $groupID, reasons: $reasons){
-            postID
-        }
-    }
-` 
-
 const ReportBox = ({data, handleReportClose}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [report_post] = useMutation(REPORT_POST)
     const [reportSent, setReportSent] = useState(false)
-
 
     const getFields = (e) => {
         let reasons = ''
@@ -63,16 +53,14 @@ const ReportBox = ({data, handleReportClose}) => {
         })
     }
 
-
-
     return (
         <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
-                <h3 style={styles.title}>Report
-                    <FontAwesomeIcon icon='times' style={styles.exitBtn} onClick={()=>handleReportClose(false)}/>    
+                <h3 className='report-box-title'>Report
+                    <FontAwesomeIcon icon='times' className='exit-report-btn' onClick={()=>handleReportClose(false)}/>    
                 </h3>
-                {reportSent && <h4 style={{...styles.title, marginTop:'10px'}}>Your report has been sent!</h4>}
-                <p style={{...styles.title, marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
+                {reportSent && <h4 className='report-box-title' style={{marginTop:'10px'}}>Your report has been sent!</h4>}
+                <p className='report-box-title' style={{marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
                 <input type='checkbox' id='opt1' value='Spam'/>
                 <label htmlFor='opt2'>Spam</label>
                 <br/>
@@ -106,7 +94,7 @@ const ReportBox = ({data, handleReportClose}) => {
                 <input type='checkbox' id='opt11' value='Suicide or self-injury'/>
                 <label htmlFor='opt2'>Suicide or self-injury</label>
                 <br/>
-                <div style={{width:'100%', textAlign:'center'}}><button style={styles.submitBtn} className='btn'>SUBMIT REPORT</button></div>
+                <div className='wh-100 flex-ctr'><button className='btn report-submit-btn'>SUBMIT REPORT</button></div>
             </form>
         </div>
     )
@@ -114,22 +102,10 @@ const ReportBox = ({data, handleReportClose}) => {
 
 export default ReportBox
 
-const styles = {
-    exitBtn:{
-        position:'absolute',
-        top:'10px',
-        right:'15px',
-        color:'white',
-        fontSize:'25px',
-        cursor:'pointer'
-    },
-    title:{
-        width:'100%',
-        color:'white',
-        textAlign:'center'
-    },
-    submitBtn:{
-        padding:'5px 10px',
-        marginTop:'20px',
+const REPORT_POST = gql`
+    mutation ($postID:Int!, $groupID:Int!, $reporterId:Int!, $reasons: String!){
+        report_group_post (postID: $postID, reporterId: $reporterId, groupID: $groupID, reasons: $reasons){
+            postID
+        }
     }
-}
+` 

@@ -1,0 +1,15 @@
+.post-media-box{
+    width: 100%;
+}
+.post-media-box img, .post-media-box video{
+    max-height: 70vh;
+    max-width: 100%;
+}
+.post-media-loader{
+    position: absolute;
+    top: 50px;
+    height: 300px;
+    width: 100%;
+    z-index: 10000;
+    background-color: #1b1b1b;
+}

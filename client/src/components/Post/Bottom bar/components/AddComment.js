@@ -30,34 +30,14 @@ const AddComment = ({postID, userID, refetchComments}) => {
     }
 
     return (
-        <form style={styles.form} onSubmit={handleAddComment}>
-            <textarea style={styles.input} id='comment_text' name='comment_text' type="text" placeholder="Add comment..."/>
+        <form className='flex-ac wh-100' onSubmit={handleAddComment}>
+            <textarea className='add-cmt-textarea wh-100 input' id='comment_text' name='comment_text' type="text" placeholder="Add comment..."/>
             <button className='post-button btn'>POST</button>
         </form>
     )
 }
 
 export default AddComment
-
-const styles = {
-    form:{
-        display:'flex',
-        width:'100%', 
-        height:'100%',
-        alignItems:'center'
-    },
-    input:{
-        width:'100%',
-        height:'100%',
-        backgroundColor:'#1b1b1b',
-        outline:'none',
-        border:'none',
-        marginLeft:'5px',
-        resize:'none',
-        paddingTop:'13px',
-        color:'white'
-    }
-}
 
 const ADD_COMMENT = gql`
     mutation ($postID: Int!, $userID: Int!, $comment_text: String!, $rid: Int!){

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
-
 import {gql} from 'graphql-tag'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
@@ -45,20 +43,13 @@ const SavePostButton = ({postID}) => {
         <FontAwesomeIcon 
             icon='bookmark'
             onClick={()=> !ifSaved.loading && (saved ? handleRemove() : handleSave())} 
-            style={{...styles.saveBtn, color: ifSaved.loading ? 'white' : (saved ? '#ffbb00' : 'white')}}
+            style={{color: ifSaved.loading ? 'white' : (saved ? '#ffbb00' : 'white')}}
+            className='save-post-btn'
         />
     )
 }
 
 export default SavePostButton
-
-const styles = {
-    saveBtn:{
-        fontSize:'25px',
-        marginRight:'20px',
-        cursor:'pointer'
-    }
-}
 
 const SAVE_POST = gql`
     mutation ($postID:Int!,$userID:Int!){

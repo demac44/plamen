@@ -2,7 +2,7 @@ import React, { useState, memo } from 'react'
 import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'
-
+import './style.css'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
@@ -56,7 +56,7 @@ const PostBottomBar = ({postID, userID}) => {
             <div className='post-bottom-bar flex'>
                 <LikePost postID={postID} userID={userID}/>
 
-                <p onClick={()=>setLikes(!likes)} style={styles.seeLikes}>
+                <p onClick={()=>setLikes(!likes)} className='see-likes-btn'>
                     <FontAwesomeIcon icon='sort-down' color='white' size='lg'
                 /></p>
                 
@@ -68,18 +68,6 @@ const PostBottomBar = ({postID, userID}) => {
 }
 
 export default memo(PostBottomBar)
-
-const styles = {
-    seeLikes:{
-        padding:'0 6px 5px 6px',
-        fontSize:'14px',
-        border:'1px solid #3f3f3f',
-        borderRadius:'2px',
-        textAlign:'center',
-        cursor:'pointer',
-        marginTop:'5px'
-    }
-}
 
 const GET_COMMENTS = gql`
     query($postID: Int!, $limit: Int, $offset: Int, $uid: Int!){

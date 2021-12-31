@@ -1,0 +1,82 @@
+.create-post-box{
+    width: 100%;
+    background-color: #1b1b1b;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 2px 2px 10px;
+}
+.create-post-box i{
+    font-size: 25px;
+    color: white;
+}
+.create-post-box p{
+    font-size: 14px;
+    color: white;
+    margin-left: 10px;
+}
+.create-post-box label{
+    cursor: pointer;
+}
+.create-post-textarea{
+    width: 100%;
+    min-height: 70px;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    padding: 5px;
+}
+.create-post-box .emojis-box{
+    visibility: visible !important;
+    padding: 5px !important;
+    max-height: 150px !important;
+}
+.create-post-box .emojis-sub-box{
+    grid-template-columns: repeat(12, 1fr);
+}
+.create-post-box .emojis-sub-box p{
+    font-size: 20px;
+    cursor: pointer;
+}
+.size-err-msg{
+    background-color: #ff5050;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-left: 0;
+}
+.clear-preview-btn{
+    height: 100%;
+    padding: 7px;
+    background-color: #2f2f2f;
+    cursor: pointer;
+}
+.post-media-preview{
+    height: 100px;
+}
+.post-media-preview img, .post-media-preview video{
+    height: 100%;
+}
+@media screen and (max-width:1400px){
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(9, 1fr);
+        gap: 0 !important;
+    }
+}
+
+@media screen and (max-width:768px){
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(10, 1fr);
+        gap: 0 !important;
+    }
+}
+@media screen and (max-width:447px){
+    .create-post-box{
+        margin-top: 0;
+        border-radius: 0;
+    }
+    .create-post-box .emojis-sub-box{
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

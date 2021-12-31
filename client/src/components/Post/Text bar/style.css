@@ -1,0 +1,14 @@
+.post-text-bar{
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 10px 20px 10px;
+}
+.post-text-bar p{
+    color: white;
+    white-space: pre-wrap;
+}
+.read-full-post-btn{
+    color: teal;
+    font-size: 14px;
+    cursor: pointer;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './style.css'
 
 const PostTextBar = ({post_text}) => {
     const [readMore, setReadMore] = useState(true)
@@ -11,9 +12,14 @@ const PostTextBar = ({post_text}) => {
                     ? 
                     (
                     <>
-                        {readMore ? <p>{post_text.slice(0,300)}<span onClick={()=>setReadMore(false)} style={styles.readMore}>. . . Read more</span></p> : <p>{post_text}</p>}
+                        {readMore ? 
+                        <p>{post_text.slice(0,300)}
+                            <span onClick={()=>setReadMore(false)} className='read-full-post'>. . . Read more</span>
+                        </p> : <p>{post_text}</p>}
+
                         <br/>
-                        {!readMore && <p onClick={()=>setReadMore(true)} style={styles.readMore}>Read less</p>}
+
+                        {!readMore && <p onClick={()=>setReadMore(true)} className='read-full-post'>Read less</p>}
                     </>
                     )
                     : <p>{post_text}</p>
@@ -22,14 +28,4 @@ const PostTextBar = ({post_text}) => {
         </>
     )
 }
-
 export default PostTextBar
-
-
-const styles = {
-    readMore:{
-        color:'teal',
-        fontSize:'14px',
-        cursor:'pointer'
-    }
-}

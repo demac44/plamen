@@ -1,0 +1,82 @@
+.post-top-bar{
+    width: 100%;
+    min-height: 50px;
+    padding: 5px 10px;
+}
+.post-menu-btn{
+    font-size: 25px;
+    cursor: pointer;
+}
+.post-options-menu{
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 150px;
+    border-bottom-left-radius: 10px;
+    background-color: #1b1b1b;
+    border: 1px solid #3f3f3f;
+    z-index: 1000;
+}
+.post-options-menu ul{width:100%; cursor: pointer;}
+.post-options-menu ul li{
+    width: 100%;
+    padding: 8px 20px;
+    color: white;
+}
+.post-options-menu ul li:hover{
+    background-color: #3f3f3f;
+}
+.container-report{
+    width: 100%;
+}
+
+.report-form{
+    position: relative;
+    width: 40%;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    color:white;
+    width: 100%;
+}
+.report-form label{
+    margin-left: 10px;
+}
+.report-form input{
+    margin-top: 10px;
+}
+.link-copied-msg{
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 10px;
+    background-color: #1f1f1f;
+    color: white;
+    z-index: 1000000000000000000000000000000000;
+    text-align: center;
+    border-radius: 10px;
+}
+.exit-report-btn{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+.report-box-title{
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+.report-submit-btn{
+    padding: 5px 10px;
+    margin-top:20px;
+}
+.save-post-btn{
+    font-size:25px;
+    margin-right:20px;
+    cursor:pointer;
+}
