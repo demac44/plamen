@@ -36,15 +36,15 @@ const ChatMenu = ({chatID}) => {
                 <ul>
                     <li onClick={()=>setChatMedia(true)}>See media</li>
 
-                    <li style={{color:'#940a00'}} onClick={()=>setConfirmDelete(!confirmDelete)}>
-                        <p>DELETE CHAT</p>
+                    <li onClick={()=>setConfirmDelete(!confirmDelete)}>
+                        <p className='del-chat-btn'>DELETE CHAT</p>
                     </li>
 
-                    {confirmDelete && <div style={styles.confirmBox} className='flex-col-ctr'>
-                        <p style={{color:'white'}}>Are you sure you want to delete this chat?</p>
-                        <span className='flex-ctr' style={styles.btnsBox}>
-                            <button style={styles.btns} className='btn' onClick={handleChatDelete}>CONFIRM</button>
-                            <button style={styles.btns} className='btn' onClick={()=>setConfirmDelete(false)}>EXIT</button>
+                    {confirmDelete && <div className='flex-col-ctr del-chat-confirm-box'>
+                        <p>Are you sure you want to delete this chat?</p>
+                        <span className='flex-ctr'>
+                            <button className='btn conf-box-btns' onClick={handleChatDelete}>CONFIRM</button>
+                            <button className='btn conf-box-btns' onClick={()=>setConfirmDelete(false)}>EXIT</button>
                         </span>
                     </div>}
 
@@ -56,18 +56,3 @@ const ChatMenu = ({chatID}) => {
 }
 
 export default ChatMenu
-
-const styles = {
-    confirmBox:{
-        marginTop:'15px',
-        padding:'10px',
-        textAlign:'center'
-    },
-    btnsBox:{
-        marginTop:'10px'
-    },
-    btns:{
-        margin:'5px 10px',
-        padding:'5px 10px'
-    }
-}

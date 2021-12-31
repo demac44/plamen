@@ -17,12 +17,12 @@ const MyGroupsList = () => {
 
     return (
         <div className='my-groups-box box' style={{margin:'0'}}>
-            <div className='flex-sb' style={styles.descTitle}>
+            <div className='flex-sb my-groups-box-title'>
                 <h2>My communities</h2>
-                <Link to='/communities' style={styles.seeAllBtn}>See all</Link>
+                <Link to='/communities' className='side-box-link-btn'>See all</Link>
             </div>
             {!loading && data.get_groups.slice(0, 5).map(group=>
-                <div style={{...styles.groupBox, backgroundColor: "#" + ((1<<24)*Math.random() | 0).toString(16)}} key={group.groupID}>
+                <div className='my-groups-box-group' style={{backgroundColor: "#" + ((1<<24)*Math.random() | 0).toString(16)}} key={group.groupID}>
                     <Link  to={'/community/'+group.groupID}  className='gcard_overlay flex-ctr'>
                         <h4>{group.group_name}</h4>
                     </Link>
@@ -33,49 +33,6 @@ const MyGroupsList = () => {
 }
 
 export default memo(MyGroupsList)
-
-
-const styles = {
-    descTitle:{
-        width:'100%',
-        padding:'5px',
-        color:'white',
-        fontSize:'10px'
-    },
-    textBoxDesc:{
-        width:'100%',
-        height:'fit-content',
-        backgroundColor:'white',
-        padding:'5px',
-        wordWrap:'break-word'
-    },
-    addInfoBtn:{
-        width:'100%',
-        padding:'10px',
-        borderRadius:'10px',
-        backgroundColor:'#2f2f2f',
-        textAlign:'center',
-        color:'white',
-        cursor:'pointer'
-    },
-    seeAllBtn:{
-        padding:'5px 10px',
-        backgroundColor:'#2f2f2f',
-        borderRadius:'10px',
-        fontSize:'14px',
-        color:'white'
-    },
-    groupBox:{
-        width:'100%',
-        height:'40px',
-        borderRadius:'10px',
-        textAlign:'center',
-        color:'white',
-        cursor:'pointer',
-        marginTop:'10px',
-        position:'relative'
-    }
-}
 
 
 const GET_MY_GROUPS = gql`

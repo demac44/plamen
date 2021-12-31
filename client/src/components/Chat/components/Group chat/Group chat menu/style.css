@@ -1,0 +1,48 @@
+.gc-menu-add-user{
+    box-shadow: none !important;
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    padding: 0 5px 20px 5px;
+}
+.gc-addu-input{
+    height: 35px;
+    margin-top: 5px;
+}
+.gc-menu-err-msg, .gc-menu-added-msg{
+    padding: 5px 20px;
+    color: white;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.gc-menu-added-msg{
+    background-color: #006b47;
+}
+.gc-menu-err-msg{
+    background-color: #ff5050;
+}
+.gc-menu-addu-btn{
+    padding: 5px 20px;
+    margin-top: 10px;
+    width: 100px;
+}
+.gc-members-box{
+    background-color: #1b1b1b;
+    overflow: auto;
+    max-height: 50vh;   
+    justify-content: flex-start;
+    box-shadow: none; 
+}
+.gc-admin-tag{
+    margin: 0 10px;
+    background-color: purple;
+    padding: 3px 6px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.gc-removeu-btn{
+    font-size: 20px;
+    color: white;
+    margin: 0 10px;
+    cursor: pointer;
+} 

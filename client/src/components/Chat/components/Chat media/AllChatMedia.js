@@ -1,10 +1,13 @@
 import React, { useCallback, useState, memo } from 'react'
 
+import './style.css'
+
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import OpenMedia from './OpenMedia'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+
 
 const GET_CHAT_MEDIA = gql`
     query($chatID: Int!){
@@ -33,18 +36,18 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
     return (
         <>
         <div className='container-all-chat-media overlay'>
-            <div style={styles.title} className='flex-sb '>
+            <div className='flex-sb title'>
                 <h3>All chat media</h3>
                 <FontAwesomeIcon
                     icon='times' 
-                    style={{fontSize:'25px', cursor:'pointer'}} 
-                    className='fas fa-times'
+                    size='lg'
+                    cursor={'pointer'}
                     onClick={()=>closeAllMediaCallback()}
                 />
             </div>
 
-            {loading ? <div style={{width:'100%', height:'200px'}} className='flex-ctr'><div className='small-spinner'></div></div>
-            : data.get_chat_media.length===0 && <p style={{color:'whitesmoke', textAlign:'center', marginTop:'30px'}}>No chat media</p>}
+            {loading ? <div className='flex-ctr spinner-box'><div className='small-spinner'></div></div>
+            : data.get_chat_media.length===0 && <p className='no-media'>No chat media</p>}
 
             <div className='chat-all-media-box'>
                 {!loading && data.get_chat_media.map(media => <div
@@ -61,12 +64,3 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
 }
 
 export default memo(AllChatMedia)
-
-
-const styles = {
-    title:{
-        width:'100%',
-        color:'white',
-        padding:'10px 20px',
-    }
-}

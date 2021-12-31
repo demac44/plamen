@@ -10,7 +10,7 @@ const ActivityStatus = ({last_seen}) => {
 
     return (
         <div className='flex-ctr' style={{marginLeft:'20px'}}>
-            <span style={{...styles.activeLight, backgroundColor: lastSeen==='online' ? 'green' : 'red'}}></span>
+            <span className='activity_light' style={{backgroundColor: lastSeen==='online' ? 'green' : 'red'}}></span>
             <p style={{fontSize:'12px'}}>{lastSeen==='online' ? 'Online' : 'Last online '+lastSeen}</p>
         </div>
     )
@@ -31,14 +31,5 @@ const getTime = (timestamp) => {
     else if(d>60*24*30) {
         let d = new Date(utcSeconds)
         return d.toDateString()
-    }
-}
-
-const styles = {
-    activeLight:{
-        width:'10px',
-        height:'10px',
-        borderRadius:'50%',
-        marginRight:'5px',
     }
 }

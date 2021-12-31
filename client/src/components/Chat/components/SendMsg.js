@@ -106,11 +106,11 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
             <EmojisBox emojiCB={emojiCB} visible={emojis}/>
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
-                {lengthErr && <p style={styles.lenErrMsg}>Message too long! Max. characters allowed: 6000</p>}
-                <FontAwesomeIcon icon='icons' style={styles.iconsIcon} onClick={()=>setEmojis(!emojis)}/>
+                {lengthErr && <p className='msg-length-err'>Message too long! Max. characters allowed: 6000</p>}
+                <FontAwesomeIcon icon='icons' className='emojis-btn' onClick={()=>setEmojis(!emojis)}/>
                 <div>
                     <label htmlFor='file-input'>
-                        <FontAwesomeIcon icon='images' style={styles.imgIcon}/>
+                        <FontAwesomeIcon icon='images' className='msg-upload-btn'/>
                     </label>
                     <input type='file' id='file-input' accept='video/*, image/*' style={{display:'none'}} 
                         onChange={(e)=>{
@@ -148,48 +148,3 @@ const MSG_NOTIFICATION = gql`
         }
     }
 `
-
-const styles = {
-    imgIcon: { 
-        fontSize:'30px',
-        color:'white',
-        cursor:'pointer',
-        marginRight:'10px'
-    },
-    iconsIcon: { 
-        fontSize:'25px',
-        color:'white',
-        cursor:'pointer',
-        marginRight:'15px'
-    },
-    imgPreviewBar:{
-        width:'100%',
-        height:'100px',
-        backgroundColor: '#1f1f1f',
-        position:'absolute',
-        bottom:'50px',
-        zIndex:'10000000000000000000000000000',
-        padding:'5px',
-        display:'flex'
-    },
-    previewMedia:{
-        height:'100%',
-        maxWidth:'100%'
-    },
-    clear: {
-        width:'30px',
-        height:'100%',
-        backgroundColor:'#4f4f4f',
-        fontSize:'20px',
-        color:'white',
-        cursor:'pointer'
-    },
-    lenErrMsg:{
-        position:'absolute',
-        top:'-30px',
-        padding:'5px 10px',
-        backgroundColor:'#1b1b1b',
-        color:'red',
-        borderRadius:'10px 10px 0 0'
-    }
-}

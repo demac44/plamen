@@ -28,11 +28,11 @@ const Sidebar = () => {
                     <p>Communities</p>
                 </NavLink>
                 <NavLink exact to='/plamentube' activeClassName='nav-active'>
-                    <img src={logoTube} style={styles.logoTube}/>
+                    <img src={logoTube}/>
                     <p>plamenTube</p>
                 </NavLink>
                 <NavLink exact to='/plamenstream' activeClassName='nav-active'>
-                    <img src={logoStream} style={styles.logoTube}/>
+                    <img src={logoStream}/>
                     <p>plamenStream</p>
                 </NavLink>
             </div>
@@ -41,9 +41,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar
-
-const styles = {
-    logoTube:{
-        height:'30px'
-    }
-}

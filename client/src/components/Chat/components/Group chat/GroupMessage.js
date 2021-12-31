@@ -31,14 +31,14 @@ const GroupMessage = ({msg}) => {
     
     return (
         <>
-            <div className={msg.userID===uid ? 'msg-wrapper-cu flex-h' : 'msg-wrapper-ou flex-h'}
+            <div className={msg.userID===uid ? 'msg-wrapper-cu flex-ac' : 'msg-wrapper-ou flex-ac'}
                     onClick={()=>setMsgOptions(!msgOptions)}>
 
                 {(msg.userID===uid && msgOptions && !deleted) && 
                     <>
                         <FontAwesomeIcon
                             icon='trash-alt' 
-                            style={styles.deletebtn}
+                            className='del-msg-btn'
                             onClick={handleDelete}
                         />
                     </>
@@ -53,9 +53,9 @@ const GroupMessage = ({msg}) => {
                         {msg.type==='video' && <video className='message-video' src={msg.url} controls/>}
                             
                         <p>{msg.msg_text.slice(0,8)==='https://' ? 
-                            <a href={msg.msg_text} target='_blank' style={styles.link} rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
+                            <a href={msg.msg_text} target='_blank' className='link-msg' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
 
-                        <span style={{...styles.timestamp, textAlign:'right'}}>
+                        <span className='msg-timestamp'>
                             <SetTime timestamp={msg.time_sent} fontSize='12px'/>
                         </span>
                     </>}
@@ -87,20 +87,3 @@ const DELETE_MESSAGE = gql`
         }
     }
 `
-
-const styles = {
-    deletebtn:{
-        fontSize:'20px',
-        cursor:'pointer',
-        color:'#aaa',
-        marginTop:'10px',
-        marginRight:'10px'
-    },
-    link:{
-        color:'white',
-        textDecoration:'underline'
-    },
-    timestamp:{
-        width:'100%'
-    }
-}

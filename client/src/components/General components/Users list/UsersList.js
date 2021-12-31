@@ -5,6 +5,8 @@ import '../General.css'
 import UserSuggestionsBox from '../UserSuggestionsBox'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import './style.css'
+
 const UsersList = ({data, title, closeList}) => {
 
     return (
@@ -12,11 +14,11 @@ const UsersList = ({data, title, closeList}) => {
             <div className='users-list-box'>
                 <div className='users-list-top-bar'>
                     <h3 style={{color:'white'}}>{title}</h3>
-                    <FontAwesomeIcon icon='times' onClick={()=>closeList()} style={styles.closeBtn}/>
+                    <FontAwesomeIcon icon='times' onClick={()=>closeList()} className='users-list-close-btn'/>
                 </div>
                 
-                <div>
-                    {(data.length === 0) && <p style={styles.emptyList}>Empty</p>}
+                <div className='flex-ctr'>
+                    {(data.length === 0) && <p className='empty-list'>Empty</p>}
                     {data.map(user => <UserBox user={user} key={user.userID}/>)}
                 </div>
                 <span className='user-suggest-cont'>
@@ -28,21 +30,3 @@ const UsersList = ({data, title, closeList}) => {
 }
 
 export default UsersList
-
-
-const styles = {
-    closeBtn:{
-        position:'absolute',
-        right:'10px',
-        top:'7px',
-        fontSize:'20px',
-        color:'white',
-        cursor:'pointer'
-    },
-    emptyList:{
-        width:'100%',
-        color:'white',
-        textAlign:'center',
-        padding:'20px'
-    }
-}

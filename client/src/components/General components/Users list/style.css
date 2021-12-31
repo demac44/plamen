@@ -1,0 +1,46 @@
+.users-list-box{
+    width: 35%;
+    max-height: 80vh;
+    background-color: #1b1b1b;
+    border-radius: 10px; 
+    overflow: auto;
+    box-shadow: 5px 5px 10px;
+    border: 1px solid #3f3f3f;
+}
+.users-list-top-bar{
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+}
+.users-list-names{
+    margin-left: 10px;
+}
+.users-list-names p:nth-child(1){
+    font-size: 14px;
+}
+.users-list-names p:nth-child(2){
+    font-size: 12px;
+}
+.users-list-close-btn{
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+.empty-list{
+    padding: 20px;
+}
+.users-list-user-box{
+    position: relative;
+    width: 100%;
+    padding: 5px 15px 5px 5px;
+    cursor: pointer;
+    transition: ease .3s;
+    border-radius: 5px;
+}
+.users-list-user-box:hover{
+    background-color: #2f2f2f;
+}

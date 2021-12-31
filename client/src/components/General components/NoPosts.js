@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const NoPosts = () => {
     return (
-        <div className='flex-col-ctr' style={styles.noPosts}>
-                <p>No new posts</p>
-                <br/>
-            <Link to='/explore' style={styles.exploreBtn}>Explore</Link>
+        <div className='flex-col-ctr no-posts-box' style={styles.noPosts}>
+            <p>No new posts</p>
+            <br/>
+            <Link to='/explore' className='btn'>Explore</Link>
         </div>
     )
 }

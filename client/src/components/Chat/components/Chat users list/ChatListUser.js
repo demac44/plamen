@@ -6,6 +6,8 @@ import Avatar from '../../../General components/Avatar'
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'
 
+import './style.css'
+
 const ChatListUser = ({data}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const newMsg = useSubscription(NEW_MESSAGE)
@@ -34,10 +36,12 @@ const ChatListUser = ({data}) => {
                     profile_picture: data?.profile_picture,
                     last_seen: data.last_seen
                 }}}     
-                className='chat-user-box flex-h'>
+                className='chat-user-box flex-ac'>
+
             <Avatar size='45px' image={data?.profile_picture}/>
+
             <div className='chat-name-msg flex-col-sb'>
-                <p style={{color:'white'}}>{data?.userID===uid? 'Me' : data?.first_name+' '+data?.last_name}</p>
+                <p>{data?.userID===uid? 'Me' : data?.first_name+' '+data?.last_name}</p>
                 
                 {!info.loading &&
                 <p style={{fontSize:'12px', 
@@ -57,28 +61,16 @@ const ChatListUser = ({data}) => {
                 </p>}
 
             </div>  
+
             {(count > 0 || (newMsg?.data?.newMessage?.userID!==uid
                 && newMsg?.data?.newMessage?.chatID===data?.chatID))
-                && <div style={styles.count}></div>}
+                && <div className='unread-msg-dot'></div>}
 
         </Link>
     )
 }
 
 export default memo(ChatListUser)
-
-
-const styles = {
-    count:{
-        backgroundColor:'white',
-        color:'white',
-        padding:'6px',
-        position:'absolute',
-        top:'25px',
-        right:'20px',
-        borderRadius:'50%',
-    }
-}
 
 
 const GET_INFO = gql`

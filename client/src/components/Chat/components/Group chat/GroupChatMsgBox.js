@@ -87,9 +87,9 @@ const GroupChatMsgBox = ({chat}) => {
         <>
             <GroupChatBar chatID={chat.groupChatId} admin={chat.admin}/>
             <div className='chat-messages'>
-                {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
+                {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
                 {!messages.loading && messages?.data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
-                {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
+                {fetchBtn && <div className='msg-load-more' onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendGroupMsg chatID={chat.groupChatId} info={chat} loaderCallback={loaderCallback}/> 
         </>
@@ -99,22 +99,6 @@ const GroupChatMsgBox = ({chat}) => {
 
 export default memo(GroupChatMsgBox)  
 
-
-const styles = {
-    loader: {
-        padding:'60px 100px 30px 0',
-        alignSelf:'flex-end',
-        zIndex:'1'
-    },
-    loadMore:{
-        width:'100%',
-        padding:'5px',
-        backgroundColor:'#1f1f1f',
-        textAlign:'center',
-        cursor:'pointer',
-        color:'white'
-    }
-}
 
 const GET_GROUP_MESSAGES = gql`
     query ($groupChatId: Int!, $limit: Int, $offset: Int, $uid: Int!){

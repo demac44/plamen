@@ -1,0 +1,77 @@
+.banner-loader{
+    width: 100%;
+    height: 250px;
+    box-shadow: 5px 5px 10px black;
+    border-radius: 10px;
+    background-color: #2f2f2f;
+}
+.main-loader{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1b1b1b;
+    z-index: 1000000000000000000000000000000000000000000000000000;
+}
+.main-loader-logo{
+    height: 80px;
+}
+.post-media-box-loader{
+    height: 400px;
+    background-color: #2f2f2f;
+    width: 100%;
+}
+.np-box-input-loader{
+    height: 90px;
+    background-color: #2f2f2f;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+.pf-avatar-loader{
+    width: 200px;
+    height: 200px;
+    background-color: #3f3f3f;
+    border-radius: 50%;
+}
+.pf-tb-btn-loader{
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    background-color: #3f3f3f;
+    width: 180px;
+    height: 45px;
+    border-radius: 30px;
+}
+.bars-cont-loader{
+    align-items: flex-start;
+    height: 100%;
+    margin-left: 30px;
+    margin-bottom: 100px;
+}
+.name-bar-loader{
+    width: 200px;
+    background-color: #3f3f3f;
+    height: 20px;
+    border-radius: 20px;
+}
+.username-bar-loader{
+    width: 100px;
+    background-color: #3f3f3f;
+    height: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+.story-head-loader{
+    width: 70px;
+    height: 70px;
+    background-color: #2f2f2f;
+    margin-left: 10px;
+    border-radius: 50%;
+}
+.story-name-bar-loader{
+    width: 70px;
+    height: 8px;
+    background-color: #2f2f2f;
+    margin-top: 8px;
+    margin-left: 10px;
+    border-radius: 5px;
+}

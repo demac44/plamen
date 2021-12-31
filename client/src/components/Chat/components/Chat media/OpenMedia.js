@@ -1,5 +1,7 @@
 import React, { useEffect, memo } from 'react'
 
+import './style.css'
+
 const OpenMedia = ({url, callback}) => {
 
 

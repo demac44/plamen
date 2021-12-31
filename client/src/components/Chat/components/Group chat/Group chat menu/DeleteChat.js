@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
+import './style.css'
+
 const DeleteChat = ({chatID, admin}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [delete_chat] = useMutation(DELETE_CHAT)
@@ -21,15 +23,15 @@ const DeleteChat = ({chatID, admin}) => {
 
     return (
         <>
-            <li style={{color:'#940a00'}} onClick={()=>setConfirmDelete(!confirmDelete)}>
-                <p>DELETE CHAT</p>
+            <li onClick={()=>setConfirmDelete(!confirmDelete)}>
+                <p className='del-chat-btn'>DELETE CHAT</p>
             </li>
 
-            {confirmDelete && <div style={styles.confirmBox} className='flex-col-ctr'>
-                <p style={{color:'white'}}>Are you sure you want to delete this chat?</p>
-                <span className='flex-ctr' style={styles.btnsBox}>
-                    <button style={styles.btns} className='btn' onClick={handleChatDelete}>CONFIRM</button>
-                    <button style={styles.btns} className='btn' onClick={()=>setConfirmDelete(false)}>EXIT</button>
+            {confirmDelete && <div className='flex-col-ctr del-chat-confirm-box'>
+                <p>Are you sure you want to delete this chat?</p>
+                <span className='flex-ctr' style={{marginTop:'10px'}}>
+                    <button className='btn conf-box-btns' onClick={handleChatDelete}>CONFIRM</button>
+                    <button className='btn conf-box-btns' onClick={()=>setConfirmDelete(false)}>EXIT</button>
                 </span>
             </div>}
         </>
@@ -45,18 +47,3 @@ const DELETE_CHAT = gql`
         }
     }
 `
-
-const styles = {
-    confirmBox:{
-        marginTop:'15px',
-        padding:'10px',
-        textAlign:'center',
-    },
-    btnsBox:{
-        marginTop:'10px'
-    },
-    btns:{
-        margin:'5px 10px',
-        padding:'5px 10px'
-    }
-}

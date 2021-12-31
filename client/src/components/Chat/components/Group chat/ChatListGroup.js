@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useQuery, useSubscription } from 'react-apollo'
 
+import './style.css'
+
 const ChatListGroup = ({data}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const newMsg = useSubscription(NEW_GROUP_MESSAGE)
@@ -32,7 +34,7 @@ const ChatListGroup = ({data}) => {
                     group_image: data?.group_image,
                     isGroupChat: true
                 }}}     
-                className='chat-user-box flex-h'>
+                className='chat-user-box flex-ac'>
             <Avatar size='45px' image={data?.group_image}/>
             <div className='chat-name-msg flex-col-sb'>  
                 <p style={{color:'white'}}>{data.name}</p>
@@ -57,7 +59,7 @@ const ChatListGroup = ({data}) => {
             </div>  
             {/* {(count > 0 || (newMsg?.data?.newGroupMessage?.userID!==uid
                 && newMsg?.data?.newGroupMessage?.groupChatId===data?.groupChatId))
-                && <div style={styles.count}></div>} */}
+                && <div className='unread-msg-dot'></div>} */}
 
         </Link>
     )
@@ -90,15 +92,3 @@ const NEW_GROUP_MESSAGE = gql`
         }
     }
 `
-
-// const styles = {
-//     count:{
-//         backgroundColor:'white',
-//         color:'white',
-//         padding:'6px',
-//         position:'absolute',
-//         top:'25px',
-//         right:'20px',
-//         borderRadius:'50%',
-//     }
-// }
