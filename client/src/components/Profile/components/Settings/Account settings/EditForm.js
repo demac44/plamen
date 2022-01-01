@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { validateNames, validateUsername } from '../../../../Entry/Register/RegisterForm'
 import ErrorMsg from '../../../../Entry/ErrorMsg'
-
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
@@ -9,7 +8,7 @@ import Avatar from '../../../../General components/Avatar'
 import { Link } from 'react-router-dom'
 import ShowActivity from './ShowActivity'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import './style.css'
 
 
 const EDIT_INFO = gql`
@@ -89,15 +88,15 @@ const EditForm = ({handleMenu, uid}) => {
             <ShowActivity/>
 
             <span className='flex-col-ctr box'>
-                <p style={styles.title}>Change profile picture</p>
+                <p style={{marginBottom:'15px'}}>Change profile picture</p>
                 <span className='flex-ctr'>
                     <Avatar size='70px' image={user.profile_picture}/>
-                    <p onClick={()=>handleMenu(true)} style={styles.pfpBtn}>Change</p>
+                    <p onClick={()=>handleMenu(true)} className='btn post-button' style={{marginLeft:'15px'}}>Change</p>
                 </span>
             </span>
 
             <form className='entry-form flex-col-ctr box' onSubmit={handleEdit}>
-                <p style={styles.title}>Change name and username</p>
+                <p>Change name and username</p>
                 <div className="reg-names-box">
                     <input 
                         type="text" 
@@ -121,26 +120,10 @@ const EditForm = ({handleMenu, uid}) => {
                     placeholder="Change username" 
                     defaultValue={usernm}
                 />
-                <button style={{marginTop:'15px', alignSelf:'flex-end'}} className="post-button btn" type="submit">SAVE</button>
+                <button className="post-button btn" type="submit">SAVE</button>
             </form>
         </>
     )
 }
 
 export default EditForm
-
-
-const styles = {
-    pfpBtn:{
-        padding:'5px 20px',
-        marginLeft:'15px',
-        color:'#aaa',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        cursor:'pointer'
-    },
-    title:{
-        color:'white',
-        paddingBottom:'20px'
-    }
-}

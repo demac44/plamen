@@ -59,9 +59,9 @@ const EditPfpMenu = ({closeMenu, uid}) => {
             <div className='edit-pfp-menu'>
                 <ul>
                     {!showDropzone && <li onClick={()=>setShowDropzone(true)}>Change profile picture</li>}
-                    {showDropzone && <div style={styles.dropzoneBox} className='flex-col-ctr'>
+                    {showDropzone && <div className='flex-col-ctr'>
                         <Dropzone onSuccessBlob={ (img) => {setImage(img)} }/>
-                        {image && <button className='btn' style={styles.editBtn} onClick={handlePfpChange}>Change</button>}
+                        {image && <button className='btn post-button' onClick={handlePfpChange}>Change</button>}
                         </div>}   
                     <li onClick={handlePfpRemove}>Remove profile picture</li>
                     <li onClick={()=>closeMenu(false)}>Cancel</li>
@@ -72,19 +72,3 @@ const EditPfpMenu = ({closeMenu, uid}) => {
 }
 
 export default EditPfpMenu
-
-
-const styles = {
-    dropzoneBox:{
-        padding:'5px',
-        borderRadius: '21px',
-    },
-    editBtn: {
-        width: '100px',
-        height: '30px',
-        marginTop: '15px',
-        color:'white',
-        backgroundColor:'#1b1b1b',
-        border:'1px solid #2f2f2f',
-    }
-}

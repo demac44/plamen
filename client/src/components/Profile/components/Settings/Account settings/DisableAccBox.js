@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-
-import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import './style.css'
 
 const DisableAccBox = ({uid}) => {
     const [disable, setDisable] = useState(false)
@@ -50,23 +49,20 @@ const DisableAccBox = ({uid}) => {
     return (
         <div className='disable-acc-box flex-col-ctr box'>
 
-            <div style={styles.opt} className='flex-col-ctr' onClick={()=>setDisable(!disable)}>
+            <div className='flex-col-ctr disable-del-btn' onClick={()=>setDisable(!disable)}>
                 <h4>Temporarily disable account</h4>
             </div>
 
             {disable && 
             <>
-                <h4 style={{color:'darkred', marginTop:'10px'}}>Warning:</h4>
-
-                <p style={{color:'white', textAlign:'center'}}>
+                <p>
                     By confirming you will temporarily disable your account. Next time you log in you will enable it again!
                 </p>
 
-                {disableError && <p style={styles.errorMsg}>{disableError}</p>}
+                {disableError && <p className='err-msg'>{disableError}</p>}
 
                 <input 
                     type='password'
-                    style={styles.passInput} 
                     className='input' 
                     id='passDisable' 
                     placeholder='Enter your password'
@@ -75,29 +71,26 @@ const DisableAccBox = ({uid}) => {
                 />
 
                 <span style={{marginTop:'10px'}} className='flex'>
-                    <p type='submit' onClick={handleDisable} style={styles.btns}>Confirm</p>
-                    <p style={styles.btns} onClick={()=>setDisable(false)}>Exit</p>
+                    <p type='submit' onClick={handleDisable} className='btn conf-exit-btns'>Confirm</p>
+                    <p className='btn conf-exit-btns' onClick={()=>setDisable(false)}>Exit</p>
                 </span>
             </>}
 
 
-            <div style={styles.opt} onClick={()=>setDeleteAcc(!deleteAcc)}>
+            <div className='disable-del-btn' onClick={()=>setDeleteAcc(!deleteAcc)}>
                 <h4>Delete account</h4>
             </div>
 
             {deleteAcc && 
             <>
-                <h4 style={{color:'darkred', marginTop:'10px'}}>Warning:</h4>
-
-                <p style={{color:'white', textAlign:'center'}}>
+                <p>
                     By confirming you will permanently delete your account! You will not be able to retrieve your it after this action!
                 </p>
 
-                {deleteError && <p style={styles.errorMsg}>{deleteError}</p>}
+                {deleteError && <p className='err-msg'>{deleteError}</p>}
 
                 <input 
                     type='password'
-                    style={styles.passInput} 
                     className='input' 
                     id='passDelete' 
                     placeholder='Enter your password'
@@ -106,8 +99,8 @@ const DisableAccBox = ({uid}) => {
                 />
 
                 <span style={{marginTop:'10px'}} className='flex'>
-                    <p style={styles.btns} onClick={handleDelete}>Confirm</p>
-                    <p style={styles.btns} onClick={()=>setDeleteAcc(false)}>Exit</p>
+                    <p className='btn conf-exit-btns' onClick={handleDelete}>Confirm</p>
+                    <p className='btn conf-exit-btns' onClick={()=>setDeleteAcc(false)}>Exit</p>
                 </span>
             </>}
         </div>
@@ -115,42 +108,6 @@ const DisableAccBox = ({uid}) => {
 }
 
 export default DisableAccBox
-
-
-const styles = {
-    opt:{
-        width:'100%',
-        color:'darkred',
-        padding:'15px',
-        textAlign:'center',
-        transition:'ease .3s',
-        cursor:'pointer'
-    },
-    btns:{
-        padding:'5px 10px',
-        width:'100px',
-        textAlign:'center',
-        border:'1px solid #2f2f2f',
-        color:'white',
-        borderRadius:'10px',
-        fontSize:'14px',
-        margin:'10px',
-        cursor:'pointer'
-    },
-    passInput:{
-        width:'90%',
-        height:'35px'
-    },
-    errorMsg: {
-        width:'90%',
-        padding:'5px 10px',
-        backgroundColor:'#ff5050',
-        color:'white',
-        textAlign:'center',
-        borderRadius:'10px',
-        margin:'10px'
-    }
-}
 
 const DISABLE_ACCOUNT = gql`
     mutation ($userID: Int!, $pass: String!){

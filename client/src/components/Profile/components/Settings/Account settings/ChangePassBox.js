@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import { useSelector } from 'react-redux';
-
 import { validatePassword, confirmPass } from '../../../../Entry/Register/RegisterForm'
+import './style.css'
 
 const ChangePassBox = ({uid}) => {
     const [errorr, setError] = useState(null)
@@ -45,8 +43,8 @@ const ChangePassBox = ({uid}) => {
 
     return (
         <div className='change-pass-box box'>
-            <p style={styles.title}>Change password</p>
-            {errorr && <p style={styles.errorMsg}>{errorr}</p>}
+            <p className='flex-ctr'>Change password</p>
+            {errorr && <p className='err-msg'>{errorr}</p>}
             <form className='flex-col-ctr' onSubmit={handleChangePassword}>
                 <input 
                     id='oldPassword'
@@ -69,37 +67,13 @@ const ChangePassBox = ({uid}) => {
                     className='input'
                     onFocus={()=>setError(null)}
                 />
-                <button style={styles.btn} type='submit' className='btn'>CHANGE</button>
+                <button type='submit' className='btn'>CHANGE</button>
             </form>
         </div>
     )
 }
 
 export default ChangePassBox
-
-
-const styles = {
-    title:{
-        textAlign:'center',
-        width:'100%',
-        color:'white',
-        marginBottom:'15px'
-    },
-    btn:{
-        padding:'5px 20px',
-        marginTop:'15px'
-    },
-    errorMsg:{
-        padding:'5px 10px',
-        backgroundColor:'#ff5050',
-        textAlign:'center',
-        color:'white',
-        borderRadius:'10px',
-        marginBottom:'15px',
-        fontSize:'14px',
-        transition:'ease .3s'
-    }
-}
 
 const CHANGE_PASSWORD = gql`
     mutation ($userID: Int!, $oldPass: String!, $newPass: String!){

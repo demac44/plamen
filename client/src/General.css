@@ -74,6 +74,8 @@ p{
     outline: none;
     transition: ease .1s;
     cursor: pointer;
+    padding: 5px 15px;
+    margin: 5px;
 }
 .input{
     width: 100%;
