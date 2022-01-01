@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation} from 'react-apollo'
 
@@ -35,23 +35,23 @@ const EditGender = ({data, uid}) => {
         <form className='edit-user-info-box flex-col-ctr' onSubmit={handleGenderEdit}>
             <p style={{padding:'10px', textAlign:'center'}}>Edit gender</p>
 
-            {updated && <p style={styles.updated}>Your gender is updated!</p>}
+            {updated && <p className='updated-msg'>Your gender is updated!</p>}
 
-            {errorMsg && <p style={styles.error}>{errorMsg}</p>}
+            {errorMsg && <p className='err-msg'>{errorMsg}</p>}
 
-            <div className='flex-ctr' style={{width:'80%', marginTop:'15px'}}>
+            <div className='flex-ctr'>
                 <h5>Gender</h5>
-                <select id='gender' name='gender'>
+                <select id='gender' name='gender' className='input'>
                     <option value='male'>Male</option>
                     <option value='female'>Female</option>
                 </select>
             </div>
-            <span className='flex-sb' style={{width:'100%', marginTop:'20px'}}>
+            <span className='flex-sb current-data-box'>
                     <p style={{fontSize:'14px'}}>Current: {data}</p>
-                    <button type='submit' style={styles.editBtn}>EDIT</button>
+                    <button type='submit' className='btn'>SAVE</button>
             </span>
-            <p style={{fontSize:'14px', marginTop:'20px', alignSelf:'flex-start'}}>
-                <strong style={{color:'darkred'}}>Warning: </strong>
+            <p className='edit-warning'>
+                <strong>Warning: </strong>
                 You can change your gender only once!
             </p>
         </form>
@@ -60,7 +60,6 @@ const EditGender = ({data, uid}) => {
 
 export default EditGender
 
-
 const EDIT_GENDER = gql`
     mutation ($userID: Int!, $gender: String!){
         edit_gender(userID: $userID, gender: $gender){
@@ -68,34 +67,3 @@ const EDIT_GENDER = gql`
         }
     }
 `
-
-const styles = {
-    editBtn:{
-        padding:'5px 20px',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        backgroundColor:'#1b1b1b',
-        color:'white',
-        alignSelf:'flex-end',
-        cursor:'pointer'
-    },
-    updated:{
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#0e7947',
-        borderRadius:'10px',
-        textAlign:'center',
-        marginBottom:'15px'
-    },
-    error: {
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#ff5050',
-        borderRadius:'10px',
-        textAlign:'center',
-        marginBottom:'15px'
-    },
-    select:{
-        marginTop:'10px'
-    }
-}

@@ -1,14 +1,12 @@
 import React from 'react'
 import Navbar from '../../../components/Navbar/Navbar'
 import { useSelector } from 'react-redux';
-
 import Sidebar from '../../../components/General components/Sidebar'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
-
+import '../../../components/Profile/components/Settings/style.css'
 import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {gql} from 'graphql-tag'
 import { useQuery} from 'react-apollo';
 import BlockedUserBox from '../../../components/Profile/components/Settings/Blocked users/BlockedUserBox';

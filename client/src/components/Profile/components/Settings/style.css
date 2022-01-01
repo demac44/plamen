@@ -1,0 +1,55 @@
+.edit-profile-nav{
+    width: 100%;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.edit-profile-nav ul{
+    width: 100%;
+}
+.edit-profile-nav li{
+    width: 100%;
+    padding: 15px;
+    color: white;
+    transition: ease .3s;
+}
+.edit-profile-nav li:hover{
+    background-color: #2f2f2f;
+    cursor: pointer;
+}
+.edit-pfp-menu{
+    width: 30%;
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #2f2f2f;
+    cursor: pointer;
+}
+.edit-pfp-menu li{
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    transition: ease .3s;
+}
+.edit-pfp-menu li:hover{
+    background-color: #2f2f2f;
+}
+.change-pass-box input{
+    width: 60%;
+    height: 35px;
+    border: 1px solid #ffbb00;
+    margin-top: 10px;
+}
+.disable-acc-box div:hover{
+    background-color: #2f2f2f;
+}
+.settings-arrow-back{
+    position: absolute;
+    left:15px;
+    top:13px;
+    font-size: 20px;
+    color: white;
+    display: none;
+    z-index: 1;
+}

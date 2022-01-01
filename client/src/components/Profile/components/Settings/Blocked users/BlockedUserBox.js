@@ -22,27 +22,18 @@ const BlockedUserBox = ({user, refetch, uid}) => {
         <div className='users-list-user-box flex-sb'>
             <Link to={'/profile/'+user.username} className='flex-ctr'>
                 <Avatar size='40px' image={user.profile_picture}/>
-                <div style={styles.namesBox}>
-                    <p style={{fontSize:'14px'}}>{user.first_name+' '+user.last_name}</p>
-                    <p style={{fontSize:'12px'}}>@{user.username}</p>
+                <div className='users-list-names'>
+                    <p>{user.first_name+' '+user.last_name}</p>
+                    <p>@{user.username}</p>
                 </div>
             </Link>
-            <button className='btn' style={styles.btn} onClick={handleUnblock}>UNBLOCK</button>
+            <button className='btn' onClick={handleUnblock}>UNBLOCK</button>
         </div>
     )
 }
 
 export default BlockedUserBox
 
-const styles = {
-    namesBox:{
-        color:'white',
-        marginLeft:'15px'
-    },
-    btn:{
-        padding:'5px 10px'
-    }
-}
 const UNBLOCK_USER = gql`
     mutation ($blockerId: Int!, $blockedId: Int!){
         unblock_user(blockedId: $blockedId, blockerId: $blockerId){

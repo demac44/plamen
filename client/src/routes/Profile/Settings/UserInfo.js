@@ -9,7 +9,8 @@ import EditBDate from '../../../components/Profile/components/Settings/User info
 import EditGender from '../../../components/Profile/components/Settings/User info/EditGender'
 import EditInfoBox from '../../../components/Profile/components/Settings/User info/EditInfoBox'
 import EditInterests from '../../../components/Profile/components/Settings/User info/EditInterests'
-
+import '../../../components/Profile/components/Settings/style.css'
+import '../../../components/Profile/components/Settings/User info/style.css'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

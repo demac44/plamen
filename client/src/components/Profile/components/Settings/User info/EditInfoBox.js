@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import CountriesSelect from './CountriesSelect'
-
+import './style.css'
 import CitiesSelect from './CitiesSelect'
 
 const EditInfoBox = ({data}) => {
@@ -11,7 +10,6 @@ const EditInfoBox = ({data}) => {
     const [update_info] = useMutation(UPDATE_INFO)
     const [country, setCountry] = useState(data.country)
     const [city, setCity] = useState(data.city)
-
 
     const handleEditInfo = (e) => {
         e.preventDefault()
@@ -45,17 +43,16 @@ const EditInfoBox = ({data}) => {
     }, [setCity]) 
 
     return (
-        <form style={styles.box} className='flex-col-ctr edit-user-info-box' onSubmit={handleEditInfo}>
-            <p style={{padding:'10px', textAlign:'center'}}>Edit info</p>
+        <form className='flex-col-ctr edit-user-info-box' onSubmit={handleEditInfo}>
+            <p>Edit info</p>
 
-            {updated && <p style={styles.updated}>Your info is updated!</p>}
+            {updated && <p className='updated- msg'>Your info is updated!</p>}
 
             <div className='flex-ctr'>
                 <h5>Country</h5>
                 <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
                 <CountriesSelect setCountryCB={setCountryCB}/>     
             </div>  
-
 
             <div className='flex-ctr'>
                 <h5>City</h5>
@@ -83,31 +80,12 @@ const EditInfoBox = ({data}) => {
                 <input type='text' className='input' id='num' placeholder='Add phone number' defaultValue={data.phone_number}/>
             </div>  
 
-            <button type='submit' style={styles.editBtn}>EDIT</button>
+            <button type='submit' className='btn save-btn'>SAVE</button>
         </form>
     )
 }
 
 export default EditInfoBox
-
-
-const styles = {
-    editBtn:{
-        padding:'5px 20px',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        marginTop:'20px',
-        backgroundColor:'#1b1b1b',
-        color:'white',
-        cursor:'pointer'
-    },
-    updated:{
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#0e7947',
-        borderRadius:'10px'
-    }
-}
 
 const UPDATE_INFO = gql`
     mutation ($userID: Int!, $job: String!, $uni: String!, $hs: String!, $num: String!, $country: String!, $city: String!){

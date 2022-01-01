@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
@@ -31,14 +31,14 @@ const EditInterests = ({data, uid}) => {
         <div className='flex-col-ctr box'>
             <p>Edit your interests</p>
 
-            {updated && <p style={styles.updated}>Your interests are updated!</p>}
+            {updated && <p className='updated-msg'>Your interests are updated!</p>}
 
-            {tags.length > 0 && <p style={{color:'white', fontSize:'12px', marginTop:'10px'}}>Click on tag to remove it</p>}
+            {tags.length > 0 && <p className='remove-tag-txt'>Click on tag to remove it</p>}
 
-            <div className='tags-box' style={{backgroundColor:'white'}}>
+            <div className='tags-box'>
                 {tags.map(tag => 
                 <div
-                    style={styles.tag}
+                    className='tag'
                     onClick={()=>{tags.splice(tags.indexOf(tag), 1);setTags([...tags])}}
                     key={tag}
                 >
@@ -46,7 +46,7 @@ const EditInterests = ({data, uid}) => {
                 </div>)}
             </div>
             <select 
-                style={styles.selectTags}
+                className='input select-tags'
                 onChange={(e)=>{
                     let arr = tags.filter(onlyUnique)
                     setTags([...arr, e.target.value].filter(onlyUnique))
@@ -55,7 +55,7 @@ const EditInterests = ({data, uid}) => {
                 {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
             </select>
 
-            <p style={styles.editBtn} onClick={handleEditInterests}>EDIT</p>
+            <button className='btn save-btn' onClick={handleEditInterests}>SAVE</button>
         </div>
     )
 }

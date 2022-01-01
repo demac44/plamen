@@ -67,7 +67,7 @@ const ChangePassBox = ({uid}) => {
                     className='input'
                     onFocus={()=>setError(null)}
                 />
-                <button type='submit' className='btn'>CHANGE</button>
+                <button type='submit' className='btn save-btn'>CHANGE</button>
             </form>
         </div>
     )

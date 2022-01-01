@@ -3,6 +3,7 @@ import AlternativeNavbar from '../../../components/General components/Alternativ
 import Sidebar from '../../../components/General components/Sidebar'
 import Navbar from '../../../components/Navbar/Navbar'
 import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
+import '../../../components/Profile/components/Settings/style.css'
 
 const Settings = ({isLogged}) => {
     return (

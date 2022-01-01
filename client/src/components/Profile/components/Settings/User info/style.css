@@ -1,0 +1,133 @@
+.edit-user-info-box{
+    width:100%;
+    padding:10px;
+    box-shadow:5px 5px 10px black;
+    border:1px solid #2f2f2f;
+    border-radius:5px;
+    color:white;
+    margin-top: 10px;
+}
+.edit-user-info-box div{
+    width: 100%;
+    margin-top: 10px;
+}
+.edit-user-info-box h5{
+    min-width: 80px;
+}
+.bDate-form select{
+    width: 60%;
+    margin-top: 10px;
+}
+.current-data-box{
+    margin-top: 15px;
+    width: 100%;
+}
+.search-cities-box{
+    position: relative;
+    width: 100%;
+    padding-left: 5px;
+}
+.select-city-drop{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width:100%;
+    height: fit-content;
+    background-color: #2f2f2f;
+    max-height: 200px;
+    overflow: auto;
+}
+.select-city-drop p{
+    color: white;
+    width: 100%;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+.select-city-drop p:hover{
+    background-color: #3f3f3f;
+}
+.select-country-box{
+    width: 100%;
+    padding-left: 5px;
+}
+.country-select{
+    width: 100%;
+    padding: 5px;
+}
+.updated-msg, .err-msg{
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.err-msg{
+    background-color: #ff5050;
+}
+.updated-msg{
+    background-color: #0e7947;
+}
+.edit-warning{
+    width: 100%;
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: left;
+}
+.edit-warning strong{
+    color: darkred;
+}
+.save-btn{
+    align-self: flex-end;
+    margin-top: 15px;
+}
+.remove-tag-txt{
+    font-size: 12px;
+    margin-top: 15px;
+}
+.select-tags{
+    width: 250px;
+    margin-top: 30px;
+}
+ 
+@media screen and (max-width: 447px){
+    .edit-user-info-box div{
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    .edit-user-info-box h5{
+        min-width: none;
+        text-align: center;
+    }
+    .edit-user-info-box select{
+        margin-top: 5px;
+    }
+    .bDate-form select{
+        width: 100%;
+        margin-top: 10px;
+    }
+    .search-cities-box{
+        padding: 0;
+    }
+    .search-cities-box input{
+        margin-top: 15px;
+    }
+    .select-city-drop{
+        top: 50px;
+        left: -25%;
+        width: 70vw !important;
+    }
+    .select-country-box{
+        width: 100%;
+        padding-left: 0;
+        padding-top: 10px;
+    }
+    .edit-user-info-box h5{
+        margin-bottom: 10px;
+        align-self: flex-start;
+        text-align: left;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+}

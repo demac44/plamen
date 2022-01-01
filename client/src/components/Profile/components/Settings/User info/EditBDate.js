@@ -42,19 +42,19 @@ const EditBDate = ({data, uid}) => {
 
     return (
         <div className='edit-user-info-box'>
-            <p style={{padding:'10px', textAlign:'center'}}>Edit birth day</p>
+            <p className='flex-ctr'>Edit birth day</p>
 
-            {updated && <p style={styles.updated}>Your birth date is updated!</p>}
+            {updated && <p className='updated-msg'>Your birth date is updated!</p>}
 
-            {errorMsg && <p style={styles.error}>{errorMsg}</p>}
+            {errorMsg && <p className='err-msg'>{errorMsg}</p>}
 
 
             <form className='bDate-form flex-col-ctr' onSubmit={handleBDateChange}>
                 <h5>Birth date</h5>
-                <select id="year" name="year" style={styles.select}>
+                <select id="year" name="year" className='input'>
                     {selectYear.map(year => <option value={year} key={year}>{year}</option>)}
                 </select>
-                <select id='month' name="month" style={styles.select}>
+                <select id='month' name="month" className='input'>
                     <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
@@ -68,16 +68,16 @@ const EditBDate = ({data, uid}) => {
                     <option value="11">November</option>
                     <option value="12">December</option>
                 </select>
-                <select d='day' name='day' style={styles.select}>
+                <select d='day' name='day' className='input'>
                     {selectDay.map(day => <option value={`${day}`} key={day}>{day}</option>)}
                 </select>
-                <span className='flex-sb' style={{width:'100%', marginTop:'20px'}}>
+                <span className='flex-sb current-data-box'>
                     <p style={{fontSize:'14px'}}>Current: {bDate}</p>
-                    <button type='submit' style={styles.editBtn}>EDIT</button>
+                    <button type='submit' className='btn'>SAVE</button>
                 </span>
             </form>
-            <p style={{fontSize:'14px', marginTop:'20px'}}>
-                <strong style={{color:'darkred'}}>Warning: </strong>
+            <p className='edit-warning'>
+                <strong>Warning: </strong>
                 You can change you birth date only once!
             </p>
         </div>
@@ -86,7 +86,6 @@ const EditBDate = ({data, uid}) => {
 
 export default EditBDate
 
-
 const CHANGE_BDATE = gql`
     mutation ($userID: Int!, $bDate: String!){
         edit_bdate(userID: $userID, bDate: $bDate){
@@ -94,38 +93,6 @@ const CHANGE_BDATE = gql`
         }
     }
 `
-
-const styles = {
-    editBtn:{
-        padding:'5px 20px',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        backgroundColor:'#1b1b1b',
-        color:'white',
-        alignSelf:'flex-end',
-        cursor:'pointer'
-    },
-    updated:{
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#0e7947',
-        borderRadius:'10px',
-        textAlign:'center',
-        marginBottom:'15px'
-    },
-    error: {
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#ff5050',
-        borderRadius:'10px',
-        textAlign:'center',
-        marginBottom:'15px'
-    },
-    select:{
-        marginTop:'10px'
-    }
-}
-
 
 const getBDate = (data) => {
     const date = new Date(parseInt(data)).toDateString()

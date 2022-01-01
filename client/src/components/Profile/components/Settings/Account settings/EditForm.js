@@ -120,7 +120,7 @@ const EditForm = ({handleMenu, uid}) => {
                     placeholder="Change username" 
                     defaultValue={usernm}
                 />
-                <button className="post-button btn" type="submit">SAVE</button>
+                <button className="btn save-btn" type="submit">SAVE</button>
             </form>
         </>
     )

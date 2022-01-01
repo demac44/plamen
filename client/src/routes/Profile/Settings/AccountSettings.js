@@ -1,11 +1,10 @@
 import React, { useCallback, useState } from 'react'
 import Navbar from '../../../components/Navbar/Navbar'
 import { useSelector } from 'react-redux';
-
 import EditForm from '../../../components/Profile/components/Settings/Account settings/EditForm'
 import Sidebar from '../../../components/General components/Sidebar'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
-
+import '../../../components/Profile/components/Settings/style.css'
 import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
 import EditPfpMenu from '../../../components/Profile/components/Settings/Account settings/EditPfpMenu'
 import ChangePassBox from '../../../components/Profile/components/Settings/Account settings/ChangePassBox'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-
 import { cities } from '../../../../../Assets/cities'
+import './style.css'
 
 const CitiesSelect = ({country, setCityCB}) => {
     let i = 0;
@@ -13,8 +13,8 @@ const CitiesSelect = ({country, setCityCB}) => {
 
 
     return (
-        <span style={{width:'100%', position:'relative'}}>
-            <input style={styles.input} className='input' value={str} onChange={(e)=>setStr(e.target.value)}/>
+        <span className='search-cities-box'>
+            <input className='input' value={str} onChange={(e)=>setStr(e.target.value)} placeholder='Search for your city'/>
 
             {str?.length > 0 && <div className='select-city-drop'>
                 {list?.length > 0 && list?.map(city => <p onClick={()=>setCityCB(city)} key={i++}>{city}</p>)}
@@ -35,11 +35,4 @@ const filterRes = (country, str) => {
 
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
-}
-
-const styles = {
-    input:{
-        width:'98%',
-        margin:'5px',
-    }
 }
