@@ -4,21 +4,12 @@ import { Link } from 'react-router-dom'
 
 const CommChatBar = ({name, groupid}) => {
     return (
-        <div className='comm-chat-bar flex-h'>
+        <div className='comm-chat-bar flex-ac'>
             <Link to={'/community/'+groupid}>
                 <FontAwesomeIcon icon='arrow-left' size='lg' color='white'/>
             </Link>
-            <p style={styles.name}>{name}</p>
+            <p>{name}</p>
         </div>
     )
 }
-
 export default CommChatBar
-
-const styles = {
-    name:{
-        fontSize:'18px',
-        color:'white',
-        marginLeft:'15px'
-    }
-}

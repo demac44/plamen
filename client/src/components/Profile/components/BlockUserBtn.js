@@ -1,7 +1,6 @@
 import React from 'react'
-
 import { useSelector } from 'react-redux';
-import gql from 'graphql-tag'
+import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 
 const BlockUserBtn = ({userID}) => {
@@ -18,7 +17,7 @@ const BlockUserBtn = ({userID}) => {
     }
 
     return (
-        <div style={styles.blockBtn} onClick={handleBlock}>
+        <div className='pf-block-user-btn' onClick={handleBlock}>
             <p>Block user</p>
         </div>
     )
@@ -33,16 +32,3 @@ const BLOCK_USER = gql`
         }
     }
 `
-
-const styles = {
-    blockBtn:{
-        position:'absolute',
-        top:'10px',
-        right:'40px',
-        color:'white',
-        padding:'5px 20px',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        cursor:'pointer'
-    }
-}

@@ -2,7 +2,6 @@ import React, { useCallback, useState, memo, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
 import ProfileFollowBtn from './components/ProfileFollowBtn'
 import ProfileEditBtn from './components/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
@@ -39,14 +38,12 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     
     if(error) throw error
 
-
     const info = {
         user: user,
         followers: data?.get_followers,
         following: data?.get_following,
         postsLength
     }
-
 
     return (
         <>
@@ -72,9 +69,9 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
 
                 {data?.if_user_blocked && <UnblockUserBtn blockedId={user.userID}/>}
 
-                {!myprofile && <FontAwesomeIcon icon='ellipsis-v' style={styles.pfMenuBtn} onClick={()=>setBlockBtn(!blockBtn)}/>}
+                {(!myprofile && !data?.if_user_blocked) && <FontAwesomeIcon icon='ellipsis-v' className='ptb-menu-btn' onClick={()=>setBlockBtn(!blockBtn)}/>}
 
-                {blockBtn && <BlockUserBtn userID={user.userID}/>}
+                {(blockBtn && !data?.if_user_blocked) && <BlockUserBtn userID={user.userID}/>}
                 
                 {(!data?.if_user_blocked && userLS?.status && user?.show_status) 
                     && <ActivityStatusBar last_seen={user.last_seen}/>}
@@ -95,7 +92,6 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
 }
 
 export default memo(ProfileTopBox)
-
 
 const FETCH_INFO= gql`
     query ($userID: Int!, $blockerId: Int!){
@@ -125,14 +121,3 @@ const FETCH_INFO= gql`
         } 
         if_user_blocked(blockerId: $blockerId, blockedId: $userID)
     }`
-
-const styles = {
-    pfMenuBtn:{
-        position:'absolute',
-        top:'15px',
-        right:'15px',
-        color:'white',
-        fontSize:'25px',
-        cursor:'pointer'
-    }
-}

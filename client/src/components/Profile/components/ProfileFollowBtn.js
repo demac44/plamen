@@ -48,13 +48,12 @@ const ProfileFollowBtn = ({userID}) => {
     return (
         <div className='profile-top-box-buttons btn'
             onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>
-            <p>{loading ? 'Loading...' : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
+            <h4>{loading ? 'Loading...' : (isFollowing ? 'Unfollow' : 'Follow')}</h4> 
         </div>
     )
 }
 
 export default ProfileFollowBtn 
-
 
 const FOLLOW = gql`
     mutation ($followerID: Int!, $followedID: Int!){

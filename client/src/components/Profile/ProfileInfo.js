@@ -30,14 +30,14 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {
             <div className="profile-top-box-info flex-col-ctr">
                 
                 <span className='name-and-status-pf'>
-                    <h4 style={styles.name}>{info.user.first_name+' '+info.user.last_name}</h4>    
+                    <h4>{info.user.first_name+' '+info.user.last_name}</h4>    
                     
                     {(!blocked && mystatus && info?.user?.show_status) && 
                         <ActivityStatus last_seen={last_seen}
                     />}
                 </span>
 
-                <h5 style={styles.username}>@{info.user.username}</h5>
+                <h4>@{info.user.username}</h4>
 
                 {(!blocked && mystatus && info?.user?.show_status) && 
                     <div className='status-991px'>
@@ -50,7 +50,7 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {
                             handleOpen(info.following)
                             setTitle('Following')
                         }}
-                        style={styles.followsDiv}
+                        style={{cursor:'pointer'}}
                         >
                         <h6>Following</h6>
                         <p>{info.following.length}</p>
@@ -61,7 +61,7 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {
                             handleOpen(info.followers)
                             setTitle('Followers')
                         }}
-                        style={styles.followsDiv}
+                        style={{cursor:'pointer'}}
                         >
                         <h6>Followers</h6>
                         <p>{info.followers.length}</p>
@@ -78,16 +78,3 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {
 }
 
 export default memo(ProfileInfo)
-
-const styles = {
-    name:{
-        fontSize:'30px'
-    },
-    username:{
-        fontSize:'16px'
-    },
-    followsDiv:{
-        textAlign:'center',
-        cursor:'pointer'
-    }
-}

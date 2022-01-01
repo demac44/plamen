@@ -3,7 +3,6 @@ import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
 
-
 const SendMsgBtn = ({userID}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [create_chat] = useMutation(CREATE_CHAT)
@@ -23,8 +22,8 @@ const SendMsgBtn = ({userID}) => {
     } 
     
     return (
-        <div className="profile-top-box-buttons send-msg-btn" onClick={()=>!loading && createChat()}>
-            <p>{loading ? 'Loading...' : 'Send message'}</p> 
+        <div className="profile-top-box-buttons btn send-msg-btn" onClick={()=>!loading && createChat()}>
+            <h4>{loading ? 'Loading...' : 'Send message'}</h4> 
         </div>
     )
 }

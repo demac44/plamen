@@ -7,12 +7,13 @@ import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
-import TagsBox from '../../components/Groups/components/TagsBox'
+import TagsBox from '../../components/General components/TagsBox'
 import MembersBox from '../../components/Groups/components/MembersBox'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
+import '../../components/Groups/groups.css'
 
 const GroupMembers = ({isLogged}) => {
     const {groupid} = useParams()
@@ -87,7 +88,7 @@ const GET_GROUP = gql`
         get_group_user (groupID: $gid, userID: $uid){
             role
         }
-        get_group_members(groupID:$gid, userID: $uid){
+        get_group_members(groupID:$gid){
             username
             first_name
             last_name

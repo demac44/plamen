@@ -161,7 +161,27 @@
     margin-top: 30px;
     color: white;
 }
-
+.tags-box{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    min-height: 40px;
+    border-radius: 10px;
+    flex-flow: wrap;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    overflow: auto;
+    max-height: 100px;
+}
+.tag{
+    padding: 5px 10px;
+    background-color: #13306e;
+    font-size: 14px;
+    color: white;
+    height: fit-content;
+    border-radius: 20px;
+    margin: 5px 0 0 5px;
+}
 /* MEDIA QUERIES */
 
 

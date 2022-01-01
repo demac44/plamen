@@ -67,9 +67,9 @@ const CommChatMsgBox = ({groupID}) => {
 
     return (
         <div className='comm-msg-box'>
-            {loader && <div className='flex-ctr' style={styles.loader}><div className='small-spinner'></div></div>}
+            {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
             {!loading && data?.get_community_messages.map(msg => <CommMessage msg={msg} key={msg.msgID}/>)}
-            {fetchBtn && <div style={styles.loadMore} onClick={handleFetchMore}>Load more</div>}
+            {fetchBtn && <div className='msg-load-more' onClick={handleFetchMore}>Load more</div>}
         </div>
     )
 }
@@ -107,18 +107,3 @@ const NEW_MESSAGE = gql`
         }
     }
 `
-const styles = {
-    loader: {
-        padding:'60px 100px 30px 0',
-        alignSelf:'flex-end',
-        zIndex:'1'
-    },
-    loadMore:{
-        width:'100%',
-        padding:'5px',
-        backgroundColor:'#1f1f1f',
-        textAlign:'center',
-        cursor:'pointer',
-        color:'white'
-    }
-}

@@ -1,5 +1,4 @@
 import React from 'react'
-
 const EmojisRecent = ({emojiCB, setRecentEmojis}) => {
     const lsEmojis = JSON.parse(localStorage.getItem('recent-emojis'))
     let i = 0;

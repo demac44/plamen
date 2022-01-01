@@ -11,6 +11,10 @@
     background-color: #1f1f1f;
     padding: 5px 15px;
 }
+.comm-chat-bar p{
+    font-size: 18px;
+    margin-left: 15px;
+}
 .comm-msg-input-box{
     position: relative;
     width: 100%;
@@ -73,6 +77,54 @@
 .community-chat-container .emojis-box{
     /* display: none; */
     visibility: visible !important;
+}
+.msg-load-more{
+    width: 100%;
+    padding: 5px;
+    background-color: #1f1f1f;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+}
+.msg-loader{
+    padding: 60px 100px 30px 0;
+    align-self: flex-end;
+    z-index: 1;
+}
+.del-msg-btn{
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.link-msg{
+    color: white;
+    text-decoration: underline !important;
+}
+.msg-timestamp{
+    width: 100%;
+    text-align: right;
+}
+.emojis-btn{
+    font-size: 25px;
+    color: white;
+    cursor: pointer;
+    margin-right: 15px;
+}
+.msg-upload-btn{
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.msg-length-err{
+    position: absolute;
+    top: -30px;
+    padding: 5px 10px;
+    background-color: #1b1b1b;
+    color: red;
+    border-radius: 10px 10px 0 0;
 }
 
 @media screen and (max-width: 991px){

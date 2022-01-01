@@ -1,0 +1,46 @@
+.activity-bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    box-shadow: 5px 5px 15px;
+}
+.pf-block-user-btn{
+    position:absolute;
+    top: 15px;
+    right: 40px;
+    padding: 5px 20px;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.profile-top-box-buttons p{
+    color: #1b1b1b;
+}
+.profile-top-box-buttons:hover{
+    background-color: #aaa;
+}
+.profile-side-info-box{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #2f2f2f;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: white;
+}
+.profile-side-info-box div{
+    margin: 15px 0;
+}
+.profile-side-info-box div i{
+    width: 25px;
+}
+.profile-side-info-box p{
+    margin-left: 10px;
+    font-size: 14px;
+}
+.profile-side-info-box h5{
+    font-size: 12px;
+    margin-left: 8px;
+    word-wrap: normal;
+}

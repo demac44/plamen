@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
-
+import '../../components/Groups/groups.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
@@ -8,7 +8,7 @@ import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
-import TagsBox from '../../components/Groups/components/TagsBox'
+import TagsBox from '../../components/General components/TagsBox'
 import Sidebar from '../../components/General components/Sidebar'
 
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'

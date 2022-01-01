@@ -1,5 +1,3 @@
-/* PROFILE */
-
 .profile-top-box{
     position: relative;
     width: 100%;
@@ -35,55 +33,35 @@
     position: absolute;
     bottom: 10px;
     right: 20px;
-    width: 150px;
-    height: 40px;
-    color: #111827;
-    text-align: center;
-    line-height: 40px;
+    min-width: 150px;
+    padding: 10px;
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     background-color: whitesmoke;
+    transition: ease .3s;
 }
 .send-msg-btn{
     right: 180px;
 }
-
-/* user info */
-
-.profile-side-info-box{
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #2f2f2f;
-    border-radius: 10px;
-    margin-bottom: 15px;
+.ptb-menu-btn{
+    position: absolute;
+    top: 20px;
+    right: 15px;
     color: white;
-}
-.profile-side-info-box div{
-    margin: 15px 0;
-}
-.profile-side-info-box div i{
-    width: 25px;
-}
-.profile-side-info-box p{
-    margin-left: 10px;
-    font-size: 14px;
-}
-.profile-side-info-box h5{
-    font-size: 12px;
-    margin-left: 8px;
-    word-wrap: normal;
+    font-size: 25px;
+    cursor: pointer;
 }
 .name-and-status-pf{
     display: flex;
     align-items: center;
 }
+.name-and-status-pf h4{
+    font-size: 30px;
+}
 .status-991px{
     display: none;
 }
-
-/* MEDIA QUERIES */
-
 
 @media screen and (max-width: 991px){
     .profile-top-box{
@@ -146,8 +124,5 @@
     }
     .profile-top-box-stats{
         width: 90%;
-    }
-    .change-pass-box input{
-        width: 100%;
     }
 }

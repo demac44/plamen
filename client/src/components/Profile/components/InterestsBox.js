@@ -1,14 +1,11 @@
-import React, { useEffect, useState, memo } from 'react'
-
+import React, { memo } from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
 import { useSelector } from 'react-redux';
-import TagsBox from '../../Groups/components/TagsBox'
+import TagsBox from '../../General components/TagsBox'
 import { Link } from 'react-router-dom'
 
 const InterestsBox = ({myprofile, userID}) => {
-    const [tags, setTags] = useState([])
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(USER_INFO, {
         variables:{
@@ -16,38 +13,18 @@ const InterestsBox = ({myprofile, userID}) => {
         }
     })
 
-    useEffect(()=>{
-        setTags([])
-        data?.get_user_info?.interests && setTags(data?.get_user_info?.interests.split(','))
-    }, [data, userID, myprofile])
-
     return (
         <div className='box'>
-            <div style={styles.title} className='flex-sb'>
+            <div className='flex-sb'>
                 <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
-                {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}
+                {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
             </div>
-            {!loading && <TagsBox tags={tags}/> }                       
+            {!loading && <TagsBox tags={data?.get_user_info?.interests.split(',')}/>}                       
         </div>
     )
 }
 
 export default memo(InterestsBox)
-
-
-const styles = {
-    title:{
-        padding:'5px'
-    },
-    editBtn:{
-        padding:'5px 15px',
-        backgroundColor:'#2f2f2f',
-        borderRadius:'10px',
-        fontSize:'14px',
-        cursor:'pointer',
-        color:'white'
-    }
-}
 
 const USER_INFO = gql`
     query ($userID: Int){

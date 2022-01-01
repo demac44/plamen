@@ -28,14 +28,14 @@ const SideInfoBox = ({myprofile, userID}) => {
 
     return (
         <div className='profile-side-info-box box' style={{margin:'0'}}>
-           <span className='flex-sb' style={styles.title}>
+           <span className='flex-sb'>
                <h3>User information</h3>
-               {myprofile && <Link to='/settings/info' style={styles.editBtn}>Edit</Link>}
+               {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
             </span>
 
             {(data?.get_user_info?.country || data?.get_user_info?.city) && 
             <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='home' color='#426e57' fixedWidth/>
                         <h5>Living in</h5>
                         {(data?.get_user_info?.city && !data?.get_user_info?.country) && <p>{data?.get_user_info?.city}</p>}
@@ -47,7 +47,7 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            {data?.get_user_info?.job && 
             <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='briefcase' color='brown' fixedWidth/>
                         <h5>Works at</h5>
                         <p>{data?.get_user_info?.job}</p>
@@ -57,7 +57,7 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            {data?.get_user_info?.university && 
             <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='university' color='teal' fixedWidth/>
                         <h5>University</h5>
                         <p>{data?.get_user_info?.university}</p>
@@ -66,7 +66,7 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            {data?.get_user_info?.high_school && 
             <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='school' color='green' fixedWidth/>
                         <h5>High school</h5>
                         <p>{data?.get_user_info?.high_school}</p>
@@ -75,7 +75,7 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            {data?.get_user_info?.bDate && 
             <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='birthday-cake' color='orange' fixedWidth/>
                         <h5>Birthday</h5>
                         <p style={{marginLeft:'10px'}}>{birthDate}</p>
@@ -85,7 +85,7 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            {data?.get_user_info?.phone_number &&
                 <div className='flex-sb'>
-                    <span className='flex-h'>
+                    <span className='flex-ac'>
                         <FontAwesomeIcon icon='mobile-alt' color='silver' fixedWidth/>
                         <h5>Phone</h5>
                         <p style={{marginLeft:'10px'}}>{data?.get_user_info?.phone_number}</p>
@@ -94,32 +94,12 @@ const SideInfoBox = ({myprofile, userID}) => {
 
            <br/>
 
-           {data?.get_user_info?.date_joined && <span style={styles.joined}><p>Joined in {dateJoined}</p></span>}
+           {data?.get_user_info?.date_joined && <span className='flex-ctr'><p>Joined in {dateJoined}</p></span>}
         </div>
     )
 }
 
 export default memo(SideInfoBox)
-
-
-const styles = {
-    title:{
-        padding:'5px'
-    },
-    joined:{
-        width:'100%',
-        textAlign:'center'
-    },
-    editBtn:{
-        padding:'5px 15px',
-        backgroundColor:'#2f2f2f',
-        borderRadius:'10px',
-        fontSize:'14px',
-        cursor:'pointer',
-        color:'white'
-    }
-}
-
 
 const USER_INFO = gql`
     query ($userID: Int){

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import './style.css'
+
 const EditTags = ({gTags, groupid}) => {
     const [tags, setTags] = useState(gTags.split(','))
     const [updated, setUpdated] = useState(false)

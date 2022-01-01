@@ -1,15 +1,11 @@
 import React, { memo } from 'react'
-
 import '../../components/Groups/Community chat/Style.css'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect, useParams } from 'react-router-dom'
-
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Sidebar from '../../components/General components/Sidebar'
-
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-
 import { useSelector } from 'react-redux'
 import CommChatBar from '../../components/Groups/Community chat/Top bar/CommChatBar'
 import CommChatMsgBox from '../../components/Groups/Community chat/Messages box/CommChatMsgBox'

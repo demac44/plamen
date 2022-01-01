@@ -1,4 +1,5 @@
 import React, { memo, useCallback } from 'react'
+import emojis from '../../../Assets/emojis'
 import EmojiAnimals from './EmojiAnimals'
 import EmojisActivities from './EmojisActivities'
 import EmojisFood from './EmojisFood'
@@ -9,7 +10,6 @@ import EmojisSymbols from './EmojisSymbols'
 import './style.css'
 
 const EmojisBox = ({emojiCB, visible}) => {
-
     const setRecentEmojis = useCallback(val => {
         const lsEmojis = JSON.parse(localStorage.getItem('recent-emojis'))
         if(!lsEmojis?.emojis){
@@ -22,12 +22,12 @@ const EmojisBox = ({emojiCB, visible}) => {
     return (
         <div className='emojis-box' style={{visibility: visible ? 'visible' : 'hidden'}}>
             <EmojisRecent emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisPeople emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojiAnimals emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisFood emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisActivities emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisPlaces emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisSymbols emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
+            <EmojisPeople emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisPeople}/>
+            <EmojiAnimals emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisAnimals}/>
+            <EmojisFood emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisFood}/>
+            <EmojisActivities emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisActivities}/>
+            <EmojisPlaces emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisPlaces}/>
+            <EmojisSymbols emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisSymbols}/>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React, {memo} from 'react'
+import './General.css'
 const TagsBox = ({tags}) => {
     return (
         <div className='tags-box'>
