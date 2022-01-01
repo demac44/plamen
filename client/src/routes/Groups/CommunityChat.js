@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import CommChatBar from '../../components/Groups/Community chat/Top bar/CommChatBar'
 import CommChatMsgBox from '../../components/Groups/Community chat/Messages box/CommChatMsgBox'
 import CommSendMsg from '../../components/Groups/Community chat/Send message box/CommSendMsg'
+import '../../components/Groups/groups.css'
 
 const CommunityChat = ({isLogged}) => {
     const {groupid} = useParams()

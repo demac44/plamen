@@ -1,0 +1,16 @@
+.allow-remove-btn{
+    padding: 5px 20px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px;
+}
+.allow-btn{
+    background-color:#0f7743;
+}
+.remove-btn{
+    background-color:#91211e;
+}
+.report-tag{
+    background-color:#91211e;
+}

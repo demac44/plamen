@@ -1,10 +1,7 @@
 import React from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 
 const ReportedPostMenu = ({data, refetchPosts}) => {
     const [remove_user] = useMutation(REMOVE_USER)
@@ -28,9 +25,7 @@ const ReportedPostMenu = ({data, refetchPosts}) => {
         </>
     )
 }
-
 export default ReportedPostMenu
-
 
 const REMOVE_USER = gql`
     mutation($userID: Int!, $groupID: Int!){

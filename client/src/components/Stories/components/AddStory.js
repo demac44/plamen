@@ -1,8 +1,6 @@
 import React, { useCallback, useState, memo } from 'react'
 import StoryPreview from './StoryPreview'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 
 const AddStory = ({refetch}) => {
     const [media, setMedia] = useState(null)
@@ -18,7 +16,7 @@ const AddStory = ({refetch}) => {
     return (
         <>
         <div style={{height:'100%'}}>
-            <label htmlFor='upload-story' className='flex-ctr' style={styles.addBtn}>
+            <label htmlFor='upload-story' className='flex-ctr add-story-btn'>
                 <div>
                     <FontAwesomeIcon icon='plus' size='lg' color='white'/>
                 </div>
@@ -46,17 +44,4 @@ const AddStory = ({refetch}) => {
         </>
     )
 }
-
 export default memo(AddStory)
-
-const styles = {
-    addBtn:{
-        height: '64px',
-        width:'64px',
-        borderRadius: '50%',
-        cursor: 'pointer',
-        backgroundColor: '#4f4f4f',
-        overflow:' hidden',
-        border: '2px solid greenyellow'
-    }
-}

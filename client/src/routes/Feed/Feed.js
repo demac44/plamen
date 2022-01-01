@@ -55,7 +55,7 @@ const Feed = ({isLogged}) => {
     }
 
     return (
-        <>
+        <div className='section-main'>
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
@@ -71,12 +71,12 @@ const Feed = ({isLogged}) => {
                         </>}
                     </div>
                 </div>
-                <div className='container-right' style={styles.containerRight}>
+                <div className='container-right'>
                     <MyGroupsList/>
                     <UserSuggestionsBox/>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
@@ -114,15 +114,3 @@ const FEED_POSTS = gql`
         }
     }
 `
-
-const styles = {
-    containerRight:{
-        position:'fixed', 
-        top:'80px', 
-        right:'0', 
-        padding:'0 10px',
-        maxHeight: '85vh',
-        overflowY: 'scroll',
-        marginRight:'-17px'
-    }
-}

@@ -47,7 +47,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) =
         <div className='flex-col-ctr overlay' style={{backgroundColor: '#1b1b1b'}}>
             <div className='story-box'>
                 <StoryBar user={user} closeStoryCallback={exitCallback}/>
-                {sizeError && <p style={styles.sizeError}>File is too large! Max.size: 15MB</p>}
+                {sizeError && <p className='size-err'>File is too large! Max.size: 15MB</p>}
                 {loading ? <div className='flex-ctr wh-100' style={{backgroundColor:'#2f2f2f'}}><div className='small-spinner'></div></div> :
                 <div className='story-media flex-ctr'>
                     {media.type.slice(0,5)==='image' && 
@@ -58,7 +58,7 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) =
                     }
                 </div>}
                 <div className='story-bottom-bar'>
-                    <button className='story-upload-btn btn' onClick={handleUpload} disabled={loading || sizeError}>UPLOAD</button>
+                    <button className='btn' onClick={handleUpload} disabled={loading || sizeError}>UPLOAD</button>
                 </div>
             </div>
         </div>
@@ -66,15 +66,3 @@ const StoryPreview = ({previewMedia, media, exitCallback, refetch, sizeError}) =
 }
 
 export default memo(StoryPreview)
-
-const styles = {
-    sizeError:{
-        backgroundColor:'#ff5050',
-        textAlign:'center',
-        color:'white',
-        padding:'5px',
-        marginTop:'10px',
-        borderRadius:'10px',
-        width:'100%'
-    }
-}

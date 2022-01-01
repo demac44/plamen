@@ -8,17 +8,20 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
 
     return (
         <div className='story-top-bar flex-sb'>
-            <Link to={'/profile/'+user.username} className='flex-ctr' style={{height:'100%', color:'white'}}>
+            <Link to={'/profile/'+user.username} className='flex-ctr'>
                 <Avatar size='45px' image={user.profile_picture}/>
                 <p style={{marginLeft:'10px'}}>{user.username}</p>
             </Link>
             <span className='story-timestamp'>
                 <SetTime timestamp={date}/>
             </span>
-            <span className='flex-h'>
+            <span className='flex-ac'>
                 <FontAwesomeIcon
                     icon='times'
-                    style={{...styles.btns, marginRight:'10px'}} 
+                    color='white'
+                    cursor={'pointer'}
+                    size='lg'
+                    style={{marginRight:'10px'}} 
                     onClick={()=>closeStoryCallback(false)}
                 />
             </span>
@@ -27,12 +30,3 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
 }
 
 export default memo(StoryBar)
-
-
-const styles = {
-    btns:{
-        fontSize:'25px',
-        color:'white',
-        cursor:'pointer'
-    }
-}

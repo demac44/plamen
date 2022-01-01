@@ -1,0 +1,22 @@
+.size-err{
+    text-align: center;
+    background-color: #ff5050;
+    color: white;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    width: 100%;
+}
+.add-story-btn{
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #3f3f3f;
+    overflow: hidden;
+    border: 2px solid greenyellow;
+}
+.story-reply-input{
+    background-color: #1f1f1f;
+    border: 1px solid #2f2f2f;
+}

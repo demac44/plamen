@@ -10,6 +10,7 @@ import GroupNavbar from '../../../components/Groups/components/GroupNavbar'
 import Navbar from '../../../components/Navbar/Navbar'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/components/Settings/SettingsMenu'
+import '../../../components/Groups/groups.css'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 

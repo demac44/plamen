@@ -12,6 +12,7 @@ import SettingsMenu from '../../../components/Groups/components/Settings/Setting
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import JoinRequestsBox from '../../../components/Groups/components/Settings/Manage users/Join requests/JoinRequestsBox'
 import { useSelector } from 'react-redux'
+import '../../../components/Groups/groups.css'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 

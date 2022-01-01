@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import GroupsGrid from '../../components/Groups/components/GroupsGrid'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
+import '../../components/Groups/groups.css'
 
 const GET_GROUPS = gql`
 query ($uid: Int!){

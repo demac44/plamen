@@ -11,6 +11,7 @@ import MyGroupsList from '../../components/General components/MyGroupsList.js'
 import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
 import UserLoader from '../../components/General components/Loaders/UserLoader.js'
 import CommunitySearchBar from '../../components/Navbar/Search bar/CommunitySearchBar'
+import './style.css'
 
 const Search = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -20,7 +21,7 @@ const Search = ({isLogged}) => {
     const [fetchComm, setFetchComm] = useState(true)
     const [communities, setCommunities] = useState([])
 
-    const {loading, data, error, fetchMore} = useQuery(SEARCH_USERS, {
+    const {loading, data, fetchMore} = useQuery(SEARCH_USERS, {
         variables:{
             limit:15,
             offset:0,
@@ -71,16 +72,16 @@ const Search = ({isLogged}) => {
     }
 
     return (
-        <>
+        <div className='section-main'>
             <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>
                 <div className='container-main'>
                     <div className='container-left flex-col-ctr'>
-                        <p style={{marginBottom:'20px'}} className='box flex-ctr'>Search results</p>
+                        <h3 className='section-title flex-ctr'>Search results</h3>
 
-                        {(users?.length>0) && <h4 style={{...styles.commTitle}}>Users</h4>}
+                        {(users?.length>0) && <h4 className='search-res-section-title flex-ctr'>Users</h4>}
 
                         {loading ? (
                             <>
@@ -94,9 +95,9 @@ const Search = ({isLogged}) => {
                             : users?.map(user => <UserSearchBar user={user} key={user.userID}/>))}
 
                         {(!loading && fetch && users?.length>=15) && 
-                            <div style={styles.loadMore} onClick={loadMore}>Load more</div>}
+                            <div className='search-res-load-more' onClick={loadMore}>Load more</div>}
 
-                        {(communities?.length>0) && <h4 style={{...styles.commTitle}}>Communities</h4>}
+                        {(communities?.length>0) && <h4 className='search-res-section-title flex-ctr'>Communities</h4>}
 
 
                         {!loading && communities?.map(community => <CommunitySearchBar 
@@ -106,51 +107,20 @@ const Search = ({isLogged}) => {
                                                                     />)}
 
                         {(!loading && fetchComm && communities?.length>=15) && 
-                            <div style={styles.loadMore} onClick={loadMoreComm}>Load more</div>}
+                            <div className='search-res-load-more' onClick={loadMoreComm}>Load more</div>}
 
                     </div>
-                    <div className='container-right' style={styles.containerRight}>
+                    <div className='container-right'>
                         <MyGroupsList/>
                         <UserSuggestionsBox/>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
 export default Search
-
-const styles = {
-    loadMore:{
-        width:'150px',
-        padding:'5px',
-        textAlign:'center',
-        color:'white',
-        cursor:'pointer',
-        margin:'10px 0 10px 0',
-        borderRadius:'10px',
-        border:'1px solid #2f2f2f',
-        fontSize:'14px'
-    },
-    containerRight:{
-        position:'fixed', 
-        top:'80px', 
-        right:'20px', 
-        padding:'0 10px'
-    },
-    commTitle:{
-        width:'100%',
-        textAlign:'center',
-        color:'white',
-        padding:'5px',
-        backgroundColor:'#1f1f1f', 
-        border: '1px solid #2f2f2f',
-        marginBottom:'5px',
-        borderRadius:'10px'
-    }
-}
-
 
 const filterUsers = (data, query) => {
     if(query.length <= 0) return []

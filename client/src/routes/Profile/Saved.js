@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
 import MyGroupsList from '../../components/General components/MyGroupsList'
-
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
@@ -14,7 +13,7 @@ import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Saved = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
-    const {loading, data, error, fetchMore, refetch} = useQuery(GET_SAVED, { 
+    const {loading, data, fetchMore, refetch} = useQuery(GET_SAVED, { 
         variables: {
             userID: uid,
             offset:0,
@@ -47,49 +46,28 @@ const Saved = ({isLogged}) => {
     }
 
     return (
-        <>
+        <div className='section-main'>
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
-                        <h2 style={styles.title}>Saved posts</h2>
+                        <h2 className='section-title flex-ctr'>Saved posts</h2>
                         {loading ? <PostLoader/> : (data.get_saved_posts.length > 0 ? <Posts posts={data.get_saved_posts} refetchPosts={refetch}/>
                             : <NoPosts/>)}
                     </div>
                 </div>
-                <div className='container-right' style={styles.containerRight}>
+                <div className='container-right'>
                     <MyGroupsList/>
                     <UserSuggestionsBox/>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
 export default memo(Saved)
-
-const styles = {
-    title: {
-        color:'white',
-        backgroundColor:'#1b1b1b',
-        width:'100%',
-        padding:'20px',
-        borderRadius:'10px',
-        textAlign:'center',
-        boxShadow:'5px 5px 10px black'
-    },
-    containerRight:{
-        position:'fixed', 
-        top:'80px', 
-        right:'0', 
-        padding:'0 10px',
-        maxHeight: '85vh',
-        overflowY: 'scroll',
-        marginRight:'-17px'
-    }
-}
 
 const GET_SAVED = gql`
     query ($userID: Int!, $offset: Int, $limit: Int){

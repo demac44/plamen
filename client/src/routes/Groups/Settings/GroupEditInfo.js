@@ -15,6 +15,7 @@ import Navbar from '../../../components/Navbar/Navbar'
 import EditGroupInfo from '../../../components/Groups/components/Settings/Manage info/EditGroupInfo'
 import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
 import EditTags from '../../../components/Groups/components/Settings/Manage info/EditTags'
+import '../../../components/Groups/groups.css'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 

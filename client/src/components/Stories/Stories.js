@@ -2,7 +2,7 @@ import React, { useEffect, useState, memo } from 'react'
 import AddStory from './components/AddStory'
 import StoryHead from './components/StoryHead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import './components/style.css'
 import './Stories.css'
 
 const Stories = ({stories, refetch}) => {
@@ -23,58 +23,31 @@ const Stories = ({stories, refetch}) => {
             <div className='inner-container-stories' style={{marginLeft:-margin.toString()+'%'}}>
                 <div className='flex-col-ctr'>
                     <AddStory refetch={refetch}/>
-                    <p style={{fontSize:'14px',color:'white'}}>Add story</p>
+                    <p style={{fontSize:'14px'}}>Add story</p>
                 </div>
                 {stories.map(story => (
-                    <div className='flex-col-ctr' style={styles.sHeadBox}  key={story?.storyID}>
+                    <div className='flex-col-ctr story-head-box' key={story?.storyID}>
                         <StoryHead story={story} allData={stories} index={index++}/>
-                        <p style={styles.sHeadName}>{story?.username}</p>
+                        <p>{story?.username}</p>
                     </div>
                 ))}
             </div>
             {/* stories buttons */}
             {margin > 0 && 
                 <div 
-                    className='flex-ctr' 
+                    className='flex-ctr list-stories-btn-left list-stories-btn' 
                     onClick={()=>setMargin(margin > 0 ? margin-100 : 0)}
-                    style={{...styles.btn, left:'0'}}
                     >
-                    <i className="fas fa-chevron-left"></i>
+                    <FontAwesomeIcon icon='chevron-left' color='white'/>
                 </div>}
             <div 
-                className='flex-ctr' 
+                className='flex-ctr list-stories-btn-right list-stories-btn' 
                 onClick={()=>setMargin(margin+100 > width ? margin :margin+100)}
-                style={{...styles.btn, right:'0'}}
                 >
-                <FontAwesomeIcon icon='chevron-right'/>
+                <FontAwesomeIcon icon='chevron-right' color='white'/>
             </div>
         </div>
     )
 }
 
 export default memo(Stories)
-
-
-const styles = {
-    btn:{
-        position: 'absolute',
-        top:'0',
-        height: '100%',
-        backgroundColor: '#1b1b1b',
-        width: '30px',
-        color: 'white',
-        fontSize: '25px',
-        cursor: 'pointer'
-    },
-    sHeadBox:{
-        width:'65px',
-        marginLeft:'10px', 
-        overflow:'hidden',
-        alignItems:'flex-start'
-    },
-    sHeadName:{
-        fontSize:'14px', 
-        color:'white', 
-        marginTop:'8px'
-    }
-}

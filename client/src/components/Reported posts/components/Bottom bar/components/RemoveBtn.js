@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 
@@ -16,24 +15,13 @@ const RemoveBtn = ({postID, reportID, refetch}) => {
     }
 
     return (
-        <div style={styles.btn} onClick={handleRemovePost}>
+        <div className='allow-remove-btn remove-btn' onClick={handleRemovePost}>
             <p>REMOVE</p>
         </div>
     )
 }
 
 export default RemoveBtn
-
-const styles = {
-    btn:{
-        padding:'5px 20px',
-        color:'white',
-        backgroundColor:'#91211e',
-        borderRadius:'10px',
-        cursor:'pointer',
-        margin:'5px'
-    }
-}
 
 const REMOVE_POST = gql`
     mutation($reportID: Int!, $postID: Int!){

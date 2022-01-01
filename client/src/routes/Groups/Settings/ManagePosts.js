@@ -4,7 +4,7 @@ import BannerLoader from '../../../components/General components/Loaders/BannerL
 import GroupBanner from '../../../components/Groups/components/GroupBanner'
 import GroupNavbar from '../../../components/Groups/components/GroupNavbar'
 import Navbar from '../../../components/Navbar/Navbar'
-
+import '../../../components/Groups/groups.css'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
