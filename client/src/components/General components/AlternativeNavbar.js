@@ -23,10 +23,10 @@ const AlternativeNavbar = ({chat}) => {
                     <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
                 </NavLink>
                 <NavLink exact to='/plamentube'>
-                    <img src={logoTube}/>
+                    <img src={logoTube} alt=''/>
                 </NavLink>
                 <NavLink exact to='/plamenstream'>
-                    <img src={logoStream}/>
+                    <img src={logoStream} alt=''/>
                 </NavLink>
             </div>
         </div>

@@ -1,5 +1,7 @@
-import React, { memo } from 'react'
+import React, { memo, useState, useCallback } from 'react'
 import '../../components/Groups/Community chat/Style.css'
+import '../../components/Groups/groups.css'
+import '../../components/General components/General.css'
 import Navbar from '../../components/Navbar/Navbar'
 import { Redirect, useParams } from 'react-router-dom'
 import {gql} from 'graphql-tag'
@@ -10,10 +12,10 @@ import { useSelector } from 'react-redux'
 import CommChatBar from '../../components/Groups/Community chat/Top bar/CommChatBar'
 import CommChatMsgBox from '../../components/Groups/Community chat/Messages box/CommChatMsgBox'
 import CommSendMsg from '../../components/Groups/Community chat/Send message box/CommSendMsg'
-import '../../components/Groups/groups.css'
 
 const CommunityChat = ({isLogged}) => {
     const {groupid} = useParams()
+    const [loader, setLoader] = useState(false)
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {data, loading} = useQuery(GET_GROUP, {
         variables:{
@@ -23,6 +25,10 @@ const CommunityChat = ({isLogged}) => {
             uid
         }
     })
+
+    const loaderCallback = useCallback(val => {
+        setLoader(val)
+    }, [setLoader])
 
     if(!loading){
         if(!data?.get_group_user) return <Redirect to='/404'/>
@@ -38,8 +44,8 @@ const CommunityChat = ({isLogged}) => {
                     {!loading &&
                     <>
                         <CommChatBar name={data?.get_group?.group_name} groupid={groupid}/>
-                        <CommChatMsgBox groupID={parseInt(groupid)}/>
-                        <CommSendMsg groupID={parseInt(groupid)}/>
+                        <CommChatMsgBox groupID={parseInt(groupid)} loader={loader}/>
+                        <CommSendMsg groupID={parseInt(groupid)} loaderCallback={loaderCallback}/>
                     </>
                     }       
                 </div>

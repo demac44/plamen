@@ -28,7 +28,7 @@ const ChatList = ({isLogged}) => {
                     <ChatListUser data={chat} key={chat.chatID}/>)
                 : <p className='flex-ctr empty-inbox'>Loading...</p>}
 
-            {!loading && (data.get_chats.length === 0 && <p className='empty-inbox' className='flex-ctr'>Empty inbox</p>)}
+            {!loading && (data.get_chats.length === 0 && <p className='empty-inbox flex-ctr'>Empty inbox</p>)}
             <p className='gc-title flex-ctr'>Group chats</p>
             {!loading && data?.get_group_chats?.map(gc => <ChatListGroup data={gc} key={gc.groupChatId}/>)}
         </div>

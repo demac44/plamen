@@ -12,13 +12,16 @@ import UnblockUserBtn from './components/UnblockUserBtn'
 import BlockUserBtn from './components/BlockUserBtn'
 import ActivityStatusBar from './components/ActivityStatusBar'
 import ProfilePfp from './components/ProfilePfp';
+import EditPfpMenu from './components/Settings/Account settings/EditPfpMenu'
+import './components/Settings/Account settings/style.css'
 
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
+    const [pfpMenu, setPfpMenu] = useState(false)
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const userLS = JSON.parse(localStorage.getItem('user'))
     const [blockBtn, setBlockBtn] = useState(false)
-    const {loading, error, data} = useQuery(FETCH_INFO, {
+    const {loading, error, data, refetch} = useQuery(FETCH_INFO, {
         variables: {
             userID: myprofile ? uid : user.userID,
             blockerId: uid
@@ -35,6 +38,10 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const setStoryCallback = useCallback(val=>{
         setOpenStory(val)
     }, [setOpenStory])
+
+    const changePfpMenu = useCallback(val => {
+        setPfpMenu(val)
+    }, [setPfpMenu])
     
     if(error) throw error
 
@@ -48,10 +55,14 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     return (
         <>
             <div className="profile-top-box">
+                <div>
                 <ProfilePfp length={data?.get_user_stories?.length}
                             blockedUser={data?.if_user_blocked}
                             pfp={user?.profile_picture}
                             openStory={setStoryCallback}/>
+                <FontAwesomeIcon icon='camera' size='lg' color='white' onClick={()=>setPfpMenu(true)} cursor='pointer'/>
+                {pfpMenu && <EditPfpMenu closeMenu={changePfpMenu} uid={uid}/>}
+                </div>
 
                 {!loading && <ProfileInfo 
                                 info={info} 

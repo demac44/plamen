@@ -62,41 +62,6 @@ const EditInterests = ({data, uid}) => {
 
 export default EditInterests
 
-const styles = {
-    tag:{
-        padding:'5px 10px',
-        backgroundColor:'#13306e',
-        fontSize:'14px',
-        color:'white',
-        height:'fit-content',
-        borderRadius:'20px',
-        marginTop:'5px',
-        marginLeft:'5px'
-    },
-    selectTags:{
-        width:'200px',
-        height:'35px',
-        marginTop:'20px',
-        borderRadius:'30px',
-        border:'1px solid #ffbb00',
-        padding:'5px'
-    },
-    editBtn:{
-        padding:'5px 20px',
-        border:'1px solid #2f2f2f',
-        borderRadius:'10px',
-        marginTop:'20px',
-        cursor:'pointer',
-        fontSize:'14px'
-    },
-    updated:{
-        padding:'5px 10px',
-        marginTop:'10px',
-        backgroundColor:'#0e7947',
-        borderRadius:'10px'
-    }
-}
-
 const allTags = ['Sport', 'Programming', 'Politics', 'Photography', 'Computers', 'DIY', 'Reading', 'Gaming', 'Comedy', 'Memes', 'Movies']
 
 const EDIT_INTERESTS = gql`

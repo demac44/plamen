@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState, memo } from 'react'
+import React, { useCallback, useEffect, useState, memo } from 'react'
 import { useSelector } from 'react-redux';
 import SendMsg from './SendMsg'
 import Message from './Message'
@@ -25,7 +25,7 @@ const ChatMsgBox = ({chat}) => {
     }, [setLoader])
 
     
-    useLayoutEffect(()=>{ 
+    useEffect(()=>{ 
         const subscribeNewMessage = () => {
             return messages?.subscribeToMore({
                 document: NEW_MESSAGE,
@@ -56,7 +56,7 @@ const ChatMsgBox = ({chat}) => {
                 rid: uid
             }
         })
-    }, [messages?.data, chat, seen])
+    }, [messages?.data, chat, seen, uid])
 
 
     const handleFetchMore = () => {

@@ -17,24 +17,6 @@
     background-color: #2f2f2f;
     cursor: pointer;
 }
-.edit-pfp-menu{
-    width: 30%;
-    background-color: #1b1b1b;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid #2f2f2f;
-    cursor: pointer;
-}
-.edit-pfp-menu li{
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-    color: white;
-    transition: ease .3s;
-}
-.edit-pfp-menu li:hover{
-    background-color: #2f2f2f;
-}
 .change-pass-box input{
     width: 60%;
     height: 35px;

@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CommMessage from './CommMessage'
 
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux'
 
-const CommChatMsgBox = ({groupID}) => {
+const CommChatMsgBox = ({groupID, loader}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
-    const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     const {data, loading, subscribeToMore, fetchMore} = useQuery(GET_COMM_MESSAGES, {
         variables:{
@@ -17,12 +16,9 @@ const CommChatMsgBox = ({groupID}) => {
             uid
         }
     })
-    const loaderCallback = useCallback(val => {
-        setLoader(val)
-    }, [setLoader])
-
     
     useEffect(()=>{ 
+        data?.get_community_messages?.length>=50 && setFetchBtn(true)
         const subscribeNewMessage = () => {
             return subscribeToMore({
                 document: NEW_MESSAGE,
@@ -38,13 +34,7 @@ const CommChatMsgBox = ({groupID}) => {
             }});
         }
         return subscribeNewMessage()
-    }, [data])        
-    
-    
-    useEffect(()=>{
-        data?.get_community_messages?.length>=50 && setFetchBtn(true)
-    }, [data])
-
+    }, [data, groupID, subscribeToMore])        
 
     const handleFetchMore = () => {
         fetchMore({

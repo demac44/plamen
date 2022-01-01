@@ -4,7 +4,7 @@ import { useMutation } from 'react-apollo'
 import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
-
+import '../../../Chat/Chat.css'
 import MsgPreviewBox from '../../../Chat/components/MsgPreviewBox'
 import EmojisBox from '../../../General components/Emojis/EmojisBox'
 
@@ -88,7 +88,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
 
-            {emojis && <EmojisBox emojiCB={emojiCB} visible={emojis}/>}
+            {emojis && <EmojisBox emojiCB={emojiCB} visible={true}/>}
 
             <form className='comm-msg-input-box flex-sb' onSubmit={sendMessage}>
                 {lengthErr && <p style={styles.lenErrMsg}>Message too long! Max. characters allowed: 6000</p>}

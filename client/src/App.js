@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react';
-import {Route, Switch, Redirect, useHistory} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 
 import './App.css';
 import './General.css'
@@ -53,19 +53,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem('user'))  
   const token = localStorage.getItem('token')
   const [set_last_seen] = useMutation(SET_LAST_SEEN)
-  const history = useHistory()
   
-  const logout = async () => {
-    await axios({
-        method:'post',
-        url:'http://localhost:8000/api/logout',
-        withCredentials: true
-    }).then(()=>{
-        localStorage.clear()
-        history.push('/login')
-    })
-  }
-
   const {data, loading} = useQuery(GET_FOLLOW_SUGGESTIONS, {
     variables:{
       userID: uid
@@ -76,7 +64,7 @@ function App() {
     dispatch(authenticate())
     
     if(checkUser(getCookie(isLogged), user)){
-      logout()
+      return logout()
     } else {
         if(data?.get_user_suggestions){
           // setInterval(()=>{
@@ -132,9 +120,20 @@ const checkUser = (token, user) => {
   return false
 }
 
-function getCookie(isLogged) {
+function getCookie() {
     const cookie = document?.cookie?.split('; ')?.find(row => row.startsWith('x-auth-token='))?.split('=')[1];
     return cookie
+}
+
+const logout = async () => {
+  await axios({
+      method:'post',
+      url:'http://localhost:8000/api/logout',
+      withCredentials: true
+  }).then(()=>{
+      localStorage.clear()
+      window.location.href = '/login'
+  })
 }
 
 

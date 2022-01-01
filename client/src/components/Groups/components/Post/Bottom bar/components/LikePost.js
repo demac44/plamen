@@ -52,6 +52,7 @@ const LikePost = ({postID, userID}) => {
                 src={ifLiked?.loading ? logoBlank : (liked ? logo : logoBlank)} 
                 onClick={() => liked ? handleRemove() : handleLike()}
                 className='like-post-btn'
+                alt=''
             />
         </>
     )

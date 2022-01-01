@@ -56,7 +56,7 @@ const LoginForm = ({popup}) => {
         <div className='entry-form-box flex-col-ctr'>
             <span style={{alignSelf:'flex-start'}}> 
                 <div className='flex-ac' style={{margin:'0 0 5px 10px'}}>
-                    <img src={logo}/>
+                    <img src={logo} alt=''/>
                     <h1>Login</h1>
                 </div>
                 <p>Enter your details below to continue</p>
