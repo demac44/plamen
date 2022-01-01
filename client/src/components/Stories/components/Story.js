@@ -49,7 +49,9 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                     setIndexCallback={setIndexCallback}
                     setInnerIndexCallback={setInnerIndexCallback}
                     innerIndex={innerIndex}
-                    type={type}/>
+                    type={type}
+                    userID={isProfile ? allData.user.userID : storyData?.userID}
+                />
                 <StoryReply userID={isProfile ? (storyData?.stories && storyData?.stories[innerIndex]?.userID) : storyData?.userID}/>
             </div>
         </div>

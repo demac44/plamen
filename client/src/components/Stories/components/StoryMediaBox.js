@@ -1,11 +1,12 @@
 import React, {useState, useEffect, memo} from 'react'
+import { useSelector } from 'react-redux';
 
 const StoryMediaBox = ({
                         storyData ,isProfile, closeStoryCallback, 
                         index, setIndexCallback, type,  setInnerIndexCallback,
-                        innerIndex, allDataLength
+                        innerIndex, allDataLength, userID
                     }) => {
-
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     let timeout;
     const [url, setUrl] = useState(null)
     const [loadBar, setLoadBar] = useState(false)
@@ -56,7 +57,7 @@ const StoryMediaBox = ({
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
                     setLoadBar(true)
-                    setTimeout(()=> {nextStory()}, 5000)
+                    !isProfile && uid===userID && setTimeout(()=> {nextStory()}, 5000)
                     return
                 }} alt=''/>)
             }
@@ -75,10 +76,14 @@ const StoryMediaBox = ({
             <div className='story-count-bars'>
                 {storyData?.stories && storyData.stories.map(story => 
                 <div className='story-count-bar' key={story.storyID}>
-                    {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'bar'}></div>}
-                    {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'bar bar-vid' : 'bar'}></div>}
+                    {(!isProfile && uid===userID) && 
+                        <>
+                            {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'load-bar-full'}></div>}
+                            {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar-full bar-vid' : 'load-bar-full'}></div>}
+                        </>
+                    }
                 </div>)}
-            </div> 
+            </div>
         </div>
     )
 }

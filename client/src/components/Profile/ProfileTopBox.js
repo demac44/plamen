@@ -14,6 +14,7 @@ import ActivityStatusBar from './components/ActivityStatusBar'
 import ProfilePfp from './components/ProfilePfp';
 import EditPfpMenu from './components/Settings/Account settings/EditPfpMenu'
 import './components/Settings/Account settings/style.css'
+import AddMediaBtnPf from './components/Buttons/AddMediaBtnPf';
 
 const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
@@ -55,13 +56,12 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
     return (
         <>
             <div className="profile-top-box">
-                <div>
-                <ProfilePfp length={data?.get_user_stories?.length}
-                            blockedUser={data?.if_user_blocked}
-                            pfp={user?.profile_picture}
-                            openStory={setStoryCallback}/>
-                <FontAwesomeIcon icon='camera' size='lg' color='white' onClick={()=>setPfpMenu(true)} cursor='pointer'/>
-                {pfpMenu && <EditPfpMenu closeMenu={changePfpMenu} uid={uid}/>}
+                <div className='pf-pfp-box'>
+                    {myprofile && <AddMediaBtnPf setPfpMenu={changePfpMenu} refetch={refetch}/>}
+                    <ProfilePfp length={data?.get_user_stories?.length}
+                                blockedUser={data?.if_user_blocked}
+                                pfp={user?.profile_picture}
+                                openStory={setStoryCallback}/>
                 </div>
 
                 {!loading && <ProfileInfo 
@@ -97,7 +97,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                 isProfile={true}
                 closeStoryCallback={setStoryCallback}
                 />}
-            
+            {pfpMenu && <EditPfpMenu closeMenu={changePfpMenu} uid={uid}/>}
         </>
     )
 }
