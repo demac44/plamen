@@ -18,6 +18,6 @@ export const PostType = new GraphQLObjectType({
         profile_picture: {type: GraphQLString},
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
-        type:{type:GraphQLString}
+        type:{type:GraphQLString},
     })
 })

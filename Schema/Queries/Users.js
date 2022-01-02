@@ -1,5 +1,6 @@
 import { GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
+import { PostType } from '../TypeDefs/Posts.js';
 import { UserInfoType, UserType } from '../TypeDefs/Users.js';
 
 export const GET_ALL_USERS = {
@@ -128,5 +129,16 @@ export const GET_BLOCKED_USERS = {
                      WHERE blockerId=${userID} AND disabled=false`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         return result
+    }
+}
+export const COUNT_POSTS = {
+    type: GraphQLInt,
+    args: {
+        userID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID} = args
+        const sql = `SELECT COUNT(1) as noOfPosts FROM posts WHERE userID=${userID}`
+        return await connection.promise().query(sql).then(res=>{return res[0][0]?.noOfPosts})
     }
 }

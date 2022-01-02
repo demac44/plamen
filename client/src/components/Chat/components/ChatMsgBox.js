@@ -107,6 +107,7 @@ const GET_MESSAGES = gql`
             time_sent
             username
             profile_picture
+            storyID
         }
     }
 `
@@ -122,6 +123,7 @@ const NEW_MESSAGE = gql`
             time_sent
             username
             profile_picture
+            storyID
         }
     }
 `

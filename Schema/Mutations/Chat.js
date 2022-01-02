@@ -60,7 +60,8 @@ export const SEND_MESSAGE = {
                                         msgID: msg.insertId, 
                                         time_sent: new Date().getTime(),
                                         username,
-                                        profile_picture
+                                        profile_picture,
+                                        storyID: null
                                         }})
         return args
     }

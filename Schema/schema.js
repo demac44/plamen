@@ -26,7 +26,7 @@ import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIF
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
-import { CREATE_STORY, DELETE_STORY } from "./Mutations/Stories.js";
+import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY } from "./Mutations/Stories.js";
 import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
         EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
 
@@ -43,7 +43,7 @@ import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
         IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
-import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS } from "./Queries/Users.js";
+import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS, COUNT_POSTS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { CommunityChatMessagesType } from "./TypeDefs/Groups.js";
 import { NotificationType } from "./TypeDefs/Notifications.js";
@@ -61,6 +61,7 @@ const RootQuery = new GraphQLObjectType({
         get_user_suggestions: USER_SUGGESTIONS,
         if_user_blocked: IF_USER_BLOCKED,
         get_blocked_users: GET_BLOCKED_USERS,
+        no_of_posts: COUNT_POSTS,
         // posts
         get_post: GET_POST,
         get_profile_posts: GET_PROFILE_POSTS,
@@ -155,6 +156,7 @@ const RootMutation = new GraphQLObjectType({
         delete_message: DELETE_MESSAGE,
         post_report: POST_REPORT,
         msg_notification: MSG_NOTIFICATION,
+        reply_to_story: REPLY_TO_STORY,
         seen: SEEN,
         // group chat
         create_group_chat:CREATE_GROUP_CHAT,

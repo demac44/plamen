@@ -87,7 +87,7 @@ export const GET_MESSAGES = {
     },
     async resolve(_, args) {
         const {chatID, limit, offset} = args
-        const sql = `SELECT msgID, msg_text, time_sent, chatID, username, type, url, users.userID, profile_picture  
+        const sql = `SELECT msgID, msg_text, time_sent, chatID, username, type, url, users.userID, profile_picture, storyID  
                      FROM messages 
                      JOIN users ON messages.userID=users.userID
                      WHERE chatID=${chatID} 
@@ -101,6 +101,60 @@ export const GET_MESSAGES = {
         return result
     }
 }
+
+// export const GET_MESSAGES = {
+//     type: new GraphQLList(ChatMessagesType),
+//     args: {
+//         chatID: {type: GraphQLInt},
+//         limit: {type: GraphQLInt},
+//         offset: {type: GraphQLInt},
+//     },
+//     async resolve(_, args) {
+//         const {chatID, limit, offset} = args
+//         const sql = `SELECT
+//                         msgID,
+//                         msg_text,
+//                         time_sent,
+//                         chatID,
+//                         username,
+//                         TYPE,
+//                         url,
+//                         users.userID,
+//                         profile_picture,
+//                         null as storyID
+//                         FROM
+//                             messages
+//                         JOIN users ON messages.userID = users.userID
+//                         WHERE
+//                             chatID =${chatID}
+//                         UNION ALL
+//                         SELECT
+//                             msgID,
+//                             msg_text,
+//                             time_sent,
+//                             chatID,
+//                             username,
+//                             TYPE,
+//                             url,
+//                             users.userID,
+//                             profile_picture,
+//                             storyID
+//                         FROM
+//                             story_replies
+//                         JOIN users ON story_replies.userID = users.userID 
+//                         WHERE
+//                             chatID =${chatID}
+//                         ORDER BY time_sent DESC
+//                         LIMIT ${limit} OFFSET ${offset}`  
+//         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+//         await result.map(msg => {
+//             const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+//             Object.assign(msg, {msg_text: decrypted})
+//         })
+//         return result
+//     }
+// }
+
 
 export const GET_CHAT_MEDIA = {
     type: new GraphQLList(ChatMessagesType),

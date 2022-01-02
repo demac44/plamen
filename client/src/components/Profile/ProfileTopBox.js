@@ -16,7 +16,7 @@ import EditPfpMenu from './components/Settings/Account settings/EditPfpMenu'
 import './components/Settings/Account settings/style.css'
 import AddMediaBtnPf from './components/Buttons/AddMediaBtnPf';
 
-const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
+const ProfileTopBox = ({myprofile, user, isBlockedCB}) => {
     const [openStory, setOpenStory] = useState(false)
     const [pfpMenu, setPfpMenu] = useState(false)
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -50,7 +50,6 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
         user: user,
         followers: data?.get_followers,
         following: data?.get_following,
-        postsLength
     }
 
     return (
@@ -69,6 +68,7 @@ const ProfileTopBox = ({myprofile, postsLength, user, isBlockedCB}) => {
                                 last_seen={user.last_seen} 
                                 mystatus={userLS?.status}
                                 blocked={data?.if_user_blocked}
+                                noOfPosts={data?.no_of_posts}
                             />}
 
                 {(!loading && !data?.if_user_blocked) && (myprofile ? <ProfileEditBtn/> : (
@@ -131,4 +131,6 @@ const FETCH_INFO= gql`
             date_posted
         } 
         if_user_blocked(blockerId: $blockerId, blockedId: $userID)
+        no_of_posts(userID: $userID)
+
     }`

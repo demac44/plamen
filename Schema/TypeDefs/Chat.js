@@ -29,7 +29,8 @@ export const ChatMessagesType = new GraphQLObjectType({
         offset: {type: GraphQLInt},
         groupChatId: {type: GraphQLInt},
         username: {type: GraphQLString},
-        profile_picture:{type:GraphQLString}
+        profile_picture:{type:GraphQLString},
+        storyID: {type: GraphQLInt}
     })
 })
 

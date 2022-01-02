@@ -57,7 +57,7 @@ const StoryMediaBox = ({
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
                     setLoadBar(true)
-                    !isProfile && uid===userID && setTimeout(()=> {nextStory()}, 5000)
+                    // !isProfile && uid===userID && setTimeout(()=> {nextStory()}, 5000)
                     return
                 }} alt=''/>)
             }

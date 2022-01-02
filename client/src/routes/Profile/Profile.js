@@ -90,7 +90,6 @@ const Profile = ({isLogged}) => {
                             : <ProfileTopBox 
                                 user={data.get_user}
                                 myprofile={myprofile} 
-                                postsLength={data.get_profile_posts.length}
                                 isBlockedCB={isBlockedCB}
                             />}
                 </div>

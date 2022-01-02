@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, memo } from 'react'
 import ActivityStatus from '../General components/ActivityStatus.js'
 import UsersList from '../General components/Users list/UsersList.js'
 
-const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {  
+const ProfileInfo = ({info, last_seen, blocked, mystatus, noOfPosts}) => {  
     const [follows, setFollows] = useState([])
     const [title, setTitle] = useState('')
     const [showList, setShowList] = useState(false)
@@ -69,7 +69,7 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus}) => {
 
                     <div style={{textAlign:'center'}}>
                         <h6>Posts</h6>
-                        <p>{info.postsLength}</p>
+                        <p>{noOfPosts}</p>
                     </div>
                 </div>
             </div>
