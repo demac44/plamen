@@ -18,8 +18,8 @@ const SavePostButton = ({postID, groupID}) => {
     })
     
     useEffect(()=>{
-        if(ifSaved?.data?.if_saved) setSaved(true)
-    }, [ifSaved?.data])
+        !ifSaved.loading && (ifSaved?.data?.if_group_post_saved && setSaved(true))
+    }, [ifSaved])
     
     const handleSave = () => {
         save_post({
@@ -43,8 +43,8 @@ const SavePostButton = ({postID, groupID}) => {
     return (
         <FontAwesomeIcon
             icon='bookmark'
-            onClick={()=> !ifSaved.loading && (saved ? handleRemove() : handleSave())} 
-            style={{color: ifSaved.loading ? 'white' : (saved ? '#ffbb00' : 'white')}}
+            onClick={()=> saved ? handleRemove() : handleSave()} 
+            style={{color: saved ? '#ffbb00' : 'white'}}
             className='save-post-btn'
         />
     )

@@ -31,7 +31,7 @@ const CommunityChat = ({isLogged}) => {
     }, [setLoader])
 
     if(!loading){
-        if(!data?.get_group_user) return <Redirect to='/404'/>
+        if(!data?.get_group_user) return <Redirect to={'/community/'+groupid}/>
     }
 
     return (

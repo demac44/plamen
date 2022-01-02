@@ -290,3 +290,27 @@ export const GET_COMMUNITY_MESSAGES = {
         return result
     }
 }
+
+export const GET_COMMUNITY_SAVED_POSTS = {
+    type: new GraphQLList(GroupPostType),
+    args: {
+        userID: {type: GraphQLInt},
+        groupID: {type: GraphQLInt},
+        limit: {type: GraphQLInt},
+        offset: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID, groupID, limit, offset} = args
+        const sql = `SELECT community_posts.postID,community_posts_saved.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,community_posts.groupID
+                        FROM community_posts_saved
+                        JOIN community_posts ON community_posts_saved.postID=community_posts.postID
+                        JOIN users ON community_posts.userID=users.userID
+                        WHERE users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
+                        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                        AND users.disabled=false
+                        AND community_posts_saved.groupID=${groupID}
+                        AND community_posts_saved.userID=${userID}
+                        ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
+        return await connection.promise().query(sql).then(res=>{return res[0]})
+    }
+}

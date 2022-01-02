@@ -38,7 +38,7 @@ import { GET_FOLLOWERS, GET_FOLLOWING, IF_FOLLOWING } from "./Queries/Followings
 
 import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GROUP_MEMBERS, GET_GROUP_POSTS,
          GET_GROUP_POST_COMMENTS, GET_GROUP_POST_LIKES, GET_GROUP_REPORTED_POSTS, GET_GROUP_USER, GET_SAVED_GROUP_POSTS, 
-         IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED, GET_COMMUNITY_MESSAGES } from "./Queries/Groups.js";
+         IF_GROUP_POST_LIKED, IF_GROUP_POST_SAVED, IF_REQUESTED, GET_COMMUNITY_MESSAGES, GET_COMMUNITY_SAVED_POSTS } from "./Queries/Groups.js";
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
         IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
@@ -112,6 +112,7 @@ const RootQuery = new GraphQLObjectType({
         if_group_post_saved: IF_GROUP_POST_SAVED,
         if_group_post_liked: IF_GROUP_POST_LIKED,
         get_group_reported_posts: GET_GROUP_REPORTED_POSTS,
+        get_community_saved_posts: GET_COMMUNITY_SAVED_POSTS,
         // community messages
         get_community_messages: GET_COMMUNITY_MESSAGES
     }

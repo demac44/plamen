@@ -19,8 +19,8 @@ const LikePost = ({postID, userID}) => {
     })
 
     useEffect(()=>{
-        return ifLiked?.data?.if_group_post_liked && setLiked(true)
-    }, [ifLiked?.data])
+        !ifLiked.loading && (ifLiked?.data?.if_group_post_liked && setLiked(true))
+    }, [ifLiked])
 
     if(error) throw error
     
@@ -49,7 +49,7 @@ const LikePost = ({postID, userID}) => {
     return (
         <>
             <img 
-                src={ifLiked?.loading ? logoBlank : (liked ? logo : logoBlank)} 
+                src={liked ? logo : logoBlank} 
                 onClick={() => liked ? handleRemove() : handleLike()}
                 className='like-post-btn'
                 alt=''

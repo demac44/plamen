@@ -10,18 +10,14 @@ import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/General components/TagsBox'
 import Sidebar from '../../components/General components/Sidebar'
-
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-import CreateGroupPost from '../../components/Groups/components/Post/Create post/CreateGroupPost'
-
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
-
 import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
 import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
-const Group = ({isLogged}) => {
+const SavedCommunityPosts = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -41,9 +37,8 @@ const Group = ({isLogged}) => {
     }, [refetch, data])
 
     if(!loading){
-        if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+        if(!data?.get_group_user) return <Redirect to={'/community/'+groupid}/>
     }
-
     
     // const scrollPagination = () => {
     //     window.onscroll = async ()=>{
@@ -78,22 +73,16 @@ const Group = ({isLogged}) => {
                 </div>
                 <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
-                            {(data?.get_group?.closed && !data?.get_group_user) && 
-                                <span className='flex-ctr' style={styles.locked}>
-                                    <FontAwesomeIcon icon='lock' color='white'/>
-                                    <p style={{marginLeft:'10px'}}>Join community to see posts!</p>
-                                </span>}
-                    
+
                             {loading ? <PostLoader/> : 
                             <>
-                                {data.get_group_user && <CreateGroupPost groupid={groupid} refetch={refetch}/>}
-                                {(!data?.get_group?.closed || data?.get_group_user) && 
-                                    (data.get_group_posts.length > 0
-                                    ? <GroupPosts posts={data.get_group_posts} 
-                                                  role={data?.get_group_user?.role} 
-                                                  refetchPosts={refetch}
-                                                />
-                                    : <NoPosts/>)}
+                                {(data.get_community_saved_posts
+                                    ? <GroupPosts 
+                                            posts={data.get_community_saved_posts} 
+                                            role={data?.get_group_user?.role} 
+                                            refetchPosts={refetch}
+                                        	/>
+                                    : <p className='flex-ctr box'>No saved posts</p>)}
                             </>}
                         </div>
                         <div className='container-right' style={{width:'35%'}}>
@@ -105,7 +94,7 @@ const Group = ({isLogged}) => {
     )
 }
 
-export default memo(Group)
+export default memo(SavedCommunityPosts)
 
 const GET_GROUP = gql`
     query($gid: Int!, $limit: Int, $offset: Int, $uid: Int!){
@@ -114,13 +103,18 @@ const GET_GROUP = gql`
             group_name
             group_creator_id
             date_created
-            closed
             group_tags
             group_rules
             group_description
             banner_image
         }
-        get_group_posts (groupID: $gid, limit: $limit, offset: $offset, userID: $uid){
+        get_group_user (groupID: $gid, userID: $uid){
+            role
+        }
+        get_group_members(groupID:$gid){
+            userID
+        }
+        get_community_saved_posts(userID: $uid, groupID: $gid, limit: $limit, offset: $offset){
             groupID
             postID
             post_text
@@ -133,18 +127,5 @@ const GET_GROUP = gql`
             profile_picture
             type
         }
-        get_group_user (groupID: $gid, userID: $uid){
-            role
-        }
-        get_group_members(groupID:$gid){
-            userID
-        }
     }
 `
-const styles = {
-    locked:{
-        color:'white',
-        width:'100%',
-        height:'200px'
-    }
-}

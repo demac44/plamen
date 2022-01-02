@@ -34,6 +34,7 @@ const GroupEditInfo = lazy(()=>import('./routes/Groups/Settings/GroupEditInfo'))
 const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
 const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
+const SavedCommunityPosts = lazy(()=>import('./routes/Groups/SavedCommunityPosts'))
 
 
 import('@fortawesome/free-solid-svg-icons').then(i=>{
@@ -42,7 +43,7 @@ import('@fortawesome/free-solid-svg-icons').then(i=>{
         i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
         i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
         i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-        i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera, i.faRedo)
+        i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera, i.faRedo, i.faChevronLeft)
       })
 })
 
@@ -107,6 +108,7 @@ function App() {
               <Route exact path='/community/:groupid/settings/manage_posts'>{isLogged ? <ManagePosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/join_requests'>{isLogged ? <JoinRequests isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/manage_users'>{isLogged ? <ManageUsers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
+              <Route exact path='/community/:groupid/saved'>{isLogged ? <SavedCommunityPosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
             </Suspense>
           </Switch>}
       </div>
