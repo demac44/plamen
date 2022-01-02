@@ -55,6 +55,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                 <StoryReply 
                     userID={isProfile ? (storyData?.stories && storyData?.stories[innerIndex]?.userID) : storyData?.userID}
                     storyID={storyData?.stories && storyData?.stories[innerIndex]?.storyID}
+                    type={type}
                 />
             </div>
         </div>

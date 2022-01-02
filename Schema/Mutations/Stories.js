@@ -47,7 +47,7 @@ export const REPLY_TO_STORY = {
         const {chatID, userID, msg_text,username, profile_picture, storyID, type} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const sql = `INSERT INTO messages (chatID, userID, msg_text, storyID, type, url)
-                     VALUES (${chatID}, ${userID}, "${encrypted}", ${storyID}, "story", "")`
+                     VALUES (${chatID}, ${userID}, "${encrypted}", ${storyID}, "${'story-'+type}", "")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {
                                                chatID, 

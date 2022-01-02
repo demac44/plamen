@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useMutation, useQuery} from 'react-apollo'
 
-const StoryReply = ({userID, storyID}) => {
+const StoryReply = ({userID, storyID, type}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const usernm= useSelector(state => state?.isAuth?.user?.username)
     const user = JSON.parse(localStorage.getItem('user'))
@@ -19,10 +19,11 @@ const StoryReply = ({userID, storyID}) => {
                 variables:{
                     uid,
                     username: usernm,
-                    pfp: user.profile_picture,
+                    pfp: user.profile_picture || '',
                     sid: storyID,
                     text: replyText,
-                    cid: data?.chat_exists?.chatID
+                    cid: data?.chat_exists?.chatID,
+                    type
                 }
             })
         } else {
@@ -36,10 +37,11 @@ const StoryReply = ({userID, storyID}) => {
                     variables:{
                         uid,
                         username: usernm,
-                        pfp: user.profile_picture,
+                        pfp: user.profile_picture || '',
                         sid: storyID,
                         text: replyText,
-                        cid: res?.data?.create_chat?.chatID
+                        cid: res?.data?.create_chat?.chatID,
+                        type
                     }
                     })
                 })
@@ -65,8 +67,8 @@ const StoryReply = ({userID, storyID}) => {
 export default StoryReply
 
 const STORY_REPLY = gql`
-    mutation ($uid: Int!, $cid: Int!, $sid: Int!, $text: String!, $username: String!, $pfp: String!){
-        reply_to_story(userID: $uid, chatID: $cid, storyID: $sid, msg_text: $text, username: $username, profile_picture: $pfp){
+    mutation ($uid: Int!, $cid: Int!, $sid: Int!, $text: String!, $username: String!, $pfp: String!, $type: String!){
+        reply_to_story(userID: $uid, chatID: $cid, storyID: $sid, msg_text: $text, username: $username, profile_picture: $pfp, type: $type){
             storyID
         }
     }

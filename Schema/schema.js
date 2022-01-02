@@ -42,7 +42,7 @@ import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GRO
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
         IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
-import { GET_STORIES, GET_USER_STORIES } from "./Queries/Stories.js";
+import { GET_STORIES, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS, COUNT_POSTS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { CommunityChatMessagesType } from "./TypeDefs/Groups.js";
@@ -82,6 +82,7 @@ const RootQuery = new GraphQLObjectType({
         last_message: LAST_MESSAGE,
         count_newMsgs: COUNT_ALL_MSGS,
         count_msgs: COUNT_MSGS,
+        get_story_msg_url: GET_STORY_MSG,
         // group chat
         get_group_chats: GET_GROUP_CHATS,
         get_all_group_chats: GET_ALL_GROUP_CHATS,

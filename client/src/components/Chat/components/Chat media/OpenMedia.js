@@ -11,7 +11,8 @@ const OpenMedia = ({url, callback}) => {
 
 
     return (
-        <div className='open-chat-media flex-ctr' onClick={()=>{
+        <div className='open-chat-media flex-ctr overlay' style={{backgroundColor:'#1b1b1b'}}
+            onClick={()=>{
             document.querySelector('.chat-msg-box').style.zIndex = window.innerWidth < 768 ? '9999' : '999'
             callback(false)
         }}>

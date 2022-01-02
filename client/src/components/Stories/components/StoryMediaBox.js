@@ -76,7 +76,7 @@ const StoryMediaBox = ({
             <div className='story-count-bars'>
                 {storyData?.stories && storyData.stories.map(story => 
                 <div className='story-count-bar' key={story.storyID}>
-                    {(!isProfile && uid===userID) && 
+                    {(!isProfile || (isProfile && uid!==userID)) && 
                         <>
                             {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'load-bar-full'}></div>}
                             {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar-full bar-vid' : 'load-bar-full'}></div>}

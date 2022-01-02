@@ -47,3 +47,16 @@ export const GET_USER_STORIES = {
         return result
     }
 } 
+
+export const GET_STORY_MSG = {
+    type: StoryType,
+    args:{
+        storyID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {storyID} = args
+        const sql = `SELECT url FROM stories WHERE storyID=${storyID}`
+        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
+        return result
+    }
+}
