@@ -7,15 +7,14 @@ const StoryMediaBox = ({
                         innerIndex, allDataLength, userID
                     }) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
-    let timeout;
     const [url, setUrl] = useState(null)
     const [loadBar, setLoadBar] = useState(false)
+    const [timeout, setTimeoutt] = useState(null)
     
     const nextStory = () => {
         window.clearTimeout(timeout)
         if(storyData){
             if(index===(isProfile ? 0 : allDataLength-1) && innerIndex===storyData?.stories?.length-1){
-                window.clearTimeout(timeout)
                 closeStoryCallback(false)
                 return
             } else if (innerIndex===storyData?.stories?.length-1){
@@ -31,7 +30,6 @@ const StoryMediaBox = ({
         window.clearTimeout(timeout)
         if(storyData){
             if(index===0 && innerIndex===0){
-                window.clearTimeout(timeout)
                 closeStoryCallback(false)
                 return
             } else if (index>0 && innerIndex===0){
@@ -56,9 +54,10 @@ const StoryMediaBox = ({
             {type==='image' && 
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
-                    setLoadBar(true)
-                    // !isProfile && uid===userID && setTimeout(()=> {nextStory()}, 5000)
-                    return
+                    if(!isProfile || (isProfile && uid!==userID)){
+                        setLoadBar(true)
+                        setTimeoutt(setTimeout(()=> {nextStory()}, 5000))
+                    }
                 }} alt=''/>)
             }
             {type==='video' && 

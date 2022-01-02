@@ -1,5 +1,4 @@
 import React, { useCallback, useState, memo } from 'react'
-
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { OpenMedia } from '../export'
@@ -23,9 +22,9 @@ const Message = ({msg}) => {
     
     return (
         <>
-            {msg.userID===uid 
+            {!loading && ((msg.userID===uid)
             ? <MsgCurrentUser msg={msg} storyUrl={data?.get_story_msg_url?.url} uid={uid} setOpenMedia={setOpenMediaCallback}/>
-            : <MsgOtherUser msg={msg} storyUrl={data?.get_story_msg_url?.url} setOpenMedia={setOpenMediaCallback}/>}
+            : <MsgOtherUser msg={msg} storyUrl={data?.get_story_msg_url?.url} setOpenMedia={setOpenMediaCallback}/>)}
             {openMedia && <OpenMedia url={msg.url} callback={setOpenMediaCallback}/>}    
         </>
     )
