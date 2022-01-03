@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Avatar from '../Avatar';
 import FollowButton from '../FollowButton';
 import { useSelector } from 'react-redux';
-
+import './style.css'
 const UserBox = ({user}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
 

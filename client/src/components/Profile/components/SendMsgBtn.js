@@ -23,7 +23,7 @@ const SendMsgBtn = ({userID}) => {
     
     return (
         <div className="profile-top-box-buttons btn send-msg-btn" onClick={()=>!loading && createChat()}>
-            <h4>{loading ? 'Loading...' : 'Send message'}</h4> 
+            <p>{loading ? 'Loading...' : 'Send message'}</p> 
         </div>
     )
 }

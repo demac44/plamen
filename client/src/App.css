@@ -14,7 +14,7 @@ body{
     display: flex;
     width: 100vw;
     min-height: 100vh;
-    padding: 80px 50px 0 320px;
+    padding: 80px 50px 0 20%;
     overflow: hidden;
 }
 .container-left{
@@ -26,7 +26,8 @@ body{
     padding-bottom: 30px;
 }
 .container-profile{
-    padding: 70px 50px 0 370px;
+    width: 100vw;
+    padding: 70px 50px 0 calc(20% + 50px);
 }
 ::-webkit-scrollbar {
     width: 10px;

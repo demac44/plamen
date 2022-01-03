@@ -48,7 +48,7 @@ const ProfileFollowBtn = ({userID}) => {
     return (
         <div className='profile-top-box-buttons btn'
             onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>
-            <h4>{loading ? 'Loading...' : (isFollowing ? 'Unfollow' : 'Follow')}</h4> 
+            <p>{loading ? 'Loading...' : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
         </div>
     )
 }

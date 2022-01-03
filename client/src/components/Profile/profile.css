@@ -31,8 +31,8 @@
 }
 .profile-top-box-buttons{
     position: absolute;
-    bottom: 10px;
-    right: 20px;
+    bottom: 5px;
+    right: 10px;
     min-width: 150px;
     padding: 10px;
     border-radius: 10px;
@@ -40,9 +40,15 @@
     cursor: pointer;
     background-color: whitesmoke;
     transition: ease .3s;
+    background: linear-gradient(to bottom right, #2da0af, #0b4a68);
+
+}
+.profile-top-box-buttons p{
+    color: white;
+    font-size: 16px;
 }
 .send-msg-btn{
-    right: 180px;
+    right: 170px;
 }
 .ptb-menu-btn{
     position: absolute;

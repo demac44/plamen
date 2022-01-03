@@ -250,14 +250,33 @@ export const CHANGE_VISIBILITY = {
         groupID:{type:GraphQLInt},
         closed: {type: GraphQLBoolean}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {groupID, closed} = args
         const sql = `UPDATE communities SET closed=${!closed} WHERE groupID=${groupID}`
-        connection.query(sql)
-        return args
+        const get_req = `SELECT userID FROM community_join_requests WHERE groupID=${groupID}`
+        if(closed){
+            await connection.promise().query(get_req).then(res=>{
+                let ids = '('
+                let ins = `INSERT INTO community_members (userID, groupID, roleID) 
+                VALUES `
+                let q = `DELETE FROM community_join_requests WHERE userID IN `
+                res[0].forEach(r => {
+                    ins+=(`(${r.userID+','+groupID},4),`)
+                    ids+=r.userID+','
+                })
+                ids = ids.slice(0,-1)+')'
+                q+=ids
+                connection.query(ins.slice(0,-1))
+                connection.query(q)
+            })
+            .then(()=>{connection.query(sql);return})
+            return args
+        } else {
+            connection.query(sql)
+            return args
+        }        
     }
 }
-
 
 export const CHANGE_GROUP_INFO = {
     type: GroupType,

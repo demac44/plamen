@@ -59,7 +59,7 @@ const StoryReply = ({userID, storyID, type}) => {
             />
 
 
-            <button className='btn' disabled={userID===uid} onClick={handleReply}>SEND</button>
+            <button className='btn' disabled={userID===uid} onClick={handleReply}>REPLY</button>
         </div>
     )
 }

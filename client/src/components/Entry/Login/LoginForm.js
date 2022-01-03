@@ -44,7 +44,7 @@ const LoginForm = ({popup}) => {
                             userID: res?.data?.user?.userID
                         }
                     })
-                    popup ? window.location.reload() : window.location.href = '/profile/'+res?.data?.user?.username}
+                    popup ? window.location.reload() : window.location.href = '/'}
             })
         } catch (error) {
             console.log(error);
