@@ -49,6 +49,18 @@
     margin: 5px 10px 0 5px;
     font-size: 14px;
 }
+.cmt-text-box a{
+    text-decoration: underline;
+}
+.cmt-text-box a:hover{
+    color: #aaa;
+}
+.cmt-username{
+    text-decoration: none !important;
+    font-weight: bold;
+    color: white !important;
+    margin-right: 5px;
+}
 .cmt-del-btn{
     font-size: 13px;
     color: white;
