@@ -25,7 +25,7 @@ const Group = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
-    const {data, loading, refetch} = useQuery(GET_GROUP, {
+    const {data, loading, refetch, fetchMore} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
             limit:20,
@@ -41,35 +41,35 @@ const Group = ({isLogged}) => {
     }, [refetch, data])
 
     if(!loading){
-        if(!data?.get_group?.groupID || !data || !data?.get_group) return <Redirect to='/404'/>
+        if(!data?.get_group) return <Redirect to='/404'/>
     }
 
     
-    // const scrollPagination = () => {
-    //     window.onscroll = async ()=>{
-    //         if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
-    //             try {
-    //                 await fetchMore({
-    //                     variables:{
-    //                         offset:data?.get_feed_posts?.length,
-    //                     },
-    //                     updateQuery: (prev, { fetchMoreResult }) => {
-    //                         if (!fetchMoreResult) return prev;
-    //                         return Object.assign({}, prev, {
-    //                           get_feed_posts: [...data.get_feed_posts, ...fetchMoreResult?.get_feed_posts]
-    //                         });
-    //                       }
-    //                 })
-    //             } catch{}
-    //         }
-    //     }
-    // }
+    const scrollPagination = () => {
+        window.onscroll = async ()=>{
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                try {
+                    await fetchMore({
+                        variables:{
+                            offset:data?.get_group_posts?.length,
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return Object.assign({}, prev, {
+                              get_group_posts: [...data.get_group_posts, ...fetchMoreResult?.get_group_posts]
+                            });
+                          }
+                    })
+                } catch{}
+            }
+        }
+    }
 
     return (
         <>
             <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
-            <div className='wrapper'>
+            <div className='wrapper' onLoad={scrollPagination}>
                 <Sidebar/>
                 <div className='container-profile'>
                     {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}

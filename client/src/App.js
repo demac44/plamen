@@ -35,6 +35,7 @@ const ManagePosts = lazy(()=>import('./routes/Groups/Settings/ManagePosts'))
 const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
 const SavedCommunityPosts = lazy(()=>import('./routes/Groups/SavedCommunityPosts'))
+const CommunityInfo = lazy(()=>import('./routes/Groups/CommunityInfo'))
 
 
 import('@fortawesome/free-solid-svg-icons').then(i=>{
@@ -109,6 +110,7 @@ function App() {
               <Route exact path='/community/:groupid/settings/join_requests'>{isLogged ? <JoinRequests isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/manage_users'>{isLogged ? <ManageUsers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
               <Route exact path='/community/:groupid/saved'>{isLogged ? <SavedCommunityPosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
+              <Route exact path='/community/:groupid/info'>{isLogged ? <CommunityInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
             </Suspense>
           </Switch>}
       </div>
