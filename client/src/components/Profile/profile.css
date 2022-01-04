@@ -35,10 +35,7 @@
     right: 10px;
     min-width: 150px;
     padding: 10px;
-    border-radius: 10px;
     font-size: 16px;
-    cursor: pointer;
-    transition: ease .3s;
     background-color: #104b41;
     color: white;
 }

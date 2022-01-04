@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
+import SearchInterests from '../../../../General components/SearchInterests'
 
 const EditInterests = ({data, uid}) => {
     const [tags, setTags] = useState(data.split(','))
@@ -27,6 +28,11 @@ const EditInterests = ({data, uid}) => {
 
     if(error) console.log(error);
 
+    const setInterestsCB = useCallback(val => {
+        setTags([...tags, val].filter(onlyUnique))
+        tags.filter(onlyUnique)
+    }, [tags])
+
     return (
         <div className='flex-col-ctr box'>
             <p>Edit your interests</p>
@@ -45,7 +51,7 @@ const EditInterests = ({data, uid}) => {
                     {tag}
                 </div>)}
             </div>
-            <select 
+            {/* <select 
                 className='input select-tags'
                 onChange={(e)=>{
                     let arr = tags.filter(onlyUnique)
@@ -53,7 +59,8 @@ const EditInterests = ({data, uid}) => {
                     tags.filter(onlyUnique)
                 }}>
                 {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
-            </select>
+            </select> */}
+            <SearchInterests setInterest={setInterestsCB}/>
 
             <button className='btn save-btn' onClick={handleEditInterests}>SAVE</button>
         </div>
@@ -61,8 +68,6 @@ const EditInterests = ({data, uid}) => {
 }
 
 export default EditInterests
-
-const allTags = ['Sport', 'Programming', 'Politics', 'Photography', 'Computers', 'DIY', 'Reading', 'Gaming', 'Comedy', 'Memes', 'Movies']
 
 const EDIT_INTERESTS = gql`
     mutation ($userID: Int!, $interests: String!){

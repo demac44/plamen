@@ -107,9 +107,9 @@
     cursor: pointer;
 }
 .follow-button{
-    width: 80px;
-    padding: 2px;
+    padding: 3px 15px;
     font-size: 14px;
+    border-radius: 5px;
 }
 .follow-button p{
     color: white;
@@ -207,6 +207,34 @@
 }
 .gcard_overlay h4{
     color: white;
+}
+.search-interests-box{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+.search-interests-box input{
+    width: 50%;
+}
+.search-interests-drop{
+    position: absolute;
+    top: 50px;
+    background-color: #1f1f1f;
+    z-index: 100000000;
+    width: 50%;
+    border: 1px solid #4f4f4f;
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow: auto;
+    cursor: pointer;
+}
+.search-interests-drop p{
+    padding: 5px;
+    text-align: center;
+}
+.search-interests-drop p:hover{
+    background-color: #2f2f2f;
 }
 /* MEDIA QUERIES */
 

@@ -11,7 +11,7 @@ const ActivityStatus = ({last_seen}) => {
     return (
         <div className='flex-ctr' style={{marginLeft:'20px'}}>
             <span className='activity_light' style={{backgroundColor: lastSeen==='online' ? 'green' : 'red'}}></span>
-            <p style={{fontSize:'12px'}}>{lastSeen==='online' ? 'Online' : 'Last online '+lastSeen}</p>
+            <p style={{fontSize:'10px'}}>{lastSeen==='online' ? 'Online' : 'Last online '+lastSeen}</p>
         </div>
     )
 }

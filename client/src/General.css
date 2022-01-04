@@ -70,7 +70,7 @@ p{
 .btn{
     text-align: center;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     outline: none;
     transition: ease .2s;
     cursor: pointer;
@@ -79,7 +79,7 @@ p{
     color: white !important;
 }
 .btn:hover{
-    background-color:#176e60 !important;
+    background-color:#186356 !important;
 }
 .input{
     width: 100%;

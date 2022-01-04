@@ -31,9 +31,9 @@ const ChatBar = ({chatID}) => {
                     </Link>
                     
                     <Link to={'/profile/'+state?.username} className='flex-ac'>
-                        <Avatar size='45px' image={state?.profile_picture}/>
+                        <Avatar size='40px' image={state?.profile_picture}/>
                         <span className='activity-status-chat flex-col'>
-                            <p style={{marginLeft:'10px'}}>{state?.first_name+' '+state?.last_name}</p>
+                            <p style={{marginLeft:'10px', fontSize:'15px'}}>{state?.first_name+' '+state?.last_name}</p>
                             <ActivityStatus last_seen={state?.last_seen}/>
                         </span>
                     </Link>

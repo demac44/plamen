@@ -104,8 +104,10 @@
     white-space:pre-wrap;
     word-wrap: break-word;
 }
-.msg a:hover{
+.msg a{
     text-decoration: underline;
+}
+.msg a:hover{
     color: #aaa;
 }
 .msg-current-user{

@@ -10,10 +10,9 @@
     height: 30px;
     font-size: 14px;
     cursor: pointer;
-    border-radius: 10px;
-    background-color: white;
-    color: #1f1f1f;
-    padding: 5px 15px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
 }
 .post-comments-box{
     width: 100%;
