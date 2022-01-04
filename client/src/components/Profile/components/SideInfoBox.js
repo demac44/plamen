@@ -12,7 +12,7 @@ const SideInfoBox = ({myprofile, userID}) => {
     const [dateJoined, setDateJoined] = useState(null)
     const [birthDate, setBirthDate] = useState(null)
     const [age, setAge] = useState(null)
-    const {data} = useQuery(USER_INFO, {
+    const {data, loading} = useQuery(USER_INFO, {
         variables:{
             userID: myprofile ? uid : userID
         }
@@ -33,6 +33,10 @@ const SideInfoBox = ({myprofile, userID}) => {
                {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
             </span>
 
+            {loading ? <div className='flex-ctr'><div className='small-spinner'></div></div> :
+
+            (
+            <>
             {(data?.get_user_info?.country || data?.get_user_info?.city) && 
             <div className='flex-sb'>
                     <span className='flex-ac'>
@@ -95,6 +99,7 @@ const SideInfoBox = ({myprofile, userID}) => {
            <br/>
 
            {data?.get_user_info?.date_joined && <span className='flex-ctr'><p>Joined in {dateJoined}</p></span>}
+           </>)}
         </div>
     )
 }

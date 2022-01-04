@@ -38,10 +38,9 @@
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
-    background-color: whitesmoke;
     transition: ease .3s;
-    background: linear-gradient(to bottom right, #2da0af, #0b4a68);
-
+    background-color: #104b41;
+    color: white;
 }
 .profile-top-box-buttons p{
     color: white;
@@ -69,7 +68,6 @@
     display: none;
 }
 .pf-pfp-box{
-    /* position: relative; */
     padding-top: 10px;
 }
 .pf-camera-icon{

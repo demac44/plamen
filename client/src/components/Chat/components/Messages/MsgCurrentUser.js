@@ -4,6 +4,7 @@ import SetTime from '../../../General components/SetTime'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Linkify from 'react-linkify'
 
 
 const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid}) => {
@@ -46,8 +47,7 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid}) => {
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
                             
-                        <p>{msg.msg_text.slice(0,8)==='https://' ? 
-                            <a href={msg.msg_text} target='_blank' className='link-msg' rel="noreferrer">{msg.msg_text}</a> : msg.msg_text}</p>  
+                        <Linkify><p>{msg.msg_text}</p></Linkify>
 
                         <span className='msg-timestamp'>
                             <SetTime timestamp={msg.time_sent} fontSize='12px'/>

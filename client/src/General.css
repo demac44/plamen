@@ -72,10 +72,14 @@ p{
     border: none;
     border-radius: 10px;
     outline: none;
-    transition: ease .1s;
+    transition: ease .2s;
     cursor: pointer;
-    padding: 5px 15px;
-    margin: 5px;
+    padding: 5px 10px;
+    background-color: #104b41 !important;
+    color: white !important;
+}
+.btn:hover{
+    background-color:#176e60 !important;
 }
 .input{
     width: 100%;
@@ -101,7 +105,7 @@ p{
 .box{
     position: relative;
     width: 100%;
-    padding: 10px;
+    padding:10px;
     box-shadow: 5px 5px 10px black;
     border-radius: 10px;
     color: white;

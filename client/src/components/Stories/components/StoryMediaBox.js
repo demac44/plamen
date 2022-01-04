@@ -31,17 +31,17 @@ const StoryMediaBox = ({
         if(storyData){
             if(index===0 && innerIndex===0){
                 closeStoryCallback(false)
-                return
+                return null
             } else if (index>0 && innerIndex===0){
                 setIndexCallback(index-1)
                 setInnerIndexCallback(0)
-                return
+                return null
             } else if (index>=0 && innerIndex>0){
                 setInnerIndexCallback(innerIndex-1)
-                return
+                return null
             }
         }
-        return
+        return null
     }
 
     useEffect(()=>{

@@ -19,7 +19,10 @@ const MyGroupsList = () => {
                 <h2>My communities</h2>
                 <Link to='/communities' className='side-box-link-btn'>See all</Link>
             </div>
-            {!loading && data?.get_groups?.slice(0, 5)?.map(group=>
+
+            {loading ? <div className='flex-ctr'><div className='small-spinner'></div></div>
+            
+            : data?.get_groups?.slice(0, 5)?.map(group=>
                 <div className='my-groups-box-group flex-ctr' style={{backgroundColor: "#" + ((1<<24)*Math.random() | 0).toString(16)}} key={group.groupID}>
                     <Link  to={'/community/'+group.groupID}  className='gcard_overlay flex-ctr'>
                         <h4>{group.group_name}</h4>

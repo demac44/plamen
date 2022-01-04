@@ -19,11 +19,15 @@ const InfoBox = ({data, user, membersCount}) => {
                     <p>{membersCount} members</p>
                     <Link to={'/community/'+data.groupID+'/members'} className='btn side-box-link-btn'>See all</Link>
                 </div>
-                <p style={{padding:'5px'}}>Created on {dateCreated}</p>
+                <p className='flex-ctr' style={{padding:'15px 0 0 0', fontSize:'14px'}}>Created on {dateCreated}</p>
             </div>
 
             <div className='info-box flex-col-ctr'>
-                <div><h3>Description</h3></div>
+                <div className='flex-sb wh-100'>
+                    <h3>Description</h3>
+                    {(user && (user?.role==='CREATOR' || user?.role==='ADMIN')) 
+                        && <Link to={'/community/'+data?.groupID+'/settings/edit_info'} className='side-box-link-btn'>Edit</Link>}
+                </div>
                 {data?.group_description ? 
                 <div className='info-box-text'>{data?.group_description}</div>
                     :  
@@ -35,15 +39,13 @@ const InfoBox = ({data, user, membersCount}) => {
             </div>
 
             <div className='info-box flex-col-ctr'>
-                <div><h3>Community rules</h3></div>
-                {data?.group_rules ? 
-                <div className='info-box-text'><p>{data?.group_rules}</p></div>
-                    : 
-                    ((user && (user?.role==='CREATOR' || user?.role==='ADMIN')) &&
-                    <div className='flex-ctr info-box-add-btn'>
-                        <FontAwesomeIcon icon='plus' color='white' style={{marginRight:'5px'}}/>
-                        <p>Add rules</p>
-                    </div>)}
+                <div className='flex-sb wh-100'>
+                    <h3>Community rules</h3>
+                    {(user && (user?.role==='CREATOR' || user?.role==='ADMIN')) 
+                        && <Link to={'/community/'+data?.groupID+'/settings/edit_info'} className='side-box-link-btn'>Edit</Link>}
+                </div>
+                {data?.group_rules &&
+                    <div className='info-box-text'><p>{data?.group_rules}</p></div>}
             </div>
         </>
     )

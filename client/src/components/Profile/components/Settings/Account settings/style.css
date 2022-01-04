@@ -85,6 +85,10 @@
 .on-off-txt:nth-child(2){
     right: 4px;
 }
+.save-btn{
+    align-self: flex-end;
+    margin-top: 15px;
+}
 @media screen and (max-width: 768px){
     .edit-pfp-menu{
         width: 60%;

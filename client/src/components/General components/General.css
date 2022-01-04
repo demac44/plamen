@@ -99,6 +99,7 @@
     border-radius:50%;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
+    margin: 30px 0;
 }
 .user-avatar{
     border-radius: 50%;
@@ -106,13 +107,12 @@
     cursor: pointer;
 }
 .follow-button{
-    background-color: white;
     width: 80px;
     padding: 2px;
     font-size: 14px;
 }
 .follow-button p{
-    color: #1b1b1b;
+    color: white;
 }
 
 .user-suggest-cont div, .user-suggest-cont h4{
@@ -179,7 +179,7 @@
 }
 .tag{
     padding: 5px 10px;
-    background-color: #13306e;
+    background-color: #144379;
     font-size: 14px;
     color: white;
     height: fit-content;
