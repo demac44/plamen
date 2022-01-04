@@ -14,10 +14,10 @@ const CitiesSelect = ({country, setCityCB}) => {
 
     return (
         <span className='search-cities-box'>
-            <input className='input' value={str} onChange={(e)=>setStr(e.target.value)} placeholder='Search for your city'/>
+            <input className='input' value={str} onChange={(e)=>setStr(e.target.value)} placeholder='Find your city...'/>
 
-            {str?.length > 0 && <div className='select-city-drop'>
-                {list?.length > 0 && list?.map(city => <p onClick={()=>setCityCB(city)} key={i++}>{city}</p>)}
+            {str?.length > 0 && <div className='uni-search-drop'>
+                {list?.length > 0 && list?.slice(0,50)?.map(city => <p onClick={()=>setCityCB(city)} key={i++}>{city}</p>)}
             </div>}
         </span>
     )
@@ -29,7 +29,6 @@ const filterRes = (country, str) => {
     if(country?.length <1) return []
     return country?.filter(city => {
         return city.toLowerCase().includes(str.toLowerCase()) 
-                || str.toLowerCase().includes(city.toLowerCase())
     })
 }
 

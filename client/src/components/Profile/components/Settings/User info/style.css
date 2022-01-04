@@ -90,6 +90,30 @@
     width: 250px;
     margin-top: 30px;
 }
+.search-uni-box{
+    position: relative;
+    margin-left: 5px;
+    width: 100%;
+}
+.uni-search-drop{
+    width: 100%;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    max-height: 50vh;
+    overflow: auto;
+    background-color: #1f1f1f;
+    cursor: pointer;
+    border: 1px solid #3f3f3f;
+    border-radius: 5px;
+    z-index: 10000000000000000000000;
+}
+.uni-search-drop p{
+    padding: 10px;
+}
+.uni-search-drop p:hover{
+    background-color: #2f2f2f;
+}
  
 @media screen and (max-width: 447px){
     .edit-user-info-box div{
@@ -129,5 +153,14 @@
         text-align: left;
         margin-left: 10px;
         margin-top: 10px;
+    }
+    .search-uni-box{
+        margin: 0;
+    }
+    .search-uni-box input{
+        margin-top: 15px;
+    }
+    .uni-search-drop{
+        top: 50px;
     }
 }

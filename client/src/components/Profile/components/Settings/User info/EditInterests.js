@@ -51,15 +51,6 @@ const EditInterests = ({data, uid}) => {
                     {tag}
                 </div>)}
             </div>
-            {/* <select 
-                className='input select-tags'
-                onChange={(e)=>{
-                    let arr = tags.filter(onlyUnique)
-                    setTags([...arr, e.target.value].filter(onlyUnique))
-                    tags.filter(onlyUnique)
-                }}>
-                {allTags.map(tag => <option value={tag} key={tag}>{tag}</option>)}
-            </select> */}
             <SearchInterests setInterest={setInterestsCB}/>
 
             <button className='btn save-btn' onClick={handleEditInterests}>SAVE</button>

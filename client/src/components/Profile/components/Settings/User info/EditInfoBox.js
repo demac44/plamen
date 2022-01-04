@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo'
 import CountriesSelect from './CountriesSelect'
 import './style.css'
 import CitiesSelect from './CitiesSelect'
+import SearchUniversity from './SearchUniversity'
 
 const EditInfoBox = ({data}) => {
     const [updated, setUpdated] = useState(false)
@@ -67,7 +68,8 @@ const EditInfoBox = ({data}) => {
 
             <div className='flex-ctr'>
                 <h5>University</h5>
-                <input type='text' className='input' id='uni' placeholder='Add university' defaultValue={data.university}/>
+                <input type='text' className='input' id='uni' placeholder='Add university' defaultValue={data.university} readOnly/>
+                <SearchUniversity/>
             </div>            
 
             <div className='flex-ctr'>
