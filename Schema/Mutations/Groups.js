@@ -296,6 +296,20 @@ export const CHANGE_GROUP_INFO = {
         return args
     }
 }
+export const CHANGE_COMMUNITY_BANNER = {
+    type: GroupType,
+    args:{
+        groupID:{type: GraphQLInt},
+        banner_image: {type: GraphQLString}
+    },
+    resolve(_, args){
+        const {groupID, banner_image} = args
+        const sql = `UPDATE community_info SET banner_image="${banner_image}" WHERE groupID=${groupID}`
+        connection.query(sql)
+        return args
+    }
+}
+
 export const CHANGE_GROUP_NAME = {
     type: GroupType,
     args: {

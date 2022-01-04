@@ -107,7 +107,7 @@ p{
     width: 100%;
     padding:10px;
     box-shadow: 5px 5px 10px black;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     margin-top: 15px;
     border: 1px solid #2f2f2f;
@@ -127,8 +127,8 @@ p{
     width: 100%;
     padding: 15px;
     box-shadow: 3px 3px 10px black;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     border: 1px solid #2f2f2f;
-    margin: 10px 0;
+    margin: 0 0 10px 0;
 }

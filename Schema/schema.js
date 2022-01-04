@@ -13,7 +13,7 @@ import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
 import { CHANGE_PASSWORD, EDIT_INFO, EDIT_PFP } from "./Mutations/Edit.js";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./Mutations/Followings.js";
 
-import { ACCEPT_REQUEST, ADD_GP_COMMENT, ALLOW_REPORTED_POST, CHANGE_GROUP_BANNER_IMG, 
+import { ACCEPT_REQUEST, ADD_GP_COMMENT, ALLOW_REPORTED_POST, CHANGE_COMMUNITY_BANNER, CHANGE_GROUP_BANNER_IMG, 
         CHANGE_GROUP_INFO, CHANGE_GROUP_NAME, CHANGE_GROUP_TAGS, CHANGE_MEMBER_ROLE, 
         CHANGE_VISIBILITY, CREATE_GROUP, CREATE_GROUP_POST, DELETE_GROUP_POST, 
         DENY_REQUEST, JOIN_GROUP, JOIN_REQUEST, LEAVE_GROUP, LIKE_GP_POST, REMOVE_GP_COMMENT, 
@@ -184,6 +184,7 @@ const RootMutation = new GraphQLObjectType({
         change_group_banner: CHANGE_GROUP_BANNER_IMG,
         change_group_tags: CHANGE_GROUP_TAGS,
         change_group_name: CHANGE_GROUP_NAME,
+        change_community_banner: CHANGE_COMMUNITY_BANNER,
         // community posts
         create_group_post: CREATE_GROUP_POST,
         delete_group_post: DELETE_GROUP_POST,

@@ -3,7 +3,7 @@ import JoinBtn from './JoinBtn'
 const GroupBanner = ({info, user, updatedCallback}) => {
     return (
         <div className='group-banner'>
-            <img className='wh-100' src={info.banner_image} alt=''/>
+            {info.banner_image && <img className='wh-100' src={info.banner_image} alt=''/>}
             <span className='group-banner-name-bar'>
                 <h1>{info.group_name}</h1>
             </span>

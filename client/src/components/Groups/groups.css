@@ -46,16 +46,19 @@
 .group-banner{
     position: relative;
     width: 100%;
+    min-height: 300px;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 5px 5px 10px;
-    border: 1px solid #4f4f4f;
+    border: 1px solid #2f2f2f;
     background-color: #2f2f2f;
+    background: url(../../images//community-default-banner.jpg);
 }
 .group-banner img{
     width: 100%;
     max-height: 50vh;
     object-fit: fill;
+    z-index: 1000000000;
 }
 .group-banner-name-bar{
     position: absolute;
@@ -75,7 +78,7 @@
     cursor: pointer;
     position: absolute;
     right: 10px;
-    bottom: 5px;
+    bottom: 10px;
     z-index: 100;
     background: linear-gradient(to bottom right, #227580, #063246);
     color: white;

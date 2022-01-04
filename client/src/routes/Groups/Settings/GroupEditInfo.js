@@ -16,6 +16,7 @@ import EditGroupInfo from '../../../components/Groups/components/Settings/Manage
 import EditGroupName from '../../../components/Groups/components/Settings/Manage info/EditGroupName'
 import EditTags from '../../../components/Groups/components/Settings/Manage info/EditTags'
 import '../../../components/Groups/groups.css'
+import ChangeBanner from '../../../components/Groups/components/Settings/Manage info/ChangeBanner'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
@@ -56,6 +57,12 @@ const GroupEditInfo = ({isLogged}) => {
                             <EditGroupVisibility 
                                 visibility={data?.get_group?.closed} 
                                 groupid={groupid}
+                                refetch={refetch}
+                            />
+
+                            <ChangeBanner 
+                                groupID={parseInt(groupid)} 
+                                banner={data?.get_group?.banner_image}
                                 refetch={refetch}
                             />
 

@@ -2,7 +2,7 @@
     width: 100%;
     background-color: #1b1b1b;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid #2f2f2f;
 }
 .my-groups-box-title{
@@ -118,16 +118,6 @@
 .follow-button p{
     color: white;
 }
-
-.user-suggest-cont div, .user-suggest-cont h4{
-    border: none !important;
-    max-height: fit-content !important;
-}
-.user-suggest-cont h4{
-    border-top: 1px solid #3f3f3f !important;
-    border-radius: 0 !important;
-}
-
 /* EMOJIS BOX */
 
 .emojis-box{
@@ -152,8 +142,16 @@
     border-radius: 50%;
     margin-right: 5px;
 }
+.user-suggest-cont div, .user-suggest-cont h4{
+    border: none !important;
+    max-height: fit-content !important;
+}
+.user-suggest-cont h4{
+    border-top: 1px solid #3f3f3f !important;
+    border-radius: 0 !important;
+}
 .user-sugg-box{
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 5px 5px;
     border-top: none;
     overflow: auto;
     max-height: 60vh;
@@ -163,7 +161,7 @@
 .user-sugg-box-title{
     width: 100%;
     padding: 5px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px 5px 0 0;
     border: 1px solid #2f2f2f;
     border-bottom: none;
     margin-top: 30px;
