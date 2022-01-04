@@ -6,10 +6,9 @@ import { useSelector } from 'react-redux';
 
 const roles = ['CREATOR', 'ADMIN', 'MODERATOR']
 
-const PostMenu = ({data, refetchPosts, handleReport}) => {
+const PostMenu = ({data, refetchPosts, handleReport, copiedCB}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [delete_post] = useMutation(DELETE_GP)
-    const [copied, setCopied] = useState(false)
 
     const handlePostDelete = () => {
         try {delete_post({
@@ -20,10 +19,7 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(window.location.origin+'/community/post/'+data.postID)
-        setCopied(true)
-        setTimeout(()=>{
-            setCopied(false)
-        }, 2000)
+        copiedCB()
     }
 
     return (
@@ -39,7 +35,6 @@ const PostMenu = ({data, refetchPosts, handleReport}) => {
                     <li onClick={()=>handleReport(true)}><FontAwesomeIcon icon='flag'/> Report</li>
                 </ul>
             </div>
-            {copied && <div className='link-copied-msg'>Link copied!</div>}
         </>
     )
 }

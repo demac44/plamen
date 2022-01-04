@@ -12,7 +12,9 @@
     font-size: 14px;
     cursor: pointer;
 }
-.post-text-bar a:hover{
+.post-text-bar a{
     text-decoration: underline;
+}
+.post-text-bar a:hover{
     color: #aaa;
 }

@@ -20,7 +20,7 @@
     transition: ease 0.5s;
 }
 .story-head{
-    border-radius: 50%;
+    border-radius: 5px;
 }
 .story-head-box{
     margin-left: 10px;

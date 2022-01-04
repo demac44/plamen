@@ -10,7 +10,7 @@
 .add-story-btn{
     height: 64px;
     width: 64px;
-    border-radius: 50%;
+    border-radius: 5px;
     cursor: pointer;
     background-color: #3f3f3f;
     overflow: hidden;

@@ -11,10 +11,18 @@ import ReportBox from './components/ReportBox'
 const PostTopBar = ({data, refetchPosts}) => {
     const [reportMenu, setReportMenu] = useState(false)
     const [menu, setMenu] = useState(false)
+    const [copied, setCopied] = useState(false)
 
     const handleReport = useCallback((val) => {
         setReportMenu(val)
     }, [setReportMenu])
+    
+    const copiedCB = useCallback(()=>{
+        setCopied(true)
+        setTimeout(()=>{
+            setCopied(false)
+        }, 2000)
+    })
 
     return (
         <>
@@ -46,9 +54,12 @@ const PostTopBar = ({data, refetchPosts}) => {
                     postID: data.postID,
                     userID: data.userID,
                     role: data.role
-                }}/>
+                }}
+                copiedCB={copiedCB}
+                />
             </span>}
             {reportMenu && <ReportBox data={data} handleReportClose={handleReport}/>}
+            {copied && <div className='link-copied-msg'>Link copied!</div>}
         </>
     )
 }
