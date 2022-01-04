@@ -291,12 +291,6 @@
     width: 100%;
     text-align: right;
 }
-.emojis-btn{
-    font-size: 25px;
-    color: white;
-    cursor: pointer;
-    margin-right: 15px;
-}
 .msg-upload-btn{
     font-size: 30px;
     color: white;
@@ -324,7 +318,12 @@
     border-radius: 10px 10px 0 0;
 }
 /* EMOJIS */
-
+.emojis-btn{
+    font-size: 25px;
+    color: white;
+    cursor: pointer;
+    margin-right: 15px;
+}
 .chat-msg-box .emojis-box{
     position: absolute;
     bottom: 50px;

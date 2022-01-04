@@ -101,6 +101,10 @@ p{
     top: 0;
     left: 0;
     z-index: 100000000000000000000;
+    animation-name: overlay;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+    opacity: 0;
 }
 .box{
     position: relative;
@@ -131,4 +135,12 @@ p{
     color: white;
     border: 1px solid #2f2f2f;
     margin: 0 0 10px 0;
+}
+@-webkit-keyframes overlay {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+@keyframes overlay {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }

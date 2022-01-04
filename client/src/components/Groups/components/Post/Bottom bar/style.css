@@ -1,10 +1,10 @@
 .post-bottom-bar{
     position: relative;
     display: flex;
-    align-items: center;
-    height: 50px;
+    min-height: 50px;
     width: 100%;
-    padding: 5px;
+    padding: 0 5px;
+    align-items: flex-start;
 }
 .post-button{
     height: 30px;
@@ -92,6 +92,21 @@
 .likes-list-loader{
     width: 100%;
     height: 150px;
+}
+.cmt-emojis-btn{
+    margin-left: 10px;
+    cursor: pointer;
+}
+.post-bottom-bar .emojis-box{
+    visibility: visible;
+    max-height: 150px;
+    margin-bottom: 10px;
+}
+.post-bottom-bar .emojis-sub-box{
+    grid-template-columns: repeat(10, 1fr);
+}
+.post-bottom-bar .emojis-sub-box p{
+    font-size: 20px;
 }
 @media screen and (max-width:447px){
     .comment{

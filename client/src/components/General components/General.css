@@ -118,24 +118,6 @@
 .follow-button p{
     color: white;
 }
-/* EMOJIS BOX */
-
-.emojis-box{
-    background-color: #1b1b1b;
-    max-height: 300px;
-    overflow: auto;
-    padding: 10px 0 10px 10px;
-    border: 10px solid #1f1f1f;
-}
-.emojis-sub-box{
-    width: 100%;
-    display: grid;
-    gap: 5px;
-}
-.emojis-box p{
-    font-size: 25px;
-    cursor: pointer;
-}
 .activity_light{
     width: 10px;
     height: 10px;

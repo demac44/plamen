@@ -37,9 +37,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    animation-name: story;
-    animation-duration: .5s;
-    animation-fill-mode: forwards;
 }
 .story-media{
     position: relative;
@@ -208,13 +205,4 @@ audio::-webkit-media-controls-fullscreen-button, .story-vid::-webkit-media-contr
 @keyframes load {
     0% {width: 0%;}
     100% {width: 100%;}
-}
-
-@-webkit-keyframes story {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-@keyframes story {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
 }
