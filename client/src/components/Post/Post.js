@@ -24,7 +24,7 @@ const Post = ({post, refetchPosts}) => {
                 url:post.url,
                 type:post.type
             }}/>
-            <PostTextBar post_text={post.post_text}/>
+            <PostTextBar post_text={post.post_text} postID={post.postID}/>
             <PostBottomBar postID={post.postID} userID={post.userID}/>
         </div>
     )

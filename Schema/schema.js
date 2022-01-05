@@ -22,6 +22,7 @@ import { ACCEPT_REQUEST, ADD_GP_COMMENT, ALLOW_REPORTED_POST, CHANGE_COMMUNITY_B
 
 import { LIKE_POST, REMOVE_LIKE } from "./Mutations/Likes.js";
 import { CLEAR_NOTIFICATIONS, COMM_NOTIFICATION, FOLLOW_NOTIFICATION, LIKE_NOTIFICATION, 
+        MENTION_NOTIFICATION, 
         REMOVE_COMMENT_NOTIF, REMOVE_FOLLOW_NOTIF, REMOVE_LIKE_NOTIF } from "./Mutations/Notifications.js";
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
@@ -178,6 +179,7 @@ const RootMutation = new GraphQLObjectType({
         remove_like_notif: REMOVE_LIKE_NOTIF,
         remove_follow_notif: REMOVE_FOLLOW_NOTIF,
         remove_comment_notif: REMOVE_COMMENT_NOTIF,
+        mention_notification: MENTION_NOTIFICATION,
         // communities
         create_group: CREATE_GROUP,
         change_group_visibility: CHANGE_VISIBILITY,

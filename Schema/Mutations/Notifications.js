@@ -14,8 +14,8 @@ export const LIKE_NOTIFICATION = {
     async resolve(_, args) {
         const {postID, sender_id, receiver_id} = args
         if(sender_id!==receiver_id){
-            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                            VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "like")`
+            const sql = `INSERT INTO notifications (sender_id, receiver_id, postID, type)
+                            VALUES (${sender_id}, ${receiver_id}, ${postID}, "like")`
             const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
             const user = await connection.promise().query(usr).then(res=>{return res[0]})
             const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -45,8 +45,8 @@ export const COMM_NOTIFICATION = {
     async resolve(_, args) {
         const {postID, sender_id, receiver_id} = args
         if(sender_id!==receiver_id){
-            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                            VALUES (null, ${sender_id}, ${receiver_id}, ${postID}, null, "comment")`   
+            const sql = `INSERT INTO notifications (sender_id, receiver_id, postID, type)
+                            VALUES (${sender_id}, ${receiver_id}, ${postID}, "comment")`   
             const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
             const user = await connection.promise().query(usr).then(res=>{return res[0]})
             const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -74,8 +74,8 @@ export const FOLLOW_NOTIFICATION = {
     async resolve(_, args) {
         const {sender_id, receiver_id} = args
         if(sender_id!==receiver_id){
-            const sql = `INSERT INTO notifications (Nid, sender_id, receiver_id, postID, time_sent, type)
-                            VALUES (null, ${sender_id}, ${receiver_id}, null, null, "follow")`
+            const sql = `INSERT INTO notifications (sender_id, receiver_id, type)
+                            VALUES (${sender_id}, ${receiver_id}, "follow")`
             const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
             const user = await connection.promise().query(usr).then(res=>{return res[0]})
             const result = await connection.promise().query(sql).then(res=>{return res[0]})
@@ -90,6 +90,34 @@ export const FOLLOW_NOTIFICATION = {
             }})
         }
         return args
+    }
+}
+
+export const MENTION_NOTIFICATION = {
+    type: NotificationType,
+    args:{
+        postID: {type: GraphQLInt},
+        sender_id: {type: GraphQLInt},
+        receiver_id: {type: GraphQLInt},
+    },
+    async resolve(_, args){
+        const {sender_id, receiver_id, postID} = args
+        if(sender_id!==receiver_id){
+            const sql = `INSERT INTO notifications (sender_id, receiver_id, postID, type)
+                         VALUES (${sender_id}, ${receiver_id}, ${postID}, "mention")`
+            const usr = `SELECT username, profile_picture FROM users WHERE userID=${sender_id}`
+            const user = await connection.promise().query(usr).then(res=>{return res[0]})
+            const result = await connection.promise().query(sql).then(res=>{return res[0]})
+            pubsub.publish('NOTIFICATION', {newNotification: {
+                sender_id, 
+                receiver_id, 
+                Nid:result.insertId, 
+                type:"mention", 
+                username: user[0].username,
+                profile_picture: user[0].profile_picture,
+                time_sent: new Date().getTime()
+            }})
+        }
     }
 }
 

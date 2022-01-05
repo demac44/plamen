@@ -20,6 +20,8 @@ const CreatePost = ({refetch}) => {
     const [sizeError, setSizeError] = useState(false)
     const [lengthErr, setLengthErr] = useState(false)
     const [postText, setPostText] = useState('')
+    // const [mention_notif] = useMutation(MENTION_NOTIF)
+
 
     const [new_post] = useMutation(NEW_POST)
 
@@ -180,3 +182,19 @@ const NEW_POST = gql`
         }
     }
 `
+
+// const MENTION_NOTIF = gql`
+//     mutation ($postID: Int!, $userID: Int!, $rid: Int!){
+//         mention_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+//             postID
+//         }
+//     }
+// `
+// mention_notif({
+//     variables:{
+//         userID: uid,
+//         rid: res.userID,
+//         postID: postID
+//     }
+// })
+// }

@@ -3,6 +3,9 @@ import './style.css'
 import Linkify from 'react-linkify'
 import parse from 'html-react-parser'
 import axios from 'axios'
+import { useMutation } from 'react-apollo'
+import {gql} from 'graphql-tag'
+import {useSelector} from 'react-redux'
 
 const PostTextBar = ({post_text}) => {
     const [readMore, setReadMore] = useState(true)
@@ -12,7 +15,11 @@ const PostTextBar = ({post_text}) => {
         const func = async () => {
             return await findTag(post_text)
         }
-        func().then(res => setText(res))
+        func().then(res => {
+            if(res){
+                setText(res)
+            }        
+        })
     }, [])
 
     return (
@@ -65,8 +72,8 @@ const findTag = async (post_text) => {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                    query: `query($username: String!, $userID: Int!){
-                        get_user(username: $username, userID: $userID){
+                    query: `query($username: String!){
+                        get_tagged_user(username: $username){
                             username
                         }
                     }`,
@@ -74,7 +81,7 @@ const findTag = async (post_text) => {
                         username: username,
                         userID: 9
                     }
-            }).then(res=>{return res?.data?.data?.get_user})
+            }).then(res=>{return res?.data?.data?.get_tagged_user})
             if(result){
                 arr.splice(pos, 0, `<a href='/profile/${username}'>`)
                 arr.splice(spaceIndex+1, 0, `</a>`)

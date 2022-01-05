@@ -50,7 +50,7 @@ export const GET_TAGGED_USER = {
     },
     async resolve(_, args){
         const {username} = args
-        const sql = `SELECT username FROM users WHERE username="${username}"`
+        const sql = `SELECT username, userID FROM users WHERE username="${username}"`
         return await connection.promise().query(sql).then(res=>{return res[0][0]})
     }
 }
