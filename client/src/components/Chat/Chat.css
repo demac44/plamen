@@ -122,6 +122,11 @@
 .msg-other-user p{
     color: #1b1b1b;
 }
+.msg_username{
+    text-decoration: none !important;
+    font-weight: bold;
+    color: #1b1b1b !important;
+}
 .msg-preview-bar{
     width: 100%;
     height: 100px;

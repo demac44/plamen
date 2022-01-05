@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import SetTime from '../../../General components/SetTime'
-
-import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Linkify from 'react-linkify'
 
 
-const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid}) => {
+const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
-    const [delete_msg] = useMutation(DELETE_MESSAGE, {
+    const [delete_msg] = useMutation(deleteQuery, {
         variables:{msgID: msg.msgID}
     })
 
@@ -60,12 +58,3 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid}) => {
 }
 
 export default MsgCurrentUser
-
-
-const DELETE_MESSAGE = gql`
-    mutation ($msgID: Int!){
-        delete_message(msgID:$msgID){
-            msgID
-        }
-    }
-`

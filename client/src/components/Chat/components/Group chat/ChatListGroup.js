@@ -11,7 +11,6 @@ import './style.css'
 const ChatListGroup = ({data}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const newMsg = useSubscription(NEW_GROUP_MESSAGE)
-    // const [count, setCount] = useState(0)
     const [msgData, setMsgData] = useState([])
     const info = useQuery(LAST_MESSAGE_GROUP, {
         variables:{
@@ -20,7 +19,6 @@ const ChatListGroup = ({data}) => {
     })
 
     useEffect(()=>{
-        // setCount(info?.data?.count_msgs?.msgCount)
         setMsgData(info?.data)
         info?.refetch()
         return
@@ -57,10 +55,6 @@ const ChatListGroup = ({data}) => {
                 </p>}
 
             </div>  
-            {/* {(count > 0 || (newMsg?.data?.newGroupMessage?.userID!==uid
-                && newMsg?.data?.newGroupMessage?.groupChatId===data?.groupChatId))
-                && <div className='unread-msg-dot'></div>} */}
-
         </Link>
     )
 }

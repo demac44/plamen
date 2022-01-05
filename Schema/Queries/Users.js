@@ -43,6 +43,18 @@ export const GET_USER = {
     }    
 }
 
+export const GET_TAGGED_USER = {
+    type: UserType,
+    args:{
+        username: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {username} = args
+        const sql = `SELECT username FROM users WHERE username="${username}"`
+        return await connection.promise().query(sql).then(res=>{return res[0][0]})
+    }
+}
+
 export const GET_USER_INFO = {
     type: UserInfoType,
     args: {

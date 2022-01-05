@@ -23,7 +23,13 @@ const Message = ({msg}) => {
     return (
         <>
             {!loading && ((msg.userID===uid)
-            ? <MsgCurrentUser msg={msg} storyUrl={data?.get_story_msg_url?.url} uid={uid} setOpenMedia={setOpenMediaCallback}/>
+            ? <MsgCurrentUser
+                msg={msg} 
+                storyUrl={data?.get_story_msg_url?.url}
+                uid={uid}
+                setOpenMedia={setOpenMediaCallback}
+                deleteQuery={DELETE_MESSAGE}
+            />
             : <MsgOtherUser msg={msg} storyUrl={data?.get_story_msg_url?.url} setOpenMedia={setOpenMediaCallback}/>)}
             {openMedia && <OpenMedia url={msg.url} callback={setOpenMediaCallback}/>}    
         </>
@@ -38,6 +44,14 @@ const GET_STORY = gql`
     query($sid: Int){
         get_story_msg_url(storyID: $sid){
             url
+        }
+    }
+`
+
+const DELETE_MESSAGE = gql`
+    mutation ($msgID: Int!){
+        delete_message(msgID:$msgID){
+            msgID
         }
     }
 `

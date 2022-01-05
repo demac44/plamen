@@ -51,16 +51,16 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                     userID={isProfile ? allData.user.userID : storyData?.userID}
                 />
 
-                {(!isProfile && uid===(isProfile ? allData.user.userID : storyData?.userID)) ?
-                <StoryReply 
+                {(isProfile && uid===(storyData?.userID || allData.user.userID)) ?
+                <StoryOptionsBar 
+                    storyID={storyData?.stories[innerIndex]?.storyID}
+                    closeStoryCallback={closeStoryCallback}
+                    />
+                : <StoryReply 
                     userID={isProfile ? storyData?.stories[innerIndex]?.userID : storyData?.userID}
                     storyID={storyData?.stories[innerIndex]?.storyID}
                     type={storyData?.stories[innerIndex]?.type}
-                /> 
-                : <StoryOptionsBar 
-                    storyID={storyData?.stories[innerIndex]?.storyID}
-                    closeStoryCallback={closeStoryCallback}
-                    />}
+                /> }
 
             </div>
             : <div className='flex-ctr wh-100' style={{backgroundColor:'#2f2f2f'}}><div className='small-spinner'></div></div>}
