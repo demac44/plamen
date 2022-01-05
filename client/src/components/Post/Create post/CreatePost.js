@@ -20,7 +20,7 @@ const CreatePost = ({refetch}) => {
     const [sizeError, setSizeError] = useState(false)
     const [lengthErr, setLengthErr] = useState(false)
     const [postText, setPostText] = useState('')
-    // const [mention_notif] = useMutation(MENTION_NOTIF)
+    const [mention_notif] = useMutation(MENTION_NOTIF)
 
 
     const [new_post] = useMutation(NEW_POST)
@@ -31,7 +31,7 @@ const CreatePost = ({refetch}) => {
         if(postText.trim().length < 1 && !image && !video){
             setEmptyErr('2px solid #E82c30')
             return
-        } else if (postText.length > 5000) {
+        }else if (postText.length > 5000) {
             setLengthErr(true)
             return
         } else {
@@ -50,7 +50,21 @@ const CreatePost = ({refetch}) => {
                             url: res.data.url,
                             type:'image'
                         }
-                    }).then(()=>{
+                    }).then(postRes=>{
+                        const func = async () => {
+                            return await findTag(postText)
+                        }
+                        func().then(rslt => {
+                            if(rslt){
+                                mention_notif({
+                                    variables:{
+                                        userID: uid,
+                                        rid: rslt.userID,
+                                        postID: postRes.data.new_post.postID
+                                    }
+                                })                
+                            }        
+                        }).then(()=>{
                         setVideo(null)
                         setImage(null )
                         setPreview(null)
@@ -58,7 +72,7 @@ const CreatePost = ({refetch}) => {
                         refetch()
                         setPostText('')
                     }
-                    )
+                    )})
                 })
             } else if (video) {
                 const data = new FormData()
@@ -75,15 +89,29 @@ const CreatePost = ({refetch}) => {
                             url: res.data.url,
                             type:'video'
                         }
-                    }).then(()=>{
-                        setImage(null)
+                    }).then(postRes=>{
+                        const func = async () => {
+                            return await findTag(postText)
+                        }
+                        func().then(rslt => {
+                            if(rslt){
+                                mention_notif({
+                                    variables:{
+                                        userID: uid,
+                                        rid: rslt.userID,
+                                        postID: postRes.data.new_post.postID
+                                    }
+                                })                
+                            }        
+                        }).then(()=>{
                         setVideo(null)
+                        setImage(null )
                         setPreview(null)
-                        refetch()
                         setLoading(false)
+                        refetch()
                         setPostText('')
                     }
-                    )
+                    )})
                 })
             } else {
                 new_post({
@@ -93,9 +121,24 @@ const CreatePost = ({refetch}) => {
                         url: '',
                         type:'text'
                     }
-                }).then(()=>{
-                    refetch()
-                    setPostText('')
+                }).then(postRes=>{
+                    const func = async () => {
+                        return await findTag(postText)
+                    }
+                    func().then(rslt => {
+                        if(rslt){
+                            mention_notif({
+                                variables:{
+                                    userID: uid,
+                                    rid: rslt.userID,
+                                    postID: postRes.data.new_post.postID
+                                }
+                            })                
+                        }        
+                    }).then(()=>{
+                        refetch()
+                        setPostText('')
+                    })
                 })
             }
         }
@@ -178,23 +221,60 @@ export default CreatePost
 const NEW_POST = gql`
     mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
         new_post(userID: $userID, post_text: $text, url: $url, type: $type){
-            userID
+            postID
         }
     }
 `
 
-// const MENTION_NOTIF = gql`
-//     mutation ($postID: Int!, $userID: Int!, $rid: Int!){
-//         mention_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
-//             postID
-//         }
-//     }
-// `
-// mention_notif({
-//     variables:{
-//         userID: uid,
-//         rid: res.userID,
-//         postID: postID
-//     }
-// })
-// }
+const MENTION_NOTIF = gql`
+    mutation ($postID: Int!, $userID: Int!, $rid: Int!){
+        mention_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+            postID
+        }
+    }
+`
+
+const findTag = async (post_text) => {
+    if(post_text.includes('@')){
+        let spaceIndex = null;
+        let arr = post_text.split('')
+        let pos = arr.indexOf('@')
+        for(let i = pos;i<arr.length;i++){
+            let c = arr[i]
+            if(c===' ') {
+                spaceIndex=i
+                break
+            } else if(i===arr.length-1){
+                spaceIndex=i+1
+                break
+            } else if(i===arr.length){
+                spaceIndex=-1
+                break
+            }
+        }
+        if(spaceIndex){
+            let username = post_text.slice(pos+1, spaceIndex)
+            const result = await axios.post('http://localhost:8000/graphql',{
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                    query: `query($username: String!){
+                        get_tagged_user(username: $username){
+                            username
+                            userID
+                        }
+                    }`,
+                    variables:{
+                        username: username,
+                        userID: 9
+                    }
+            }).then(res=>{return res?.data?.data?.get_tagged_user})
+            if(result){
+                return {
+                    username: result.username,
+                    userID: result.userID
+                }
+            } else return false
+        } else return false
+    } else return false
+}

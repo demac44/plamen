@@ -10,12 +10,12 @@ export const CREATE_POST = {
         url: {type: GraphQLString},
         type:{type:GraphQLString}
     },
-    resolve (_, args){
+    async resolve (_, args){
         const {userID, post_text, url, type} = args
         const sql = `INSERT INTO posts (userID, post_text, url, type)
                     VALUES (${userID}, "${post_text}", "${url}", "${type}")`
-        connection.query(sql)
-        return args
+        const result = connection.promise().query(sql).then(res=>{return res[0].insertId})
+        return {postID: result}
     }
 }
 export const DELETE_POST = {
