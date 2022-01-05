@@ -1,5 +1,5 @@
 import React, {memo} from 'react'
-import CreateGroupCard from './Create group/CreateGroupCard'
+import CreateGroupCard from '../Create group/CreateGroupCard'
 import GroupCard from './GroupCard'
 const GroupsGrid = ({groups}) => {
     return (

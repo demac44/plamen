@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import CommMessage from './CommMessage'
-
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux'
+import CommMessage from './CommMessage'
 
 const CommChatMsgBox = ({groupID, loader}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)

@@ -5,9 +5,6 @@ body{
 .wrapper{
     position: relative;
     overflow: hidden;
-    animation-name: logo;
-    animation-duration: .5s;
-    animation-fill-mode:backwards;
 }
 .container-main{
     position: relative;

@@ -55,8 +55,8 @@
 }
 .notif-type{
     position: absolute;
-    top: 0;
-    right: -5px;
+    top: -5px;
+    right: -10px;
     font-size: 20px;
 }
 .like-notif{
@@ -67,6 +67,9 @@
 }
 .foll-notif{
     color:#008607
+}
+.mention-notif{
+    color: indianred;
 }
 
 

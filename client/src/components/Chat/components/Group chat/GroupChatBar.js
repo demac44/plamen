@@ -2,9 +2,7 @@ import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Avatar from '../../../General components/Avatar'
 import GroupChatMenu from './Group chat menu/GroupChatMenu'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 
 const GroupChatBar = ({chatID, admin}) => {
     const [showMenu, setShowMenu] = useState(false)

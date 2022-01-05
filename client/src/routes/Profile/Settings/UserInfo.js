@@ -1,19 +1,19 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
-import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
-import Sidebar from '../../../components/General components/Sidebar'
-import Navbar from '../../../components/Navbar/Navbar'
-import EditProfileNav from '../../../components/Profile/components/Settings/EditProfileNav'
-import EditBDate from '../../../components/Profile/components/Settings/User info/EditBDate'
-import EditGender from '../../../components/Profile/components/Settings/User info/EditGender'
-import EditInfoBox from '../../../components/Profile/components/Settings/User info/EditInfoBox'
-import EditInterests from '../../../components/Profile/components/Settings/User info/EditInterests'
-import '../../../components/Profile/components/Settings/style.css'
-import '../../../components/Profile/components/Settings/User info/style.css'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../../../components/Profile/Settings/User info/style.css'
+import '../../../components/Profile/Settings/style.css'
+import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
+import Sidebar from '../../../components/General components/Sidebar'
+import Navbar from '../../../components/Navbar/Navbar'
+import EditProfileNav from '../../../components/Profile/Settings/EditProfileNav'
+import EditBDate from '../../../components/Profile/Settings/User info/EditBDate'
+import EditGender from '../../../components/Profile/Settings/User info/EditGender'
+import EditInfoBox from '../../../components/Profile/Settings/User info/EditInfoBox'
+import EditInterests from '../../../components/Profile/Settings/User info/EditInterests'
 
 const UserInfo = ({isLogged}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)

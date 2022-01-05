@@ -21,7 +21,7 @@ const Groups = lazy(()=>import('./routes/Groups/Groups'))
 const GroupMembers = lazy(()=>import('./routes/Groups/GroupMembers'))
 const Explore = lazy(()=>import('./routes/Explore/Explore'))
 const Chats = lazy(()=>import('./routes/Chat/Chats'))
-const Saved = lazy(()=>import('./routes/Profile/Saved'))
+const Saved = lazy(()=>import('./routes/Saved/Saved'))
 const NotFound = lazy(()=>import('./routes/Not found/NotFound'))
 const SinglePost = lazy(()=>import('./routes/Post/SinglePost'))
 const Search = lazy(()=>import('./routes/Search/Search'))
@@ -44,7 +44,8 @@ import('@fortawesome/free-solid-svg-icons').then(i=>{
         i.faSortDown, i.faHome, i.faBriefcase, i.faUniversity, i.faSchool, i.faBirthdayCake, 
         i.faMobileAlt, i.faHeart, i.faComment, i.faUser, i.faTrashAlt, i.faEllipsisV, i.faArrowLeft,
         i.faTimes,i.faImages, i.faVideo, i.faShare, i.faFlag, i.faChevronRight, i.faSearch, i.faUserCog, i.faInfoCircle,
-        i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera, i.faRedo, i.faChevronLeft)
+        i.faPhone, i.faIcons, i.faLock, i.faLockOpen, i.faCommentDots, i.faCogs, i.faCamera, i.faRedo, i.faChevronLeft,
+        i.faAt)
       })
 })
 

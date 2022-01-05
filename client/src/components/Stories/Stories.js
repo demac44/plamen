@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
-import AddStory from './components/AddStory'
-import StoryHead from './components/StoryHead'
+import AddStory from './components/All stories container/AddStory'
+import StoryHead from './components/All stories container/StoryHead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './components/style.css'
 import './Stories.css'

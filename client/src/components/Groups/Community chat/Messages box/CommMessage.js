@@ -1,11 +1,8 @@
 import React, { useCallback, useState, memo } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import OpenMedia from '../../../Chat/components/Chat media/OpenMedia';
-import SetTime from '../../../General components/SetTime';
-import Avatar from '../../../General components/Avatar'
 import MsgCurrentUser from '../../../Chat/components/Messages/MsgCurrentUser';
 import MsgOtherUser from '../../../Chat/components/Messages/MsgOtherUser';
 

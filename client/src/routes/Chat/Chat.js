@@ -4,7 +4,7 @@ import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
 
 import { ChatList, ChatMsgBox } from '../../components/Chat/export'
-import GroupChatMsgBox from '../../components/Chat/components/Group chat/GroupChatMsgBox'
+import GroupChatMsgBox from '../../components/Chat/components/Group chat/Messages/GroupChatMsgBox'
 import { useSelector } from 'react-redux'
 
 const Chat = ({isLogged, isGroupChat}) => {

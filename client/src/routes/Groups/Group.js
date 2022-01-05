@@ -10,13 +10,10 @@ import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
 import TagsBox from '../../components/General components/TagsBox'
 import Sidebar from '../../components/General components/Sidebar'
-
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-import CreateGroupPost from '../../components/Groups/components/Post/Create post/CreateGroupPost'
-
+import CreateGroupPost from '../../components/Groups/Post/Create post/CreateGroupPost'
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
-
-import GroupPosts from '../../components/Groups/components/Post/GroupPosts'
+import GroupPosts from '../../components/Groups/Post/GroupPosts'
 import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'

@@ -2,9 +2,7 @@ import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
-
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 import ActivityStatus from '../../General components/ActivityStatus'
 
 const ChatBar = ({chatID}) => {
