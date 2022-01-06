@@ -2,7 +2,8 @@ import {
     GraphQLObjectType,
     GraphQLInt,
     GraphQLString,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLList
  } from "graphql";
 
 export const UserType = new GraphQLObjectType({

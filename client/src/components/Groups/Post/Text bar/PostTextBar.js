@@ -1,23 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import Linkify from 'react-linkify'
-import parse from 'html-react-parser'
-import axios from 'axios'
 
 const PostTextBar = ({post_text}) => {
     const [readMore, setReadMore] = useState(true)
-    const [text, setText] = useState(null)
-
-    useEffect(()=>{
-        const func = async () => {
-            return await findTag(post_text)
-        }
-        func().then(res => {
-            if(res){
-                setText(res)
-            }        
-        })
-    }, [post_text])
 
     return (
         <>
@@ -37,7 +23,8 @@ const PostTextBar = ({post_text}) => {
                         {!readMore && <p onClick={()=>setReadMore(true)} className='read-full-post'>Read less</p>}
                     </>
                     )
-                    : <Linkify>{<p>{text ? parse(text) : post_text}</p>}</Linkify>
+                    : (findTag(post_text) ? <Linkify>{<p dangerouslySetInnerHTML={{__html: findTag(post_text)}}></p>}</Linkify>
+                        : <Linkify><p>{post_text}</p></Linkify>)
                     }
                 </div>}
         </>
@@ -45,45 +32,33 @@ const PostTextBar = ({post_text}) => {
 }
 export default PostTextBar
 
-const findTag = async (post_text) => {
+const findTag = (post_text) => {
     if(post_text.includes('@')){
-        let spaceIndex = null;
+        post_text = post_text.replaceAll('@', ' @')
+        if(post_text.includes('<')){
+            post_text = post_text.replaceAll('<', '<\u200b')
+        }
         let arr = post_text.split('')
-        let pos = arr.indexOf('@')
-        for(let i = pos;i<arr.length;i++){
-            let c = arr[i]
-            if(c===' ') {
-                spaceIndex=i
-                break
-            } else if(i===arr.length-1){
-                spaceIndex=i+1
-                break
-            } else if(i===arr.length){
-                spaceIndex=-1
-                break
+        let namesArr = [];
+        let name=null;
+        for(let i = 0;i<arr.length;i++){
+            name=null;
+            if(arr[i]==='@'){
+                for(let j=i;j<arr.length;j++){
+                    if(arr[j]===' ') {name=post_text.slice(i+1,j); break}
+                    else if(j===arr.length-1) {name=post_text.slice(i+1,j+1); break}
+                    else if(j===arr.length) {name=post_text.slice(i+1,-1); break}
+                }
+                name && namesArr.push(name)
             }
         }
-        if(spaceIndex){
-            let username = post_text.slice(pos+1, spaceIndex)
-            const result = await axios.post('http://localhost:8000/graphql',{
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                    query: `query($username: String!){
-                        get_tagged_user(username: $username){
-                            username
-                        }
-                    }`,
-                    variables:{
-                        username: username,
-                        userID: 9
-                    }
-            }).then(res=>{return res?.data?.data?.get_tagged_user})
-            if(result){
-                arr.splice(pos, 0, `<a href='/profile/${username}'>`)
-                arr.splice(spaceIndex+1, 0, `</a>`)
-                return arr.join('')
-            } else return false
-        } else return false
-    } else return false
+        if(namesArr.length>0){
+            namesArr.forEach(name => {
+                post_text = post_text.replaceAll(`@${name}`, `<a href='/profile/${name}'>@${name}</a>`)
+            })
+            return post_text
+        }
+        return false
+    }
+    return false
 }

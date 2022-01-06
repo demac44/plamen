@@ -12,6 +12,8 @@ import './style.css'
 
 const CreatePost = ({refetch}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
+    const ls = JSON.parse(localStorage.getItem('user'))
     const [emptyErr, setEmptyErr] = useState('')
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null)
@@ -50,21 +52,21 @@ const CreatePost = ({refetch}) => {
                             url: res.data.url,
                             type:'image'
                         }
-                    }).then(postRes=>{
-                        const func = async () => {
-                            return await findTag(postText)
-                        }
-                        func().then(rslt => {
-                            if(rslt){
-                                mention_notif({
-                                    variables:{
-                                        userID: uid,
-                                        rid: rslt.userID,
-                                        postID: postRes.data.new_post.postID
-                                    }
-                                })                
-                            }        
-                        }).then(()=>{
+                    })   
+                    .then(res=>{
+                        findTag(postText).forEach(tag=>{
+                            mention_notif({
+                                variables:{
+                                    userID: uid,
+                                    postID: res.data?.new_post?.postID,
+                                    username: usernm,
+                                    pfp: ls.profile_picture,
+                                    rusername: tag
+                                }
+                            })
+                        })
+                    })   
+                    .then(()=>{
                         setVideo(null)
                         setImage(null )
                         setPreview(null)
@@ -73,7 +75,6 @@ const CreatePost = ({refetch}) => {
                         setPostText('')
                     }
                     )})
-                })
             } else if (video) {
                 const data = new FormData()
                 data.append("file", video)
@@ -89,29 +90,28 @@ const CreatePost = ({refetch}) => {
                             url: res.data.url,
                             type:'video'
                         }
-                    }).then(postRes=>{
-                        const func = async () => {
-                            return await findTag(postText)
-                        }
-                        func().then(rslt => {
-                            if(rslt){
-                                mention_notif({
-                                    variables:{
-                                        userID: uid,
-                                        rid: rslt.userID,
-                                        postID: postRes.data.new_post.postID
-                                    }
-                                })                
-                            }        
-                        }).then(()=>{
+                    })      
+                    .then(res=>{
+                        findTag(postText).forEach(tag=>{
+                            mention_notif({
+                                variables:{
+                                    userID: uid,
+                                    postID: res.data?.new_post?.postID,
+                                    username: usernm,
+                                    pfp: ls.profile_picture,
+                                    rusername: tag
+                                }
+                            })
+                        })
+                    })
+                    .then(()=>{
                         setVideo(null)
                         setImage(null )
                         setPreview(null)
                         setLoading(false)
                         refetch()
                         setPostText('')
-                    }
-                    )})
+                    })
                 })
             } else {
                 new_post({
@@ -121,24 +121,23 @@ const CreatePost = ({refetch}) => {
                         url: '',
                         type:'text'
                     }
-                }).then(postRes=>{
-                    const func = async () => {
-                        return await findTag(postText)
-                    }
-                    func().then(rslt => {
-                        if(rslt){
-                            mention_notif({
-                                variables:{
-                                    userID: uid,
-                                    rid: rslt.userID,
-                                    postID: postRes.data.new_post.postID
-                                }
-                            })                
-                        }        
-                    }).then(()=>{
+                })
+                .then(res=>{
+                    findTag(postText).forEach(tag=>{
+                        mention_notif({
+                            variables:{
+                                userID: uid,
+                                postID: res.data?.new_post?.postID,
+                                username: usernm,
+                                pfp: ls.profile_picture,
+                                rusername: tag
+                            }
+                        })
+                    })
+                })
+                .then(()=>{
                         refetch()
                         setPostText('')
-                    })
                 })
             }
         }
@@ -227,54 +226,39 @@ const NEW_POST = gql`
 `
 
 const MENTION_NOTIF = gql`
-    mutation ($postID: Int!, $userID: Int!, $rid: Int!){
-        mention_notification (postID: $postID, sender_id: $userID, receiver_id: $rid){
+    mutation ($postID: Int!, 
+              $userID: Int!, 
+              $username: String!, 
+              $rusername: String!,
+              $pfp: String!){
+        mention_notification (postID: $postID, 
+                              sender_id: $userID, 
+                              username: $username, 
+                              receiver_username: $rusername
+                              profile_picture: $pfp){
             postID
         }
     }
 `
 
-const findTag = async (post_text) => {
-    if(post_text.includes('@')){
-        let spaceIndex = null;
-        let arr = post_text.split('')
-        let pos = arr.indexOf('@')
-        for(let i = pos;i<arr.length;i++){
-            let c = arr[i]
-            if(c===' ') {
-                spaceIndex=i
-                break
-            } else if(i===arr.length-1){
-                spaceIndex=i+1
-                break
-            } else if(i===arr.length){
-                spaceIndex=-1
-                break
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+const findTag = (post_text) => {
+    let arr = post_text.split('')
+    let namesArr = [];
+    let name=null;
+    for(let i = 0;i<arr.length;i++){
+        name=null;
+        if(arr[i]==='@'){
+            for(let j=i;j<arr.length;j++){
+                if(arr[j]===' ') {name=post_text.slice(i+1,j); break}
+                else if(j===arr.length-1) {name=post_text.slice(i+1,j+1); break}
+                else if(j===arr.length) {name=post_text.slice(i+1,-1); break}
             }
+            name && namesArr.push(name)
         }
-        if(spaceIndex){
-            let username = post_text.slice(pos+1, spaceIndex)
-            const result = await axios.post('http://localhost:8000/graphql',{
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                    query: `query($username: String!){
-                        get_tagged_user(username: $username){
-                            username
-                            userID
-                        }
-                    }`,
-                    variables:{
-                        username: username,
-                        userID: 9
-                    }
-            }).then(res=>{return res?.data?.data?.get_tagged_user})
-            if(result){
-                return {
-                    username: result.username,
-                    userID: result.userID
-                }
-            } else return false
-        } else return false
-    } else return false
+    }
+    return namesArr.filter(onlyUnique)
 }

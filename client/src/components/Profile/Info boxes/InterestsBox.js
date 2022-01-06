@@ -14,14 +14,17 @@ const InterestsBox = ({myprofile, userID}) => {
     })
 
     return (
-        <div className='box'>
-            <div className='flex-sb'>
-                <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
-                {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
-            </div>
-            {loading ? <div className='flex-ctr'><div className='small-spinner'></div></div> :
-            <TagsBox tags={data?.get_user_info?.interests.split(',')}/>}             
-        </div>
+        <>
+        {data?.get_user_info?.interests && 
+            <div className='box'>
+                <div className='flex-sb'>
+                    <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
+                    {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
+                </div>
+                {loading ? <div className='flex-ctr'><div className='small-spinner'></div></div> :
+                <TagsBox tags={data?.get_user_info?.interests?.split(',')}/>}             
+            </div>}
+        </>
     )
 }
 

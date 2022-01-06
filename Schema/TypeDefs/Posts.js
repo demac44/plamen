@@ -2,6 +2,7 @@ import {
     GraphQLObjectType,
     GraphQLInt,
     GraphQLString,
+    GraphQLList,
  } from "graphql";
 
 export const PostType = new GraphQLObjectType({

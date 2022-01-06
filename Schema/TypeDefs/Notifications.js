@@ -17,5 +17,6 @@ export const NotificationType = new GraphQLObjectType({
         type:{type:GraphQLString},
         profile_picture: {type:GraphQLString},
         username: {type:GraphQLString},
+        receiver_username: {type:GraphQLString},
     })
 })
