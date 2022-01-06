@@ -21,7 +21,7 @@ const PostTopBar = ({data, refetchPosts}) => {
         setTimeout(()=>{
             setCopied(false)
         }, 2000)
-    })
+    }, [setCopied])
 
     return (
         <>

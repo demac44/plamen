@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 import { useQuery } from 'react-apollo'
 import gql from 'graphql-tag'
-import './style.css'
 import LikesList from './components/LikesList'
 import PostComments from './components/PostComments'
 import AddComment from './components/AddComment'
 import LikePost from './components/LikePost'
+import './style.css'
 
 const PostBottomBar = ({postID, userID}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)

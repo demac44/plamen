@@ -3,9 +3,6 @@ import './style.css'
 import Linkify from 'react-linkify'
 import parse from 'html-react-parser'
 import axios from 'axios'
-import { useMutation } from 'react-apollo'
-import {gql} from 'graphql-tag'
-import {useSelector} from 'react-redux'
 
 const PostTextBar = ({post_text}) => {
     const [readMore, setReadMore] = useState(true)
@@ -20,7 +17,7 @@ const PostTextBar = ({post_text}) => {
                 setText(res)
             }        
         })
-    }, [])
+    }, [post_text])
 
     return (
         <>
