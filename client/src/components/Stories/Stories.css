@@ -6,12 +6,10 @@
     height: 100px;
     background-color: #1f1f1f;
     box-shadow: 2px 2px 10px;
-    border-radius: 10px;
-    border-right: none;
-    display: flex;
-    align-items: center;
+    border-radius: 5px;
     padding: 5px 15px;
     overflow: hidden;
+    border: 1px solid #2f2f2f;
 }   
 .inner-container-stories{
     width: fit-content;

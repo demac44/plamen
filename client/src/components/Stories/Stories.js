@@ -19,7 +19,7 @@ const Stories = ({stories, refetch}) => {
 
 
     return (
-        <div className="container-stories">
+        <div className="container-stories flex-ac">
             <div className='inner-container-stories' style={{marginLeft:-margin.toString()+'%'}}>
                 <div className='flex-col-ctr'>
                     <AddStory refetch={refetch}/>

@@ -1,4 +1,9 @@
 /* CHATS */
+.wrapper-chat{
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: hidden;
+}
 .container-chat{
     position: relative;
     width: 100vw;
@@ -7,7 +12,7 @@
 }
 .all-chats-box{
     position: sticky;
-    top: 60px;
+    top: 0px;
     left: 0;
     min-width: 350px;
     overflow:auto;
@@ -35,10 +40,10 @@
 }
 .chat-msg-box{
     position: relative;
-    height: 100vh;
+    height: calc(100vh - 60px);
     width: 100%;
     padding-bottom:105px;
-    padding-top: 60px;
+    /* padding-top: 60px; */
     z-index: 999;
 }
 .msg-input-box{
@@ -168,7 +173,7 @@
 .chat-bar{
     position: relative;
     position: sticky;
-    top:60px;
+    top:0;
     left: 0;
     width: 100%;
     background-color: #1b1b1b;

@@ -60,7 +60,7 @@ const CreatePost = ({refetch}) => {
                                     userID: uid,
                                     postID: res.data?.new_post?.postID,
                                     username: usernm,
-                                    pfp: ls.profile_picture,
+                                    pfp: ls.profile_picture || '',
                                     rusername: tag
                                 }
                             })
@@ -98,7 +98,7 @@ const CreatePost = ({refetch}) => {
                                     userID: uid,
                                     postID: res.data?.new_post?.postID,
                                     username: usernm,
-                                    pfp: ls.profile_picture,
+                                    pfp: ls.profile_picture || '',
                                     rusername: tag
                                 }
                             })
@@ -129,7 +129,7 @@ const CreatePost = ({refetch}) => {
                                 userID: uid,
                                 postID: res.data?.new_post?.postID,
                                 username: usernm,
-                                pfp: ls.profile_picture,
+                                pfp: ls.profile_picture || '',
                                 rusername: tag
                             }
                         })

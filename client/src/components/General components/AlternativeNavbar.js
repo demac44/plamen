@@ -37,7 +37,6 @@ export default AlternativeNavbar
 
 const styles = {
     nav:{
-        position:'fixed',
-        top:'-60px',
+        top:'0',
     },
 }

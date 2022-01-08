@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import connection from '../middleware/db.js'
 import jwt from 'jsonwebtoken'
 
+
 const router = express.Router()
 
 const options =  {
@@ -39,7 +40,6 @@ router.post('/', async (req, res) => {
         })
     }
 })
-
 
 
 export default router

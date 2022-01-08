@@ -16,6 +16,7 @@ import UserSuggestionsBox from '../../components/General components/UserSuggesti
 import StoriesLoader from '../../components/General components/Loaders/StoriesLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
+import EmailConfirmWarning from '../../components/General components/EmailConfirmWarning'
 
 const Feed = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -62,6 +63,7 @@ const Feed = ({isLogged}) => {
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
+                        {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
                         {loading ? <StoriesLoader/> : <Stories stories={data?.get_stories} refetch={refetch}/>}
                         {loading ? <PostLoader/> : 
                         <>
@@ -85,6 +87,7 @@ export default memo(Feed)
 
 const FEED_POSTS = gql`
     query ($userID: Int!, $limit: Int, $offset: Int){
+        confirmed_email_check(userID: $userID)
         get_feed_posts (userID: $userID, limit: $limit, offset: $offset){
             postID
             post_text

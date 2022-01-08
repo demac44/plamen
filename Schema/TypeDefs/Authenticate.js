@@ -11,3 +11,11 @@ export const AuthType = new GraphQLObjectType({
         username: {type: GraphQLString}
     })
 })
+
+export const VerifyEmailCodesType = new GraphQLObjectType({
+    name:"VerifyEmailCode",
+    fields:()=>({
+        email: {type: GraphQLString},
+        code: {type: GraphQLString}
+    })
+})

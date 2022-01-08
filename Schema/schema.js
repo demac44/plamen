@@ -44,7 +44,7 @@ import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
         IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
 import { GET_STORIES, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
-import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS, COUNT_POSTS, GET_TAGGED_USER } from "./Queries/Users.js";
+import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS, COUNT_POSTS, CHECK_EMAIL_CONFIRMED } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { CommunityChatMessagesType } from "./TypeDefs/Groups.js";
 import { NotificationType } from "./TypeDefs/Notifications.js";
@@ -63,7 +63,7 @@ const RootQuery = new GraphQLObjectType({
         if_user_blocked: IF_USER_BLOCKED,
         get_blocked_users: GET_BLOCKED_USERS,
         no_of_posts: COUNT_POSTS,
-        get_tagged_user: GET_TAGGED_USER,
+        confirmed_email_check: CHECK_EMAIL_CONFIRMED,
         // posts
         get_post: GET_POST,
         get_profile_posts: GET_PROFILE_POSTS,

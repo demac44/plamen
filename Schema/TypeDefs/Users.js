@@ -22,7 +22,8 @@ export const UserType = new GraphQLObjectType({
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
         last_seen: {type:GraphQLString},
-        show_status: {type: GraphQLBoolean}
+        show_status: {type: GraphQLBoolean},
+        email_confirmed: {type: GraphQLBoolean}
     })
 })
 

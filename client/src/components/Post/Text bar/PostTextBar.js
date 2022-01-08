@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './style.css'
 import Linkify from 'react-linkify'
-import parse from 'html-react-parser'
 import { render } from 'react-dom';
 
 const PostTextBar = ({post_text}) => {

@@ -8,7 +8,7 @@ import axios from 'axios'
 const RegisterForm = () => {    
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
-
+    const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(()=>{
@@ -29,8 +29,9 @@ const RegisterForm = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let birth_date = `${e.target.year.value+'-'+e.target.month.value+'-'+e.target.day.value}`
+        setLoading(true)
 
+        let birth_date = `${e.target.year.value+'-'+e.target.month.value+'-'+e.target.day.value}`
         let fname = e.target.first_name.value.charAt(0).toUpperCase() + e.target.first_name.value.slice(1);
         let lname = e.target.last_name.value.charAt(0).toUpperCase() + e.target.last_name.value.slice(1);
         let username = e.target.username.value
@@ -46,23 +47,31 @@ const RegisterForm = () => {
             let trimmed = field.trim()
             if (trimmed === '') {
                 empty = true
+                setLoading(true)
                 return
             }
         })
         
         if (empty){
+            setLoading(false)
             setErrorMsg('Please fill in all fields')
         } else if (validateNames(fname, lname)){
+            setLoading(false)
             setErrorMsg('First name and last name can contain only letters, not numbers, whitespace or any other special characters and cannot be longer than 50 characters!')
         } else if (validateAge(birth_date) < 13) {
+            setLoading(false)
             setErrorMsg('You must be at least 13 years old to register')
         } else if (!validateEmail(email)) {
+            setLoading(false)
             setErrorMsg('Email not valid')
         } else if (!validateUsername(username)){
+            setLoading(false)
             setErrorMsg('Username must contains only lowercase letters, numbers, underscores and dots and cannot be longer than 30 characters')
         } else if (!validatePassword(password)){
+            setLoading(false)
             setErrorMsg('Password must be between 8 and 30 characters long and should not contain whitespace')
         } else if (!confirmPass(password, passconfirm)) {
+            setLoading(false)
             setErrorMsg('Passwords must match')
         } else {
             try {
@@ -79,10 +88,17 @@ const RegisterForm = () => {
                         gender
                     }
                 }).then(res => {
-                    res?.data.error ? setErrorMsg(res.data.error) : window.location.href = '/login'
+                    if(res?.data.error){
+                        setLoading(false)
+                        setErrorMsg(res.data.error)
+                        return
+                    } else {
+                        window.location.href='/login'
+                        return
+                    }
                 })
             } catch (error) {
-                console.log(error);
+                setLoading(false)
             }
         }
     }
@@ -94,6 +110,11 @@ const RegisterForm = () => {
                     <p>Enter your details below to continue</p>
                 </span>
                 {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
+                {loading && 
+                    <div className='overlay flex-col-ctr' style={{backgroundColor:'rgba(0,0,0,0.9)'}}>
+                        <div className='small-spinner'></div>
+                        <p>Hold on...</p>
+                    </div>}
                 <form className="entry-form flex-col-ctr" onSubmit={handleSubmit}>
                     <div className="reg-names-box flex">
                         <input type="text" id='first_name' name='first_name' placeholder="First name"/>
@@ -129,7 +150,7 @@ const RegisterForm = () => {
                     <input type="text" id='username' name='username' placeholder="Create your username"/>
                     <input type="password" id='password' name='password' placeholder="Password"/>
                     <input type="password" id='confirmpass' name='confirmpass' placeholder="Confirm your password"/>
-                    <button className="entry-btn btn" type="submit">REGISTER</button>
+                    <button className="entry-btn btn" type="submit" disabled={loading}>REGISTER</button>
                 </form>
                 <div className="entry-link flex-ctr">
                     <h6>Already have an account?</h6>                

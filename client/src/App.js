@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo';
 import axios from 'axios';
+import EmailConfirmWarning from './components/General components/EmailConfirmWarning';
 
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const CommunityChat = lazy(()=>import('./routes/Groups/CommunityChat'))

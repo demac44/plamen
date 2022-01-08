@@ -1,6 +1,5 @@
 import { GraphQLBoolean, GraphQLInt, GraphQLList, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
-import { PostType } from '../TypeDefs/Posts.js';
 import { UserInfoType, UserType } from '../TypeDefs/Users.js';
 
 export const GET_ALL_USERS = {
@@ -43,15 +42,18 @@ export const GET_USER = {
     }    
 }
 
-export const GET_TAGGED_USER = {
-    type: UserType,
-    args:{
-        username: {type: GraphQLString}
+export const CHECK_EMAIL_CONFIRMED = {
+    type: GraphQLBoolean,
+    args: {
+        userID: {type: GraphQLInt}
     },
     async resolve(_, args){
-        const {username} = args
-        const sql = `SELECT username, userID FROM users WHERE username="${username}"`
-        return await connection.promise().query(sql).then(res=>{return res[0][0]})
+        const {userID} = args
+        const sql = `SELECT email_confirmed FROM users WHERE userID=${userID}`
+        return await connection.promise().query(sql).then(res=>{
+            if(res[0][0].email_confirmed===0) return false
+            else if(res[0][0].email_confirmed===1) return true
+        })
     }
 }
 

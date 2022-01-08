@@ -15,6 +15,7 @@ import InterestsBox from '../../components/Profile/Info boxes/InterestsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import ProfileBoxLoader from '../../components/General components/Loaders/ProfileBoxLoader'
 import { useSelector } from 'react-redux'
+import EmailConfirmWarning from '../../components/General components/EmailConfirmWarning'
 
     
 const Profile = ({isLogged}) => {
@@ -85,6 +86,7 @@ const Profile = ({isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-profile'>
+                   {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
                    {(loading || isLoading) ? <ProfileBoxLoader/> 
                             : <ProfileTopBox 
                                 user={data.get_user}
@@ -124,6 +126,7 @@ export default memo(Profile)
 
 const FETCH_INFO= gql`
     query ($limit: Int, $offset: Int, $username: String!, $userID: Int!){
+        confirmed_email_check(userID: $userID)
         get_profile_posts (limit: $limit, offset: $offset, username: $username){
             postID
             post_text
