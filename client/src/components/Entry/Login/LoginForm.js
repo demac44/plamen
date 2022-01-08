@@ -12,15 +12,17 @@ const LoginForm = ({popup}) => {
     let password, username;
     const [errorMsg, setErrorMsg] = useState('')
     const [undisable_account] = useMutation(UNDISABLE_ACCOUNT)
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = async (e) => {
         e.preventDefault()
-
+        setLoading(true)
 
         username = e.target.username.value
         password = e.target.password.value
 
         if (username === '' || password === ''){
+            setLoading(false)
             setErrorMsg('Please fill in all fields')
             return
         }
@@ -34,7 +36,7 @@ const LoginForm = ({popup}) => {
                 },
                 withCredentials: true
             }).then(res => {
-                if(res?.data.error) setErrorMsg(res.data.error)    
+                if(res?.data.error) {setErrorMsg(res.data.error);setLoading(false)}    
                 else {
                     localStorage.setItem('user', JSON.stringify(res?.data.user))
                     localStorage.setItem('search-history', JSON.stringify({search_history:[]}))
@@ -53,26 +55,33 @@ const LoginForm = ({popup}) => {
 
     
     return (
-        <div className='entry-form-box flex-col-ctr'>
-            <span style={{alignSelf:'flex-start'}}> 
-                <div className='flex-ac' style={{margin:'0 0 5px 10px'}}>
-                    <img src={logo} alt=''/>
-                    <h1>Login</h1>
+        <>
+            {loading && 
+                <div className='overlay flex-col-ctr' style={{backgroundColor:'rgba(0,0,0,0.9)'}}>
+                    <div className='small-spinner'></div>
+                    <p>Hold on...</p>
+                </div>}
+            <div className='entry-form-box flex-col-ctr'>
+                <span style={{alignSelf:'flex-start'}}> 
+                    <div className='flex-ac' style={{margin:'0 0 5px 10px'}}>
+                        <img src={logo} alt=''/>
+                        <h1>Login</h1>
+                    </div>
+                    <p>Enter your details below to continue</p>
+                </span>
+                {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
+                <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
+                    <input type="text" ref={value => username = value} id='username' name='username' placeholder="Username or email"/>
+                    <input type="password" ref={value => password = value} id='password' name='password' placeholder="Password"/>
+                    <NavLink to="/passwordretrieve">Forgot your password?</NavLink>
+                    <button className="entry-btn btn" type="submit">LOGIN</button>
+                </form>
+                <div className="entry-link flex-ctr">
+                    <h6>Don't have an account?</h6>                
+                    <NavLink exact to="/register">Register now</NavLink>
                 </div>
-                <p>Enter your details below to continue</p>
-            </span>
-            {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
-            <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
-                <input type="text" ref={value => username = value} id='username' name='username' placeholder="Username or email"/>
-                <input type="password" ref={value => password = value} id='password' name='password' placeholder="Password"/>
-                <NavLink to="/passwordretrieve">Forgot your password?</NavLink>
-                <button className="entry-btn btn" type="submit">LOGIN</button>
-            </form>
-            <div className="entry-link flex-ctr">
-                <h6>Don't have an account?</h6>                
-                <NavLink exact to="/register">Register now</NavLink>
             </div>
-        </div>
+        </>
     )
 }
 

@@ -2,6 +2,7 @@ import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
 import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
+import { VerifyEmailType } from "../TypeDefs/Authenticate.js"
 
 export const SET_LAST_SEEN = {
     type: UserType,
@@ -16,29 +17,26 @@ export const SET_LAST_SEEN = {
     }
 }
 
-export const CREATE_USER = {
-    type: UserType,
-    args: {
-        tag_name: {type: GraphQLString},
-        first_name:{type:GraphQLString},
-        last_name:{type:GraphQLString},
-        email:{type:GraphQLString},
-        pass:{type:GraphQLString},
-        birth_date: {type: GraphQLString},
-        pfp_url: {type: GraphQLString}
+export const VERIFY_EMAIL = {
+    type: VerifyEmailType,
+    args:{
+        email: {type: GraphQLString},
+        code: {type: GraphQLString}
     },
-    resolve(parent, args) {
-        const {tag_name, first_name, last_name, email, pass, birth_date, pfp_url} = args
-        bcrypt.genSalt(10, (err, salt) => {
-            if(err) return err
-            bcrypt.hash(pass, salt, (err, hash) => {
-                if(err) return err
-                const sql = `INSERT INTO users (user_id, tag_name, first_name, last_name, email, pass, birth_date, date_registered, pfp_url)
-                            VALUES (null, "${tag_name}", "${first_name}", "${last_name}", "${email}", "${hash}", STR_TO_DATE("${birth_date}", "%Y-%m-%d"), null, "${pfp_url}")`
-                connection.query(sql)
+    async resolve(_, args){
+        const {email, code} = args
+        const checkCode = `SELECT * FROM email_verification_codes WHERE email="${email}" LIMIT 1`
+        const delCodes = `DELETE FROM email_verification_codes WHERE email="${email}"`
+        const res = await connection.promise().query(checkCode).then(res=>{return res[0][0]})
+        if(res.email===email && res.verification_code===code){
+            const updateVerified = `UPDATE users SET email_confirmed=true WHERE email="${email}"`
+            return await connection.promise().query(updateVerified).then(()=>{
+                connection.query(delCodes)
+                return {error:false}
             })
-        })
-        return args
+        } else {
+            return {error: true}
+        }
     }
 }
 

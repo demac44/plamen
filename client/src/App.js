@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo';
 import axios from 'axios';
-import EmailConfirmWarning from './components/General components/EmailConfirmWarning';
 
 const Group = lazy(()=>import('./routes/Groups/Group'))
 const CommunityChat = lazy(()=>import('./routes/Groups/CommunityChat'))
@@ -37,7 +36,7 @@ const JoinRequests = lazy(()=>import('./routes/Groups/Settings/JoinRequests'))
 const ManageUsers = lazy(()=>import('./routes/Groups/Settings/ManageUsers'))
 const SavedCommunityPosts = lazy(()=>import('./routes/Groups/SavedCommunityPosts'))
 const CommunityInfo = lazy(()=>import('./routes/Groups/CommunityInfo'))
-
+const ConfirmEmail = lazy(()=>import('./routes/Confirm email/ConfirmEmail'))
 
 import('@fortawesome/free-solid-svg-icons').then(i=>{
     import('@fortawesome/fontawesome-svg-core').then(core =>{
@@ -112,7 +111,9 @@ function App() {
               <Route exact path='/community/:groupid/settings/join_requests'>{isLogged ? <JoinRequests isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>
               <Route exact path='/community/:groupid/settings/manage_users'>{isLogged ? <ManageUsers isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
               <Route exact path='/community/:groupid/saved'>{isLogged ? <SavedCommunityPosts isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
-              <Route exact path='/community/:groupid/info'>{isLogged ? <CommunityInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
+              <Route exact path='/community/:groupid/info'>{isLogged ? <CommunityInfo isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>     
+              {/* confirm email */}
+              <Route exact path='/verify_email'>{isLogged ? <ConfirmEmail isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>            
             </Suspense>
           </Switch>}
       </div>

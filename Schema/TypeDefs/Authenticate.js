@@ -1,4 +1,5 @@
 import { 
+    GraphQLBoolean,
     GraphQLInt,
     GraphQLObjectType,
     GraphQLString
@@ -12,10 +13,11 @@ export const AuthType = new GraphQLObjectType({
     })
 })
 
-export const VerifyEmailCodesType = new GraphQLObjectType({
-    name:"VerifyEmailCode",
+export const VerifyEmailType = new GraphQLObjectType({
+    name:"VerifyEmail",
     fields:()=>({
         email: {type: GraphQLString},
-        code: {type: GraphQLString}
+        code: {type: GraphQLString},
+        error: {type: GraphQLBoolean}
     })
 })

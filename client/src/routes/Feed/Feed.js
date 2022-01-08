@@ -16,7 +16,7 @@ import UserSuggestionsBox from '../../components/General components/UserSuggesti
 import StoriesLoader from '../../components/General components/Loaders/StoriesLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
-import EmailConfirmWarning from '../../components/General components/EmailConfirmWarning'
+import EmailConfirmWarning from '../../components/General components/Confirm email/EmailConfirmWarning'
 
 const Feed = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)

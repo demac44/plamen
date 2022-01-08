@@ -227,6 +227,7 @@
     background-color: #ffbb00;
     z-index: 100000000000000000000000000000;
     border-radius: 5px;
+    text-align: center;
 }
 .email_confirm_warning p{
     color: #1b1b1b;

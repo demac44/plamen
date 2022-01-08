@@ -28,8 +28,8 @@ import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY } from "./Mutations/Stories.js";
-import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, CREATE_USER, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
-        EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT } from "./Mutations/Users.js";
+import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
+        EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT, VERIFY_EMAIL } from "./Mutations/Users.js";
 
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, 
         GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, 
@@ -124,8 +124,6 @@ const RootMutation = new GraphQLObjectType({
     name:'RootMutation',
     fields: {
         // users
-        new_user: CREATE_USER,
-        new_post: CREATE_POST,
         follow: FOLLOW_USER,
         unfollow: UNFOLLOW_USER,
         edit_pfp: EDIT_PFP,
@@ -142,7 +140,9 @@ const RootMutation = new GraphQLObjectType({
         unblock_user: UNBLOCK_USER,
         set_last_seen: SET_LAST_SEEN,
         change_activity_status: CHANGE_ACTIVITY_STATUS,
+        verify_email: VERIFY_EMAIL,
         // posts
+        new_post: CREATE_POST,
         delete_post: DELETE_POST,
         like_post: LIKE_POST,
         remove_like: REMOVE_LIKE,

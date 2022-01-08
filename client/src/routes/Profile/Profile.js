@@ -15,7 +15,7 @@ import InterestsBox from '../../components/Profile/Info boxes/InterestsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import ProfileBoxLoader from '../../components/General components/Loaders/ProfileBoxLoader'
 import { useSelector } from 'react-redux'
-import EmailConfirmWarning from '../../components/General components/EmailConfirmWarning'
+import EmailConfirmWarning from '../../components/General components/Confirm email/EmailConfirmWarning'
 
     
 const Profile = ({isLogged}) => {

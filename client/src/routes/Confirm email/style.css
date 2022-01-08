@@ -1,0 +1,26 @@
+.confirm-email-container{
+    width: 100vw;
+    height: 100vh;
+}
+.confirm-email-container p{
+    color: #aaa;
+    font-size: 14px;
+}
+.confirm-email-container h2{
+    color: white;
+    margin: 10px;
+}
+.confirm-email-container input{
+    width: 200px;
+    height: 60px;
+    font-size: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 5px;
+}
+.confirm-email-container button{
+    padding: 10px 20px;
+    margin-top: 20px;
+}
