@@ -29,7 +29,7 @@ import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
 import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY } from "./Mutations/Stories.js";
 import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
-        EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT, VERIFY_EMAIL } from "./Mutations/Users.js";
+        EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, SEND_NEW_CODE, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT, VERIFY_EMAIL } from "./Mutations/Users.js";
 
 import { CHAT_EXISTS, COUNT_ALL_MSGS, COUNT_MSGS, GET_ALL_USER_CHATS, GET_GROUP_CHATS, GET_CHAT_LIST, 
         GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, 
@@ -141,6 +141,7 @@ const RootMutation = new GraphQLObjectType({
         set_last_seen: SET_LAST_SEEN,
         change_activity_status: CHANGE_ACTIVITY_STATUS,
         verify_email: VERIFY_EMAIL,
+        send_new_verification_code: SEND_NEW_CODE,
         // posts
         new_post: CREATE_POST,
         delete_post: DELETE_POST,

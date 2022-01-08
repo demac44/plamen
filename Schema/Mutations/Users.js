@@ -3,6 +3,7 @@ import connection from "../../middleware/db.js"
 import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 import { VerifyEmailType } from "../TypeDefs/Authenticate.js"
+import nodemailer from 'nodemailer'
 
 export const SET_LAST_SEEN = {
     type: UserType,
@@ -16,6 +17,7 @@ export const SET_LAST_SEEN = {
         return args
     }
 }
+// auth
 
 export const VERIFY_EMAIL = {
     type: VerifyEmailType,
@@ -37,6 +39,74 @@ export const VERIFY_EMAIL = {
         } else {
             return {error: true}
         }
+    }
+}
+
+const createCode = () => {
+    let code = "";
+    const chars = "abdcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    for(let i=0;i<8;i++){
+        let c = chars[Math.floor(Math.random() * 62)]
+        code+=c
+    }
+    return code
+}
+
+const createHTML = (code) => {
+    const html = `
+    <body>
+        <div style='width:100%;height:55px;padding:5px 10px;background-color:#1b1b1b;'>
+            <img style='height:100%;' src='https://res.cloudinary.com/de5mm13ux/image/upload/v1641594878/Website%20assets/logo-full_gbltij.png'/>
+        </div>
+        <div style='width:100%;text-align:center;padding-top:15px;'>
+            <h2>Confirm email</h2>
+            <p>Enter this code on plamen app to verify your email: </p>
+            <h1 style='width:100%;padding:30px 10px;'>${code}</h1>
+            <p>If email is not verified within 7 days from registration, your plamen account will be removed!</p>
+        </div>
+        <div style='width:100%;padding:5px;background-color:#1b1b1b;text-align:center;'>
+            <p style='color:white;'>&#169; Copyright plamen 2021. All rights reserved.</p>
+        </div>
+    </body>
+    `
+
+    return html
+}
+
+const sendCode = async (email) => {
+    const code = createCode()
+
+    let transporter = nodemailer.createTransport({
+        host:"smtp.gmail.com",
+        port:587,
+        secure:false,
+        auth:{
+            user: "plamen.manage@gmail.com",
+            pass:"Windowjesubak2000"
+        }
+    })
+
+    await transporter.sendMail({
+        from: "plamen.manage@gmail.com",
+        to:email,
+        subject: "Plamen - confirm email",
+        text: "Enter this code on plamen app to verify your email: 812R91",
+        html: createHTML(code)
+    }).then(()=>{
+        const sql = `INSERT INTO email_verification_codes (email, verification_code) VALUES ("${email}", "${code}")`
+        connection.query(sql)
+    })
+}
+
+export const SEND_NEW_CODE = {
+    type: VerifyEmailType,
+    args:{
+        email: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {email} = args
+        await sendCode(email).then(()=>{return})
+        return args
     }
 }
 
