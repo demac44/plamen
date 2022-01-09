@@ -64,3 +64,12 @@ export const BlockUserType = new GraphQLObjectType({
         blockedId: {type:GraphQLInt}
     })
 })
+
+export const ProfileVisitType = new GraphQLObjectType({
+    name:'ProfileVisit',
+    fields:()=>({
+        visitorId: {type: GraphQLInt},
+        visitedId: {type: GraphQLInt},
+        date_visited: {type: GraphQLString}
+    })
+})

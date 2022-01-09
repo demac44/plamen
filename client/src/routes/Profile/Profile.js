@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import '../../components/Profile/profile.css'
 import ProfileTopBox from '../../components/Profile/Profile top box/ProfileTopBox'
 import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useMutation, useQuery } from 'react-apollo'
 import { useParams, useHistory } from 'react-router'
 import Posts from '../../components/Post/Posts'
 import CreatePost from '../../components/Post/Create post/CreatePost'
@@ -24,6 +24,7 @@ const Profile = ({isLogged}) => {
     const [myprofile, setMyProfile] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [userBlocked, setUserBlocked] = useState(false)
+    const [profile_visit] = useMutation(PROFILE_VISIT)
     const history = useHistory()
     const {username} = useParams()
 
@@ -60,6 +61,16 @@ const Profile = ({isLogged}) => {
     }
     if(error) throw error 
 
+    const profileVisit = () => {
+        if(!loading && !isLoading && !myprofile){
+            profile_visit({
+                variables:{
+                    visitorId: uid, 
+                    visitedId: data?.get_user?.userID}
+            })
+        }
+    }
+
     const scrollPagination = () => {
         window.onscroll = async ()=>{
             if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
@@ -85,7 +96,7 @@ const Profile = ({isLogged}) => {
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
-                <div className='container-profile'>
+                <div className='container-profile' onLoad={profileVisit}>
                    {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
                    {(loading || isLoading) ? <ProfileBoxLoader/> 
                             : <ProfileTopBox 
@@ -147,6 +158,13 @@ const FETCH_INFO= gql`
             userID
             last_seen
             show_status
+        }
+    }
+`
+const PROFILE_VISIT = gql`
+    mutation($visitorId: Int, $visitedId: Int){
+        profile_visit(visitorId: $visitorId, visitedId: $visitedId){
+            visitedId
         }
     }
 `

@@ -1,6 +1,6 @@
 import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
 import connection from "../../middleware/db.js"
-import { BlockUserType, PasswordType, UserInfoType, UserType } from "../TypeDefs/Users.js"
+import { BlockUserType, PasswordType, ProfileVisitType, UserInfoType, UserType } from "../TypeDefs/Users.js"
 import bcrypt from 'bcrypt'
 import { VerifyEmailType } from "../TypeDefs/Authenticate.js"
 import nodemailer from 'nodemailer'
@@ -17,6 +17,21 @@ export const SET_LAST_SEEN = {
         return args
     }
 }
+
+export const PROFILE_VISIT = {
+    type: ProfileVisitType,
+    args: {
+        visitorId: {type: GraphQLInt},
+        visitedId: {type: GraphQLInt}
+    },
+    resolve(_, args){
+        const {visitedId, visitorId} = args
+        const sql = `INSERT INTO profile_visits (visitorId, visitedId) VALUES (${visitorId}, ${visitedId})`
+        connection.query(sql)
+        return args
+    }
+}
+
 // auth
 
 export const VERIFY_EMAIL = {
