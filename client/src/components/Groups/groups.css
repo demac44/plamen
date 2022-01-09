@@ -53,6 +53,7 @@
     border: 1px solid #2f2f2f;
     background-color: #2f2f2f;
     background: url(../../images//community-default-banner.jpg);
+    margin-top: 20px;
 }
 .group-banner img{
     width: 100%;

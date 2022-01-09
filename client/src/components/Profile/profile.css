@@ -34,8 +34,9 @@
     position: absolute;
     bottom: 5px;
     right: 10px;
-    min-width: 120px;
-    padding: 5px;
+    min-width: 130px;
+    /* padding: 7px; */
+    height: 35px;
     font-size: 16px;
     background-color: #104b41;
     color: white;
@@ -45,7 +46,7 @@
     font-size: 15px;
 }
 .send-msg-btn{
-    bottom: 40px;
+    bottom: 45px;
 }
 .ptb-menu-btn{
     position: absolute;

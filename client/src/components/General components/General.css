@@ -101,6 +101,17 @@
     animation: spin 2s linear infinite;
     margin: 30px 0;
 }
+.tiny-spinner{
+    width:20px;height:20px;
+    left:48%;top:40%;
+    border: 2px solid white;
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+    border-radius:50%;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+    margin: 2px;
+}
 .user-avatar{
     border-radius: 5px;
     overflow: hidden;

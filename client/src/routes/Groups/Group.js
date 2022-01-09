@@ -68,13 +68,12 @@ const Group = ({isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper wrapper-community' onLoad={scrollPagination}>
                 <Sidebar/>
-                <div className='container-profile'>
-                    {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
-                    <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
-                    {!loading && <TagsBox tags={tags}/>}                        
-                </div>
                 <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
+                            {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
+                            <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
+                            {!loading && <TagsBox tags={tags}/>}  
+                            
                             {(data?.get_group?.closed && !data?.get_group_user) && 
                                 <span className='flex-ctr' style={styles.locked}>
                                     <FontAwesomeIcon icon='lock' color='white'/>

@@ -8,6 +8,7 @@ import { useMutation, useQuery } from 'react-apollo'
 const JoinBtn = ({info, user}) => {
     const [state, setState] = useState('JOIN')
     const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const [isLoading, setIsLoading] = useState(false)
     const {data, loading, refetch} = useQuery(IF_REQUESTED, {
         variables:{
             gid: info.groupID,
@@ -27,44 +28,55 @@ const JoinBtn = ({info, user}) => {
     }, [data, info.groupID, uid, user, loading])
 
     const handleJoin = () => {
-        join_group({
-            variables:{
-                uid: uid,
-                gid: info.groupID
-            }
-        }).then(()=>{window.location.reload()})
+        setIsLoading(true)
+        setTimeout(()=>{
+            join_group({
+                variables:{
+                    uid: uid,
+                    gid: info.groupID
+                }
+            }).then(()=>{window.location.reload()})
+        }, 1000)
     }
 
     const handleLeave = () => {
-        leave_group({
-            variables:{
-                uid: uid,
-                gid: info.groupID
-            }
-        }).then(()=>{window.location.reload()})
+        setIsLoading(true)
+        setTimeout(()=>{
+            leave_group({
+                variables:{
+                    uid: uid,
+                    gid: info.groupID
+                }
+            }).then(()=>{window.location.reload()})
+        }, 1000)
     }
 
     const handleRequest = () => {
+        setIsLoading(true)
         if(data?.if_requested?.userID===uid && data?.if_requested?.groupID===info.groupID){
-            remove_request({
-                variables:{
-                    uid: uid,
-                    gid: info.groupID
-                }
-            }).then(()=>{setState('JOIN');refetch()})
+            setTimeout(()=>{
+                remove_request({
+                    variables:{
+                        uid: uid,
+                        gid: info.groupID
+                    }
+                }).then(()=>{setState('JOIN');refetch();setIsLoading(false)})
+            }, 1000)
         } else {
-            request({
-                variables:{
-                    uid: uid,
-                    gid: info.groupID
-                }
-            }).then(()=>{setState('REQUESTED');refetch()})
+            setTimeout(()=>{
+                request({
+                    variables:{
+                        uid: uid,
+                        gid: info.groupID
+                    }
+                }).then(()=>{setState('REQUESTED');refetch();setIsLoading(false)})
+            }, 1000)
         }
     }
 
     return (
         <button 
-            className='group-join-btn btn'
+            className='group-join-btn btn flex-ctr'
             onClick={()=>{
                 if(!loading){
                     if(user) handleLeave()
@@ -73,7 +85,7 @@ const JoinBtn = ({info, user}) => {
                 }
             }}
             >
-            {loading ? 'Loading' : state}
+            {(isLoading || loading) ? <div className='tiny-spinner'></div> : state}
         </button>
     )
 }

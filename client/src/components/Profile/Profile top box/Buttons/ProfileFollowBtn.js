@@ -9,6 +9,7 @@ const ProfileFollowBtn = ({userID}) => {
     const [follow] = useMutation(FOLLOW)
     const [unfollow] = useMutation(UNFOLLOW)
     const [follow_notification] = useMutation(FOLLOW_NOTIFICATION)
+    const [isLoading, setIsLoading] = useState(false)
 
     const {loading, data, error} = useQuery(IF_FOLLOWING,{
         variables: {followerID: uid, followedID: userID}
@@ -20,35 +21,41 @@ const ProfileFollowBtn = ({userID}) => {
     
 
     const handleFollow = () => {
-        follow({
-            variables: {
-                followerID: uid,
-                followedID: userID
-            }
-        })
-        .then(()=>setIsFollowing(true))
-        .then(()=>follow_notification({
-            variables:{
-                rid: userID,
-                sid: uid
-            }
-        }))
+        setIsLoading(true)
+        setTimeout(()=>{
+            follow({
+                variables: {
+                    followerID: uid,
+                    followedID: userID
+                }
+            })
+            .then(()=>setIsFollowing(true))
+            .then(()=>follow_notification({
+                variables:{
+                    rid: userID,
+                    sid: uid
+                }
+            })).then(()=>setIsLoading(false))
+        }, 500)
     }
 
     const handleUnfollow = () => {
-        unfollow({
-            variables: {
-                followerID: uid,
-                followedID: userID
-            }
-        }).then(()=>setIsFollowing(false))
+        setIsLoading(true)
+        setTimeout(()=>{
+            unfollow({
+                variables: {
+                    followerID: uid,
+                    followedID: userID
+                }
+            }).then(()=>setIsFollowing(false)).then(()=>setIsLoading(false))
+        },500)
     }
 
     if(error) throw error
     return (
-        <div className='profile-top-box-buttons btn'
+        <div className='profile-top-box-buttons btn flex-ctr'
             onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>
-            <p>{loading ? 'Loading...' : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
+            <p>{(isLoading || loading) ? <div className='tiny-spinner'></div> : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
         </div>
     )
 }

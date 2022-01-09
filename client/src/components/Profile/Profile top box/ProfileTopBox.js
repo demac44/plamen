@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import ProfileFollowBtn from './Buttons/ProfileFollowBtn'
-import ProfileEditBtn from './Buttons/ProfileEditBtn'
 import ProfileInfo from './ProfileInfo'
 import SendMsgBtn from './Buttons/SendMsgBtn'
 import Story from '../../Stories/components/Story/Story'
@@ -74,7 +73,7 @@ const ProfileTopBox = ({myprofile, user, isBlockedCB}) => {
                 {(!loading && !data?.if_user_blocked && !myprofile) && 
                 <>
                     <ProfileFollowBtn userID={user?.userID}/>
-                    <SendMsgBtn userID={user?.userID}/>
+                    <SendMsgBtn user={user}/>
                 </>
                 } 
 

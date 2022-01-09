@@ -8,13 +8,15 @@ import Linkify from 'react-linkify'
 const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
     const [msgOptions, setMsgOptions] = useState(false)
     const [deleted, setDeleted] = useState(false)
-    const [delete_msg] = useMutation(deleteQuery, {
-        variables:{msgID: msg.msgID}
-    })
+    const [delete_msg] = useMutation(deleteQuery)
 
 
     const handleDelete = () => {
-        delete_msg().then(()=>{setDeleted(true)})
+        delete_msg({
+            variables:{
+                msgID: msg.msgID
+            }
+        }).then(()=>{setDeleted(true)})
     }  
 
     return (

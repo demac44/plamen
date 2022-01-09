@@ -43,13 +43,12 @@ const CommunityInfo = ({isLogged}) => {
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>
-                <div className='container-profile'>
-                    {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
-                    <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
-                    {!loading && <TagsBox tags={tags}/>}                        
-                </div>
                 <div className='container-main' style={{paddingTop:'0'}}>
                         <div className='container-left'>
+                            {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
+                            <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
+                            {!loading && <TagsBox tags={tags}/>}    
+
                             {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
                         </div>
                         <div className='container-right' style={{width:'35%'}}>

@@ -281,6 +281,7 @@ export const GET_COMMUNITY_MESSAGES = {
                      users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      AND groupID=${groupID}
+                     ORDER BY time_sent DESC
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         await result.map(msg => {

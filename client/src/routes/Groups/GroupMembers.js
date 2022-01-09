@@ -43,13 +43,12 @@ const GroupMembers = ({isLogged}) => {
             <div className='wrapper'>
                 <div className='main'>
                     <Sidebar/>
-                    <div className='container-profile'>
-                        {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data?.get_group_user}/>}
-                        <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
-                        {!loading && <TagsBox tags={tags}/>}                        
-                    </div>
                         <div className='container-main' style={{paddingTop:'10px'}}>
                             <div className='container-left'>
+                                {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data?.get_group_user}/>}
+                                <GroupNavbar groupid={groupid} role={data?.get_group_user?.role}/>
+                                {!loading && <TagsBox tags={tags}/>} 
+
                                 {!loading &&
                                 ((data.get_group_user) ?
 
@@ -60,7 +59,7 @@ const GroupMembers = ({isLogged}) => {
                                         <p style={{marginLeft:'10px'}}>Join to see community members!</p>
                                     </span>)}
                             </div>
-                            <div className='container-right' style={{width:'35%'}}>
+                            <div className='container-right'>
                                {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
                             </div>
                         </div>
