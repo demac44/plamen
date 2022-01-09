@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './components/style.css'
 import './Stories.css'
 
-const Stories = ({stories, refetch}) => {
+const Stories = ({stories, refetch, seenStories}) => {
     const [width, setWidth] = useState(0)
     const [margin, setMargin] = useState(0)
     let index = 0 
@@ -15,8 +15,7 @@ const Stories = ({stories, refetch}) => {
             // each story head is 64px wide
             setWidth(stories?.length*64)
         }
-    }, [stories])
-
+    }, [stories,seenStories])
 
     return (
         <div className="container-stories flex-ac">
@@ -25,9 +24,15 @@ const Stories = ({stories, refetch}) => {
                     <AddStory refetch={refetch}/>
                     <p style={{fontSize:'14px'}}>Add story</p>
                 </div>
+                {/* not seen stories */}
                 {stories.map(story => (
+                    seenStories.includes(story?.stories[story?.stories?.length-1].storyID) ?
                     <div className='flex-col-ctr story-head-box' key={story?.storyID}>
-                        <StoryHead story={story} allData={stories} index={index++}/>
+                        <StoryHead story={story} seen={true} allData={stories} index={index++}/>
+                        <p>{story?.username}</p>
+                    </div>
+                    : <div className='flex-col-ctr story-head-box' key={story?.storyID}>
+                        <StoryHead story={story} seen={false} allData={stories} index={index++}/>
                         <p>{story?.username}</p>
                     </div>
                 ))}

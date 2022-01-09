@@ -27,7 +27,7 @@ import { CLEAR_NOTIFICATIONS, CMT_MENTION_NOTIFICATION, COMM_NOTIFICATION, FOLLO
 import { CREATE_POST, DELETE_POST } from "./Mutations/Posts.js";
 import { POST_REPORT } from "./Mutations/Report.js";
 import { REMOVE_SAVED, SAVE_POST } from "./Mutations/Saves.js";
-import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY } from "./Mutations/Stories.js";
+import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY, SEEN_STORY } from "./Mutations/Stories.js";
 import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
         EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, PROFILE_VISIT, SEND_NEW_CODE, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT, VERIFY_EMAIL } from "./Mutations/Users.js";
 
@@ -43,7 +43,7 @@ import { GET_ALL_GROUPS, GET_GROUP, GET_GROUPS, GET_GROUP_JOIN_REQUESTS, GET_GRO
 import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 import { GET_FEED_POSTS, GET_POST, GET_POST_COMMENTS, GET_POST_LIKES, GET_PROFILE_POSTS, GET_SAVED_POSTS, IF_LIKED, 
         IF_SAVED, RANDOM_POSTS } from "./Queries/Posts.js";
-import { GET_STORIES, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
+import { GET_SEEN_STORIES, GET_STORIES, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
 import { GET_USER, GET_ALL_USERS, GET_USER_INFO, USER_SUGGESTIONS, IF_USER_BLOCKED, GET_BLOCKED_USERS, COUNT_POSTS, CHECK_EMAIL_CONFIRMED, GET_USER_INTERESTS } from "./Queries/Users.js";
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
 import { CommunityChatMessagesType } from "./TypeDefs/Groups.js";
@@ -96,6 +96,7 @@ const RootQuery = new GraphQLObjectType({
         // stories
         get_stories: GET_STORIES,
         get_user_stories: GET_USER_STORIES,
+        get_seen_stories: GET_SEEN_STORIES,
         // notifications
         get_notifications: GET_NOTIFICATIONS,
         //communities
@@ -156,6 +157,7 @@ const RootMutation = new GraphQLObjectType({
         // stories
         create_story: CREATE_STORY,
         delete_story: DELETE_STORY,
+        seen_story: SEEN_STORY,
         // chats
         create_chat: CREATE_CHAT,
         send_message: SEND_MESSAGE,

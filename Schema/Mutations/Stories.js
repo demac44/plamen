@@ -63,3 +63,24 @@ export const REPLY_TO_STORY = {
                                            return args
     }
 }
+
+export const SEEN_STORY = {
+    type: StoryType,
+    args: {
+        userID: {type: GraphQLInt},
+        storyID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID, storyID} = args
+        const checkExists = `SELECT * FROM seen_stories WHERE userID=${userID} AND storyID=${storyID} LIMIT 1`
+        await connection.promise().query(checkExists).then(res=>{
+            if(res[0][0]?.storyID) return null
+            else {
+                const sql = `INSERT INTO seen_stories (userID, storyID) VALUES (${userID}, ${storyID})`
+                connection.query(sql)
+                return
+            }
+        })
+        return args
+    }
+}

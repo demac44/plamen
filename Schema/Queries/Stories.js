@@ -60,3 +60,15 @@ export const GET_STORY_MSG = {
         return result
     }
 }
+
+export const GET_SEEN_STORIES = {
+    type: new GraphQLList(StoryType),
+    args:{
+        userID: {type: GraphQLInt},
+    },
+    async resolve(_, args){
+        const {userID} = args
+        const sql = `SELECT storyID FROM seen_stories WHERE userID=${userID}`
+        return await connection.promise().query(sql).then(res=>{return res[0]})
+    }
+}

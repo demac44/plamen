@@ -5,11 +5,15 @@ import StoryMediaBox from './Story media/StoryMediaBox';
 import StoryOptionsBar from './Options bar/StoryOptionsBar';
 import StoryReply from './Reply bar/StoryReply';
 
+import {gql} from 'graphql-tag'
+import { useMutation } from 'react-apollo'
+
 const Story = ({i, closeStoryCallback, isProfile, allData}) => {
     const [storyData, setStoryData] = useState([])
     const [index, setIndex] = useState(i)
     const [innerIndex, setInnerIndex] = useState(0)
     const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const [seen_story] = useMutation(SEEN_STORY)
 
     const setIndexCallback = useCallback(val => {
         setIndex(val)
@@ -21,6 +25,12 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
 
     useEffect(()=>{
         setStoryData(isProfile ? allData : allData[index])
+        storyData?.stories && seen_story({
+            variables:{
+                uid,
+                storyID: storyData?.stories[innerIndex]?.storyID
+            }
+        })
     }, [index, innerIndex, i, storyData, allData, isProfile])
 
     return (
@@ -70,3 +80,10 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
 
 export default memo(Story)
 
+const SEEN_STORY = gql`
+    mutation($uid: Int, $storyID: Int){
+        seen_story(userID: $uid, storyID: $storyID){
+            storyID
+        }
+    }
+`

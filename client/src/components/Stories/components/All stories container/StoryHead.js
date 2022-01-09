@@ -2,7 +2,7 @@ import React, { useCallback, useState, memo } from 'react'
 import Story from '../Story/Story'
 import Avatar from '../../../General components/Avatar'
 
-const StoryHead = ({index, story, allData}) => {
+const StoryHead = ({index, story, allData, seen}) => {
     const [openStory, setOpenStory] = useState(false)
 
     const closeStoryCallback = useCallback(()=>{
@@ -13,7 +13,7 @@ const StoryHead = ({index, story, allData}) => {
         <>
             <div   
                 className="story-head" 
-                style={{border:'2px solid #ffbb00'}} 
+                style={{border:seen ? 'none' : '2px solid #ffbb00'}} 
                 onClick={()=>setOpenStory(true)
             }>
                 <Avatar size='60px' image={story?.profile_picture}/>

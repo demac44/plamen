@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react'
+import React, { useEffect, memo, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import {gql} from 'graphql-tag'
@@ -20,6 +20,8 @@ import EmailConfirmWarning from '../../components/General components/Confirm ema
 
 const Feed = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const [seenStories, setSeenStories] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
             userID: uid,
@@ -28,10 +30,19 @@ const Feed = ({isLogged}) => {
         },
         pollInterval:1500000
     })
-
+    
     useEffect(()=>{
         window.scrollTo(0,0)
-    }, [])
+        setIsLoading(true)
+        setSeenStories(()=>{
+            let arr = [];
+            data?.get_seen_stories?.map(s => {
+                arr.push(s?.storyID)
+            })
+            return arr;
+        })
+        setIsLoading(false)
+    }, [data])
 
     if(error) console.log(error); 
 
@@ -64,7 +75,7 @@ const Feed = ({isLogged}) => {
                     <Sidebar/>
                     <div className='container-left'>
                         {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
-                        {loading ? <StoriesLoader/> : <Stories stories={data?.get_stories} refetch={refetch}/>}
+                        {(loading || isLoading) ? <StoriesLoader/> : <Stories seenStories={seenStories} stories={data?.get_stories} refetch={refetch}/>}
                         {loading ? <PostLoader/> : 
                         <>
                             <CreatePost refetch={refetch}/>
@@ -114,6 +125,9 @@ const FEED_POSTS = gql`
                 url
                 type
             }
+        }
+        get_seen_stories(userID: $userID){
+            storyID
         }
     }
 `
