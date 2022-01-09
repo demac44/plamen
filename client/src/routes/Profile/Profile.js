@@ -62,13 +62,14 @@ const Profile = ({isLogged}) => {
     if(error) throw error 
 
     const profileVisit = () => {
-        if(!loading && !isLoading && !myprofile){
-            profile_visit({
-                variables:{
-                    visitorId: uid, 
-                    visitedId: data?.get_user?.userID}
-            })
-        }
+        return
+        // if(!loading && !isLoading && !myprofile){
+        //     profile_visit({
+        //         variables:{
+        //             visitorId: uid, 
+        //             visitedId: data?.get_user?.userID}
+        //     })
+        // }
     }
 
     const scrollPagination = () => {
@@ -96,27 +97,28 @@ const Profile = ({isLogged}) => {
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
-                <div className='container-profile' onLoad={profileVisit}>
-                   {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
-                   {(loading || isLoading) ? <ProfileBoxLoader/> 
-                            : <ProfileTopBox 
-                                user={data.get_user}
-                                myprofile={myprofile} 
-                                isBlockedCB={isBlockedCB}
-                            />}
-                </div>
                 <div className='container-main'  style={{paddingTop:'10px'}}>
                     <Sidebar/>
                     {userBlocked ? '' : 
                     <>
                         <div className='container-left'>
+                            {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
+
+                            {(loading || isLoading) ? <ProfileBoxLoader/> 
+                                : <ProfileTopBox 
+                                    user={data.get_user}
+                                    myprofile={myprofile} 
+                                    isBlockedCB={isBlockedCB}
+                                    />
+                            }
+
                             {(loading || isLoading) ? <PostLoader/> :
                             <>
                                 {myprofile && <CreatePost refetch={refetch}/>}    
                                 <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
                             </>}
                         </div>
-                        <div className='container-right' style={{width:'35%', paddingTop:'10px', display:'block'}}>
+                        <div className='container-right'>
                             {(loading || isLoading) ? '' :
                             <>
                                 <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>

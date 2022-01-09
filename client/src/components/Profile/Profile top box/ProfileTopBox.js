@@ -71,12 +71,12 @@ const ProfileTopBox = ({myprofile, user, isBlockedCB}) => {
                                 noOfPosts={data?.no_of_posts}
                             />}
 
-                {(!loading && !data?.if_user_blocked) && (myprofile ? <ProfileEditBtn/> : (
+                {(!loading && !data?.if_user_blocked && !myprofile) && 
                 <>
                     <ProfileFollowBtn userID={user?.userID}/>
                     <SendMsgBtn userID={user?.userID}/>
                 </>
-                ))} 
+                } 
 
                 {data?.if_user_blocked && <UnblockUserBtn blockedId={user.userID}/>}
 

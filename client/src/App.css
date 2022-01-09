@@ -16,7 +16,7 @@ body{
 }
 .container-left{
     width: 65%;
-    padding: 0 50px 50px 50px;
+    padding: 0 0px 50px 50px;
 }
 .container-right{
     width: 28%;
@@ -24,7 +24,7 @@ body{
 }
 .container-profile{
     width: 100vw;
-    padding: 20px 50px 0 calc(20% + 50px);
+    padding: 10px 0 0 calc(20% + 50px);
 }
 ::-webkit-scrollbar {
     width: 10px;
@@ -52,18 +52,30 @@ body{
     margin-right: -17px;
 }
 
+.wrapper-profile .container-right{
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    overflow: auto;
+    max-height: 90vh;
+}
+
+.wrapper-community .container-profile{
+    padding-right: 20px;
+}
+.wrapper-community .container-right{
+    width: 35%;
+    margin-right: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
 @media screen and (max-width: 1200px){
     .container-main{
         padding: 20px 30px 0 20%;
     }
     .container-left{
-        padding: 0 30px 0 50px;
-    }
-    .container-profile{
-        padding: 20px 10px 0 25%;
-    }
-    .container-right{
-        width: 33%;
+        padding: 0 5px 0 50px;
     }
 }
 
@@ -72,7 +84,7 @@ body{
         padding: 10px;
     }
     .container-left{
-        padding: 0 20px 0 0px;
+        padding: 0 45px 0 0px;
     }
     .container-profile{
         padding: 10px 10px 0 10px;

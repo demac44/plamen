@@ -66,7 +66,7 @@ const Group = ({isLogged}) => {
         <>
             <Navbar isLogged={isLogged}/> 
             <AlternativeNavbar/>
-            <div className='wrapper' onLoad={scrollPagination}>
+            <div className='wrapper wrapper-community' onLoad={scrollPagination}>
                 <Sidebar/>
                 <div className='container-profile'>
                     {loading ? <BannerLoader/> : <GroupBanner info={data?.get_group} user={data.get_group_user}/>}
@@ -93,7 +93,7 @@ const Group = ({isLogged}) => {
                                     : <NoPosts/>)}
                             </>}
                         </div>
-                        <div className='container-right' style={{width:'35%'}}>
+                        <div className='container-right'>
                             {!loading && <InfoBox data={data.get_group} membersCount={data.get_group_members.length} user={data.get_group_user}/>}
                         </div>
                 </div>
