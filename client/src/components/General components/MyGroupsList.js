@@ -14,6 +14,8 @@ const MyGroupsList = () => {
     })
 
     return (
+        <>
+        {data?.get_groups.length > 0 &&
         <div className='my-groups-box box' style={{margin:'0'}}>
             <div className='flex-sb my-groups-box-title'>
                 <h2>My communities</h2>
@@ -29,7 +31,8 @@ const MyGroupsList = () => {
                     </Link>
                 </div>
             )}
-        </div>
+        </div>}
+        </>
     )
 }
 

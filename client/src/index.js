@@ -19,6 +19,7 @@ import rootReducer from './Redux-reducers/index.js'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk';
 import { applyMiddleware } from 'redux';
+import ResetPassword from './routes/Password retrieve/ResetPassword';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -59,6 +60,7 @@ ReactDOM.render(
       <Router>
         <App />
         <Entry/>
+        <ResetPassword/>
       </Router>
       </ApolloProvider>
     </Provider>

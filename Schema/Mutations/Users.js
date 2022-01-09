@@ -30,7 +30,7 @@ export const VERIFY_EMAIL = {
         const checkCode = `SELECT * FROM email_verification_codes WHERE email="${email}" LIMIT 1`
         const delCodes = `DELETE FROM email_verification_codes WHERE email="${email}"`
         const res = await connection.promise().query(checkCode).then(res=>{return res[0][0]})
-        if(res.email===email && res.verification_code===code){
+        if(res?.email && res?.email===email && res?.verification_code===code){
             const updateVerified = `UPDATE users SET email_confirmed=true WHERE email="${email}"`
             return await connection.promise().query(updateVerified).then(()=>{
                 connection.query(delCodes)
@@ -59,10 +59,10 @@ const createHTML = (code) => {
             <img style='height:100%;' src='https://res.cloudinary.com/de5mm13ux/image/upload/v1641594878/Website%20assets/logo-full_gbltij.png'/>
         </div>
         <div style='width:100%;text-align:center;padding-top:15px;'>
-            <h2>Confirm email</h2>
-            <p>Enter this code on plamen app to verify your email: </p>
+            <h2 style='color:black;'>Confirm email</h2>
+            <p style='color:black;'>Enter this code on plamen app to verify your email: </p>
             <h1 style='width:100%;padding:30px 10px;'>${code}</h1>
-            <p>If email is not verified within 7 days from registration, your plamen account will be removed!</p>
+            <p style='color:black;'>If email is not verified within 7 days from registration, your plamen account will be removed!</p>
         </div>
         <div style='width:100%;padding:5px;background-color:#1b1b1b;text-align:center;'>
             <p style='color:white;'>&#169; Copyright plamen 2021. All rights reserved.</p>

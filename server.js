@@ -25,6 +25,7 @@ export const pubsub = new PubSub({eventEmitter: biggerEventEmitter});
 import login from './controllers/login.js'
 import register from './controllers/register.js'
 import logout from './controllers/logout.js'
+import reset_password from './controllers/Retrieve password/reset_password.js'
 
 
 (async function () {
@@ -80,7 +81,7 @@ import logout from './controllers/logout.js'
     app.use('/api/login', login)
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)
-    
+    app.use('/api/reset_password', reset_password)
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))

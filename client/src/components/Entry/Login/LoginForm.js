@@ -73,7 +73,7 @@ const LoginForm = ({popup}) => {
                 <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
                     <input type="text" ref={value => username = value} id='username' name='username' placeholder="Username or email"/>
                     <input type="password" ref={value => password = value} id='password' name='password' placeholder="Password"/>
-                    <NavLink to="/passwordretrieve">Forgot your password?</NavLink>
+                    <NavLink to="/reset_password">Forgot your password?</NavLink>
                     <button className="entry-btn btn" type="submit">LOGIN</button>
                 </form>
                 <div className="entry-link flex-ctr">

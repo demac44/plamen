@@ -1,0 +1,53 @@
+.retrieve_pass_box{
+    width: 35%;
+}
+.retrieve_pass_box h2{
+    color: white;
+    margin-bottom: 1px;
+}
+.retrieve_pass_box p{
+    font-size: 15px;
+    margin: 15px;
+}
+.retrieve_pass_box label{
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    align-self: flex-start;
+}
+.retrieve_pass_box input{
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 18px;
+}
+.retrieve_pass_box img{
+    position: fixed;
+    top: 10px;
+    left: 15px;
+}
+.retrieve_pass_box button{
+    padding: 10px 30px;
+    margin-top: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #1b1b1b;
+}
+.retrieve_pass_box a{
+    margin-top: 20px;
+    color: #aaa;
+    cursor: pointer;
+}
+.sent-msg{
+    background-color: #109b4a;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
