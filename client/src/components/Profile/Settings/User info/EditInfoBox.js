@@ -5,12 +5,20 @@ import './style.css'
 import CountriesSelect from './CountriesSelect'
 import CitiesSelect from './CitiesSelect'
 import SearchUniversity from './SearchUniversity'
+import { useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const EditInfoBox = ({data}) => {
+    const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [updated, setUpdated] = useState(false)
     const [update_info] = useMutation(UPDATE_INFO)
     const [country, setCountry] = useState(data.country)
     const [city, setCity] = useState(data.city)
+    const [uni, setUni] = useState(data.university)
+    const [job, setJob] = useState(data.job)
+    const [hs, setHS] = useState(data.high_school)
+    const [pnum, setPNum] = useState(data.phone_number)
+
 
     const handleEditInfo = (e) => {
         e.preventDefault()
@@ -24,7 +32,7 @@ const EditInfoBox = ({data}) => {
 
         update_info({
             variables:{
-                userID: data.userID,
+                userID: uid,
                 job,
                 uni,
                 hs,
@@ -43,43 +51,53 @@ const EditInfoBox = ({data}) => {
         setCity(val)
     }, [setCity]) 
 
+    const setUniCB = useCallback(val => {
+        setUni(val)
+    }, [setUni]) 
+
     return (
         <form className='flex-col-ctr edit-user-info-box' onSubmit={handleEditInfo}>
             <p>Edit info</p>
 
-            {updated && <p className='updated- msg'>Your info is updated!</p>}
+            {updated && <p className='updated-msg'>Your info is updated!</p>}
 
             <div className='flex-ctr'>
                 <h5>Country</h5>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setCountry('')}/>
                 <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
                 <CountriesSelect setCountryCB={setCountryCB}/>     
             </div>  
 
             <div className='flex-ctr'>
                 <h5>City</h5>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setCity('')}/>
                 <input type='text' id='city' className='input' placeholder='Add city' value={city} readOnly={true}/>
                 <CitiesSelect country={country} setCityCB={setCityCB}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>Job</h5>
-                <input type='text' className='input' id='job' placeholder='Add job' defaultValue={data.job}/>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setJob('')}/>
+                <input type='text' className='input' id='job' placeholder='Add job' value={job} onChange={(e)=>setJob(e.target.value)}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>University</h5>
-                <input type='text' className='input' id='uni' placeholder='Add university' defaultValue={data.university} readOnly/>
-                <SearchUniversity/>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setUni('')}/>
+                <input type='text' className='input' id='uni' placeholder='Add university' value={uni} readOnly/>
+                <SearchUniversity setUniCB={setUniCB}/>
             </div>            
 
             <div className='flex-ctr'>
                 <h5>High school</h5>
-                <input type='text' className='input' id='hs' placeholder='Add high school' defaultValue={data.high_school}/>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={(e)=>setHS('')}/>
+                <input type='text' className='input' id='hs' placeholder='Add high school' value={hs} onChange={(e)=>setHS(e.target.value)}/>
             </div>    
 
             <div className='flex-ctr'>
                 <h5>Phone</h5>
-                <input type='text' className='input' id='num' placeholder='Add phone number' defaultValue={data.phone_number}/>
+                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setPNum('')}/>
+                <input type='text' className='input' id='num' placeholder='Add phone number' value={pnum} onChange={(e)=>setPNum(e.target.value)}/>
             </div>  
 
             <button type='submit' className='btn save-btn'>SAVE</button>

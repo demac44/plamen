@@ -7,22 +7,30 @@ import TagsBox from '../../General components/TagsBox'
 
 const InterestsBox = ({myprofile, userID}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
-    const {data, loading} = useQuery(USER_INFO, {
+    const {data, loading} = useQuery(USER_INTERESTS, {
         variables:{
             userID: myprofile ? uid : userID
         }
     })
 
+    const splitInterests = () => {
+        let arr = [];
+        data?.get_user_interests?.map(i=>{
+            arr.push(i.interest)
+        })
+        return arr
+    }
+
     return (
         <>
-        {data?.get_user_info?.interests && 
+        {data?.get_user_interests && 
             <div className='box'>
                 <div className='flex-sb'>
                     <h3>{myprofile ? 'My interests' : 'User interests'}</h3>
                     {myprofile && <Link to='/settings/info' className='side-box-link-btn'>Edit</Link>}
                 </div>
                 {loading ? <div className='flex-ctr'><div className='small-spinner'></div></div> :
-                <TagsBox tags={data?.get_user_info?.interests?.split(',')}/>}             
+                <TagsBox tags={splitInterests()}/>}             
             </div>}
         </>
     )
@@ -30,10 +38,10 @@ const InterestsBox = ({myprofile, userID}) => {
 
 export default memo(InterestsBox)
 
-const USER_INFO = gql`
+const USER_INTERESTS = gql`
     query ($userID: Int){
-        get_user_info (userID: $userID){
-            interests
+        get_user_interests(userID: $userID){
+            interest
         }
     }
 `

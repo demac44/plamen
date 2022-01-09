@@ -70,6 +70,18 @@ export const GET_USER_INFO = {
     }
 }
 
+export const GET_USER_INTERESTS = {
+    type: new GraphQLList(UserInfoType),
+    args:{
+        userID: {type: GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID} = args
+        const sql = `SELECT interest FROM user_interests WHERE userID=${userID}`
+        return await connection.promise().query(sql).then(res=>{return res[0]})
+    }
+}
+
 export const USER_SUGGESTIONS = {
     type: new GraphQLList(UserType),
     args:{

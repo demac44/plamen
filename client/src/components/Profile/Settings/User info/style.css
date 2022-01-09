@@ -114,6 +114,11 @@
 .uni-search-drop p:hover{
     background-color: #2f2f2f;
 }
+.clear-info{
+    margin-right: 5px;
+    min-width: 20px;
+    color: rgb(175, 44, 44);
+}
  
 @media screen and (max-width: 447px){
     .edit-user-info-box div{

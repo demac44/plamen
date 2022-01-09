@@ -177,10 +177,15 @@ export const EDIT_INTERESTS = {
         userID: {type: GraphQLInt},
         interests: {type: GraphQLString}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {userID, interests} = args
-        const sql = `UPDATE user_info SET interests="${interests}" WHERE userID=${userID}`
-        connection.query(sql)
+        const clear = `DELETE FROM user_interests WHERE userID=${userID}`
+        connection.query(clear)
+        const arr = interests.split(',')
+        await arr.forEach(async i => {
+            const insert = `INSERT INTO user_interests (userID, interest) VALUES (${userID}, "${i}")`
+            connection.query(insert)
+        })
         return args
     }
 }

@@ -40,7 +40,7 @@ const UserInfo = ({isLogged}) => {
                             </h3>
                         </div>
 
-                        {!loading && <EditInterests data={data?.get_user_info?.interests} uid={uid}/>}
+                        {!loading && <EditInterests data={data?.get_user_interests} uid={uid}/>}
 
                         {!loading &&<EditInfoBox data={{
                             job:data?.get_user_info?.job,
@@ -76,10 +76,12 @@ const USER_INFO = gql`
             bDate
             phone_number
             date_joined
-            interests
             gender
             country
             city
+        }
+        get_user_interests(userID: $userID){
+            interest
         }
     }
 `

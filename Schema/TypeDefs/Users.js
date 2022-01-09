@@ -49,10 +49,11 @@ export const UserInfoType = new GraphQLObjectType({
         phone_number: {type: GraphQLString},
         gender: {type: GraphQLString},
         date_joined: {type: GraphQLString},
-        interests: {type: GraphQLString},
         error: {type: GraphQLString},
         country: {type: GraphQLString},
-        city: {type: GraphQLString}
+        city: {type: GraphQLString},
+        interest: {type: GraphQLString},
+        interests: {type: GraphQLString}
     })
 })
 

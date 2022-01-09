@@ -1,11 +1,12 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import {universities} from '../../../../Assets/universities.js'
 
-const SearchUniversity = () => {
+const SearchUniversity = ({setUniCB}) => {
     const [query, setQuery] = useState('')
 
     return (
-        <span className='search-uni-box'>
+        <span className='search-uni-box flex-ctr'>
             <input 
                 type='text' 
                 placeholder='Find your university...'
@@ -13,9 +14,10 @@ const SearchUniversity = () => {
                 value={query}
                 onChange={(e)=>setQuery(e.target.value)}
             />
+            {query!=='' && <FontAwesomeIcon icon='times' color='white' fixedWidth onClick={()=>setQuery('')} cursor='pointer'/>}
             {query.length > 0 &&
-            <div className='uni-search-drop'>
-                {filterRes(universities, query)?.slice(0,50)?.map(uni => <p key={uni.name}>{uni.name}</p>)}
+            <div className='uni-search-drop' onClick={()=>setQuery('')}>
+                {filterRes(universities, query)?.slice(0,50)?.map(uni => <p onClick={()=>{setUniCB(uni.name);setQuery('')}} key={uni.name}>{uni.name}</p>)}
             </div>}
         </span>
     )

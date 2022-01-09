@@ -5,7 +5,11 @@ import { useMutation } from 'react-apollo'
 import SearchInterests from '../../../General components/SearchInterests'
 
 const EditInterests = ({data, uid}) => {
-    const [tags, setTags] = useState(data.split(','))
+    const [tags, setTags] = useState(()=>{
+        let arr=[]
+        data.map(i => arr.push(i.interest))
+        return arr;
+    })
     const [updated, setUpdated] = useState(false)
     const [edit_interests, {error}] = useMutation(EDIT_INTERESTS)
 
