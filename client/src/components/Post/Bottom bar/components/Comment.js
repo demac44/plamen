@@ -54,8 +54,10 @@ const Comment = ({comment, refetchComments}) => {
                       </p>}
                 </>
                 )
-                : <p><Link to={'/profile/'+comment.username} className='cmt-username'>{comment.username}</Link>
-                    <Linkify>{' '+comment.comment_text}</Linkify></p>}
+                : <div className='flex'><Link to={'/profile/'+comment.username} className='cmt-username'>{comment.username}</Link>
+                    {findTag(comment.comment_text) ? <Linkify>{<p dangerouslySetInnerHTML={{__html: findTag(comment.comment_text)}}></p>}</Linkify>
+                        : <Linkify>{comment.comment_text}</Linkify>}
+                 </div>}
                     
                 <SetTime timestamp={comment.date_commented} fontSize='12px'/>
             </div>
@@ -82,3 +84,33 @@ const DELETE_COMMENT = gql`
         }
     }
 `
+const findTag = (post_text) => {
+    if(post_text.includes('@')){
+        post_text = post_text.replaceAll('@', ' @')
+        if(post_text.includes('<')){
+            post_text = post_text.replaceAll('<', '<\u200b')
+        }
+        let arr = post_text.split('')
+        let namesArr = [];
+        let name=null;
+        for(let i = 0;i<arr.length;i++){
+            name=null;
+            if(arr[i]==='@'){
+                for(let j=i;j<arr.length;j++){
+                    if(arr[j]===' ') {name=post_text.slice(i+1,j); break}
+                    else if(j===arr.length-1) {name=post_text.slice(i+1,j+1); break}
+                    else if(j===arr.length) {name=post_text.slice(i+1,-1); break}
+                }
+                name && namesArr.push(name)
+            }
+        }
+        if(namesArr.length>0){
+            namesArr.forEach(name => {
+                post_text = post_text.replaceAll(`@${name}`, `<a href='/profile/${name}'>@${name}</a>`)
+            })
+            return post_text
+        }
+        return false
+    }
+    return false
+}

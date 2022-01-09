@@ -125,6 +125,38 @@ export const MENTION_NOTIFICATION = {
     }
 }
 
+export const CMT_MENTION_NOTIFICATION = {
+    type: NotificationType,
+    args:{
+        postID: {type: GraphQLInt},
+        sender_id: {type: GraphQLInt},
+        username:  {type: GraphQLString},
+        profile_picture: {type:GraphQLString},
+        receiver_username: {type: GraphQLString}
+    },
+    async resolve(_, args){
+        const {sender_id, postID, username, profile_picture, receiver_username} = args
+        const usr = `SELECT userID FROM users WHERE username="${receiver_username}"`
+        const userRes = await connection.promise().query(usr).then(res=>{return res[0][0]})
+        if(userRes){
+            if(sender_id!==userRes.userID){
+                const sql = `INSERT INTO notifications (sender_id, receiver_id, postID, type)
+                VALUES (${sender_id}, ${userRes.userID}, ${postID}, "mention-cmt")`
+                const result = await connection.promise().query(sql).then(res=>{return res[0]})
+                pubsub.publish('NOTIFICATION', {newNotification: {
+                    sender_id, 
+                    receiver_id: userRes.userID, 
+                    Nid:result.insertId, 
+                    type:"mention-cmt", 
+                    username: username,
+                    profile_picture: profile_picture,
+                    time_sent: new Date().getTime()
+                }})
+            }
+        }
+    }
+}
+
 export const CLEAR_NOTIFICATIONS = {
     type: NotificationType,
     args:{

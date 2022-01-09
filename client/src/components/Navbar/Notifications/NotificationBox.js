@@ -15,12 +15,14 @@ const NotificationBox = ({notif}) => {
                     {notif.type==='comment' && <FontAwesomeIcon icon='comment' className='notif-type comment-notif'/>}
                     {notif.type==='follow' && <FontAwesomeIcon icon='user' className='notif-type foll-notif'/>}
                     {notif.type==='mention' && <FontAwesomeIcon icon='at' className='notif-type mention-notif'/>}
+                    {notif.type==='mention-cmt' && <FontAwesomeIcon icon='at' className='notif-type mention-notif'/>}
                 </span>
                 <span className='notif-text'>
                     {notif.type==='like' && <p>{'@'+notif.username+' liked your post'}</p>}
                     {notif.type==='comment' && <p>{'@'+notif.username+' commented on your post'}</p>}
                     {notif.type==='follow' && <p>{'@'+notif.username+' followed you'}</p>}
                     {notif.type==='mention' && <p>{'@'+notif.username+' mentioned you in post'}</p>}
+                    {notif.type==='mention-cmt' && <p>{'@'+notif.username+' mentioned you in comment'}</p>}
                 </span>
             </Link>
             <div className='nb-right flex-ctr'>
