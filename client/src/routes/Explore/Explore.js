@@ -39,7 +39,7 @@ const Explore = ({isLogged}) => {
                         >
                             <p>Refresh?</p>
                             <br/>
-                            <FontAwesomeIcon icon='redo' size='ls' color='white'/>
+                            <FontAwesomeIcon icon='redo' size='lg' color='white'/>
                         </div>
                     </div>
                 </div>

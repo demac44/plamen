@@ -64,17 +64,17 @@ const LoginForm = ({popup}) => {
             <div className='entry-form-box flex-col-ctr'>
                 <span style={{alignSelf:'flex-start'}}> 
                     <div className='flex-ac' style={{margin:'0 0 5px 10px'}}>
-                        <img src={logo} alt=''/>
+                        <img className='entry-logo-img' src={logo} alt=''/>
                         <h1>Login</h1>
                     </div>
-                    <p>Enter your details below to continue</p>
+                    <p>Enter your details below to login</p>
                 </span>
                 {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
                 <form className="entry-form flex-col-ctr" onSubmit={handleLogin}>
                     <input type="text" ref={value => username = value} id='username' name='username' placeholder="Username or email"/>
                     <input type="password" ref={value => password = value} id='password' name='password' placeholder="Password"/>
                     <NavLink to="/reset_password">Forgot your password?</NavLink>
-                    <button className="entry-btn btn" type="submit">LOGIN</button>
+                    <button className="btn login-btn" type="submit">LOGIN</button>
                 </form>
                 <div className="entry-link flex-ctr">
                     <h6>Don't have an account?</h6>                

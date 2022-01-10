@@ -44,7 +44,7 @@ const EditInfoBox = ({data}) => {
     }
 
     const setCountryCB = useCallback(val => {
-        setCountry(val)
+        val === "--blank--" ? setCountry('') : setCountry(val)
     }, [setCountry]) 
 
     const setCityCB = useCallback(val => {

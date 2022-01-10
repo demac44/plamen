@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import ErrorMsg from '../ErrorMsg'
 import axios from 'axios'
-
-
+import logo from '../../../images/logo-min.png'
     
 const RegisterForm = () => {    
     const [selectYear, setSelectYear] = useState([])
@@ -105,9 +104,12 @@ const RegisterForm = () => {
     
         return (
             <div className='entry-form-box flex-col-ctr'>
-                <span style={{alignSelf:'flex-start'}}>
-                    <h1>Register</h1>
-                    <p>Enter your details below to continue</p>
+                <span style={{alignSelf:'flex-start'}}> 
+                    <div className='flex-ac' style={{margin:'0 0 5px 10px'}}>
+                        <img className='entry-logo-img' src={logo} alt=''/>
+                        <h1>Register</h1>
+                    </div>
+                    <p>Enter your details below to register</p>
                 </span>
                 {errorMsg !== '' && <ErrorMsg message={errorMsg}/>}
                 {loading && 
@@ -150,7 +152,12 @@ const RegisterForm = () => {
                     <input type="text" id='username' name='username' placeholder="Create your username"/>
                     <input type="password" id='password' name='password' placeholder="Password"/>
                     <input type="password" id='confirmpass' name='confirmpass' placeholder="Confirm your password"/>
-                    <button className="entry-btn btn" type="submit" disabled={loading}>REGISTER</button>
+
+                    <span className='terms-conditions-box'>
+                        <p>By clicking on register you agree to our terms and conditions and privacy policy.</p>
+                    </span>
+
+                    <button className="register-btn btn" type="submit" disabled={loading}>REGISTER</button>
                 </form>
                 <div className="entry-link flex-ctr">
                     <h6>Already have an account?</h6>                

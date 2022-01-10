@@ -131,7 +131,7 @@
 
 @media screen and (max-width: 1300px){
     .profile-top-box{
-        padding: 20px 10px;
+        padding: 60px 10px 20px 10px;
         flex-direction: column;
         align-items: center;
     }
@@ -170,6 +170,21 @@
     .status-991px div{
         margin: 0 !important;
     }
+    .pf-camera-icon{
+        top: 20px;
+        right: 50%;
+    }
+    .pf-sett-icon{
+        top: 20px;
+        right: 30%;
+    }
+    .pf-story-icon{
+        top: 20px;
+        right: 70%;
+    }
+    .pf-camera-icon,.pf-sett-icon, .pf-story-icon{
+        transform: translateX(50%);
+    }
     
 }
 
@@ -178,6 +193,7 @@
     /* PROFILE */
     .profile-top-box{
         width: 100%;
+        padding-top: 60px;
     }
     .profile-top-box-stats{
         width: 65%;
@@ -191,7 +207,6 @@
         border-radius: 0;
         border: none;
         box-shadow: none;
-        padding-top: 50px;
     }
     .profile-top-box-stats{
         width: 90%;

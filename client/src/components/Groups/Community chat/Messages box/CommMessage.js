@@ -12,8 +12,6 @@ const Message = ({msg}) => {
     const setOpenMediaCallback = useCallback(val => {
         setOpenMedia(val)
     }, [setOpenMedia])
-
-    console.log(msg);
     
     return (
         <>

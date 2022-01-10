@@ -23,7 +23,7 @@ const InterestsBox = ({myprofile, userID}) => {
 
     return (
         <>
-        {data?.get_user_interests && 
+        {data?.get_user_interests?.length>0 && 
             <div className='box'>
                 <div className='flex-sb'>
                     <h3>{myprofile ? 'My interests' : 'User interests'}</h3>

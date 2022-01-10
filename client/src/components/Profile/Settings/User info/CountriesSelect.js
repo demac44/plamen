@@ -4,6 +4,7 @@ const CountriesSelect = ({setCountryCB}) => {
     return (
         <span className='select-country-box'>
         <select className='country-select input' onChange={(e)=>setCountryCB(e.target.value)}>
+            <option value="--blank--">--blank--</option>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Albania">Albania</option>
             <option value="Algeria">Algeria</option>
