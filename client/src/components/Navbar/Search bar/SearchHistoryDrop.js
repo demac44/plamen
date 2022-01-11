@@ -10,9 +10,9 @@ const SearchHistoryDrop = ({searchHistory, dropdownCallback}) => {
 
     return (
         <>
-            <div style={styles.title}>
+            <div className='search-hist-title flex-sb'>
                 <p>Search history</p>
-                <p onClick={handleClear} style={styles.clearBtn}>Clear all</p>
+                <p onClick={handleClear} className='search-hist-clear-btn'>Clear all</p>
             </div>
         <div className='searchHis-drop flex-col-ctr'>
             {
@@ -27,17 +27,3 @@ const SearchHistoryDrop = ({searchHistory, dropdownCallback}) => {
 }
 
 export default SearchHistoryDrop
-
-const styles = {
-    title:{
-        padding:'5px 10px',
-        display:'flex',
-        justifyContent:'space-between',
-        color:'white'
-    },
-    clearBtn:{
-        fontSize:'14px',
-        color:'teal',
-        cursor:'pointer'
-    }
-}

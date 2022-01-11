@@ -10,7 +10,6 @@ const GroupChatMsgBox = ({chat}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
-    // const [seen] = useMutation(SEEN)
     const messages = useQuery(GET_GROUP_MESSAGES, {
         variables: {
             groupChatId: chat.groupChatId,
@@ -50,12 +49,6 @@ const GroupChatMsgBox = ({chat}) => {
     
     useEffect(()=>{
         messages?.data?.get_group_messages?.length>=50 && setFetchBtn(true)
-        // seen({
-        //     variables:{
-        //         cid: chat.chatID,
-        //         rid: ls.userID
-        //     }
-        // })
     }, [messages?.data, chat, uid])
 
 
@@ -129,10 +122,3 @@ const NEW_MESSAGE = gql`
         }
     }
 `
-// const SEEN = gql`
-//     mutation($cid: Int!, $rid: Int!){
-//         seen(chatID: $cid, receiver_id: $rid){
-//             chatID
-//         }
-//     }
-// `

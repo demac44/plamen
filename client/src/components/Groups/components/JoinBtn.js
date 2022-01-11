@@ -27,6 +27,8 @@ const JoinBtn = ({info, user}) => {
         } else if(!loading && user) setState('LEAVE')
     }, [data, info.groupID, uid, user, loading])
 
+    // putting 1s delay to prevent spaming
+
     const handleJoin = () => {
         setIsLoading(true)
         setTimeout(()=>{

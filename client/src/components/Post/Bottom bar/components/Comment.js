@@ -32,6 +32,7 @@ const Comment = ({comment, refetchComments}) => {
             </Link>
 
             <div className='cmt-text-box'>
+                {/* if comment too long slice and show read more btn */}
                 {comment.comment_text.length>200 ? 
                 (
                 <>
@@ -84,16 +85,18 @@ const DELETE_COMMENT = gql`
         }
     }
 `
+
+// find if user @mentions in comment
 const findTag = (post_text) => {
     if(post_text.includes('@')){
-        post_text = post_text.replaceAll('@', ' @')
+        post_text = post_text.replaceAll('@', ' @') // if user puts no space between tags are not rendered correctly
         if(post_text.includes('<')){
-            post_text = post_text.replaceAll('<', '<\u200b')
+            post_text = post_text.replaceAll('<', '<\u200b') // zero width char to prevent xss
         }
         let arr = post_text.split('')
         let namesArr = [];
         let name=null;
-        for(let i = 0;i<arr.length;i++){
+        for(let i = 0;i<arr.length;i++){ // finding all mentioned usernames
             name=null;
             if(arr[i]==='@'){
                 for(let j=i;j<arr.length;j++){

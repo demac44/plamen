@@ -242,19 +242,16 @@ export const ADD_GROUP_CHAT_USER = {
         error = null
         const {groupChatId, username} = args
         const sql = `SELECT userID FROM users WHERE username="${username}"`
-        await connection.promise().query(sql).then(res=>{
+        return await connection.promise().query(sql).then(res=>{
             if(!res[0][0]?.userID) {
-                error = 'User not found!'
-                return
+                return {error: "User not found"}
             } else {
                 const addUser = `INSERT INTO group_chats_members (groupChatId, userID)
                                     VALUES (${groupChatId}, ${res[0][0].userID})`
                 connection.query(addUser)
-                error=null
-                return
+                return {error: null}
             }
         })
-        return {error: error}
     }
 }
 
@@ -271,34 +268,3 @@ export const REMOVE_GROUP_CHAT_MEMBER = {
         return args
     }
 }
-
-// export const MSG_NOTIFICATION = {
-//     type:MsgNotificationType,
-//     args:{
-//         sender_id: {type:GraphQLInt},
-//         receiver_id: {type:GraphQLInt},
-//         chatID: {type:GraphQLInt}      
-//     },
-//     async resolve(_, args){ 
-//         const {sender_id, receiver_id, chatID} = args
-//         const sql = `INSERT INTO msg_notifications (Nid, sender_id, receiver_id, chatID)
-//                         VALUES (null, ${sender_id}, ${receiver_id}, ${chatID})`
-//         const result = await connection.promise().query(sql).then(res=>{return res[0]})
-//         pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender_id, receiver_id, chatID, Nid:result.insertId}})
-//         return args
-//     }
-// }
-
-// export const SEEN = {
-//     type:ChatMessagesType,
-//     args: {
-//         chatID:{type:GraphQLInt},
-//         receiver_id:{type:GraphQLInt}
-//     },
-//     resolve(_, args){
-//         const {chatID, receiver_id} = args
-//         const sql = `DELETE FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}` 
-//         connection.query(sql)
-//         return args
-//     }
-// }

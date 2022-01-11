@@ -6,16 +6,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const GroupChatBar = ({chatID, admin}) => {
     const [showMenu, setShowMenu] = useState(false)
+
+    // passing chat info from chat list
     const {state} = useLocation()
 
-    const addListeners = () => {
+    useEffect(()=>{
         document.querySelector('.chat-messages').addEventListener('click', ()=>setShowMenu(false))
         document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
-    }
-
-
-    useEffect(()=>{
-        addListeners()
         setShowMenu(false)
         return
     }, [chatID])

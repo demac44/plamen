@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import Linkify from 'react-linkify'
-import { render } from 'react-dom';
 
 const PostTextBar = ({post_text}) => {
     const [readMore, setReadMore] = useState(true)
@@ -33,16 +32,17 @@ const PostTextBar = ({post_text}) => {
 }
 export default PostTextBar
 
+// find if user @mentions in post
 const findTag = (post_text) => {
     if(post_text.includes('@')){
-        post_text = post_text.replaceAll('@', ' @')
+        post_text = post_text.replaceAll('@', ' @') // if user puts no space between tags are not rendered correctly
         if(post_text.includes('<')){
-            post_text = post_text.replaceAll('<', '<\u200b')
+            post_text = post_text.replaceAll('<', '<\u200b') // zero width char to prevent xss
         }
         let arr = post_text.split('')
         let namesArr = [];
         let name=null;
-        for(let i = 0;i<arr.length;i++){
+        for(let i = 0;i<arr.length;i++){ // find all mentioned users
             name=null;
             if(arr[i]==='@'){
                 for(let j=i;j<arr.length;j++){

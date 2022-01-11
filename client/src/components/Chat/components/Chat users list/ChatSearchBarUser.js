@@ -2,7 +2,6 @@ import React, {memo} from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
-
 import Avatar from '../../../General components/Avatar'
 import UserLoader from '../../../General components/Loaders/UserLoader'
 
@@ -11,11 +10,8 @@ const ChatSearchBarUser = ({user}) => {
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:uid, user2:user.userID}})  
 
-    
     if(loading) return <UserLoader/>
 
-
-    
     const createChat = () => {
         if(data?.if_user_blocked){
             window.location.href='/profile/'+user.username

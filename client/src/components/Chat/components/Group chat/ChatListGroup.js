@@ -33,7 +33,9 @@ const ChatListGroup = ({data}) => {
                     isGroupChat: true
                 }}}     
                 className='chat-user-box flex-ac'>
+
             <Avatar size='45px' image={data?.group_image}/>
+
             <div className='chat-name-msg flex-col-sb'>  
                 <p style={{color:'white'}}>{data.name}</p>
            
@@ -42,12 +44,14 @@ const ChatListGroup = ({data}) => {
                             color:info?.data?.last_group_message?.userID===uid ? 'gray' : 'white', 
                             fontWeight: info?.data?.last_group_message?.userID===uid ? 'lighter' : 'bold'}}>
 
+                    {/* checking if last message is from db or subscription and slicing message if too long */}
                     {(newMsg && newMsg?.data && newMsg?.data?.newGroupMessage?.groupChatId===data?.groupChatId) ? 
                         (newMsg?.data?.newGroupMessage?.msg_text.length>25 ? newMsg?.data?.newGroupMessage?.msg_text.slice(0,22)+'...' 
                             : newMsg?.data?.newGroupMessage?.msg_text)
                         : (msgData?.last_group_message?.msg_text.length>25 ? msgData?.last_group_message?.msg_text.slice(0,22)+'...' 
                             : msgData?.last_group_message?.msg_text)}
 
+                    {/* check the type of message is image or video without text and setting corresponding message */}
                     {(msgData?.last_group_message?.type==='image' && !msgData?.last_group_message?.msg_text) && 
                         (info?.data.last_group_message?.userID===uid ? 'You sent an image' : data?.username+' sent an image')}
                     {(msgData?.last_group_message?.type==='video' && !msgData?.last_group_message?.msg_text) && 

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, memo } from 'react'
+import React, { useState, useCallback, memo } from 'react'
 import ActivityStatus from '../../General components/ActivityStatus.js'
 import UsersList from '../../General components/Users list/UsersList.js'
 
@@ -6,12 +6,6 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus, noOfPosts}) => {
     const [follows, setFollows] = useState([])
     const [title, setTitle] = useState('')
     const [showList, setShowList] = useState(false)
-
-
-    useEffect(()=>{
-        document.querySelector('body').style.overflowY = (showList ? 'hidden' : 'auto')
-        return
-    }, [info, showList])
 
     const closeList = useCallback(() => {
         setShowList(false)
@@ -22,7 +16,6 @@ const ProfileInfo = ({info, last_seen, blocked, mystatus, noOfPosts}) => {
         setFollows(type)
         setShowList(true)
     }
-
 
     return (
         <>

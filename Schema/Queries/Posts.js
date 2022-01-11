@@ -21,8 +21,7 @@ export const GET_PROFILE_POSTS = {
                      WHERE username="${username}"
                      ORDER BY date_posted DESC  
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }
 }
 export const GET_FEED_POSTS = {
@@ -41,8 +40,7 @@ export const GET_FEED_POSTS = {
                      (SELECT followedID FROM followings WHERE followerID=${userID})) 
                      AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 // saved posts
@@ -65,8 +63,7 @@ export const GET_SAVED_POSTS    = {
                         AND saves.userID=${userID} 
                         ORDER BY date_posted DESC 
                         LIMIT ${limit} OFFSET ${offset};`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 export const IF_SAVED = {
@@ -78,9 +75,7 @@ export const IF_SAVED = {
     async resolve(_, args){
         const {userID, postID} = args
         const sql = `SELECT EXISTS(SELECT 1 FROM saves WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifSaved`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0][0]})
-        if(result.ifSaved===1) return true
-        return false
+        return await connection.promise().query(sql).then((res)=>{return res[0][0].ifSaved===1 ? true : false})
     }
 }
 // get random posts
@@ -97,8 +92,7 @@ export const RANDOM_POSTS = {
                      AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      ORDER BY RAND() limit 100`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -121,8 +115,7 @@ export const GET_POST = {
                         AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                         WHERE disabled=false 
                         AND posts.postID=${postID}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result[0]
+        return await connection.promise().query(sql).then(res=>{return res[0][0]})
     }
 }
 // comments and likes
@@ -143,8 +136,7 @@ export const GET_POST_COMMENTS = {
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      ORDER BY date_commented DESC
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 export const GET_POST_LIKES = {
@@ -164,8 +156,7 @@ export const GET_POST_LIKES = {
                      AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -178,8 +169,6 @@ export const IF_LIKED = {
     async resolve(_, args){
         const {postID, userID} = args
         const sql = `SELECT EXISTS(SELECT 1 FROM likes WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifLiked`
-        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
-        if(result.ifLiked===1) return true
-        return false
+        return await connection.promise().query(sql).then(res=>{return res[0][0].ifLiked===1 ? true : false})
     }
 }

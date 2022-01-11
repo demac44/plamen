@@ -24,20 +24,14 @@ const Stories = ({stories, refetch, seenStories}) => {
                     <AddStory refetch={refetch}/>
                     <p style={{fontSize:'14px'}}>Add story</p>
                 </div>
-                {/* not seen stories */}
                 {stories.map(story => (
-                    seenStories.includes(story?.stories[story?.stories?.length-1].storyID) ?
                     <div className='flex-col-ctr story-head-box' key={story?.storyID}>
-                        <StoryHead story={story} seen={true} allData={stories} index={index++}/>
-                        <p>{story?.username}</p>
-                    </div>
-                    : <div className='flex-col-ctr story-head-box' key={story?.storyID}>
-                        <StoryHead story={story} seen={false} allData={stories} index={index++}/>
+                        <StoryHead story={story} seen={seenStories.includes(story?.stories[story?.stories?.length-1].storyID)} allData={stories} index={index++ /* setting index for each story group */}/>
                         <p>{story?.username}</p>
                     </div>
                 ))}
             </div>
-            {/* stories buttons */}
+            {/* listing story heads buttons */}
             {margin > 0 && 
                 <div 
                     className='flex-ctr list-stories-btn-left list-stories-btn' 

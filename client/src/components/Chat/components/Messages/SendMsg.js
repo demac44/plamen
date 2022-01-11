@@ -103,11 +103,15 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     return (
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
+
             <EmojisBox emojiCB={emojiCB} visible={emojis}/>
+
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
                 {lengthErr && <p className='msg-length-err'>Message too long! Max. characters allowed: 6000</p>}
+
                 <FontAwesomeIcon icon='icons' className='emojis-btn' onClick={()=>setEmojis(!emojis)}/>
-                <div>
+
+                <div> 
                     <label htmlFor='file-input'>
                         <FontAwesomeIcon icon='images' className='msg-upload-btn'/>
                     </label>
@@ -117,13 +121,15 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                             setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
                         }}></input>
                 </div>
+
                 <textarea 
                     name='msg_text' 
                     value={msgText} 
                     className='msg_text' 
                     onChange={(e)=>setMsgText(e.target.value)} 
                     placeholder='Send message...'
-                    ></textarea>
+                ></textarea>
+
                 <button type='submit' className="post-button btn">SEND</button>
             </form>
         </>

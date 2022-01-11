@@ -36,9 +36,9 @@ const Feed = ({isLogged}) => {
         setIsLoading(true)
         setSeenStories(()=>{
             let arr = [];
-            data?.get_seen_stories?.map(s => {
-                arr.push(s?.storyID)
-            })
+            data?.get_seen_stories?.map(s => ({
+                p: arr.push(s?.storyID)
+            }))
             return arr;
         })
         setIsLoading(false)

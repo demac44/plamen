@@ -11,7 +11,6 @@ import './style.css'
 const ChatListUser = ({data}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const newMsg = useSubscription(NEW_MESSAGE)
-    const [count, setCount] = useState(0)
     const [msgData, setMsgData] = useState([])
     const info = useQuery(GET_INFO, {
         variables:{
@@ -21,7 +20,6 @@ const ChatListUser = ({data}) => {
     })
 
     useEffect(()=>{
-        setCount(info?.data?.count_msgs?.msgCount)
         setMsgData(info?.data)
         info?.refetch()
         return
@@ -48,12 +46,14 @@ const ChatListUser = ({data}) => {
                             color:info?.data?.last_message?.userID===uid ? 'gray' : 'white', 
                             fontWeight: info?.data?.last_message?.userID===uid ? 'lighter' : 'bold'}}>
 
+                    {/* checking if message is from db or subscription and slicing it is too long */}
                     {(newMsg && newMsg?.data && newMsg?.data?.newMessage?.chatID===data?.chatID) ? 
                         (newMsg?.data?.newMessage?.msg_text.length>25 ? newMsg?.data?.newMessage?.msg_text.slice(0,22)+'...' 
                             : newMsg?.data?.newMessage?.msg_text)
                         : (msgData?.last_message?.msg_text.length>25 ? msgData?.last_message?.msg_text.slice(0,22)+'...' 
                             : msgData?.last_message?.msg_text)}
 
+                    {/* checking if msg type is image or video and setting corresponding message */}
                     {(msgData?.last_message?.type==='image' && !msgData?.last_message?.msg_text) && 
                         (info?.data.last_message?.userID===uid ? 'You sent an image' : data?.username+' sent an image')}
                     {(msgData?.last_message?.type==='video' && !msgData?.last_message?.msg_text) && 
@@ -62,7 +62,8 @@ const ChatListUser = ({data}) => {
 
             </div>  
 
-            {(count > 0 || (newMsg?.data?.newMessage?.userID!==uid
+            {/* show dot if unread or new message */}
+            {(info?.data?.check_unread_msg || (newMsg?.data?.newMessage?.userID!==uid
                 && newMsg?.data?.newMessage?.chatID===data?.chatID))
                 && <div className='unread-msg-dot'></div>}
 
@@ -75,9 +76,7 @@ export default memo(ChatListUser)
 
 const GET_INFO = gql`
     query($cid: Int!, $rid: Int){
-        count_msgs(chatID: $cid, receiver_id: $rid){
-            msgCount
-        }
+        check_unread_msg(chatID: $cid, receiver_id: $rid)
         last_message(chatID: $cid){
             msg_text
             type

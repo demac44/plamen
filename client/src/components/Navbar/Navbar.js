@@ -17,7 +17,8 @@ const Navbar = ({isLogged}) => {
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
     const {data} = useSubscription(NEW_MESSAGE)
-    const [NotNo, setNotNo] = useState(0)
+    // count all unread messages
+    const [NoOfMsgs, setNoOfMsgs] = useState(0)
     const count = useQuery(COUNT_MSGS, {
         variables:{rid: uid}
     })
@@ -28,7 +29,7 @@ const Navbar = ({isLogged}) => {
     }
 
     useEffect(()=>{
-        isLogged && setNotNo(!count.loading && count?.data?.count_newMsgs?.msgCount)
+        isLogged && setNoOfMsgs(!count.loading && count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
         return
     }, [count, data, isLogged]) 
@@ -61,15 +62,19 @@ const Navbar = ({isLogged}) => {
                 <>
                     <FontAwesomeIcon icon='sort-down' className='tn-icons' style={{marginTop:'-13px'}} 
                         onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
+
                     <Link to='/chats' style={{position:'relative'}}>
                         {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
-                        <div className='flex-ctr tn-msgs-count'>{NotNo}</div>))}
+                        <div className='flex-ctr tn-msgs-count'>{NoOfMsgs}</div>))}
                         <FontAwesomeIcon icon='inbox' className='tn-icons'/>
                     </Link>
+
                     <div onClick={handleDropdown}> 
                         <Avatar size='45px' image={ls.profile_picture}/>
                     </div>
+
                     {dropdown && <Dropdown closeDropd={closeDropd}/>}
+                    
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
                 </>
                     : <Link to='/login'><button className='btn navbar-login-btn'>LOGIN</button></Link>}

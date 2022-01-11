@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-
 import { useSelector } from 'react-redux';
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
 import './style.css'
 
 const LeaveChatBtn = ({data, admin, chatID}) => {

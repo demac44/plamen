@@ -2,6 +2,8 @@ import React, {useState, useEffect, memo} from 'react'
 import { Link } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
+const editBtnRoles = ["CREATOR", "ADMIN"]
+
 const InfoBox = ({data, user, membersCount}) => {
     const [dateCreated, setDateCreated] = useState('')
 
@@ -25,13 +27,13 @@ const InfoBox = ({data, user, membersCount}) => {
             <div className='info-box flex-col-ctr'>
                 <div className='flex-sb wh-100'>
                     <h3>Description</h3>
-                    {(user && (user?.role==='CREATOR' || user?.role==='ADMIN')) 
+                    {editBtnRoles.includes(user?.role)
                         && <Link to={'/community/'+data?.groupID+'/settings/edit_info'} className='side-box-link-btn'>Edit</Link>}
                 </div>
                 {data?.group_description ? 
                 <div className='info-box-text'>{data?.group_description}</div>
                     :  
-                    ((user && (user?.role==='CREATOR' || user?.role==='ADMIN')) &&
+                    (editBtnRoles.includes(user?.role) &&
                     <div className='flex-ctr info-box-add-btn'>
                         <FontAwesomeIcon icon='plus' color='white' style={{marginRight:'5px'}}/>
                         <p>Add description</p>
@@ -41,7 +43,7 @@ const InfoBox = ({data, user, membersCount}) => {
             <div className='info-box flex-col-ctr'>
                 <div className='flex-sb wh-100'>
                     <h3>Community rules</h3>
-                    {(user && (user?.role==='CREATOR' || user?.role==='ADMIN')) 
+                    {editBtnRoles.includes(user?.role) 
                         && <Link to={'/community/'+data?.groupID+'/settings/edit_info'} className='side-box-link-btn'>Edit</Link>}
                 </div>
                 {data?.group_rules &&

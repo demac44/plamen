@@ -12,8 +12,7 @@ export const IF_FOLLOWING = {
     async resolve(_, args) {
         const {followerID, followedID} = args
         const sql = `SELECT COUNT(*) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result[0].ifFollowing
+        return await connection.promise().query(sql).then((res)=>{return res[0][0].ifFollowing})
     }   
 }
 export const GET_FOLLOWERS = {
@@ -30,8 +29,7 @@ export const GET_FOLLOWERS = {
                         (SELECT followerID 
                             FROM followings 
                             WHERE followedID=${followedID})`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }
 }
 export const GET_FOLLOWING = {
@@ -48,7 +46,6 @@ export const GET_FOLLOWING = {
                         (SELECT followedID 
                             FROM followings 
                             WHERE followerID=${followerID})`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }
 }

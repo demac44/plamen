@@ -70,17 +70,16 @@ function App() {
       return logout()
     } else {
         if(data?.get_user_suggestions){
-          // setInterval(()=>{
-        //   set_last_seen({variables:{userID: uid}})
-        // }, 120000)
+          setInterval(()=>{
+          set_last_seen({variables:{userID: uid}})
+        }, 120000)
         localStorage.setItem('user-suggestions', JSON.stringify(data?.get_user_suggestions))
         }
     }
   },[isLogged, user, uid, token, data, dispatch])
   
-  // <div onFocus={()=>set_last_seen({variables:{userID: uid}})}>
   return (
-      <div>
+    <div onFocus={()=>set_last_seen({variables:{userID: uid}})}>
         {(loading) ? <MainLoader/> :
           <Switch>
             <Route exact path='/'>{isLogged ? <Feed isLogged={isLogged}/> : <Redirect to='/login'/>}</Route>

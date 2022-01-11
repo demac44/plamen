@@ -13,7 +13,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
     const [query, setQuery] = useState('')
     const {loading, error, data} = useQuery(SEARCH, {
         variables:{
-            limit:5,
+            limit:50,
             offset:0,
             userID: uid
         }

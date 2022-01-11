@@ -11,7 +11,7 @@ const MsgPreviewBox = ({media, preview, clearFiles}) => {
             {media.type.slice(0,5)==='video' &&
                 <video className='msg-preview-media' src={preview}
                 onLoad={()=>URL.revokeObjectURL(preview)}></video>}
-            <div className='flex-ctr msg-preview-clear-btn'><FontAwesomeIcon icon='times'/></div>
+            <div className='flex-ctr msg-preview-clear-btn' onClick={()=>clearFiles()}><FontAwesomeIcon icon='times'/></div>
         </div>
     )
 }

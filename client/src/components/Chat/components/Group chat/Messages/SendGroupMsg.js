@@ -15,7 +15,6 @@ const SendGroupMsg = ({chatID, loaderCallback}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
-    // const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState(null)
     const [msgText, setMsgText] = useState('')
@@ -52,21 +51,12 @@ const SendGroupMsg = ({chatID, loaderCallback}) => {
                             url: res.data.url
                         }
                         }).then(()=>{
-                            // msg_notification({
-                                //     variables:{
-                            //         sid: uid,
-                            //         rid: uid,
-                            //         groupChatId: chatID
-                            //     }
-                            // })
-                            return
-                        }).then(()=>{
                             setMedia(null)
                             e.target.msg_text.value = ''
                             loaderCallback(false)
                         })
                     })
-                } else {
+        } else {
             send_msg({
                 variables: {
                     userID: uid,
@@ -78,35 +68,29 @@ const SendGroupMsg = ({chatID, loaderCallback}) => {
                     url: 'null'
                 }
             }).then(()=>{
-                // msg_notification({
-                    //     variables:{
-                        //         sid: uid,
-                        //         rid: uid,
-                        //         groupChatId: chatID
-                        //     },
-                        
-                        // })
-                        return
-                    }).then(()=>{
-                        e.target.msg_text.value = ''
+                    e.target.msg_text.value = ''
                 })
-            }}
-            
-            const clearFiles = () => {
-                setPreview(null)
-                setMedia(null)
+        }
     }
-    
+            
+    const clearFiles = () => {
+        setPreview(null)
+        setMedia(null)
+    }   
+
     const emojiCB = useCallback(val => {
         setMsgText(msgText+val)
     }, [msgText])
-    
+
     return (
         <>
             {(preview && media) && <MsgPreviewBox media={media} preview={preview} clearFiles={clearFiles}/>}
+
             {emojis && <EmojisBox emojiCB={emojiCB} visible={emojis}/>}
+
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
                 <FontAwesomeIcon icon='icons' className='emojis-btn' onClick={()=>setEmojis(!emojis)}/>
+
                 <div>
                     <label htmlFor='file-input'>
                         <FontAwesomeIcon icon='images' className='msg-upload-btn'/>
@@ -115,15 +99,17 @@ const SendGroupMsg = ({chatID, loaderCallback}) => {
                         onChange={(e)=>{
                             setMedia(e.target.files[0])
                             setPreview(e.target.value ? URL.createObjectURL(e.target.files[0]) : null)
-                        }}></input>
+                    }}></input>
                 </div>
+
                 <textarea 
                     name='msg_text' 
                     value={msgText} 
                     className='msg_text' 
                     onChange={(e)=>setMsgText(e.target.value)} 
                     placeholder='Send message...'
-                    ></textarea>
+                ></textarea>
+
                 <button type='submit' className="post-button btn">SEND</button>
             </form>
         </>
@@ -139,11 +125,3 @@ const SEND_MSG = gql`
         }
     }
 `
-
-// const MSG_NOTIFICATION = gql`
-//     mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
-//         msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
-//             chatID
-//         }
-//     }
-// `

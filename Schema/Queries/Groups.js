@@ -19,8 +19,7 @@ export const GET_ALL_GROUPS = {
                      FROM communities
                      JOIN community_info ON community_info.groupID=communities.groupID
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }   
 }
 
@@ -36,8 +35,7 @@ export const GET_GROUPS = {
                      FROM community_members 
                      JOIN communities ON community_members.groupID=communities.groupID 
                      WHERE community_members.userID=${userID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }    
 }      
 
@@ -51,8 +49,7 @@ export const GET_GROUP = {
         const sql = `SELECT * FROM communities 
                      JOIN community_info ON communities.groupID=community_info.groupID
                      WHERE communities.groupID=${groupID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result[0]
+        return await connection.promise().query(sql).then((res)=>{return res[0][0]})
     }
 }
 
@@ -74,8 +71,7 @@ export const GET_GROUP_POSTS = {
                      AND users.disabled=false
                      AND community_posts.groupID=${groupID}
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -99,8 +95,7 @@ export const GET_SAVED_GROUP_POSTS = {
                         AND community_posts_saved.userID=${userID} 
                         ORDER BY date_posted DESC 
                         LIMIT ${limit} OFFSET ${offset};`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 export const IF_GROUP_POST_SAVED = {
@@ -112,9 +107,7 @@ export const IF_GROUP_POST_SAVED = {
     async resolve(_, args){
         const {userID, postID} = args
         const sql = `SELECT EXISTS(SELECT 1 FROM community_posts_saved WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifSaved`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0][0]})
-        if(result.ifSaved===1) return true
-        return false
+        return await connection.promise().query(sql).then((res)=>{return res[0][0].ifSaved===1 ? true : false})
     }
 }
 
@@ -138,8 +131,7 @@ export const GET_GROUP_POST_COMMENTS = {
                      AND postID=${postID} 
                      ORDER BY date_commented DESC 
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 export const GET_GROUP_POST_LIKES = {
@@ -159,8 +151,7 @@ export const GET_GROUP_POST_LIKES = {
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
                      AND postID=${postID} 
                      LIMIT ${limit} OFFSET ${offset}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -173,9 +164,7 @@ export const IF_GROUP_POST_LIKED = {
     async resolve(_, args){
         const {postID, userID} = args
         const sql = `SELECT EXISTS(SELECT 1 FROM community_posts_likes WHERE userID=${userID} AND postID=${postID} LIMIT 1) AS ifLiked`
-        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
-        if(result.ifLiked===1) return true
-        return false
+        return await connection.promise().query(sql).then(res=>{return res[0][0].ifLiked===1 ? true : false})
     }
 }
 
@@ -192,8 +181,7 @@ export const GET_GROUP_USER = {
                         JOIN community_roles ON community_members.roleID=community_roles.roleID
                         WHERE community_members.userID=${userID} 
                         AND community_members.groupID=${groupID}`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result[0]
+        return await connection.promise().query(sql).then((res)=>{return res[0][0]})
     }
 }
 
@@ -210,8 +198,7 @@ export const GET_GROUP_MEMBERS = {
                      JOIN community_roles ON community_roles.roleID=community_members.roleID
                      WHERE users.disabled=false
                      AND community_members.groupID=${groupID}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -224,8 +211,7 @@ export const IF_REQUESTED = {
     async resolve(_, args){
         const {userID, groupID} = args
         const sql = `SELECT * FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result[0]
+        return await connection.promise().query(sql).then(res=>{return res[0][0]})
     }
 }
 
@@ -243,8 +229,7 @@ export const GET_GROUP_REPORTED_POSTS = {
                      JOIN users ON community_posts.userID=users.userID
                      WHERE community_posts_reports.groupID=${groupID}
                      ORDER BY date_reported DESC`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 
@@ -259,8 +244,7 @@ export const GET_GROUP_JOIN_REQUESTS = {
                      FROM community_join_requests 
                      JOIN users ON community_join_requests.userID=users.userID
                      WHERE groupID=${groupID}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
 

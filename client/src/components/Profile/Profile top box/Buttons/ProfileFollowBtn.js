@@ -19,6 +19,7 @@ const ProfileFollowBtn = ({userID}) => {
         return setIsFollowing(data?.ifFollowing) 
     }, [data])
     
+    // .5s delay to prevent spamming
 
     const handleFollow = () => {
         setIsLoading(true)
@@ -55,7 +56,7 @@ const ProfileFollowBtn = ({userID}) => {
     return (
         <div className='profile-top-box-buttons btn flex-ctr'
             onClick={() => !loading && (isFollowing ? handleUnfollow() : handleFollow())}>
-            <p>{(isLoading || loading) ? <div className='tiny-spinner'></div> : (isFollowing ? 'Unfollow' : 'Follow')}</p> 
+            {(isLoading || loading) ? <div className='tiny-spinner'></div> : <p>{isFollowing ? 'Unfollow' : 'Follow'}</p>}
         </div>
     )
 }

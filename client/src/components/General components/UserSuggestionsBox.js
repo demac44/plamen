@@ -3,6 +3,7 @@ import React, {memo} from 'react'
 import UserBox from './Users list/UserBox'
 
 const UserSuggestionsBox = () => {
+    // setting suggestions in App
     const user_suggestions = JSON.parse(localStorage.getItem('user-suggestions'))
     return (
         <>

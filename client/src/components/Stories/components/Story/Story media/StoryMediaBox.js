@@ -14,14 +14,14 @@ const StoryMediaBox = ({
     const nextStory = () => {
         window.clearTimeout(timeout)
         if(storyData){
-            if(index===(isProfile ? 0 : allDataLength-1) && innerIndex===storyData?.stories?.length-1){
+            if(index===(isProfile ? 0 : allDataLength-1) && innerIndex===storyData?.stories?.length-1){ // very last story
                 closeStoryCallback(false)
                 return
-            } else if (innerIndex===storyData?.stories?.length-1){
+            } else if (innerIndex===storyData?.stories?.length-1){ // last story of current story group
                 setIndexCallback(index+1)
                 setInnerIndexCallback(0)
                 return
-            } else { setInnerIndexCallback(innerIndex+1); return}
+            } else { setInnerIndexCallback(innerIndex+1); return} // story in middle
         }
         return
     } 
@@ -29,14 +29,14 @@ const StoryMediaBox = ({
     const prevStory = () => {
         window.clearTimeout(timeout)
         if(storyData){
-            if(index===0 && innerIndex===0){
+            if(index===0 && innerIndex===0){ // very first story
                 closeStoryCallback(false)
                 return null
-            } else if (index>0 && innerIndex===0){
+            } else if (index>0 && innerIndex===0){ // first story of current stories group
                 setIndexCallback(index-1)
                 setInnerIndexCallback(0)
                 return null
-            } else if (index>=0 && innerIndex>0){
+            } else if (index>=0 && innerIndex>0){ // story in middle
                 setInnerIndexCallback(innerIndex-1)
                 return null
             }
@@ -54,8 +54,8 @@ const StoryMediaBox = ({
             {type==='image' && 
                 (!url ? <div className='small-spinner'></div> : 
                 <img src={url} onLoad={()=>{
-                    if(!isProfile || (isProfile && uid!==userID)){
-                        setLoadBar(true)
+                    if(!isProfile || (isProfile && uid!==userID)){ // no timeout if current users profile
+                        setLoadBar(true) 
                         setTimeoutt(setTimeout(()=> {nextStory()}, 5000))
                     }
                 }} alt=''/>)
@@ -71,17 +71,22 @@ const StoryMediaBox = ({
                 onEnded={nextStory}/>
             </>)}
             <button className='nextBtn' onClick={nextStory}></button>
+
             <button className='prevBtn' onClick={prevStory}></button>
+
             <div className='story-count-bars'>
                 {storyData?.stories && storyData.stories.map(story => 
-                <div className='story-count-bar' key={story.storyID}>
-                    {(!isProfile || (isProfile && uid!==userID)) && 
-                        <>
-                            {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'load-bar-full'}></div>}
-                            {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar-full bar-vid' : 'load-bar-full'}></div>}
-                        </>
-                    }
-                </div>)}
+                    <div className='story-count-bar' key={story.storyID}>
+
+                        {/* no timeout if on current users profile */}
+                        {(!isProfile || (isProfile && uid!==userID)) && 
+                            <>
+                                {/* if type is video no animation on bars */}
+                                {(url && type==='image' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar' : 'load-bar-full'}></div>}
+                                {(url && type==='video' && loadBar) && <div className={story.storyID===storyData?.stories[innerIndex]?.storyID ? 'load-bar-full bar-vid' : 'load-bar-full'}></div>}
+                            </>
+                        }
+                    </div>)}
             </div>
         </div>
     )

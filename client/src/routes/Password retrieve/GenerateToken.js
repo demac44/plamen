@@ -31,7 +31,7 @@ const GenerateToken = () => {
     return (
         <div className='overlay flex-col-ctr'>
             <div className='retrieve_pass_box flex-col-ctr'>
-                <img src={logo}/>
+                <img src={logo} alt=''/>
                 <h2>Forgot your password?</h2>
                 <p>Enter your email below and we will send you a link to reset your password.</p>
                 <label htmlFor='email'>EMAIL ADDRESS</label>

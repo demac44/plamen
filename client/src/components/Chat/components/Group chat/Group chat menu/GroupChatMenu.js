@@ -41,19 +41,21 @@ const GroupChatMenu = ({chatID, admin}) => {
         <>
             <div className='chat-menu'>
                 <ul className='flex-col-ac'>
-                    {!loading && <ChatMembersBox 
-                                    data={data} 
-                                    admin={admin} 
-                                    refetch={refetch}
-                                    chatID={chatID}
-                                    adminMember={adminMember}
-                                />}
+                    {!loading && 
+                        <ChatMembersBox 
+                            data={data} 
+                            admin={admin} 
+                            refetch={refetch}
+                            chatID={chatID}
+                            adminMember={adminMember}
+                        />}
 
                     {uid===admin && 
                         <AddChatMembers 
                             data={data} 
                             chatID={chatID} 
-                            refetch={refetch}/>}
+                            refetch={refetch}
+                        />}
 
                     <li 
                         onClick={()=>setChatMedia(true)} 
@@ -67,12 +69,14 @@ const GroupChatMenu = ({chatID, admin}) => {
                         admin={admin}
                     />
 
-                    {uid===admin && <DeleteChat 
+                    {uid===admin &&
+                     <DeleteChat 
                         chatID={chatID} 
                         admin={admin}
                     />}
                 </ul>
             </div>
+            
             {chatMedia && 
                 <AllChatMedia 
                     chatID={chatID} 

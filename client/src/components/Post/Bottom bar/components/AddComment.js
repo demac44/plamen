@@ -99,7 +99,7 @@ const MENTION_NOTIF = gql`
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
-
+// find if user @mentions in post
 const findTag = (post_text) => {
     let arr = post_text.split('')
     let namesArr = [];

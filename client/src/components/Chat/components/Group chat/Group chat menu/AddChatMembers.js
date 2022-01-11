@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-
 import './style.css'
 
 const AddChatMembers = ({data, chatID, refetch}) => {
@@ -11,13 +9,12 @@ const AddChatMembers = ({data, chatID, refetch}) => {
     const [addUserValue, setAddUserValue] = useState('')
     const [add_user] = useMutation(ADD_USER)
 
-
     const checkIfMember = (username) => {
         const userFound = data?.get_group_chat_members?.filter(user=>{
             return user.username===username
         })
         if(userFound.length>0) return true
-        else return false
+        return false
     }
 
     const handleAddUser = () => {

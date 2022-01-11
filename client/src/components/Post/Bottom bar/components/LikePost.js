@@ -84,7 +84,3 @@ query ($postID: Int!, $userID: Int!){
     if_liked(postID: $postID, userID: $userID)
 }
 `
-// <FontAwesomeIcon icon='heart'
-//     style={{...styles.likeBtn, color: ifLiked.loading ? 'white' : (ifLiked?.data?.if_liked || liked) ? '#a50202' : 'white'}}
-//     onClick={() => !ifLiked.loading && ((ifLiked?.data?.if_liked || liked) ? handleRemove() : handleLike())}
-// />

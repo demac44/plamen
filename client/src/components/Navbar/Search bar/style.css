@@ -100,6 +100,15 @@
 .sb-see-all-btn:hover{
     background-color: #2f2f2f;
 }
+.search-hist-title{
+    padding: 5px 10px;
+    color: white;
+}
+.search-hist-clear-btn{
+    color: teal;
+    cursor: pointer;
+    font-size: 14px;
+}
 @media screen and (max-width: 768px){
     .search-drop{
         width: 60vw ;

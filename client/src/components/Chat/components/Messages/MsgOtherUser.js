@@ -7,6 +7,7 @@ const MsgOtherUser = ({setOpenMedia, storyUrl, msg}) => {
     return (
         <div className='msg-wrapper-ou flex-col'>
 
+            {/* story reply message */}
             {msg?.type==='story-image' && 
                 <div className='flex-col-ctr story-msg-box'>
                     <p>{msg.username+' replied to your story:'}</p>
@@ -18,6 +19,7 @@ const MsgOtherUser = ({setOpenMedia, storyUrl, msg}) => {
 
                 <div className='msg msg-other-user'>
 
+                    {/* message type */}
                     {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                     {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
 

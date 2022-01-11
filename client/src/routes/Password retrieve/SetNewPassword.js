@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link, Redirect, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import logo from '../../images/logo-min.png'
 
 
@@ -32,7 +32,7 @@ const SetNewPassword = () => {
             })
         }
         check().then(()=>{return})
-    }, [])
+    }, [token])
 
 
     const handleReset = () => {
@@ -59,10 +59,10 @@ const SetNewPassword = () => {
             <div className='overlay flex-col-ctr'>
             {!loading ?
                 <div className='retrieve_pass_box flex-col-ctr'>
-                    <img src={logo}/>
+                    <img src={logo} alt=''/>
                     <h2>Set new password</h2>
                     <p>Enter your new password below.</p>
-                    <label htmlFor='email'>EMAIL ADDRESS</label>
+                    <label htmlFor='email'>PASSWORD</label>
                     <input 
                         type='password' 
                         name='pass' 
@@ -82,6 +82,7 @@ const SetNewPassword = () => {
                         onChange={(e)=>setConfirmPass(e.target.value)}
                         onFocus={()=>{setError(false)}}
                         />
+                    {error && <p className='err-msg'>{error}</p>}
                     <button onClick={handleReset}>RESET PASSWORD</button>
                     <Link to='/login'>Go back</Link>
                 </div>

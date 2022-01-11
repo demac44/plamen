@@ -11,28 +11,32 @@ const Chat = ({isLogged, isGroupChat}) => {
     const [chat, setChat] = useState(null)
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {chatid} = useParams()
+    const [isLoading, setIsLoading] = useState(false)
 
     const {data, loading, error} = useQuery(isGroupChat ? GET_GROUP_CHATS : GET_CHATS, {
         variables:{userID: uid},
     }) 
 
     useEffect(()=>{
+        // getting all active chats of current user
+        setIsLoading(true)
         if(isGroupChat){
-            data?.get_all_group_chats?.forEach(c => {
-                if(c.groupChatId===parseInt(chatid)) return setChat(c)
-            })
+            data?.get_all_group_chats?.map(c => ({
+                c: c.groupChatId===parseInt(chatid) && setChat(c)
+            }))
         } else {
-            data?.get_all_user_chats?.forEach(c => {
-                if(c.chatID===parseInt(chatid)) return setChat(c)
-            })
+            data?.get_all_user_chats?.map(c => ({
+                c: c.chatID===parseInt(chatid) && setChat(c)
+            }))
         }
+        setIsLoading(false)
     }, [data, chatid, isGroupChat])
   
     if(error) console.log(error); 
 
     return (
         <>
-            {loading ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
+            {(loading || isLoading) ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
                 <>
                 <ChatList isLogged={isLogged}/>
                 {chat && (isGroupChat ? <GroupChatMsgBox chat={chat}/> : <ChatMsgBox chat={chat}/>)}

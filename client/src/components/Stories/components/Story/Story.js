@@ -15,11 +15,14 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [seen_story] = useMutation(SEEN_STORY)
 
-    const setIndexCallback = useCallback(val => {
+    // allData: all stories data
+    // storyData: data of current story group
+
+    const setIndexCallback = useCallback(val => { // setting story group by users
         setIndex(val)
     }, [setIndex])
 
-    const setInnerIndexCallback = useCallback(val => {
+    const setInnerIndexCallback = useCallback(val => { // stories of one group
         setInnerIndex(val)
     }, [setInnerIndex])
 
@@ -31,7 +34,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                 storyID: storyData?.stories[innerIndex]?.storyID
             }
         })
-    }, [index, innerIndex, i, storyData, allData, isProfile])
+    }, [index, innerIndex, i, storyData, allData, isProfile, seen_story, uid])
 
     return (
         <div className='overlay flex-col-ctr' style={{backgroundColor: '#1b1b1b'}}>

@@ -42,9 +42,21 @@ const Profile = ({isLogged}) => {
         setUserBlocked(val)
     }, [])
 
+    const profileVisit = () => {
+        if(!loading && !isLoading && !myprofile){
+            profile_visit({
+                variables:{
+                    visitorId: uid, 
+                    visitedId: data?.get_user?.userID}
+                })
+                return
+        }
+        return
+    }
     
     useEffect(()=>{
         setIsLoading(true)
+        profileVisit()
         if(username===usernm) {
             setMyProfile(true)
         } else {
@@ -53,7 +65,7 @@ const Profile = ({isLogged}) => {
         window.scrollTo(0,0)
         setIsLoading(false)
         return null
-    }, [username, usernm, refetch, history, myprofile])
+    }, [username, usernm, refetch, history, myprofile, data])
 
 
     if(!loading){
@@ -61,16 +73,6 @@ const Profile = ({isLogged}) => {
     }
     if(error) throw error 
 
-    const profileVisit = () => {
-        return
-        // if(!loading && !isLoading && !myprofile){
-        //     profile_visit({
-        //         variables:{
-        //             visitorId: uid, 
-        //             visitedId: data?.get_user?.userID}
-        //     })
-        // }
-    }
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -97,7 +99,7 @@ const Profile = ({isLogged}) => {
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
-                <div className='container-main'  style={{paddingTop:'10px'}}>
+                <div className='container-main' style={{paddingTop:'10px'}}>
                     <Sidebar/>
                     {userBlocked ? '' : 
                     <>

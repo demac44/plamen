@@ -25,7 +25,7 @@ const Message = ({msg}) => {
             {!loading && ((msg.userID===uid)
             ? <MsgCurrentUser
                 msg={msg} 
-                storyUrl={data?.get_story_msg_url?.url}
+                storyUrl={data?.get_story_msg_url?.url} // if message is story reply
                 uid={uid}
                 setOpenMedia={setOpenMediaCallback}
                 deleteQuery={DELETE_MESSAGE}

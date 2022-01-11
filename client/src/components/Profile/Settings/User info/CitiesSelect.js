@@ -4,7 +4,6 @@ import { cities } from '../../../../Assets/cities'
 import './style.css'
 
 const CitiesSelect = ({country, setCityCB}) => {
-    let i = 0;
     const [str, setStr] = useState('')
     const [list, setList] = useState([])
 

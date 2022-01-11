@@ -19,12 +19,12 @@ const SearchDrop = ({data, query, chat, searchHistory, dropdownCallback}) => {
 
             {(query.length<1 && !chat) && <SearchHistoryDrop dropdownCallback={dropdownCallback} searchHistory={searchHistory}/>}
 
-            {chat ? users.map(user => <ChatSearchBarUser user={user} key={user.userID}/>)
-                : users.map(user => <UserSearchBar user={user} key={user.userID} dropdownCallback={dropdownCallback}/>)}
+            {chat ? users.slice(0,10).map(user => <ChatSearchBarUser user={user} key={user.userID}/>)
+                : users?.slice(0, 5)?.map(user => <UserSearchBar user={user} key={user.userID} dropdownCallback={dropdownCallback}/>)}
 
             {(!chat && communities.length>0) && <h4 className='sb-cmnty-title flex-ctr'>Communities</h4>}
 
-            {!chat && communities.map(community => <CommunitySearchBar 
+            {!chat && communities?.slice(0,5)?.map(community => <CommunitySearchBar 
                                                         comm={community} 
                                                         dropdownCallback={dropdownCallback}
                                                         key={community.groupID}

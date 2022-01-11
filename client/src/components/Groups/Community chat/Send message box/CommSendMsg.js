@@ -8,8 +8,6 @@ import '../../../Chat/Chat.css'
 import MsgPreviewBox from '../../../Chat/components/Messages/MsgPreviewBox'
 import EmojisBox from '../../../General components/Emojis/EmojisBox'
 
-
-
 const CommSendMsg = ({groupID, loaderCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -22,12 +20,11 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
     const [lengthErr, setLengthErr] = useState(false)
     
     useEffect(()=>{
-        // document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
-        // document.querySelector('.chat-bar').addEventListener('click', ()=>setEmojis(false))
+        document?.querySelector('.comm-msg-box')?.addEventListener('click', ()=>setEmojis(false))
+        document?.querySelector('.comm-chat-bar')?.addEventListener('click', ()=>setEmojis(false))
     }, [])
 
-    const sendMessage = (e) => {
-        e.preventDefault()
+    const sendMessage = () => {
         setEmojis(false)
         if(msgText.trim().length < 1 && !media){
             return
@@ -90,7 +87,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
 
             {emojis && <EmojisBox emojiCB={emojiCB} visible={true}/>}
 
-            <form className='comm-msg-input-box flex-sb' onSubmit={sendMessage}>
+            <form className='comm-msg-input-box flex-sb'>
                 {lengthErr && <p className='msg-length-err'>Message too long! Max. characters allowed: 6000</p>}
                 <FontAwesomeIcon icon='icons' className='emojis-btn' onClick={()=>setEmojis(!emojis)}/>
                 <div>
@@ -110,7 +107,7 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
                     onChange={(e)=>setMsgText(e.target.value)} 
                     placeholder='Send message...'
                     ></textarea>
-                <button type='submit' className="post-button btn">SEND</button>
+                <button type='submit' className="post-button btn" onClick={sendMessage}>SEND</button>
             </form>
         </>
     )

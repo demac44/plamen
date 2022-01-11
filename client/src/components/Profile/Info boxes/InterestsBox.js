@@ -15,9 +15,9 @@ const InterestsBox = ({myprofile, userID}) => {
 
     const splitInterests = () => {
         let arr = [];
-        data?.get_user_interests?.map(i=>{
-            arr.push(i.interest)
-        })
+        data?.get_user_interests?.map(i=>({
+            p: arr.push(i.interest)
+        }))
         return arr
     }
 

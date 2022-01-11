@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../General components/Avatar'
 const GroupMemberBox = ({member}) => {
     const [date, setDate] = useState('')
+    const [role] = useState(()=>{
+        if(member.role==="CREATOR") return {role: "CREATOR", color: '#771d1d'}
+        else if(member.role==='ADMIN') return {role: "ADMIN", color: '#572157'}
+        else if(member.role==='MODERATOR') return {role: "MOD", color: '#0b2670'}
+        else if(member.role==='MEMBER') return {role: "CREATOR", color: '#252a38'}
+        return {role:"", color:"#2f2f2f"}
+    })
 
     useEffect(()=>{
         setDate(getDateJoined(member.date_joined))
@@ -20,10 +27,7 @@ const GroupMemberBox = ({member}) => {
                     <p style={{fontSize:'12px'}}>Member since {date}</p>
                 </div>
             </div>
-            {member.role==='CREATOR' && <div className='cmnty-role-tag' style={{backgroundColor:'#771d1d'}}>CREATOR</div>}
-            {member.role==='ADMIN' && <div className='cmnty-role-tag' style={{backgroundColor:'#572157'}}>ADMIN</div>}
-            {member.role==='MODERATOR' && <div className='cmnty-role-tag' style={{backgroundColor:'#0b2670'}}>MOD</div>}
-            {member.role==='MEMBER' && <div className='cmnty-role-tag' style={{backgroundColor:'#252a38'}}>MEMBER</div>}
+            <div className='cmnty-role-tag' style={{backgroundColor: role?.color}}>{role?.role}</div>
         </Link>
     )
 }

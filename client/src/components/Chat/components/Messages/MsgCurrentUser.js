@@ -22,6 +22,7 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
     return (
         <div className='msg-wrapper-cu flex-col' onDoubleClick={()=>setMsgOptions(!msgOptions)}>
 
+            {/* story reply message*/}
             {msg.type==='story-image' && 
                 <div className='flex-col-ctr story-msg-box'>
                     <p>You replied to story:</p>
@@ -29,6 +30,7 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
                 </div>
             }
 
+            {/* delete icon */}
             <div className='msg-inner-wrapper-cu flex-ac'>
                 {(msg.userID===uid && msgOptions && !deleted) && 
                     <>
@@ -43,7 +45,7 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :
                     <>
-                        {/* media message */}
+                        {/* message type */}
                         {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                         {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
                             

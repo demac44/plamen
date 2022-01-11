@@ -9,6 +9,8 @@ const SendMsgBtn = ({user}) => {
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:uid, user2:user.userID}}) 
     const history = useHistory()
+
+    // checking if chat already exists and creating it if not
     
     const createChat = () => {
         if(data?.chat_exists?.chatID){
@@ -43,7 +45,7 @@ const SendMsgBtn = ({user}) => {
     
     return (
         <div className="profile-top-box-buttons btn send-msg-btn flex-ctr" onClick={()=>!loading && createChat()}>
-            <p>{loading ? <div className='tiny-spinner'></div> : 'Send message'}</p> 
+            {loading ? <div className='tiny-spinner'></div> : <p>Send message</p>}
         </div>
     )
 }

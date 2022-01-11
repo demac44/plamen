@@ -19,7 +19,7 @@ export const GET_STORIES = {
                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
                         GROUP BY (users.userID)
                         ORDER BY date_posted DESC;`
-        let result = await connection.promise().query(sql).then((res)=>{return res[0]})
+        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         await result.forEach( res => {
             const sql2 = `SELECT storyID, url, type, date_posted FROM stories 
             JOIN users ON stories.userID=users.userID WHERE stories.userID=${res.userID} 
@@ -43,8 +43,7 @@ export const GET_USER_STORIES = {
                         WHERE disabled=false 
                         AND stories.userID=${userID} 
                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        return result
+        return await connection.promise().query(sql).then((res)=>{return res[0]})
     }
 } 
 
@@ -56,8 +55,7 @@ export const GET_STORY_MSG = {
     async resolve(_, args){
         const {storyID} = args
         const sql = `SELECT url FROM stories WHERE storyID=${storyID}`
-        const result = await connection.promise().query(sql).then(res=>{return res[0][0]})
-        return result
+        return await connection.promise().query(sql).then(res=>{return res[0][0]})
     }
 }
 

@@ -7,15 +7,13 @@ import ActivityStatus from '../../General components/ActivityStatus'
 
 const ChatBar = ({chatID}) => {
     const [showMenu, setShowMenu] = useState(false)
+
+    // passing user info from chat list user
     const {state} = useLocation()
 
-    const addListeners = () => {
+    useEffect(()=>{
         document.querySelector('.chat-messages').addEventListener('click', ()=>setShowMenu(false))
         document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
-    }
-
-    useEffect(()=>{
-        addListeners()
         setShowMenu(false)
         return
     }, [chatID])
@@ -37,14 +35,6 @@ const ChatBar = ({chatID}) => {
                     </Link>
                 </div>
                 <span>
-                    <FontAwesomeIcon
-                        icon='phone'
-                        className='bar-btns'
-                    />
-                    <FontAwesomeIcon
-                        icon='video'
-                        className='bar-btns'
-                    />
                     <FontAwesomeIcon
                         icon='ellipsis-v'
                         onClick={()=>setShowMenu(!showMenu)}
