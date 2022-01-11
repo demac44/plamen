@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import CreateGroupForm from './CreateGroupForm'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 const CreateGroupCard = () => {
     const [createGroup, setCreateGroup] = useState(false)
 
@@ -17,7 +15,7 @@ const CreateGroupCard = () => {
             onClick={()=>setCreateGroup(true)}
         >
             <div className='gcard_overlay flex-ctr'>
-                <FontAwesomeIcon icon='plus' size='lg' color='white'/>
+                <i className='fas fa-plus' style={{fontSize:'25px', color:'white'}}/>
             </div>
         </div>
         {createGroup && <CreateGroupForm closeFormCallback={closeFormCallback}/>}

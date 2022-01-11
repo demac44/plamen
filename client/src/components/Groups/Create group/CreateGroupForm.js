@@ -51,7 +51,7 @@ const CreateGroupForm = ({closeFormCallback}) => {
     return (
         <div className='flex-ctr overlay' style={{backgroundColor: 'rgba(0, 0, 0,0.7)'}}>
             <form className='create-group-form flex-col-ctr' onSubmit={handleSubmit}>
-                <FontAwesomeIcon icon='times' className='cg-box-exit-btn' onClick={()=>closeFormCallback()}/>
+                <i className='fas fa-times cg-box-exit-btn' onClick={()=>closeFormCallback()}/>
                 <h3>Community name:</h3>
                 <input placeholder='Community name...' id='name'></input>
 

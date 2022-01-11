@@ -8,9 +8,8 @@ const ImagePreview = ({preview, previewCB, imageCB}) => {
             <img src={preview} 
                 onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
             <div className='flex-ctr clear-preview-btn' onClick={()=>{imageCB(null);previewCB(null)}}>
-                <FontAwesomeIcon
-                    color='white'
-                    icon='times'
+                <i
+                    className='fas fa-times'
                 />
             </div>
         </div>

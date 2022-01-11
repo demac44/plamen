@@ -1,8 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 import logoTube from '../../images/logo-red-min.png'
 import logoStream from '../../images/logo-green-min.png'
 
@@ -12,19 +9,19 @@ const Sidebar = () => {
         <div className="sidebar">
             <div className="ln-list">
                 <NavLink exact to="/" activeClassName='nav-active'>
-                    <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
+                    <i className='fas fa-newspaper' style={{color: 'darkgreen'}} />
                     <p>Feed</p>
                 </NavLink>
                 <NavLink exact to='/explore' activeClassName='nav-active'>
-                    <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
+                    <i className='fas fa-compass' style={{color: '#9933ff'}}/>
                     <p>Explore</p>
                 </NavLink>
                 <NavLink exact to='/saved' activeClassName='nav-active'>
-                    <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
+                    <i className='fas fa-bookmark' style={{color: '#ffbb00'}}/>
                     <p>Saved</p>
                 </NavLink>
                 <NavLink exact to='/communities' activeClassName='nav-active'>
-                    <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
+                    <i className='fas fa-users' style={{color: 'teal'}}/>
                     <p>Communities</p>
                 </NavLink>
                 <NavLink exact to='/plamentube' activeClassName='nav-active'>

@@ -9,19 +9,19 @@ const GroupNavbar = ({groupid, role}) => {
         <div className='group-navbar'>
             <div className='flex-sa' style={{width:'100%', height:'100%'}}>
                 <NavLink exact to={'/community/'+groupid}>
-                    <FontAwesomeIcon icon='newspaper' color='darkgreen'/>
+                    <i className='fas fa-newspaper' style={{color: 'darkgreen'}}/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/chat'}>
-                    <FontAwesomeIcon icon='comment-dots' color='teal'/>
+                    <i className='fas fa-comment-dots' style={{color: 'teal'}}/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/saved'}>
-                    <FontAwesomeIcon icon='bookmark' color='#ffbb00'/>
+                    <i className='fas fa-bookmark' style={{color: '#ffbb00'}}/>
                 </NavLink>
                 <NavLink exact to={'/community/'+groupid+'/info'}>
-                    <FontAwesomeIcon icon='info-circle' color='#36579e'/>
+                    <i className='fas fa-info-circle' style={{color: '#36579e'}}/>
                 </NavLink>
                 {roles.includes(role) && <NavLink exact to={'/community/'+groupid+'/settings'}>
-                    <FontAwesomeIcon icon='user-cog' color='silver'/>
+                    <i className='fas fa-user-cog' style={{color: 'silver'}}/>
                 </NavLink>}
             </div>
         </div>

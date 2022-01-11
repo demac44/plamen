@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { useSubscription, useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Logo from '../General components/Logo'
 import Dropdown from './Dropdown'
 import SearchBar from './Search bar/SearchBar'
@@ -60,13 +59,13 @@ const Navbar = ({isLogged}) => {
                 <div className="tn-right">
                 {isLogged ?
                 <>
-                    <FontAwesomeIcon icon='sort-down' className='tn-icons' style={{marginTop:'-13px'}} 
+                    <i className='fas fa-sort-down tn-icons' style={{marginTop:'-13px'}} 
                         onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
 
                     <Link to='/chats' style={{position:'relative'}}>
                         {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
                         <div className='flex-ctr tn-msgs-count'>{NoOfMsgs}</div>))}
-                        <FontAwesomeIcon icon='inbox' className='tn-icons'/>
+                        <i className='fas fa-inbox tn-icons'/>
                     </Link>
 
                     <div onClick={handleDropdown}> 

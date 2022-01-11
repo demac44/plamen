@@ -7,9 +7,8 @@ const VideoPreview = ({preview, videoCB, previewCB}) => {
             <video src={preview} 
                 onLoad={()=>URL.revokeObjectURL(preview)}/>
             <div className='flex-ctr clear-preview-btn' onClick={()=>{previewCB(null);videoCB(null)}}>
-                <FontAwesomeIcon
-                    color='white'
-                    icon='times'
+                <i
+                    className='fas fa-times'
                 />
             </div>
         </div>

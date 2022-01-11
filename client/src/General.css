@@ -20,6 +20,11 @@ li{
 p{
     color: white;
 }
+i{
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
 .left-arrow{
     position: absolute;
     color: white;

@@ -1,6 +1,5 @@
 import React, { useState, memo, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Avatar from '../../../General components/Avatar'
 import PostMenu from './components/PostMenu'
 import ReportBox from './components/ReportBox'
@@ -37,10 +36,8 @@ const PostTopBar = ({data, refetchPosts}) => {
 
                 <span className='flex'>
                     <SavePostButton postID={data.postID} groupID={data?.groupID}/>
-                    <FontAwesomeIcon
-                        icon='ellipsis-v' 
-                        color='white'
-                        className='post-menu-btn'
+                    <i
+                        className='fas fa-ellipsis-v post-menu-btn'
                         onClick={()=>setMenu(!menu)}/>
                 </span>
             </div>

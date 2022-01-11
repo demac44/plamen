@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Avatar from '../../General components/Avatar'
 import FollowButton from '../../General components/FollowButton'
 import SetTime from '../../General components/SetTime'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const NotificationBox = ({notif}) => {
     return (
@@ -11,11 +10,11 @@ const NotificationBox = ({notif}) => {
             <Link to={notif.type==='follow' ? '/profile/'+notif.username : '/post/'+notif.postID} className='flex-ctr'>
                 <span style={{position:'relative'}}>
                     <Avatar size='50px' image={notif.profile_picture}/>
-                    {notif.type==='like' && <FontAwesomeIcon icon='heart' className='notif-type like-notif'/>}
-                    {notif.type==='comment' && <FontAwesomeIcon icon='comment' className='notif-type comment-notif'/>}
-                    {notif.type==='follow' && <FontAwesomeIcon icon='user' className='notif-type foll-notif'/>}
-                    {notif.type==='mention' && <FontAwesomeIcon icon='at' className='notif-type mention-notif'/>}
-                    {notif.type==='mention-cmt' && <FontAwesomeIcon icon='at' className='notif-type mention-notif'/>}
+                    {notif.type==='like' && <i className='fas fa-heart notif-type like-notif'/>}
+                    {notif.type==='comment' && <i className='fas fa-comment notif-type comment-notif'/>}
+                    {notif.type==='follow' && <i className='fas fa-user notif-type foll-notif'/>}
+                    {notif.type==='mention' && <i className='fas fa-at notif-type mention-notif'/>}
+                    {notif.type==='mention-cmt' && <i className='fas fa-at notif-type mention-notif'/>}
                 </span>
                 <span className='notif-text'>
                     {notif.type==='like' && <p>{'@'+notif.username+' liked your post'}</p>}

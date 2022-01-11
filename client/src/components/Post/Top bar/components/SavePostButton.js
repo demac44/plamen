@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import {gql} from 'graphql-tag'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
 const SavePostButton = ({postID}) => {
@@ -40,11 +39,10 @@ const SavePostButton = ({postID}) => {
     }
 
     return (
-        <FontAwesomeIcon 
-            icon='bookmark'
+        <i 
+            className='fas fa-bookmark save-post-btn'
             onClick={()=> saved ? handleRemove() : handleSave()} 
             style={{color: saved ? '#ffbb00' : 'white'}}
-            className='save-post-btn'
         />
     )
 }

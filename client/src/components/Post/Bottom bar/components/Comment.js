@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import Avatar from '../../../General components/Avatar'
 import SetTime from '../../../General components/SetTime'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Linkify from 'react-linkify'
 
 const Comment = ({comment, refetchComments}) => {
@@ -64,9 +63,8 @@ const Comment = ({comment, refetchComments}) => {
             </div>
 
             {comment.userID===uid && 
-                <FontAwesomeIcon 
-                    icon='trash-alt' 
-                    className='cmt-del-btn'
+                <i 
+                    className='fas fa-trash-alt cmt-del-btn'
                     onClick={handleDelete}
                 />}
         </div>

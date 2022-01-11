@@ -1,11 +1,8 @@
 import React from 'react'
-
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-
 import UserBox from '../../../../General components/Users list/UserBox'
 import { useSelector } from 'react-redux'
-
 
 const LikesList = ({postID}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)

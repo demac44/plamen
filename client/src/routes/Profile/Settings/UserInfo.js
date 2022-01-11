@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../../../components/Profile/Settings/User info/style.css'
 import '../../../components/Profile/Settings/style.css'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
@@ -33,7 +32,7 @@ const UserInfo = ({isLogged}) => {
                     <div className='container-left'>
                         <div className='box flex-ctr'>
                             <Link to='/settings'>
-                                <FontAwesomeIcon icon='arrow-left' className='settings-arrow-back'/>
+                                <i className='arrow-left settings-arrow-back'/>
                             </Link>
                             <h3>
                                 User info

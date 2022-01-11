@@ -2,7 +2,6 @@ import React, { useState, memo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import ActivityStatus from '../../General components/ActivityStatus'
 
 const ChatBar = ({chatID}) => {
@@ -23,7 +22,7 @@ const ChatBar = ({chatID}) => {
             <div className='chat-bar flex-sb'>
                 <div className='flex-ctr'>
                     <Link to='/chats'>
-                        <FontAwesomeIcon icon='arrow-left' className="chat-back-icon"/>
+                        <i className='arrow-left chat-back-icon'/>
                     </Link>
                     
                     <Link to={'/profile/'+state?.username} className='flex-ac'>
@@ -35,11 +34,10 @@ const ChatBar = ({chatID}) => {
                     </Link>
                 </div>
                 <span>
-                    <FontAwesomeIcon
-                        icon='ellipsis-v'
+                    <i
+                        className='ellipsis-v bar-btns'
                         onClick={()=>setShowMenu(!showMenu)}
-                        className='bar-btns'
-                        />
+                    />
                 </span>
                 {showMenu && <ChatMenu chatID={chatID}/>}
             </div>

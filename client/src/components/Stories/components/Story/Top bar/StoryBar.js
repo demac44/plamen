@@ -1,6 +1,5 @@
 import React, { memo } from 'react'
 import {Link} from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Avatar from '../../../../General components/Avatar'
 import SetTime from '../../../../General components/SetTime'
 
@@ -16,11 +15,8 @@ const StoryBar = ({user, date, closeStoryCallback}) => {
                 <SetTime timestamp={date}/>
             </span>
             <span className='flex-ac'>
-                <FontAwesomeIcon
-                    icon='times'
-                    color='white'
-                    cursor={'pointer'}
-                    size='lg'
+                <i
+                    className='fas fa-times'
                     style={{marginRight:'10px'}} 
                     onClick={()=>closeStoryCallback(false)}
                 />

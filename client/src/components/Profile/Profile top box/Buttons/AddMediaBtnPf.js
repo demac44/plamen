@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AddStoryBtn from './AddStoryBtn'
 import {Link} from 'react-router-dom'
 
@@ -8,21 +7,19 @@ const AddMediaBtnPf = ({setPfpMenu, refetch}) => {
         <span>
             <AddStoryBtn refetch={refetch}/>
 
-            <FontAwesomeIcon 
-                icon='camera' 
+            <i 
+                className='fas fa-camera pf-camera-icon' 
                 size='lg' 
-                color='#aaa' 
+                style={{color:'#aaa'}} 
                 onClick={()=>setPfpMenu(true)} cursor='pointer'
-                className='pf-camera-icon'
             />
 
             <Link to='/settings'>
-                <FontAwesomeIcon 
-                    icon='cog'
+                <i 
+                    className='fas fa-cog pf-sett-icon'
                     size='lg' 
-                    color='#aaa' 
-                    onClick={()=>setPfpMenu(true)} cursor='pointer'
-                    className='pf-sett-icon'/>
+                    style={{color:'#aaa'}} 
+                    onClick={()=>setPfpMenu(true)} cursor='pointer'/>
             </Link>
         </span>
     )

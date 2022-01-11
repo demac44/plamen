@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './style.css'
 import Avatar from '../../../General components/Avatar'
 import ShowActivity from './ShowActivity'
@@ -77,7 +76,7 @@ const EditForm = ({handleMenu, uid}) => {
 
             <div className='box flex-ctr'>
                 <Link to='/settings'>
-                    <FontAwesomeIcon icon='arrow-left' className='settings-arrow-back'/>
+                    <i className='fas fa-arrow-left settings-arrow-back'/>
                 </Link>
                 <h3>
                     Account settings

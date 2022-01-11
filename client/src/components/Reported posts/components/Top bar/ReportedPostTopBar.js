@@ -2,7 +2,6 @@ import React, { useState, memo } from 'react'
 import SetTime from '../../../General components/SetTime'
 import Avatar from '../../../General components/Avatar'
 import { Link } from 'react-router-dom'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import ReportedPostMenu from './components/ReportedPostMenu'
 import './style.css'
 
@@ -22,10 +21,8 @@ const ReportedPostTopBar = ({data, refetchPosts}) => {
                 </Link >
 
                 <span className='flex'>
-                    <FontAwesomeIcon
-                        icon='ellipsis-v' 
-                        className='post-menu-btn'
-                        color='white'
+                    <i
+                        className='fas fa-ellipsis-v post-menu-btn'
                         onClick={()=>setMenu(!menu)}/>
                 </span>
             </div>

@@ -1,6 +1,5 @@
 import React, { useCallback, useState, memo } from 'react'
 import StoryPreview from './StoryPreview'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const AddStory = ({refetch}) => {
     const [media, setMedia] = useState(null)
@@ -18,7 +17,7 @@ const AddStory = ({refetch}) => {
         <div style={{height:'100%'}}>
             <label htmlFor='upload-story' className='flex-ctr add-story-btn'>
                 <div>
-                    <FontAwesomeIcon icon='plus' size='lg' color='white'/>
+                    <i className='fas fa-plus'/>
                 </div>
             </label>
             <input type='file' accept='video/*, image/*' id='upload-story' onChange={(e)=>{

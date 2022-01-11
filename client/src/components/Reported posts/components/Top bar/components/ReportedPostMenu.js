@@ -1,7 +1,6 @@
 import React from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const ReportedPostMenu = ({data, refetchPosts}) => {
     const [remove_user] = useMutation(REMOVE_USER)
@@ -19,7 +18,7 @@ const ReportedPostMenu = ({data, refetchPosts}) => {
         <>
             <div className='post-options-menu' style={{width:'fit-content'}}>
                 <ul>
-                    <li onClick={handleRemove}><FontAwesomeIcon icon='times' /> Remove user</li>
+                    <li onClick={handleRemove}><i className='fas fa-times' /> Remove user</li>
                 </ul>
             </div>
         </>

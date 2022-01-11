@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
  
 const ChangeBannerMenu = ({groupID, closeMenu, refetch}) => {
     const [change_banner] = useMutation(CHANGE_BANNER)
@@ -76,10 +75,7 @@ const ChangeBannerMenu = ({groupID, closeMenu, refetch}) => {
                         <img src={preview} 
                             onLoad={()=>URL.revokeObjectURL(preview)} alt=''/>
                         <div className='flex-ctr clear-banner_preview-btn' onClick={()=>{setImage(null);setPreview(null)}}>
-                            <FontAwesomeIcon
-                                color='white'
-                                icon='times'
-                                />
+                            <i className='fas fa-times'/>
                         </div>
                     </div>}
                     {(image && preview) && <button onClick={handleChange} className='btn save-banner-btn'>SAVE</button>}

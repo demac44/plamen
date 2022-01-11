@@ -1,15 +1,11 @@
 import React from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 const UploadVideo = ({videoCB, imageCB, previewCB, sizeErrorCB}) => {
     return (
         <>
             <label htmlFor='video_upload' className='flex-ctr'>
-                <FontAwesomeIcon 
-                    icon='video' 
-                    size='lg'
-                    color='white' 
+                <i 
+                    className='fas fa-video' 
                     style={{marginLeft: "25px"}}
                 />
                 <p>Video</p>

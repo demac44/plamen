@@ -41,11 +41,10 @@ const SavePostButton = ({postID, groupID}) => {
     }
 
     return (
-        <FontAwesomeIcon
-            icon='bookmark'
+        <i
+            className='fas fa-bookmark save-post-btn'
             onClick={()=> saved ? handleRemove() : handleSave()} 
             style={{color: saved ? '#ffbb00' : 'white'}}
-            className='save-post-btn'
         />
     )
 }

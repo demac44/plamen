@@ -35,7 +35,7 @@ const InfoBox = ({data, user, membersCount}) => {
                     :  
                     (editBtnRoles.includes(user?.role) &&
                     <div className='flex-ctr info-box-add-btn'>
-                        <FontAwesomeIcon icon='plus' color='white' style={{marginRight:'5px'}}/>
+                        <i className='fas fa-plus' style={{marginRight:'5px',color: 'white'}}/>
                         <p>Add description</p>
                     </div>)}               
             </div>

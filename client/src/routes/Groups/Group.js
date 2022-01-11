@@ -1,7 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import '../../components/Groups/groups.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
@@ -76,7 +75,7 @@ const Group = ({isLogged}) => {
                             
                             {(data?.get_group?.closed && !data?.get_group_user) && 
                                 <span className='flex-ctr' style={styles.locked}>
-                                    <FontAwesomeIcon icon='lock' color='white'/>
+                                    <i className='fas fa-lock'/>
                                     <p style={{marginLeft:'10px'}}>Join community to see posts!</p>
                                 </span>}
                     

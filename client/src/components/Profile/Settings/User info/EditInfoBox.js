@@ -6,7 +6,6 @@ import CountriesSelect from './CountriesSelect'
 import CitiesSelect from './CitiesSelect'
 import SearchUniversity from './SearchUniversity'
 import { useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const EditInfoBox = ({data}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -63,40 +62,40 @@ const EditInfoBox = ({data}) => {
 
             <div className='flex-ctr'>
                 <h5>Country</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setCountry('')}/>
+                <i className='fas fa-times clear-info' onClick={()=>setCountry('')}/>
                 <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
                 <CountriesSelect setCountryCB={setCountryCB}/>     
             </div>  
 
             <div className='flex-ctr'>
                 <h5>City</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setCity('')}/>
+                <i className='fas fa-times clear-info' onClick={()=>setCity('')}/>
                 <input type='text' id='city' className='input' placeholder='Add city' value={city} readOnly={true}/>
                 <CitiesSelect country={country} setCityCB={setCityCB}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>Job</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setJob('')}/>
+                <i className='fas fa-times clear-info' onClick={()=>setJob('')}/>
                 <input type='text' className='input' id='job' placeholder='Add job' value={job} onChange={(e)=>setJob(e.target.value)}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>University</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setUni('')}/>
+                <i className='fas fa-times clear-info' onClick={()=>setUni('')}/>
                 <input type='text' className='input' id='uni' placeholder='Add university' value={uni} readOnly/>
                 <SearchUniversity setUniCB={setUniCB}/>
             </div>            
 
             <div className='flex-ctr'>
                 <h5>High school</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={(e)=>setHS('')}/>
+                <i className='fas fa-times clear-info' onClick={(e)=>setHS('')}/>
                 <input type='text' className='input' id='hs' placeholder='Add high school' value={hs} onChange={(e)=>setHS(e.target.value)}/>
             </div>    
 
             <div className='flex-ctr'>
                 <h5>Phone</h5>
-                <FontAwesomeIcon icon='times' color='white' fixedWidth cursor='pointer' className='clear-info' onClick={()=>setPNum('')}/>
+                <i className='fas fa-times clear-info' onClick={()=>setPNum('')}/>
                 <input type='text' className='input' id='num' placeholder='Add phone number' value={pnum} onChange={(e)=>setPNum(e.target.value)}/>
             </div>  
 

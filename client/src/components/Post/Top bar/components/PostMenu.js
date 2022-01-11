@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 const PostMenu = ({data, refetchPosts, handleReport, copiedCB}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -24,12 +23,12 @@ const PostMenu = ({data, refetchPosts, handleReport, copiedCB}) => {
         <>
             <div className='post-options-menu'>
                 <ul>
-                    <li onClick={copyToClipboard}><FontAwesomeIcon icon='share' /> Share</li>
+                    <li onClick={copyToClipboard}><i className='fas fa-share' /> Share</li>
                     {data.userID===uid && <li onClick={handlePostDelete}>
-                        <FontAwesomeIcon icon='trash-alt' /> Delete
+                        <i className='fas fa-trash-alt' /> Delete
                     </li>}
 
-                    <li onClick={()=>handleReport(true)}><FontAwesomeIcon icon='flag' /> Report</li>
+                    <li onClick={()=>handleReport(true)}><i className='fas fa-flag' /> Report</li>
                 </ul>
             </div>
         </>

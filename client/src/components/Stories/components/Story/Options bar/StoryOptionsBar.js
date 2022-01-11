@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
 
@@ -17,12 +16,9 @@ const StoryOptionsBar = ({storyID, closeStoryCallback}) => {
 
     return (
         <div className='stories-options-bar flex-sb'>
-            <FontAwesomeIcon 
-                icon='trash-alt' 
-                size='lg' 
-                color='white' 
+            <i 
+                className='fas fa-trash-alt' 
                 onClick={handleDelete}
-                cursor='pointer'
             />
         </div>
     )

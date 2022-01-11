@@ -47,6 +47,9 @@
 .sidebar img{
     height: 30px;
 }
+.sidebar i, .alternative-navbar i{
+    width: 23px;
+}
 .nav-active{
     background: linear-gradient(to bottom right,#1f1f1f, #2f2f2f);
 }

@@ -9,7 +9,6 @@ import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/Settings/SettingsMenu'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import JoinRequestsBox from '../../../components/Groups/Settings/Manage users/Join requests/JoinRequestsBox'
 import { useSelector } from 'react-redux'
 import '../../../components/Groups/groups.css'
@@ -44,7 +43,7 @@ const GroupSettings = ({isLogged}) => {
                         <div className='container-left'>
                             <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
-                                    <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
+                                    <i className='fas fa-arrow-left' style={styles.arrowBack}/>
                                 </Link>
                                 <h3>Join requests</h3>
                             </div>

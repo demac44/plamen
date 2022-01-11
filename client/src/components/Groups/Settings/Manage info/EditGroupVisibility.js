@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-
 import {gql} from 'graphql-tag'
 import { useMutation} from 'react-apollo';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const EditGroupVisibility = ({visibility, groupid, refetch}) => {
     const [change_visibility] = useMutation(CHANGE_VISIBILITY)
@@ -22,8 +20,8 @@ const EditGroupVisibility = ({visibility, groupid, refetch}) => {
             <p>Community visibility: </p>
 
             <div className='switch-box' onClick={handleChange}>
-                <FontAwesomeIcon icon='lock' className='lock-icon'/>
-                <FontAwesomeIcon icon='lock-open' className='lock-icon'/>
+                <i className='fas fa-lock lock-icon'/>
+                <i className='fas fa-lock-open lock-icon'/>
                 <div className='switch' style={{ 
                             left: visib ? '0' : '32px',
                             backgroundColor: visib ? '#861b1b' : '#00752d'}}></div>

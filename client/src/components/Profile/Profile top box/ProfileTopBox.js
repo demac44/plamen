@@ -2,7 +2,6 @@ import React, { useCallback, useState, memo, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import ProfileFollowBtn from './Buttons/ProfileFollowBtn'
 import ProfileInfo from './ProfileInfo'
 import SendMsgBtn from './Buttons/SendMsgBtn'
@@ -79,7 +78,7 @@ const ProfileTopBox = ({myprofile, user, isBlockedCB}) => {
 
                 {data?.if_user_blocked && <UnblockUserBtn blockedId={user.userID}/>}
 
-                {(!myprofile && !data?.if_user_blocked) && <FontAwesomeIcon icon='ellipsis-v' className='ptb-menu-btn' onClick={()=>setBlockBtn(!blockBtn)}/>}
+                {(!myprofile && !data?.if_user_blocked) && <i className='fas fa-ellipsis-v ptb-menu-btn' onClick={()=>setBlockBtn(!blockBtn)}/>}
 
                 {(blockBtn && !data?.if_user_blocked) && <BlockUserBtn userID={user.userID}/>}
                 

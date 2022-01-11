@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {gql} from 'graphql-tag'
 import { useQuery} from 'react-apollo';
 import '../../../components/Profile/Settings/style.css'
@@ -30,7 +29,7 @@ const BlockedUsers = ({isLogged}) => {
                     <div className='container-left'>
                         <div className='box flex-ctr'>
                             <Link to='/settings'>
-                                <FontAwesomeIcon icon='arrow-left' className='settings-arrow-back'/>
+                                <i className='fas fa-arrow-left settings-arrow-back'/>
                             </Link>
                             <h3>
                                 Blocked users

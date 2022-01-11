@@ -2,7 +2,6 @@ import React from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 import '../../../components/Groups/groups.css'
 import AlternativeNavbar from '../../../components/General components/AlternativeNavbar'
@@ -47,7 +46,7 @@ const ManageUsers = ({isLogged}) => {
 
                             <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
-                                    <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
+                                    <i className='fas fa-arrow-left' style={styles.arrowBack}/>
                                 </Link>
                                 <h3>Manage users</h3>
                             </div>
@@ -101,10 +100,5 @@ const styles = {
         fontSize:'20px',
         cursor:'pointer',
         color:'white'
-    },
-    noPosts:{
-        color:'white',
-        textAlign:'center',
-        marginTop:'100px'
     }
 }

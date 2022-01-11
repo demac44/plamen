@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
 import {useQuery} from 'react-apollo'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import SearchDrop from './SearchDrop'
 import './style.css'
 
@@ -33,7 +32,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
     return (
         <>
             <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+query}}>
-                <div className="search-icon"><FontAwesomeIcon icon='search' color='#bbb'/></div>
+                <div className="search-icon"><i className='fas fa-search' style={{color:"#aaa"}}/></div>
                 <input 
                     type="text" 
                     className="tn-search-input" 
@@ -57,7 +56,7 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
                     }}/>
                 {query.length>0 && 
                 <div className='flex-ctr clear-search-query'>
-                    <FontAwesomeIcon icon='times' onClick={()=>setQuery('')} size='lg' color='#aaa'/>
+                    <i className='fas fa-times' onClick={()=>setQuery('')} style={{color:"#aaa", fontSize:'20px'}}/>
                 </div>}
                 {(!loading && dropdown) && <SearchDrop 
                                 dropdownCallback={dropdownCallback} 

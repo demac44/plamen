@@ -5,7 +5,6 @@ import PostMenu from './components/PostMenu'
 import Avatar from '../../General components/Avatar'
 import { Link } from 'react-router-dom'
 import ReportBox from './components/ReportBox'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './style.css'
 
 const PostTopBar = ({data, refetchPosts}) => {
@@ -38,10 +37,8 @@ const PostTopBar = ({data, refetchPosts}) => {
 
                 <span className='flex'>
                     <SavePostButton postID={data.postID}/>
-                    <FontAwesomeIcon
-                        icon='ellipsis-v' 
-                        color='white'
-                        className='post-menu-btn'
+                    <i
+                        className='fas fa-ellipsis-v post-menu-btn'
                         onClick={()=>setMenu(!menu)}/>
                 </span>
             </div>

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/Settings/SettingsMenu'
 import EditGroupVisibility from '../../../components/Groups/Settings/Manage info/EditGroupVisibility'
@@ -49,7 +48,7 @@ const GroupEditInfo = ({isLogged}) => {
 
                             <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
-                                    <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
+                                    <i className='fas fa-arrow-left' style={styles.arrowBack}/>
                                 </Link>
                                 <h3>Community settings</h3>
                             </div>

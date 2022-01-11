@@ -79,8 +79,3 @@ query ($postID: Int, $userID: Int){
     if_group_post_liked (postID: $postID, userID: $userID)
 }
 `
-// <FontAwesomeIcon  
-//     icon='heart'
-//     style={{...styles.likeBtn, color: ifLiked.loading ? 'white' 
-//                 : liked ? '#a50202' : 'white'}}
-//     onClick={() => liked ? handleRemove() : handleLike()}/>

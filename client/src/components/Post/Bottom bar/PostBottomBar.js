@@ -6,7 +6,6 @@ import LikePost from './components/LikePost'
 import gql from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import LikesList from './components/LikesList'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
 const PostBottomBar = ({postID, userID}) => {
@@ -57,8 +56,8 @@ const PostBottomBar = ({postID, userID}) => {
                 <LikePost postID={postID} userID={userID}/>
 
                 <p onClick={()=>setLikes(!likes)} className='see-likes-btn'>
-                    <FontAwesomeIcon icon='sort-down' color='white' size='lg'
-                /></p>
+                    <i className='fas fa-sort-down'/>
+                </p>
                 
                 <AddComment postID={postID} userID={userID} refetchComments={refetch}/>
             </div>

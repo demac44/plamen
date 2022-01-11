@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState, memo } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import Avatar from '../../../../General components/Avatar'
 import RemoveBtn from './RemoveBtn'
@@ -44,7 +43,7 @@ const MemberBoxMNG = ({member, refetch, currentUserRole}) => {
 
                 <span className='flex-ctr' onClick={()=> role!=='CREATOR' && setRolesMenu(!rolesMenu)}>
                     <p style={{backgroundColor: tagColor}} className='mng-memb-role-tag'>{role}</p>
-                    {role!=='CREATOR' && <FontAwesomeIcon icon='sort-down' size='lg' style={{marginTop:'-7px'}}/>}
+                    {role!=='CREATOR' && <i className='fas fa-sort-down' style={{marginTop:'-7px'}}/>}
                 </span>
 
             </div>

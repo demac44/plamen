@@ -26,6 +26,7 @@ import login from './controllers/login.js'
 import register from './controllers/register.js'
 import logout from './controllers/logout.js'
 import reset_password from './controllers/Retrieve password/reset_password.js'
+import fake_data from './FakeData.js'
 
 
 (async function () {
@@ -72,7 +73,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     app.use(express.json());
     
 
-    app.use('/graphiql', auth, graphqlHTTP({
+    app.use('/graphiql', graphqlHTTP({
         schema,
         graphiql:true
     }))
@@ -82,6 +83,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
+    app.use('/api/fake_data', fake_data)
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))

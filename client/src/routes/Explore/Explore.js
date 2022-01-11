@@ -7,10 +7,8 @@ import MyGroupsList from '../../components/General components/MyGroupsList'
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
-import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Explore = ({isLogged}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -39,13 +37,12 @@ const Explore = ({isLogged}) => {
                         >
                             <p>Refresh?</p>
                             <br/>
-                            <FontAwesomeIcon icon='redo' size='lg' color='white'/>
+                            <i className='fas fa-redo'/>
                         </div>
                     </div>
                 </div>
                 <div className='container-right'>
                     <MyGroupsList/>
-                    <UserSuggestionsBox/>
                 </div>
             </div>
         </div>

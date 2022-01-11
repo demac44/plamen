@@ -1,7 +1,6 @@
 import React, { useEffect, useState, memo } from 'react'
 import AddStory from './components/All stories container/AddStory'
 import StoryHead from './components/All stories container/StoryHead'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './components/style.css'
 import './Stories.css'
 
@@ -37,13 +36,13 @@ const Stories = ({stories, refetch, seenStories}) => {
                     className='flex-ctr list-stories-btn-left list-stories-btn' 
                     onClick={()=>setMargin(margin > 0 ? margin-100 : 0)}
                     >
-                    <FontAwesomeIcon icon='chevron-left' color='white'/>
+                    <i className='fas fa-chevron-left'/>
                 </div>}
             <div 
                 className='flex-ctr list-stories-btn-right list-stories-btn' 
                 onClick={()=>setMargin(margin+100 > width ? margin :margin+100)}
                 >
-                <FontAwesomeIcon icon='chevron-right' color='white'/>
+                <i className='fas fa-chevron-right'/>
             </div>
         </div>
     )

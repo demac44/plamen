@@ -1,12 +1,10 @@
 import React from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 const UploadImage = ({imageCB, videoCB, previewCB, sizeErrorCB}) => {
     return (
         <>
             <label htmlFor='image_upload' className='flex-ctr'>
-                <FontAwesomeIcon icon='images' size='lg' color='white'/>
+                <i className='fas fa-images'/>
                 <p>Image</p>
             </label>
             <input 

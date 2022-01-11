@@ -10,7 +10,6 @@ import { useQuery } from 'react-apollo'
 import { Link, Redirect, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/General components/Sidebar'
 import SettingsMenu from '../../../components/Groups/Settings/SettingsMenu'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReportedPost from '../../../components/Reported posts/ReportedPost'
 import { useSelector } from 'react-redux'
 
@@ -47,7 +46,7 @@ const ManagePosts = ({isLogged}) => {
 
                             <div className='box flex-ctr'>
                                 <Link to={'/community/'+groupid+'/settings'}>
-                                    <FontAwesomeIcon icon='arrow-left' style={styles.arrowBack}/>
+                                    <i className='fas fa-arrow-left' style={styles.arrowBack}/>
                                 </Link>
                                 <h3>Reported posts</h3>
                             </div>

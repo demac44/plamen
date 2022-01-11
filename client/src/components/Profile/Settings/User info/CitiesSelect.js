@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { cities } from '../../../../Assets/cities'
 import './style.css'
@@ -15,7 +14,7 @@ const CitiesSelect = ({country, setCityCB}) => {
     return (
         <span className='search-cities-box flex-ctr'>
             <input className='input' value={str} onChange={(e)=>setStr(e.target.value)} placeholder='Find your city...'/>
-            {str!=='' && <FontAwesomeIcon icon='times' color='white' fixedWidth onClick={()=>setStr('')} cursor='pointer'/>}
+            {str!=='' && <i icon='fas fa-times' onClick={()=>setStr('')}/>}
             {str?.length > 0 && <div className='uni-search-drop' onClick={()=>setStr('')}>
                 {list?.length > 0 && list?.slice(0,50)?.map(city => <p onClick={()=>setCityCB(city)} key={city}>{city}</p>)}
             </div>}

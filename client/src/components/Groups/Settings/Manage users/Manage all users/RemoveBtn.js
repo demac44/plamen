@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './style.css'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
@@ -16,7 +15,7 @@ const RemoveBtn = ({userID, groupID, refetch}) => {
         }).then(()=>refetch())
     }
     return (
-        <p className='mng-memb-remove' onClick={handleRemove}><FontAwesomeIcon icon='times'/></p>
+        <p className='mng-memb-remove' onClick={handleRemove}><i className='fas fa-times'/></p>
     )
 }
 

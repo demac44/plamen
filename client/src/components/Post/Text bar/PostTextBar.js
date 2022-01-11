@@ -15,12 +15,12 @@ const PostTextBar = ({post_text}) => {
                     <>
                         {readMore ? 
                         <Linkify><p>{post_text.slice(0,300)}
-                            <span onClick={()=>setReadMore(false)} className='read-full-post'>. . . Read more</span>
+                            <span onClick={()=>setReadMore(false)} className='read-full-post-btn'>. . . Read more</span>
                         </p></Linkify> : <Linkify><p>{post_text}</p></Linkify>}
 
                         <br/>
 
-                        {!readMore && <p onClick={()=>setReadMore(true)} className='read-full-post'>Read less</p>}
+                        {!readMore && <span onClick={()=>setReadMore(true)} className='read-full-post-btn'>Read less</span>}
                     </>
                     )
                     : (findTag(post_text) ? <Linkify>{<p dangerouslySetInnerHTML={{__html: findTag(post_text)}}></p>}</Linkify>

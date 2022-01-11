@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import { useSelector } from 'react-redux';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import EmojisBox from '../../../../General components/Emojis/EmojisBox';
 
 const AddComment = ({postID, userID, refetchComments}) => {
@@ -37,7 +36,7 @@ const AddComment = ({postID, userID, refetchComments}) => {
     return (
         <div className='flex-col wh-100'>
             <span className='flex-ctr'>
-                <FontAwesomeIcon icon='icons' color='white' size='lg' fixedWidth className='cmt-emojis-btn' onClick={()=>setEmojis(!emojis)}/>
+                <i className='fas fa-icons cmt-emojis-btn' onClick={()=>setEmojis(!emojis)}/>
                 <textarea 
                     className='add-cmt-textarea wh-100 input' 
                     type="text" 

@@ -91,7 +91,8 @@ export const RANDOM_POSTS = {
                      WHERE disabled=false
                      AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
-                     ORDER BY RAND() limit 100`
+                     AND DATE(date_posted) > (NOW() - INTERVAL 1 DAY)
+                     limit 100`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }

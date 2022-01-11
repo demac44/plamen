@@ -62,9 +62,8 @@ const Comment = ({comment, refetchComments}) => {
             </div>
 
             {comment.userID===uid && 
-                <FontAwesomeIcon 
-                    icon='trash-alt' 
-                    className='cmt-del-btn'
+                <i 
+                    className='fas fa-trash-alt cmt-del-btn'
                     onClick={handleDelete}
                 />}
         </div>

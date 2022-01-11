@@ -1,8 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 import logoTube from '../../images/logo-red-min.png'
 import logoStream from '../../images/logo-green-min.png'
 
@@ -11,16 +8,16 @@ const AlternativeNavbar = ({chat}) => {
         <div className='alternative-navbar' style={chat && styles.nav}>
             <div className='flex-sa' style={{width:'100%', height:'100%'}}>
                 <NavLink exact to="/">
-                    <FontAwesomeIcon icon='newspaper' color='darkgreen' fixedWidth />
+                    <i className='fas fa-newspaper' style={{color: 'darkgreen'}}/>
                 </NavLink>
                 <NavLink exact to='/explore'>      
-                    <FontAwesomeIcon icon='compass' color='#9933ff' fixedWidth/>
+                    <i className='fas fa-compass' style={{color: '#9933ff'}}/>
                 </NavLink>
                 <NavLink exact to='/saved'>
-                    <FontAwesomeIcon icon='bookmark' color='#ffbb00' fixedWidth/>
+                    <i className='fas fa-bookmark' style={{color: '#ffbb00'}}/>
                 </NavLink>
                 <NavLink exact to='/communities'>
-                    <FontAwesomeIcon icon='users' color='teal' fixedWidth/>
+                    <i className='fas fa-users' style={{color: 'teal'}}/>
                 </NavLink>
                 <NavLink exact to='/plamentube'>
                     <img src={logoTube} alt=''/>

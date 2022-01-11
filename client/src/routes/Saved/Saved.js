@@ -60,7 +60,7 @@ const Saved = ({isLogged}) => {
                 </div>
                 <div className='container-right'>
                     <MyGroupsList/>
-                    <UserSuggestionsBox/>
+                    {/* <UserSuggestionsBox/> */}
                 </div>
             </div>
         </div>

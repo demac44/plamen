@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {gql} from 'graphql-tag'
 import {useMutation} from 'react-apollo'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
 
 const ReportBox = ({data, handleReportClose}) => {
@@ -57,7 +56,7 @@ const ReportBox = ({data, handleReportClose}) => {
         <div className='container-report flex-col-ctr'>
             <form className='report-form' onSubmit={handleReport}>
                 <h3 className='report-box-title'>Report
-                    <FontAwesomeIcon icon='times' className='exit-report-btn' onClick={()=>handleReportClose(false)}/>   
+                    <i className='fas fa-times exit-report-btn' onClick={()=>handleReportClose(false)}/>   
                 </h3>
                 {reportSent && <h4 className='report-box-title' style={{marginTop:'10px'}}>Your report has been sent!</h4>}
                 <p className='report-box-title' style={{marginTop:'10px'}}>Please specify reasons for reporting this post:</p>
