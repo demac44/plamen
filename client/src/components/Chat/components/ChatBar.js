@@ -22,7 +22,7 @@ const ChatBar = ({chatID}) => {
             <div className='chat-bar flex-sb'>
                 <div className='flex-ctr'>
                     <Link to='/chats'>
-                        <i className='arrow-left chat-back-icon'/>
+                        <i className='fas fa-arrow-left chat-back-icon'/>
                     </Link>
                     
                     <Link to={'/profile/'+state?.username} className='flex-ac'>
@@ -35,7 +35,7 @@ const ChatBar = ({chatID}) => {
                 </div>
                 <span>
                     <i
-                        className='ellipsis-v bar-btns'
+                        className='fas fa-ellipsis-v bar-btns'
                         onClick={()=>setShowMenu(!showMenu)}
                     />
                 </span>

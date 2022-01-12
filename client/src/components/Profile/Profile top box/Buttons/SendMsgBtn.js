@@ -2,7 +2,7 @@ import React from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
-import {useHistory} from 'react-router-dom'
+import {Redirect, useHistory} from 'react-router-dom'
 
 const SendMsgBtn = ({user}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
@@ -14,32 +14,30 @@ const SendMsgBtn = ({user}) => {
     
     const createChat = () => {
         if(data?.chat_exists?.chatID){
-            history.push({
-                pathname:'/chat/'+data.chat_exists.chatID, 
+            return <Redirect to={{pathname:'/chat/'+data.chat_exists.chatID, 
                 state: {
                     first_name: user?.first_name,
                     last_name: user?.last_name,
                     username: user?.username,
                     profile_picture: user?.profile_picture,
                     last_seen: user.last_seen
-                }
-            })
+                }}}/>
         } else {
             create_chat({
                 variables: { 
                     user1: uid,
                     user2: user.userID
                 }
-            }).then(res=>history.push({
-                pathname:'/chat/'+res.data.create_chat.chatID, 
+            }).then(res=>{
+                return <Redirect to={{pathname:'/chat/'+res.data.create_chat.chatID, 
                 state: {
                     first_name: user?.first_name,
                     last_name: user?.last_name,
                     username: user?.username,
                     profile_picture: user?.profile_picture,
                     last_seen: user.last_seen
-                }
-            }))
+                }}}/>
+            })
         }
     } 
     

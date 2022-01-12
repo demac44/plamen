@@ -4,11 +4,13 @@ import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
 import Avatar from '../../../General components/Avatar'
 import UserLoader from '../../../General components/Loaders/UserLoader'
+import { useHistory } from 'react-router-dom';
 
 const ChatSearchBarUser = ({user}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [create_chat] = useMutation(CREATE_CHAT)
     const {data, loading} = useQuery(CHAT_EXISTS, {variables: {user1:uid, user2:user.userID}})  
+    const history = useHistory()
 
     if(loading) return <UserLoader/>
 
@@ -17,7 +19,16 @@ const ChatSearchBarUser = ({user}) => {
             window.location.href='/profile/'+user.username
         } else {
             if(data?.chat_exists?.chatID){
-                window.location.href = '/chat/'+data?.chat_exists?.chatID
+                history.push({
+                    pathname:'/chat/'+data.chat_exists.chatID, 
+                    state: {
+                        first_name: user?.first_name,
+                        last_name: user?.last_name,
+                        username: user?.username,
+                        profile_picture: user?.profile_picture,
+                        last_seen: user.last_seen
+                    }
+                })
             } else {
                 create_chat({
                     variables: { 
@@ -25,7 +36,16 @@ const ChatSearchBarUser = ({user}) => {
                         user2: user.userID
                     }
                 }).then(res=>{
-                    window.location.href = '/chat/'+res?.data?.create_chat?.chatID
+                    history.push({
+                        pathname:'/chat/'+res.data.create_chat.chatID, 
+                        state: {
+                            first_name: user?.first_name,
+                            last_name: user?.last_name,
+                            username: user?.username,
+                            profile_picture: user?.profile_picture,
+                            last_seen: user.last_seen
+                        }
+                    })
                 })
             }
         }

@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom'
 import '../../components/Groups/groups.css'
 import { useSelector } from 'react-redux'
 import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
 import GroupBanner from '../../components/Groups/components/GroupBanner'
 import InfoBox from '../../components/Groups/components/InfoBox'
@@ -21,6 +21,7 @@ const Group = ({isLogged}) => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const [set_last_seen] = useMutation(SET_LAST_SEEN)
     const {data, loading, refetch, fetchMore} = useQuery(GET_GROUP, {
         variables:{
             gid: parseInt(groupid),
@@ -35,6 +36,11 @@ const Group = ({isLogged}) => {
             setTags(data?.get_group?.group_tags?.split(','))
         }
     }, [refetch, data])
+    
+    useEffect(()=>{
+        window.scrollTo(0,0)
+        set_last_seen({variables:{userID: uid}})
+    }, [set_last_seen, uid])
 
     if(!loading){
         if(!data?.get_group) return <Redirect to='/404'/>
@@ -143,3 +149,11 @@ const styles = {
         height:'200px'
     }
 }
+const SET_LAST_SEEN = gql`
+mutation ($userID: Int){
+set_last_seen (userID: $userID){
+  userID
+}
+}
+
+`

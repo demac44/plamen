@@ -3,7 +3,7 @@
     display: flex;
     min-height: 50px;
     width: 100%;
-    padding: 0 5px;
+    padding:0 5px 0 5px;
     align-items: flex-start;
 }
 .post-button{
@@ -24,12 +24,12 @@
     background-color: #aaa;
 }
 .see-likes-btn{
-    padding: 0 6px 5px 6px;
-    font-size: 14px;
+    padding: 0 5px 4px 5px;
+    font-size: 12px;
     border: 1px solid #3f3f3f;
     border-radius: 2px;
     cursor: pointer;
-    margin-top: 13px;
+    margin-top: 15px;
 }
 .add-cmt-textarea{
     background-color: #1b1b1b;
@@ -81,7 +81,7 @@
 }
 .like-post-btn{
     height:40px;
-    margin:0 10px 0 5px;
+    margin:5px 10px 0 5px;
     cursor: pointer;
 }
 .likes-list{
@@ -107,6 +107,7 @@
 .cmt-emojis-btn{
     margin-left: 10px;
     cursor: pointer;
+    margin-top: 5px;
 }
 .post-bottom-bar .emojis-box{
     visibility: visible;

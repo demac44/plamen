@@ -77,6 +77,7 @@ const SEARCH = gql`
             last_name
             username
             profile_picture
+            last_seen
         }
         get_all_groups (limit: $limit, offset: $offset) {
             groupID

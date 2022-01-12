@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../style.css'
 const VideoPreview = ({preview, videoCB, previewCB}) => {
     return (

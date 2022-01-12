@@ -8,7 +8,7 @@ const PostMedia = ({data}) => {
             {data.type==='image' && (
                 <>
                 {loading && <div className='flex-ctr post-media-loader'><div className='small-spinner'></div></div>}
-                <img onLoad={()=>setLoading(false)} src={data.url} alt=""/>
+                <img onLoad={()=>setLoading(false)} src={data.url} style={{display: loading ? 'none' : 'block'}} className='post-img' alt=""/>
                 </>
             )}
             {data.type==='video' && <video controls src={data.url}/>}

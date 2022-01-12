@@ -6,8 +6,6 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import OpenMedia from './OpenMedia'
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-
 
 const GET_CHAT_MEDIA = gql`
     query($chatID: Int!){
@@ -38,10 +36,8 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
         <div className='container-all-chat-media overlay'>
             <div className='flex-sb title'>
                 <h3>All chat media</h3>
-                <FontAwesomeIcon
-                    icon='times' 
-                    size='lg'
-                    cursor={'pointer'}
+                <i
+                    className='fas fa-times' 
                     onClick={()=>closeAllMediaCallback()}
                 />
             </div>

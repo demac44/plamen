@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import SetTime from '../../../General components/SetTime'
 import { useMutation } from 'react-apollo'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Linkify from 'react-linkify'
 
 
@@ -32,15 +31,7 @@ const MsgCurrentUser = ({setOpenMedia, storyUrl, msg, uid, deleteQuery}) => {
 
             {/* delete icon */}
             <div className='msg-inner-wrapper-cu flex-ac'>
-                {(msg.userID===uid && msgOptions && !deleted) && 
-                    <>
-                        <FontAwesomeIcon
-                            icon='trash-alt' 
-                            className='del-msg-btn'
-                            onClick={handleDelete}
-                            />
-                    </>
-                }
+                {(msg.userID===uid && msgOptions && !deleted) && <i className='fas fa-trash-alt del-msg-btn' onClick={handleDelete}/>}
 
                 <div className='msg msg-current-user' style={{backgroundColor: deleted && 'gray'}}>
                     {deleted ? 'This message is deleted!' :

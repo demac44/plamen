@@ -2,13 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 import { useSelector } from 'react-redux';
 import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar.js'
 import UserSearchBar from '../../components/Navbar/Search bar/UserSearchBar'
 import Sidebar from '../../components/General components/Sidebar.js'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar.js'
 import MyGroupsList from '../../components/General components/MyGroupsList.js'
-import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox.js'
 import UserLoader from '../../components/General components/Loaders/UserLoader.js'
 import CommunitySearchBar from '../../components/Navbar/Search bar/CommunitySearchBar'
 import './style.css'
@@ -20,7 +19,8 @@ const Search = ({isLogged}) => {
     const [fetch, setFetch] = useState(true)
     const [fetchComm, setFetchComm] = useState(true)
     const [communities, setCommunities] = useState([])
-
+    const [set_last_seen] = useMutation(SET_LAST_SEEN)
+    
     const {loading, data, fetchMore} = useQuery(SEARCH_USERS, {
         variables:{
             limit:15,
@@ -28,12 +28,13 @@ const Search = ({isLogged}) => {
             userID: uid
         }
     })
-
+    
     useEffect(()=>{
         handleSearchHistory(query)
         setUsers(filterUsers(data?.get_users, query))
         setCommunities(filterCommunities(data?.get_all_groups, query))
-    }, [data, query])
+        set_last_seen({variables:{userID: uid}})
+    }, [data, query, set_last_seen, uid])
         
     const loadMore = () => {
         fetchMore({
@@ -47,11 +48,11 @@ const Search = ({isLogged}) => {
                     return
                 }
                 return Object.assign({}, prev, {
-                  get_users: [...data?.get_users, ...fetchMoreResult?.get_users]
+                    get_users: [...data?.get_users, ...fetchMoreResult?.get_users]
                 });
               }
-        })
-    }
+            })
+        }
 
     const loadMoreComm = () => {
         fetchMore({
@@ -112,7 +113,6 @@ const Search = ({isLogged}) => {
                     </div>
                     <div className='container-right'>
                         <MyGroupsList/>
-                        <UserSuggestionsBox/>
                     </div>
                 </div>
             </div>
@@ -177,4 +177,12 @@ const SEARCH_USERS = gql`
             banner_image
         }
     }
+`
+const SET_LAST_SEEN = gql`
+mutation ($userID: Int){
+set_last_seen (userID: $userID){
+  userID
+}
+}
+
 `

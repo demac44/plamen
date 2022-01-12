@@ -11,7 +11,7 @@ const ChatMsgBox = ({chat}) => {
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     const [seen] = useMutation(SEEN)
-    const messages = useQuery(GET_MESSAGES, {
+    const {data, loading, subscribeToMore, fetchMore, refetch} = useQuery(GET_MESSAGES, {
         variables: {
             chatID: chat.chatID,
             limit:50,
@@ -26,7 +26,7 @@ const ChatMsgBox = ({chat}) => {
     
     useEffect(()=>{ 
         const subscribeNewMessage = () => {
-            return messages?.subscribeToMore({
+            return subscribeToMore({
                 document: NEW_MESSAGE,
                 updateQuery: (prev, { subscriptionData }) => {
                     if (!subscriptionData?.data) return prev;
@@ -44,24 +44,24 @@ const ChatMsgBox = ({chat}) => {
             }});
         }
         return subscribeNewMessage()
-    }, [chat, messages])        
+    }, [chat, loading])        
     
     
     useEffect(()=>{
-        messages?.data?.get_messages?.length>=50 && setFetchBtn(true)
+        data?.get_messages?.length>=50 && setFetchBtn(true)
         seen({
             variables:{
                 cid: chat?.chatID,
                 rid: uid
             }
         })
-    }, [messages?.data, chat, seen, uid])
+    }, [data, chat, seen, uid, loading])
 
 
     const handleFetchMore = () => {
-        messages?.fetchMore({
+        fetchMore({
             variables:{
-                offset: messages?.data?.get_messages?.length,
+                offset: data?.get_messages?.length,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
@@ -70,21 +70,20 @@ const ChatMsgBox = ({chat}) => {
                     return
                 }
                 return Object.assign({}, prev, {
-                  get_messages: [...messages?.data?.get_messages, ...fetchMoreResult?.get_messages]
+                  get_messages: [...data?.get_messages, ...fetchMoreResult?.get_messages]
                 });
             }
         })
         return
     }
       
-    if(messages.error) console.log(messages.error); 
 
     return (
         <div className='chat-msg-box'> 
             <ChatBar chatID={chat.chatID} info={chat}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
-                {!messages.loading && messages?.data?.get_messages?.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
+                {!loading && data?.get_messages?.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
                 {fetchBtn && <div className='msg-load-more' onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendMsg chatID={chat.chatID} info={chat} loaderCallback={loaderCallback}/> 

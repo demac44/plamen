@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import axios from 'axios'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux';
 import EmojisBox from '../../../../General components/Emojis/EmojisBox'
 import MsgPreviewBox from '../../Messages/MsgPreviewBox'
@@ -89,11 +88,11 @@ const SendGroupMsg = ({chatID, loaderCallback}) => {
             {emojis && <EmojisBox emojiCB={emojiCB} visible={emojis}/>}
 
             <form className='msg-input-box flex-ctr' onSubmit={sendMessage}>
-                <FontAwesomeIcon icon='icons' className='emojis-btn' onClick={()=>setEmojis(!emojis)}/>
+                <i className='fas fa-icons emojis-btn' onClick={()=>setEmojis(!emojis)}/>
 
                 <div>
                     <label htmlFor='file-input'>
-                        <FontAwesomeIcon icon='images' className='msg-upload-btn'/>
+                        <i className='fas fa-images msg-upload-btn'/>
                     </label>
                     <input type='file' id='file-input' accept='video/*, image/*' style={{display:'none'}} 
                         onChange={(e)=>{

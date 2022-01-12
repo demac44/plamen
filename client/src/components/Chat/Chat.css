@@ -181,13 +181,10 @@
     z-index: 10000;
 }
 .bar-btns{
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     cursor: pointer;
-    margin-right: 30px;
-}
-.bar-btns:nth-child(3){
-    margin-right: 15px;
+    margin-right: 10px;
 }
 .chat-menu{
     position: absolute;

@@ -38,12 +38,12 @@ const Communities = () => {
         if(checkUser(getCookie(isLogged), user)){
           return logout()
         } else {
-            setInterval(()=>{
+            uid && setInterval(()=>{
               set_last_seen({variables:{userID: uid}})
-            }, 120000)
+            }, 60000)
             setLoading(false)
         }
-      },[isLogged, user, uid, token, dispatch])
+      },[isLogged, user, uid, token, dispatch, set_last_seen])
 
     return (
       <>

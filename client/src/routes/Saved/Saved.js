@@ -1,18 +1,18 @@
 import React, {useEffect, memo} from 'react'
 import { useSelector } from 'react-redux';
 import gql from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import Navbar from '../../components/Navbar/Navbar'
 import MyGroupsList from '../../components/General components/MyGroupsList'
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
-import UserSuggestionsBox from '../../components/General components/UserSuggestionsBox'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
 const Saved = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const [set_last_seen] = useMutation(SET_LAST_SEEN)
     const {loading, data, fetchMore, refetch} = useQuery(GET_SAVED, { 
         variables: {
             userID: uid,
@@ -20,10 +20,11 @@ const Saved = ({isLogged}) => {
             limit:15
         },
     })
-
+    
     useEffect(()=>{
         window.scrollTo(0,0)
-    }, [])
+        set_last_seen({variables:{userID: uid}})
+    }, [set_last_seen, uid])
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
@@ -60,7 +61,6 @@ const Saved = ({isLogged}) => {
                 </div>
                 <div className='container-right'>
                     <MyGroupsList/>
-                    {/* <UserSuggestionsBox/> */}
                 </div>
             </div>
         </div>
@@ -84,4 +84,12 @@ const GET_SAVED = gql`
             type
         }
     }
+`
+const SET_LAST_SEEN = gql`
+mutation ($userID: Int){
+set_last_seen (userID: $userID){
+  userID
+}
+}
+
 `

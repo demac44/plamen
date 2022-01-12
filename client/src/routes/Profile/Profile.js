@@ -53,7 +53,7 @@ const Profile = ({isLogged}) => {
         }
         return
     }
-    
+
     useEffect(()=>{
         setIsLoading(true)
         profileVisit()
@@ -169,6 +169,9 @@ const PROFILE_VISIT = gql`
     mutation($visitorId: Int, $visitedId: Int){
         profile_visit(visitorId: $visitorId, visitedId: $visitedId){
             visitedId
+        }
+        set_last_seen (userID: $visitorId){
+          userID
         }
     }
 `

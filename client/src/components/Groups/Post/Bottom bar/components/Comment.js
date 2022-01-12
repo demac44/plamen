@@ -3,7 +3,6 @@ import { useMutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Linkify from 'react-linkify'
 import Avatar from '../../../../General components/Avatar'
 import SetTime from '../../../../General components/SetTime'

@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const MsgPreviewBox = ({media, preview, clearFiles}) => {
     return (
@@ -11,7 +10,7 @@ const MsgPreviewBox = ({media, preview, clearFiles}) => {
             {media.type.slice(0,5)==='video' &&
                 <video className='msg-preview-media' src={preview}
                 onLoad={()=>URL.revokeObjectURL(preview)}></video>}
-            <div className='flex-ctr msg-preview-clear-btn' onClick={()=>clearFiles()}><FontAwesomeIcon icon='times'/></div>
+            <div className='flex-ctr msg-preview-clear-btn' onClick={()=>clearFiles()}><i className='fas fa-times'/></div>
         </div>
     )
 }

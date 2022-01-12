@@ -44,15 +44,15 @@ function App() {
     if(checkUser(getCookie(isLogged), user)){
       return logout()
     } else {
-        setInterval(()=>{
+        uid && setInterval(()=>{
           set_last_seen({variables:{userID: uid}})
         }, 120000)
         setLoading(false)
     }
-  },[isLogged, user, uid, token, dispatch])
+  },[isLogged, user, uid, token, dispatch, set_last_seen])
   
   return (
-    <div onFocus={()=>uid && set_last_seen({variables:{userID: uid}})}>
+    <div>
         {loading ? <MainLoader/> :
           (isLogged ?
           <Switch>
@@ -106,7 +106,7 @@ const logout = async () => {
 
 
 const SET_LAST_SEEN = gql`
-  mutation ($userID: Int!){
+  mutation ($userID: Int){
     set_last_seen (userID: $userID){
       userID
     }

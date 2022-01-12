@@ -38,7 +38,6 @@ export const GET_FEED_POSTS = {
                      JOIN users ON posts.userID=users.userID 
                      WHERE (users.userID=${userID} OR users.userID IN 
                      (SELECT followedID FROM followings WHERE followerID=${userID})) 
-                     AND DATE(date_posted) > (NOW() - INTERVAL 3 DAY) 
                      ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
@@ -82,23 +81,22 @@ export const IF_SAVED = {
 export const RANDOM_POSTS = {
     type: new GraphQLList(PostType),
     args:{
-        userID: {type:GraphQLInt}
+        userID: {type:GraphQLInt},
+        limit: {type:GraphQLInt},
+        offset: {type:GraphQLInt}
     },
     async resolve(_, args){
-        const {userID} = args
+        const {userID, limit, offset} = args
         const sql = `SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID FROM posts
                      JOIN users ON users.userID=posts.userID
                      WHERE disabled=false
                      AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
                      AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
-                     AND DATE(date_posted) > (NOW() - INTERVAL 1 DAY)
-                     limit 100`
-        return await connection.promise().query(sql).then(res=>{return res[0]})
-    }
-}
-
-
-
+                     LIMIT ${limit} OFFSET ${offset}`
+                     return await connection.promise().query(sql).then(res=>{return res[0]})
+                    }
+                }
+                
 // get single post
 export const GET_POST = {
     type: PostType,

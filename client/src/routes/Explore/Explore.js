@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import './style.css'
 import {gql} from 'graphql-tag'
-import { useQuery } from 'react-apollo'
+import { useQuery, useMutation } from 'react-apollo'
 import MyGroupsList from '../../components/General components/MyGroupsList'
 import Posts from '../../components/Post/Posts'
 import Sidebar from '../../components/General components/Sidebar'
@@ -12,33 +12,50 @@ import { useSelector } from 'react-redux'
 
 const Explore = ({isLogged}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
-    const {loading, data, refetch} = useQuery(RANDOM_POSTS, {pollInterval:9000000, variables:{uid}})
-
+    const [set_last_seen] = useMutation(SET_LAST_SEEN)
+    const {loading, data, refetch, fetchMore} = useQuery(RANDOM_POSTS, {
+        variables:{
+            uid,
+            limit: 20,
+            offset: 0
+        }
+    })
+    
     useEffect(()=>{
         window.scrollTo(0,0)
-    }, [])
+        set_last_seen({variables:{userID: uid}})
+    }, [set_last_seen, uid])
+
+    const scrollPagination = () => {
+        window.onscroll = async ()=>{
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+                try {
+                    await fetchMore({
+                        variables:{
+                            offset:data?.random_posts?.length,
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev;
+                            return Object.assign({}, prev, {
+                              random_posts: [...data.random_posts, ...fetchMoreResult?.random_posts]
+                            });
+                          }
+                    })
+                } catch{}
+            }
+        }
+    }
 
     return (
         <div className='section-main'>
             <Navbar isLogged={isLogged}/>
             <AlternativeNavbar/>
-            <div className='wrapper'>
+            <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
                         <div className='section-title flex-ctr'><h2>Explore</h2></div>
-                        {loading ? <PostLoader/> : <Posts posts={data.random_posts} refetchPosts={refetch}/>}
-                        <div 
-                            onClick={()=>{
-                                window.scrollTo(0,0);
-                                refetch()
-                            }} 
-                            className='flex-col-ctr explore-reload-box box'
-                        >
-                            <p>Refresh?</p>
-                            <br/>
-                            <i className='fas fa-redo'/>
-                        </div>
+                        {loading ? <PostLoader/> : <Posts posts={data?.random_posts} refetchPosts={refetch}/>}
                     </div>
                 </div>
                 <div className='container-right'>
@@ -52,8 +69,8 @@ const Explore = ({isLogged}) => {
 export default Explore
 
 const RANDOM_POSTS = gql`
-    query($uid: Int!){
-        random_posts(userID: $uid){
+    query($uid: Int!, $limit: Int, $offset: Int){
+        random_posts(userID: $uid, limit: $limit, offset: $offset){
             postID
             post_text
             date_posted
@@ -66,4 +83,13 @@ const RANDOM_POSTS = gql`
             type
         }
     }
+`
+
+const SET_LAST_SEEN = gql`
+mutation ($userID: Int){
+set_last_seen (userID: $userID){
+  userID
+}
+}
+
 `

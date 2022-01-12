@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import UserBox from '../../../../General components/Users list/UserBox'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import './style.css'
 
@@ -36,13 +35,7 @@ const ChatMembersBox = ({data, admin, refetch, chatID, adminMember}) => {
                 <div className='flex-ac wh-100' key={member.userID}>
                     <UserBox user={member}/>
 
-                    {(uid===admin) && 
-                        <FontAwesomeIcon 
-                            icon='times' 
-                            className='gc-removeu-btn'
-                            onClick={()=>handleRemoveMember(member.userID)}
-                    />}
-
+                    {(uid===admin) && <i className='fas fa-times gc-removeu-btn' onClick={()=>handleRemoveMember(member.userID)}/>}
                 </div>
             ))}
         </span>

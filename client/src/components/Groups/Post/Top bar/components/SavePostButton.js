@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import {gql} from 'graphql-tag'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
 const SavePostButton = ({postID, groupID}) => {
