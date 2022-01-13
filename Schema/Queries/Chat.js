@@ -12,7 +12,18 @@ export const CHAT_EXISTS = {
     },    
     async resolve(_, args) {
         const {user1_ID, user2_ID} = args
-        const sql = `SELECT * FROM chats WHERE user1_ID=${user1_ID} AND user2_ID=${user2_ID} OR user1_ID=${user2_ID} AND user2_ID=${user1_ID}` 
+        const sql = `SELECT * FROM chats 
+                     WHERE (user1_ID=${user1_ID} AND user2_ID=${user2_ID}) 
+                     OR (user1_ID=${user2_ID} AND user2_ID=${user1_ID})
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${user1_ID} AND blockedId = user2_ID)
+                                OR
+                            (blockerId = user2_ID AND blockedId = ${user1_ID})
+                        )
+                    )` 
         return await connection.promise().query(sql).then((res)=>{return res[0][0]})
     }    
 }
@@ -25,11 +36,18 @@ export const GET_ALL_USER_CHATS = {
     async resolve(_, args){
         const {user1_ID} = args
         const sql = `SELECT chatID, 
-                    IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID 
-                    FROM chats 
-                    WHERE (user1_ID=${user1_ID} OR user2_ID=${user1_ID})
-                    AND user1_ID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${user1_ID} AND blockedId=user1_ID)
-                    AND user1_ID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${user1_ID} AND blockerId=user1_ID)`
+                        IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID 
+                        FROM chats 
+                        WHERE (user1_ID=${user1_ID} OR user2_ID=${user1_ID})
+                        AND NOT EXISTS (
+                            (SELECT 1
+                            FROM blocked_users
+                            WHERE
+                                (blockerId = ${user1_ID} AND blockedId = user2_ID)
+                                    OR
+                                (blockerId = user2_ID AND blockedId = ${user1_ID})
+                            )
+                        )`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     } 
 }
@@ -42,17 +60,23 @@ export const GET_CHAT_LIST = {
     async resolve(_, args){
         const {user1_ID} = args
         const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MIN(time_sent), last_seen
+        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MAX(msgID), last_seen
         FROM users
         JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
         JOIN messages ON chats.chatID=messages.chatID
-        WHERE 
-        disabled=false 
+        WHERE disabled=false 
         AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
-        AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${user1_ID} AND blockedId=users.userID)
-        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${user1_ID} AND blockerId=users.userID)
+        AND NOT EXISTS (
+            (SELECT 1
+            FROM blocked_users
+            WHERE
+                (blockerId = ${user1_ID} AND blockedId = users.userID)
+                    OR
+                (blockerId = users.userID AND blockedId = ${user1_ID})
+            )
+        ) 
         GROUP BY chats.chatID
-        ORDER BY MAX(time_sent) DESC`
+        ORDER BY MAX(msgID) DESC`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }  
     
@@ -65,7 +89,7 @@ export const LAST_MESSAGE = {
     },
     async resolve(_, args){
         const {chatID} = args
-        const sql = `SELECT msg_text, type, userID FROM messages WHERE chatID=${chatID} ORDER BY time_sent DESC LIMIT 1`
+        const sql = `SELECT msg_text, type, userID FROM messages WHERE chatID=${chatID} ORDER BY msgID DESC LIMIT 1`
         return await connection.promise().query(sql).then(response => {
             if(response[0][0]?.msg_text){
                 const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
@@ -90,7 +114,7 @@ export const GET_MESSAGES = {
                      FROM messages 
                      JOIN users ON messages.userID=users.userID
                      WHERE chatID=${chatID} 
-                     ORDER BY time_sent DESC 
+                     ORDER BY msgID DESC 
                      LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         await result.map(msg => {
@@ -121,7 +145,7 @@ export const COUNT_ALL_MSGS = {
     },
     async resolve(_, args){
         const {receiver_id} = args
-        const sql = `SELECT COUNT(Nid) AS msgCount 
+        const sql = `SELECT COUNT(1) AS msgCount 
                      FROM msg_notifications 
                         WHERE receiver_id=${receiver_id}`
         return await connection.promise().query(sql).then((res)=>{return res[0][0]})
@@ -188,9 +212,16 @@ export const GET_GROUP_MESSAGES = {
                      FROM group_chats_messages 
                      JOIN users ON group_chats_messages.userID=users.userID
                      WHERE groupChatId=${groupChatId}
-                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
-                     ORDER BY time_sent DESC 
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                     ) 
+                     ORDER BY msgID DESC 
                      LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
         await result.map(msg => {
@@ -208,7 +239,7 @@ export const LAST_MESSAGE_GROUP = {
     },
     async resolve(_, args){
         const {groupChatId} = args
-        const sql = `SELECT msg_text, type, userID FROM group_chats_messages WHERE groupChatId=${groupChatId} ORDER BY time_sent DESC LIMIT 1`
+        const sql = `SELECT msg_text, type, userID FROM group_chats_messages WHERE groupChatId=${groupChatId} ORDER BY msgID DESC LIMIT 1`
         return await connection.promise().query(sql).then(response => {
             if(response[0][0]?.msg_text){
                 const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
@@ -234,8 +265,15 @@ export const GET_GROUP_CHAT_MEMBERS = {
                      FROM group_chats_members
                      JOIN users ON group_chats_members.userID=users.userID
                      WHERE groupChatId=${groupChatId}
-                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                     ) 
                      LIMIT ${limit} OFFSET ${offset}
                      `
         return await connection.promise().query(sql).then(res=>{return res[0]})

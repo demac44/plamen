@@ -16,17 +16,14 @@ import { useMutation } from 'react-apollo';
 import axios from 'axios';
 
 const Explore = lazy(()=>import('./routes/Explore/Explore'))
-const Chats = lazy(()=>import('./routes/Chat/Chats'))
 const Saved = lazy(()=>import('./routes/Saved/Saved'))
 const NotFound = lazy(()=>import('./routes/Not found/NotFound'))
 const SinglePost = lazy(()=>import('./routes/Post/SinglePost'))
 const Search = lazy(()=>import('./routes/Search/Search'))
-const AccountSettings = lazy(()=>import('./routes/Profile/Settings/AccountSettings'))
-const Settings = lazy(()=>import('./routes/Profile/Settings/Settings'))
-const UserInfo = lazy(()=>import('./routes/Profile/Settings/UserInfo'))
-const BlockedUsers = lazy(()=>import('./routes/Profile/Settings/BlockedUsers'))
 const ConfirmEmail = lazy(()=>import('./routes/Confirm email/ConfirmEmail'))
-
+const Communities = lazy(()=>import('./routes/Groups/Communities'))
+const SettingsRoute = lazy(()=>import('./routes/Profile/Settings/SettingsRoute'))
+const ChatsRoute = lazy(()=>import('./routes/Chat/ChatsRoute'))
 
 function App() {
   const dispatch = useDispatch()
@@ -36,6 +33,7 @@ function App() {
   const token = localStorage.getItem('token')
   const [set_last_seen] = useMutation(SET_LAST_SEEN)
   const [loading, setLoading] = useState(true)
+
 
   useEffect(()=>{
     setLoading(true)
@@ -49,32 +47,34 @@ function App() {
         }, 120000)
         setLoading(false)
     }
-  },[isLogged, user, uid, token, dispatch, set_last_seen])
+  },[isLogged, user, uid, token, dispatch, set_last_seen, loading])
+
+
   
   return (
     <div>
         {loading ? <MainLoader/> :
-          (isLogged ?
+        (isLogged ?
           <Switch>
-            <Route exact path='/'>{<Feed isLogged={isLogged}/>}</Route>
-            <Route exact path='/profile/:username'>{<Profile isLogged={isLogged}/>}</Route>
+            <Route exact path='/'><Feed/></Route>
+            <Route exact path='/profile/:username'><Profile/></Route>
             <Suspense fallback={<MainLoader/>}>
-              <Route exact path='/saved'>{<Saved isLogged={isLogged}/>}</Route>
-              <Route exact path='/explore'>{<Explore isLogged={isLogged}/>}</Route>
-              <Route exact path='/search/:query'>{<Search isLogged={isLogged}/>}</Route>
-              <Route exact path='/post/:postid'><SinglePost isLogged={isLogged}/></Route>
-              <Route exact path='/404'>{<NotFound/>}</Route>
-              {/* profile */}
-              <Route exact path='/settings'>{<Settings isLogged={isLogged}/>}</Route>
-              <Route exact path='/settings/account'>{<AccountSettings isLogged={isLogged}/>}</Route>
-              <Route exact path='/settings/info'>{<UserInfo isLogged={isLogged}/>}</Route>
-              <Route exact path='/settings/blocked_users'>{<BlockedUsers isLogged={isLogged}/>}</Route>
-              {/* chats */}
-              <Route exact path='/chats'>{<Chats isLogged={isLogged}/>}</Route>
-              <Route exact path='/chat/:chatid'>{<Chats isLogged={isLogged}/>}</Route>
-              <Route exact path='/chat/group/:chatid'>{<Chats isLogged={isLogged} isGroupChat={true}/>}</Route>
-              {/* confirm email */}
-              <Route exact path='/verify_email'>{<ConfirmEmail isLogged={isLogged}/>}</Route>            
+
+              <Route exact path='/saved'><Saved/></Route>
+              <Route exact path='/explore'><Explore/></Route>
+              <Route exact path='/search/:query'><Search/></Route>
+              <Route exact path='/post/:postid'><SinglePost/></Route>
+
+              <ChatsRoute/>
+
+              <Route exact path='/404'><NotFound/></Route>
+
+              <Route exact path='/verify_email'><ConfirmEmail/></Route>   
+
+              <SettingsRoute/>
+
+              <Communities/>
+
             </Suspense>
           </Switch> : <Redirect to='/login'/>)}
       </div>

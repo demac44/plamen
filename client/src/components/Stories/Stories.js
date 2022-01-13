@@ -11,10 +11,10 @@ const Stories = ({stories, refetch, seenStories}) => {
 
     useEffect(()=>{
         if(stories){
-            // each story head is 64px wide
-            setWidth(stories?.length*64)
+            // each story head is 60px wide
+            setWidth(stories?.length*60)
         }
-    }, [stories,seenStories])
+    }, [stories, seenStories])
 
     return (
         <div className="container-stories flex-ac">
@@ -23,7 +23,7 @@ const Stories = ({stories, refetch, seenStories}) => {
                     <AddStory refetch={refetch}/>
                     <p style={{fontSize:'14px'}}>Add story</p>
                 </div>
-                {stories.map(story => (
+                {stories?.map(story => (
                     <div className='flex-col-ctr story-head-box' key={story?.storyID}>
                         <StoryHead story={story} seen={seenStories.includes(story?.stories[story?.stories?.length-1].storyID)} allData={stories} index={index++ /* setting index for each story group */}/>
                         <p>{story?.username}</p>

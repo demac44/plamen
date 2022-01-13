@@ -5,7 +5,7 @@ import {useQuery} from 'react-apollo'
 import SearchDrop from './SearchDrop'
 import './style.css'
 
-const SearchBar = ({chat, isLogged, handleOpen}) => {
+const SearchBar = ({chat, handleOpen}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [dropdown, setDropdown] = useState(false)
     const [searchHistory, setSearchHistory] = useState([])
@@ -41,7 +41,6 @@ const SearchBar = ({chat, isLogged, handleOpen}) => {
                     value={query}
                     style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0', 
                             borderRight: query.length < 1 ? '1px solid #3f3f3f' : 'none'}} 
-                    disabled={!isLogged && true}
                     onFocus={()=>{
                         handleOpen()
                         setDropdown(true)

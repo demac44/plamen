@@ -15,8 +15,7 @@ export const GET_NOTIFICATIONS = {
                     JOIN users ON sender_id=users.userID 
                     WHERE disabled=false 
                     AND receiver_id=${receiver_id}
-                    AND DATE(time_sent) > (NOW() - INTERVAL 2 DAY)
-                    ORDER BY time_sent DESC`
+                    ORDER BY Nid DESC`
         return connection.promise().query(sql).then((res)=>{return res[0]})
     }
 }  

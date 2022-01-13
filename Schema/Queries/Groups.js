@@ -7,6 +7,7 @@ import { GroupReportedPost } from '../TypeDefs/Report.js';
 
 import CryptoJS from 'crypto-js';
 
+// for searching
 export const GET_ALL_GROUPS = {
     type: new GraphQLList(GroupType),
     args:{
@@ -23,7 +24,7 @@ export const GET_ALL_GROUPS = {
     }   
 }
 
-
+// on all my communities page
 export const GET_GROUPS = {
     type: new GraphQLList(GroupType),
     args:{
@@ -66,11 +67,18 @@ export const GET_GROUP_POSTS = {
         const sql = `SELECT postID,community_posts.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,groupID
                      FROM community_posts
                      JOIN users ON community_posts.userID=users.userID 
-                     WHERE users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     WHERE NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                     ) 
                      AND users.disabled=false
                      AND community_posts.groupID=${groupID}
-                     ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
+                     ORDER BY postID DESC LIMIT ${limit} OFFSET ${offset};`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
@@ -90,10 +98,17 @@ export const GET_SAVED_GROUP_POSTS = {
                         JOIN community_posts ON community_posts.postID=community_posts_saved.postID 
                         JOIN users ON users.userID=community_posts_saved.userID 
                         WHERE users.disabled=false 
-                        AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                        AND NOT EXISTS (
+                            (SELECT 1
+                            FROM blocked_users
+                            WHERE
+                                (blockerId = ${userID} AND blockedId = users.userID)
+                                    OR
+                                (blockerId = users.userID AND blockedId = ${userID})
+                            )
+                        ) 
                         AND community_posts_saved.userID=${userID} 
-                        ORDER BY date_posted DESC 
+                        ORDER BY postID DESC 
                         LIMIT ${limit} OFFSET ${offset};`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
@@ -126,10 +141,17 @@ export const GET_GROUP_POST_COMMENTS = {
                      FROM community_posts_comments 
                      JOIN users ON community_posts_comments.userID=users.userID 
                      WHERE users.disabled=false 
-                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                    ) 
                      AND postID=${postID} 
-                     ORDER BY date_commented DESC 
+                     ORDER BY commentID DESC 
                      LIMIT ${limit} OFFSET ${offset}`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
@@ -147,8 +169,15 @@ export const GET_GROUP_POST_LIKES = {
         const sql = `SELECT first_name,last_name,users.userID,username,profile_picture FROM community_posts_likes 
                      JOIN users ON community_posts_likes.userID=users.userID 
                      WHERE users.disabled=false 
-                     AND users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                     ) 
                      AND postID=${postID} 
                      LIMIT ${limit} OFFSET ${offset}`
         return await connection.promise().query(sql).then(res=>{return res[0]})
@@ -228,7 +257,7 @@ export const GET_GROUP_REPORTED_POSTS = {
                      JOIN community_posts ON community_posts.postID=community_posts_reports.postID
                      JOIN users ON community_posts.userID=users.userID
                      WHERE community_posts_reports.groupID=${groupID}
-                     ORDER BY date_reported DESC`
+                     ORDER BY reportID DESC`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }
@@ -261,11 +290,17 @@ export const GET_COMMUNITY_MESSAGES = {
         const sql = `SELECT msgID, msg_text, time_sent, groupID, username, type, url, users.userID, profile_picture
                      FROM community_chat_messages
                      JOIN users ON community_chat_messages.userID=users.userID
-                     WHERE 
-                     users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                     AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                     WHERE NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE
+                            (blockerId = ${userID} AND blockedId = users.userID)
+                                OR
+                            (blockerId = users.userID AND blockedId = ${userID})
+                        )
+                     ) 
                      AND groupID=${groupID}
-                     ORDER BY time_sent DESC
+                     ORDER BY msgID DESC
                      LIMIT ${limit} OFFSET ${offset}`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         await result.map(msg => {
@@ -290,12 +325,20 @@ export const GET_COMMUNITY_SAVED_POSTS = {
                         FROM community_posts_saved
                         JOIN community_posts ON community_posts_saved.postID=community_posts.postID
                         JOIN users ON community_posts.userID=users.userID
-                        WHERE users.userID NOT IN (SELECT blockedId FROM blocked_users WHERE blockerId=${userID} AND blockedId=users.userID)
-                        AND users.userID NOT IN (SELECT blockerId FROM blocked_users WHERE blockedId=${userID} AND blockerId=users.userID)
+                        WHERE 
+                        NOT EXISTS (
+                            (SELECT 1
+                            FROM blocked_users
+                            WHERE
+                                (blockerId = ${userID} AND blockedId = users.userID)
+                                    OR
+                                (blockerId = users.userID AND blockedId = ${userID})
+                            )
+                        ) 
                         AND users.disabled=false
                         AND community_posts_saved.groupID=${groupID}
                         AND community_posts_saved.userID=${userID}
-                        ORDER BY date_posted DESC LIMIT ${limit} OFFSET ${offset};`
+                        ORDER BY postID DESC LIMIT ${limit} OFFSET ${offset};`
         return await connection.promise().query(sql).then(res=>{return res[0]})
     }
 }

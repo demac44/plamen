@@ -4,7 +4,7 @@ import auth from '../middleware/auth.js'
 const router = express.Router()
 
 
-router.post('/', auth, (req, res) => {
+router.post('/', (req, res) => {
     res.clearCookie("x-auth-token")
     res.send('del')
 })

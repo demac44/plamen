@@ -61,7 +61,7 @@ import fake_data from './FakeData.js'
 
     
     const __dirname = resolve()
-    app.use(express.static(join(__dirname, "client", "build")))
+    app.use(express.static(join(__dirname, "client", "public")))
     
     app.use(cors({    
         origin: "http://localhost:3000",
@@ -73,7 +73,7 @@ import fake_data from './FakeData.js'
     app.use(express.json());
     
 
-    app.use('/graphiql', graphqlHTTP({
+    app.use('/graphiql', auth, graphqlHTTP({
         schema,
         graphiql:true
     }))
@@ -86,7 +86,7 @@ import fake_data from './FakeData.js'
     app.use('/api/fake_data', fake_data)
     
     app.get('*', (req,res)=>{
-        res.sendFile(join(__dirname, "client", "build", "index.html"))
+        res.sendFile(join(__dirname, "client", "public", "index.html"))
     })
 
     await server.start()

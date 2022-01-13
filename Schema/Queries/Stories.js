@@ -3,33 +3,74 @@ import connection from '../../middleware/db.js'
 import {StoryType} from '../TypeDefs/Stories.js'
 
 
+// export const GET_STORIES = {
+//     type: new GraphQLList(StoryType),
+//     args: {
+//         userID: {type:GraphQLInt}
+//     },
+//     async resolve(_, args){
+//         const {userID} = args
+//         const sql = `SELECT storyID, users.userID, first_name, last_name, profile_picture, username, type
+//                     FROM stories 
+//                     JOIN users ON stories.userID=users.userID 
+//                     WHERE disabled=false 
+//                     AND (users.userID=${userID} OR users.userID IN 
+//                         (SELECT followedID FROM followings WHERE followerID=${userID})) 
+//                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+//                         GROUP BY (users.userID)
+//                         ORDER BY date_posted DESC;`
+//         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+//         await result.forEach( res => {
+//             const sql2 = `SELECT storyID, url, type, date_posted FROM stories 
+//             JOIN users ON stories.userID=users.userID WHERE stories.userID=${res.userID} 
+//                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY date_posted ASC;`
+//             const r = connection.promise().query(sql2).then((res)=>{return res[0]})
+//             Object.assign(res, {stories: r})
+//         })
+//         return result
+//     }
+// } 
+
 export const GET_STORIES = {
-    type: new GraphQLList(StoryType),
-    args: {
-        userID: {type:GraphQLInt}
-    },
-    async resolve(_, args){
-        const {userID} = args
-        const sql = `SELECT storyID, users.userID, first_name, last_name, profile_picture, username, type
-                    FROM stories 
-                    JOIN users ON stories.userID=users.userID 
-                    WHERE disabled=false 
-                    AND (users.userID=${userID} OR users.userID IN 
-                        (SELECT followedID FROM followings WHERE followerID=${userID})) 
-                        AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
-                        GROUP BY (users.userID)
-                        ORDER BY date_posted DESC;`
-        const result = await connection.promise().query(sql).then((res)=>{return res[0]})
-        await result.forEach( res => {
-            const sql2 = `SELECT storyID, url, type, date_posted FROM stories 
-            JOIN users ON stories.userID=users.userID WHERE stories.userID=${res.userID} 
-                        AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY date_posted ASC;`
-            const r = connection.promise().query(sql2).then((res)=>{return res[0]})
-            Object.assign(res, {stories: r})
-        })
-        return result
-    }
-} 
+        type: new GraphQLList(StoryType),
+        args: {
+            userID: {type:GraphQLInt}
+        },
+        async resolve(_, args){
+            const {userID} = args
+            const sql = `SELECT storyID, users.userID, profile_picture, username, type, url, date_posted
+                         FROM stories 
+                         JOIN users ON stories.userID=users.userID 
+                         WHERE disabled=false 
+                         AND (users.userID=${userID} 
+                             OR EXISTS (SELECT 1 FROM followings WHERE followerID=${userID} AND followedID=users.userID))
+                         AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+                         ORDER BY storyID ASC;`
+
+            const result = await connection.promise().query(sql).then((res)=>{return res[0]})
+            
+            let ids = result.map(user => user.userID).filter((value, index, self) => self.indexOf(value) === index)
+
+            let main = [];
+            
+            for(let i=0;i<ids.length;i++){
+                let temp = [];
+                result.forEach(story => {
+                    story.userID===ids[i] && temp.push(story)
+                })
+                main.push({
+                    username: temp[0]?.username,
+                    userID: temp[0].userID,
+                    storyID: temp[0].storyID,
+                    profile_picture: temp[0].profile_picture,
+                    type: temp[0].type,
+                    stories: temp
+                })
+            }
+
+            return main
+        }
+    } 
 
 export const GET_USER_STORIES = {
     type: new GraphQLList(StoryType),

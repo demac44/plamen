@@ -17,7 +17,7 @@ import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
 import EmailConfirmWarning from '../../components/General components/Confirm email/EmailConfirmWarning'
 
-const Feed = ({isLogged}) => {
+const Feed = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [seenStories, setSeenStories] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -27,12 +27,10 @@ const Feed = ({isLogged}) => {
             userID: uid,
             limit:20,
             offset:0
-        },
-        pollInterval:1500000
+        }
     })
     
     useEffect(()=>{
-        setIsLoading(true)
         setSeenStories(()=>{
             let arr = [];
             data?.get_seen_stories?.map(s => ({
@@ -41,12 +39,7 @@ const Feed = ({isLogged}) => {
             return arr;
         })
         set_last_seen({variables:{userID: uid}})
-        setIsLoading(false)
     }, [data, set_last_seen, uid])
-
-    useEffect(()=>{
-        window.scrollTo(0,0)
-    }, [])
 
     if(error) console.log(error); 
 
@@ -72,20 +65,20 @@ const Feed = ({isLogged}) => {
 
     return (
         <div className='section-main'>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>
                     <Sidebar/>
                     <div className='container-left'>
                         {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
-                        {(loading || isLoading) ? <StoriesLoader/> : <Stories seenStories={seenStories} stories={data?.get_stories} refetch={refetch}/>}
-                        {loading ? <PostLoader/> : 
-                        <>
-                            <CreatePost refetch={refetch}/>
-                            {data.get_feed_posts.length > 0 ? <Posts posts={data.get_feed_posts} refetchPosts={refetch}/>
-                                : <NoPosts/>}
-                        </>}
+
+                        <Stories seenStories={seenStories} stories={data?.get_stories} refetch={refetch}/>
+
+                        <CreatePost refetch={refetch}/>
+
+                        {data?.get_feed_posts.length > 0 ? <Posts posts={data?.get_feed_posts} loading={loading} refetchPosts={refetch}/>
+                            : <NoPosts/>}
                     </div>
                 </div>
                 <div className='container-right'>
@@ -135,10 +128,10 @@ const FEED_POSTS = gql`
     }
 `
 const SET_LAST_SEEN = gql`
-mutation ($userID: Int){
-set_last_seen (userID: $userID){
-  userID
-}
+    mutation ($userID: Int){
+        set_last_seen (userID: $userID){
+        userID
+    }
 }
 
 `

@@ -20,7 +20,6 @@ import {Provider} from 'react-redux'
 import thunk from 'redux-thunk';
 import { applyMiddleware } from 'redux';
 import ResetPassword from './routes/Password retrieve/ResetPassword';
-import Communities from './routes/Groups/Communities';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -62,7 +61,6 @@ ReactDOM.render(
         <App />
         <Entry/>
         <ResetPassword/>
-        <Communities/>
       </Router>
       </ApolloProvider>
     </Provider>

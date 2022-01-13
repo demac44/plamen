@@ -13,10 +13,11 @@ export const GET_ALL_USERS = {
         const {limit, offset, userID} = args
         const sql = `SELECT * FROM users 
                      WHERE disabled=false 
-                     AND userID NOT IN (SELECT blockerId 
-                                        FROM blocked_users 
-                                        WHERE blockedId=${userID} 
-                                        AND blockerId=userID)
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE (blockedId = ${userID} AND blockerId =userID)
+                     ))
                      LIMIT ${limit} OFFSET ${offset}`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }    
@@ -29,13 +30,15 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const sql = `SELECT * FROM users 
+        const sql = `SELECT username,first_name, last_name, profile_picture, userID, last_seen, show_status FROM users 
                      WHERE disabled=false
                      AND username="${username}"
-                     AND userID NOT IN (SELECT blockerId 
-                                        FROM blocked_users 
-                                        WHERE blockedId=${userID} 
-                                        AND blockerId=userID)`
+                     AND NOT EXISTS (
+                        (SELECT 1
+                        FROM blocked_users
+                        WHERE (blockedId = ${userID} AND blockerId =userID)
+                        )
+                    ) `
         return await connection.promise().query(sql).then((res)=>{return res[0][0]})
     }    
 }

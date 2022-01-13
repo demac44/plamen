@@ -51,7 +51,7 @@ const SideInfoBox = ({myprofile, userID}) => {
             <div className='flex-sb'>
                     <span className='flex-ac'>
                         <i className='fas fa-briefcase' style={{color: 'brown'}}/>
-                        <h5>Works at</h5>
+                        <h5>Job</h5>
                         <p>{data?.get_user_info?.job}</p>
                     </span>
             </div>}

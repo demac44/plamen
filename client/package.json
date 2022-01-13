@@ -3,17 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "apollo": "^2.33.6",
+    "apollo": "^2.33.9",
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",
     "apollo-link-ws": "^1.0.20",
     "axios": "^0.22.0",
     "bcryptjs": "^2.4.3",
     "cloudinary-react": "^1.7.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^11.0.0",
     "env-cmd": "^10.1.0",
     "graphql": "^14.7.0",
     "react": "^17.0.2",
@@ -30,7 +27,7 @@
   },
   "scripts": {
     "start": "env-cmd -f .env react-scripts --openssl-legacy-provider start",
-    "build": "GENERATE_SOURCEMAP=false env-cmd -f .env react-scripts --openssl-legacy-provider build",
+    "build": "env-cmd -f .env react-scripts --openssl-legacy-provider build",
     "postbuild": "gzip build/static/js/*.js && gzip build/static/css/*.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

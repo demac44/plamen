@@ -22,7 +22,7 @@ const Profile = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [myprofile, setMyProfile] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const [userBlocked, setUserBlocked] = useState(false)
     const [profile_visit] = useMutation(PROFILE_VISIT)
     const history = useHistory()
@@ -40,7 +40,7 @@ const Profile = ({isLogged}) => {
 
     const isBlockedCB = useCallback(val => {
         setUserBlocked(val)
-    }, [])
+    }, [setUserBlocked])
 
     const profileVisit = () => {
         if(!loading && !isLoading && !myprofile){
@@ -101,34 +101,31 @@ const Profile = ({isLogged}) => {
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-main' style={{paddingTop:'10px'}}>
                     <Sidebar/>
-                    {userBlocked ? '' : 
-                    <>
-                        <div className='container-left'>
-                            {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
+                    <div className='container-left'>
+                        {!loading && (!data?.confirmed_email_check && <EmailConfirmWarning/>)}
 
-                            {(loading || isLoading) ? <ProfileBoxLoader/> 
-                                : <ProfileTopBox 
-                                    user={data.get_user}
-                                    myprofile={myprofile} 
-                                    isBlockedCB={isBlockedCB}
-                                    />
-                            }
+                        {(loading || isLoading) ? <ProfileBoxLoader/> 
+                            : <ProfileTopBox 
+                                user={data.get_user}
+                                myprofile={myprofile} 
+                                isBlockedCB={isBlockedCB}
+                                />
+                        }
 
-                            {(loading || isLoading) ? <PostLoader/> :
-                            <>
-                                {myprofile && <CreatePost refetch={refetch}/>}    
-                                <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
-                            </>}
-                        </div>
-                        <div className='container-right'>
-                            {(loading || isLoading) ? '' :
-                            <>
-                                <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
-                                <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
-                            </>
-                            }
-                        </div>
-                    </>}
+                        {(loading || isLoading || userBlocked) ? <PostLoader/> :
+                        <>
+                            {myprofile && <CreatePost refetch={refetch}/>}    
+                            <Posts posts={data?.get_profile_posts} refetchPosts={refetch}/>  
+                        </>}
+                    </div>
+                    <div className='container-right'>
+                        {(loading || isLoading || userBlocked) ? '' :
+                        <>
+                            <SideInfoBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                            <InterestsBox myprofile={myprofile} userID={data?.get_user?.userID}/>
+                        </>
+                        }
+                    </div>
                 </div>
             </div>
         </> 

@@ -10,14 +10,12 @@ import SearchBar from './Search bar/SearchBar'
 import Avatar from '../General components/Avatar'
 import NotficationsMenu from './Notifications/NotficationsMenu'
 
-const Navbar = ({isLogged}) => {
+const Navbar = () => {
     const ls = JSON.parse(localStorage.getItem('user')) 
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
-    const {data} = useSubscription(NEW_MESSAGE)
     // count all unread messages
-    const [NoOfMsgs, setNoOfMsgs] = useState(0)
     const count = useQuery(COUNT_MSGS, {
         variables:{rid: uid}
     })
@@ -28,16 +26,14 @@ const Navbar = ({isLogged}) => {
     }
 
     useEffect(()=>{
-        isLogged && setNoOfMsgs(!count.loading && count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
-        return
-    }, [count, data, isLogged]) 
+    }, []) 
 
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => {
             setNotificiations(false)
             setDropdown(false)})
-        return
+        return null
     }
 
     const handleSearchOpen = useCallback(()=>{
@@ -47,7 +43,7 @@ const Navbar = ({isLogged}) => {
     
     const closeDropd = () => {
         setDropdown(false)
-        return
+        return null
     }
     return (
         <>
@@ -55,16 +51,14 @@ const Navbar = ({isLogged}) => {
                 <div className="tn-left">
                     <Logo/>
                 </div>
-                <SearchBar chat={false} isLogged={isLogged} handleOpen={handleSearchOpen} />
+                <SearchBar chat={false} handleOpen={handleSearchOpen} />
                 <div className="tn-right">
-                {isLogged ?
-                <>
                     <i className='fas fa-sort-down tn-icons' style={{marginTop:'-13px'}} 
                         onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
 
                     <Link to='/chats' style={{position:'relative'}}>
-                        {(!count.loading && (count?.data?.count_newMsgs?.msgCount > 0 && 
-                        <div className='flex-ctr tn-msgs-count'>{NoOfMsgs}</div>))}
+                        {count?.data?.count_newMsgs?.msgCount > 0 && 
+                        <div className='flex-ctr tn-msgs-count'>{count?.data?.count_newMsgs?.msgCount}</div>}
                         <i className='fas fa-inbox tn-icons'/>
                     </Link>
 
@@ -75,8 +69,6 @@ const Navbar = ({isLogged}) => {
                     {dropdown && <Dropdown closeDropd={closeDropd}/>}
                     
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
-                </>
-                    : <Link to='/login'><button className='btn navbar-login-btn'>LOGIN</button></Link>}
                 </div>
             </div>
         </>
@@ -85,16 +77,16 @@ const Navbar = ({isLogged}) => {
 
 export default memo(Navbar)
 
-const NEW_MESSAGE = gql`
-    subscription {
-        newMsgNotification {
-            chatID
-            sender_id
-            receiver_id
-            Nid
-        }
-    }
-`
+// const NEW_MESSAGE = gql`
+//     subscription {
+//         newMsgNotification {
+//             chatID
+//             sender_id
+//             receiver_id
+//             Nid
+//         }
+//     }
+// `
 
 const COUNT_MSGS = gql`
     query($rid:Int!){
