@@ -62,20 +62,20 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     const __dirname = resolve()
     app.use(express.static(join(__dirname, "client", "build")))
     
-    // app.use(cors({    
-    //     origin: "http://localhost:3000/",
-    //     credentials: true
-    // }));
+    app.use(cors({    
+        origin: "http://localhost:3000",
+        credentials: true
+    }));
 
         
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     
 
-    // app.use('/graphiql', auth, graphqlHTTP({
-    //     schema,
-    //     graphiql:true
-    // }))
+    app.use('/graphiql', auth, graphqlHTTP({
+        schema,
+        graphiql:true
+    }))
     
     
     app.use('/api/login', login)
