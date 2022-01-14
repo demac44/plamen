@@ -42,7 +42,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
         subscribe,
     }, {
         server: httpServer,
-        path: '/graphql',
+        path: 'https://plamen-main.herokuapp.com/graphql',
     })
 
     const server = new ApolloServer({
@@ -63,7 +63,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
-        origin: "http://localhost:3000",
+        origin: "https://plamen-main.herokuapp.com",
         credentials: true
     }));
 
