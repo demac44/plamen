@@ -61,7 +61,7 @@ import fake_data from './FakeData.js'
 
     
     const __dirname = resolve()
-    app.use(express.static(join(__dirname, "client", "public")))
+    app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
         origin: "http://localhost:3000",
@@ -86,7 +86,7 @@ import fake_data from './FakeData.js'
     app.use('/api/fake_data', fake_data)
     
     app.get('*', (req,res)=>{
-        res.sendFile(join(__dirname, "client", "public", "index.html"))
+        res.sendFile(join(__dirname, "client", "build", "index.html"))
     })
 
     await server.start()
