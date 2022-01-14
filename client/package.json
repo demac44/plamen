@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "env-cmd -f .env react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "postbuild": "gzip build/static/js/*.js && gzip build/static/css/*.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
