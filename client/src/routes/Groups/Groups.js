@@ -17,7 +17,7 @@ query ($uid: Int!){
     }
     `
     
-const Groups = ({isLogged}) => {
+const Groups = () => {
     const [leftnav, setLeftnav] = useState(false)
     const uid = useSelector(state => state.isAuth.user?.userID)
 
@@ -33,7 +33,7 @@ const Groups = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={leftNavCallback} isLogged={isLogged}/>
+            <Navbar callback={leftNavCallback}/>
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar show={leftnav}/>

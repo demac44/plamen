@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo, useCallback } from 'react'
 import './Navbar.css'
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
-import { useSubscription, useQuery } from 'react-apollo'
+import { useQuery } from 'react-apollo'
 import { gql } from 'graphql-tag'
 import Logo from '../General components/Logo'
 import Dropdown from './Dropdown'

@@ -6,7 +6,7 @@ import ErrorMsg from '../ErrorMsg';
 import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo';
 
-import logo from '../../../images/logo-min.png'
+import logo from '../../../images/logo-min.jpg'
 
 const LoginForm = ({popup}) => {
     let password, username;

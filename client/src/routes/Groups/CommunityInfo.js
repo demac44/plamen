@@ -13,7 +13,7 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 
-const CommunityInfo = ({isLogged}) => {
+const CommunityInfo = () => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -39,7 +39,7 @@ const CommunityInfo = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

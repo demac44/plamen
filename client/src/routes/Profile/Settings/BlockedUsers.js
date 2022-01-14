@@ -11,7 +11,7 @@ import EditProfileNav from '../../../components/Profile/Settings/EditProfileNav'
 import BlockedUserBox from '../../../components/Profile/Settings/Blocked users/BlockedUserBox';
 
 
-const BlockedUsers = ({isLogged}) => {
+const BlockedUsers = () => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading, refetch} = useQuery(GET_BLOCKED_USERS, {
         variables:{
@@ -21,7 +21,7 @@ const BlockedUsers = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={()=>{return}} isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper'> 
                 <div className='container-main'>

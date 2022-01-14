@@ -8,7 +8,7 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo';
 import { useSelector } from 'react-redux'
 
-const Settings = ({isLogged}) => {
+const Settings = () => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [set_last_seen] = useMutation(SET_LAST_SEEN)
 
@@ -18,7 +18,7 @@ const Settings = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper'> 
                 <div className='container-main'>

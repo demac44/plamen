@@ -1,4 +1,4 @@
-import React, { useEffect, memo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 
 import {gql} from 'graphql-tag'
@@ -12,15 +12,12 @@ import Sidebar from '../../components/General components/Sidebar'
 
 import AlternativeNavbar from '../../components/General components/AlternativeNavbar'
 import NoPosts from '../../components/General components/NoPosts'
-import StoriesLoader from '../../components/General components/Loaders/StoriesLoader'
-import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
 import EmailConfirmWarning from '../../components/General components/Confirm email/EmailConfirmWarning'
 
 const Feed = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [seenStories, setSeenStories] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
     const [set_last_seen] = useMutation(SET_LAST_SEEN)
     const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
@@ -89,7 +86,7 @@ const Feed = () => {
     )
 }
 
-export default memo(Feed)
+export default Feed
 
 
 const FEED_POSTS = gql`
@@ -135,3 +132,4 @@ const SET_LAST_SEEN = gql`
 }
 
 `
+

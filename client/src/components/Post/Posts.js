@@ -1,4 +1,4 @@
-import React, {memo} from 'react'
+import React from 'react'
 import Post from './Post'
 
 const Posts = ({posts, refetchPosts}) => {
@@ -9,5 +9,5 @@ const Posts = ({posts, refetchPosts}) => {
     )
 }
 
-export default memo(Posts)
+export default Posts
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import logo from '../../images/logo-min.png'
+import logo from '../../images/logo-min.jpg'
 
 const GenerateToken = () => {
     const [email, setEmail] = useState('')

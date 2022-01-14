@@ -18,7 +18,7 @@ import { useSelector } from 'react-redux'
 import EmailConfirmWarning from '../../components/General components/Confirm email/EmailConfirmWarning'
 
     
-const Profile = ({isLogged}) => {
+const Profile = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [myprofile, setMyProfile] = useState(false)
@@ -43,7 +43,7 @@ const Profile = ({isLogged}) => {
     }, [setUserBlocked])
 
     const profileVisit = () => {
-        if(!loading && !isLoading && !myprofile){
+        if(!loading && !isLoading && !myprofile && data?.get_user?.userID){
             profile_visit({
                 variables:{
                     visitorId: uid, 
@@ -56,16 +56,16 @@ const Profile = ({isLogged}) => {
 
     useEffect(()=>{
         setIsLoading(true)
-        profileVisit()
-        if(username===usernm) {
+        if(!loading && (username===usernm)) {
             setMyProfile(true)
         } else {
             setMyProfile(false)
         }
         window.scrollTo(0,0)
+        profileVisit()
         setIsLoading(false)
         return null
-    }, [username, usernm, refetch, history, myprofile, data])
+    }, [username, usernm, refetch, history, myprofile, data, loading])
 
 
     if(!loading){
@@ -96,7 +96,7 @@ const Profile = ({isLogged}) => {
 
     return ( 
         <>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper wrapper-profile' onLoad={scrollPagination}> 
                 <div className='container-main' style={{paddingTop:'10px'}}>

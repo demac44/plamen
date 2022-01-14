@@ -14,7 +14,7 @@ import EditGender from '../../../components/Profile/Settings/User info/EditGende
 import EditInfoBox from '../../../components/Profile/Settings/User info/EditInfoBox'
 import EditInterests from '../../../components/Profile/Settings/User info/EditInterests'
 
-const UserInfo = ({isLogged}) => {
+const UserInfo = () => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(USER_INFO, {
         variables:{
@@ -24,7 +24,7 @@ const UserInfo = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper'> 
                 <div className='container-main'>

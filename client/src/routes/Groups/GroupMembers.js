@@ -14,7 +14,7 @@ import GroupNavbar from '../../components/Groups/components/GroupNavbar'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import '../../components/Groups/groups.css'
 
-const GroupMembers = ({isLogged}) => {
+const GroupMembers = () => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state?.isAuth.user?.userID)
@@ -37,7 +37,7 @@ const GroupMembers = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <div className='main'>

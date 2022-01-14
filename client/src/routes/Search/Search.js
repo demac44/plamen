@@ -12,7 +12,7 @@ import UserLoader from '../../components/General components/Loaders/UserLoader.j
 import CommunitySearchBar from '../../components/Navbar/Search bar/CommunitySearchBar'
 import './style.css'
 
-const Search = ({isLogged}) => {
+const Search = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {query} = useParams()
     const [users, setUsers] = useState([])
@@ -74,7 +74,7 @@ const Search = ({isLogged}) => {
 
     return (
         <div className='section-main'>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

@@ -16,7 +16,7 @@ import UsersContainer from '../../../components/Groups/Settings/Manage users/Man
 
 const roles = ['ADMIN', 'CREATOR']
 
-const ManageUsers = ({isLogged}) => {
+const ManageUsers = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -33,7 +33,7 @@ const ManageUsers = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

@@ -17,7 +17,7 @@ import NoPosts from '../../components/General components/NoPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
-const Group = ({isLogged}) => {
+const Group = () => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -69,7 +69,7 @@ const Group = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper wrapper-community' onLoad={scrollPagination}>
                 <Sidebar/>

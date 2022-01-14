@@ -29,7 +29,7 @@ const GET_POST = gql`
     }
 `
 
-const SinglePost = ({isLogged}) => {
+const SinglePost = () => {
     const {postid} = useParams()
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const {data, loading} = useQuery(GET_POST, {
@@ -42,7 +42,7 @@ const SinglePost = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper'> 
                 <div className='container-main'>
@@ -54,10 +54,9 @@ const SinglePost = ({isLogged}) => {
                             <Post post={data.get_post}/>
                         </>}
                     </div>
-                    {isLogged &&
                     <div className='container-right' style={{width:'35%'}}>
                         <MyGroupsList/>
-                    </div>}
+                    </div>
                 </div>
             </div>
         </> 

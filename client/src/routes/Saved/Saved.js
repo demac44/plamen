@@ -10,7 +10,7 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import NoPosts from '../../components/General components/NoPosts'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
-const Saved = ({isLogged}) => {
+const Saved = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [set_last_seen] = useMutation(SET_LAST_SEEN)
     const {loading, data, fetchMore, refetch} = useQuery(GET_SAVED, { 
@@ -48,7 +48,7 @@ const Saved = ({isLogged}) => {
 
     return (
         <div className='section-main'>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>

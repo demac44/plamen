@@ -6,8 +6,8 @@ import ChatMembersBox from './ChatMembersBox'
 import AddChatMembers from './AddChatMembers'
 import LeaveChatBtn from './LeaveChatBtn'
 import DeleteChat from './DeleteChat'
-import {AllChatMedia} from '../../../export'
- 
+import AllChatMedia from '../../Chat media/AllChatMedia';
+
 const GroupChatMenu = ({chatID, admin}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [chatMedia, setChatMedia] = useState(false)

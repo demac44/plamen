@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
-const ManagePosts = ({isLogged}) => {
+const ManagePosts = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -33,7 +33,7 @@ const ManagePosts = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

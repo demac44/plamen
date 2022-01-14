@@ -15,7 +15,7 @@ import GroupPosts from '../../components/Groups/Post/GroupPosts'
 import BannerLoader from '../../components/General components/Loaders/BannerLoader'
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 
-const SavedCommunityPosts = ({isLogged}) => {
+const SavedCommunityPosts = () => {
     const {groupid} = useParams()
     const [tags, setTags] = useState([])
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -60,7 +60,7 @@ const SavedCommunityPosts = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <Sidebar/>

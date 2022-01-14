@@ -19,7 +19,7 @@ import ChangeBanner from '../../../components/Groups/Settings/Manage info/Change
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
-const GroupEditInfo = ({isLogged}) => {
+const GroupEditInfo = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -35,7 +35,7 @@ const GroupEditInfo = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

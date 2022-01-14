@@ -1,22 +1,8 @@
 import React, { useCallback, useState, memo } from 'react'
-
 import './style.css'
-
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import OpenMedia from './OpenMedia'
-
-
-const GET_CHAT_MEDIA = gql`
-    query($chatID: Int!){
-        get_chat_media(chatID: $chatID){
-            url
-            userID
-            msgID
-            type
-        }
-    }
-`
 
 const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
     const [url, setUrl] = useState(null)
@@ -60,3 +46,15 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
 }
 
 export default memo(AllChatMedia)
+
+
+const GET_CHAT_MEDIA = gql`
+    query($chatID: Int!){
+        get_chat_media(chatID: $chatID){
+            url
+            userID
+            msgID
+            type
+        }
+    }
+`

@@ -11,7 +11,7 @@ import ChangePassBox from '../../../components/Profile/Settings/Account settings
 import DisableAccBox from '../../../components/Profile/Settings/Account settings/DisableAccBox'
 
 
-const AccountSettings = ({isLogged}) => {
+const AccountSettings = () => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [pfpMenu, setPfpMenu] = useState(false)
 
@@ -22,7 +22,7 @@ const AccountSettings = ({isLogged}) => {
 
     return (
         <>
-            <Navbar callback={()=>{return}} isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             {pfpMenu && <EditPfpMenu closeMenu={handleMenu} uid={uid}/>}
             <div className='wrapper'> 

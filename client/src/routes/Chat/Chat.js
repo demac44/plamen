@@ -1,13 +1,13 @@
-import React, { useEffect, useState, memo } from 'react'
+import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import { useParams } from 'react-router'
-
-import { ChatList, ChatMsgBox } from '../../components/Chat/export'
+import ChatList from '../../components/Chat/components/Chat users list/ChatList'
+import ChatMsgBox from '../../components/Chat/components/Messages/ChatMsgBox'
 import GroupChatMsgBox from '../../components/Chat/components/Group chat/Messages/GroupChatMsgBox'
 import { useSelector } from 'react-redux'
 
-const Chat = ({isLogged, isGroupChat}) => {
+const Chat = ({isGroupChat}) => {
     const [chat, setChat] = useState(null)
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {chatid} = useParams()
@@ -38,7 +38,7 @@ const Chat = ({isLogged, isGroupChat}) => {
         <>
             {(loading || isLoading) ? <div className='overlay flex-ctr'><div className='small-spinner'></div></div> :
                 <>
-                <ChatList isLogged={isLogged}/>
+                <ChatList/>
                 {chat && (isGroupChat ? <GroupChatMsgBox chat={chat}/> : <ChatMsgBox chat={chat}/>)}
                 </>
             }
@@ -46,7 +46,7 @@ const Chat = ({isLogged, isGroupChat}) => {
     )
 }
 
-export default memo(Chat)
+export default Chat
 
 
 const GET_CHATS = gql`

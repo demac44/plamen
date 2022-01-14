@@ -13,7 +13,7 @@ import CommChatBar from '../../components/Groups/Community chat/Top bar/CommChat
 import CommChatMsgBox from '../../components/Groups/Community chat/Messages box/CommChatMsgBox'
 import CommSendMsg from '../../components/Groups/Community chat/Send message box/CommSendMsg'
 
-const CommunityChat = ({isLogged}) => {
+const CommunityChat = () => {
     const {groupid} = useParams()
     const [loader, setLoader] = useState(false)
     const uid = useSelector(state => state.isAuth.user?.userID)
@@ -36,7 +36,7 @@ const CommunityChat = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

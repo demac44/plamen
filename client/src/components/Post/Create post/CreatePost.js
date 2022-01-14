@@ -48,7 +48,7 @@ const CreatePost = ({refetch}) => {
                     new_post({
                         variables: {
                             userID: uid,
-                            text: postText,
+                            text: cleanText(postText),
                             url: res.data.url,
                             type:'image'
                         }
@@ -86,7 +86,7 @@ const CreatePost = ({refetch}) => {
                     new_post({
                         variables: {
                             userID: uid,
-                            text: postText,
+                            text: cleanText(postText),
                             url: res.data.url,
                             type:'video'
                         }
@@ -117,7 +117,7 @@ const CreatePost = ({refetch}) => {
                 new_post({
                     variables: {
                         userID: uid,
-                        text: postText,
+                        text: cleanText(postText),
                         url: '',
                         type:'text'
                     }
@@ -261,4 +261,14 @@ const findTag = (post_text) => {
         }
     }
     return namesArr.filter(onlyUnique)
+}
+
+const cleanText = (text) => {
+    text = text.replaceAll('"', "''");
+    text = text.replaceAll('@', ' @')
+    if(text.includes('<')){
+        text = text.replaceAll('<', '<\u200b')
+    }
+
+    return text
 }

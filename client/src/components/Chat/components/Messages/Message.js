@@ -1,10 +1,10 @@
 import React, { useCallback, useState, memo } from 'react'
 import { gql } from 'graphql-tag'
 import { useQuery } from 'react-apollo'
-import { OpenMedia } from '../../export'
 import { useSelector } from 'react-redux';
 import MsgCurrentUser from './MsgCurrentUser'
 import MsgOtherUser from './MsgOtherUser'
+import OpenMedia from '../Chat media/OpenMedia'
 
 const Message = ({msg}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)

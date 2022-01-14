@@ -27,11 +27,11 @@ const PostTopBar = ({data, refetchPosts}) => {
         <>
             <div className='post-top-bar flex-sb'>
                 <Link to={'/profile/'+data.username} className='flex'>
-                    <Avatar size='40px' image={data.pfp}/>
+                    <Avatar size='40px' image={data.profile_picture}/>
 
                     <span className='flex-col-sb users-list-names'>
-                        <p style={{fontSize:'16px'}}>{data.name}</p>
-                        <SetTime timestamp={data.timestamp} fontSize='12px'/>
+                        <p style={{fontSize:'16px'}}>{`${data.first_name} ${data.last_name}`}</p>
+                        <SetTime timestamp={data.date_posted} fontSize='12px'/>
                     </span>
                 </Link >
 

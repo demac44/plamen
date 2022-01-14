@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import logo from '../../images/logo-min.png'
+import logo from '../../images/logo-min.jpg'
 
 
 const SetNewPassword = () => {

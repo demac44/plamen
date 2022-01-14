@@ -15,7 +15,7 @@ import '../../../components/Groups/groups.css'
 
 const roles = ['ADMIN', 'CREATOR', 'MODERATOR']
 
-const GroupSettings = ({isLogged}) => {
+const GroupSettings = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const {groupid} = useParams()
     const {data, loading, refetch} = useQuery(GET_GROUP, {
@@ -31,7 +31,7 @@ const GroupSettings = ({isLogged}) => {
 
     return (
         <>
-            <Navbar isLogged={isLogged}/> 
+            <Navbar/> 
             <AlternativeNavbar/>
             <div className='wrapper'>
                 <Sidebar/>

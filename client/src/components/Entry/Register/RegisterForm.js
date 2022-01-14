@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import ErrorMsg from '../ErrorMsg'
 import axios from 'axios'
-import logo from '../../../images/logo-min.png'
+import logo from '../../../images/logo-min.jpg'
     
 const RegisterForm = () => {    
     const [selectYear, setSelectYear] = useState([])

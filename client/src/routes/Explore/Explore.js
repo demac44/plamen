@@ -10,7 +10,7 @@ import AlternativeNavbar from '../../components/General components/AlternativeNa
 import PostLoader from '../../components/General components/Loaders/PostLoader'
 import { useSelector } from 'react-redux'
 
-const Explore = ({isLogged}) => {
+const Explore = () => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [set_last_seen] = useMutation(SET_LAST_SEEN)
     const {loading, data, refetch, fetchMore} = useQuery(RANDOM_POSTS, {
@@ -48,7 +48,7 @@ const Explore = ({isLogged}) => {
 
     return (
         <div className='section-main'>
-            <Navbar isLogged={isLogged}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper' onLoad={scrollPagination}>
                 <div className='container-main'>

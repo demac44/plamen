@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {gql} from 'graphql-tag'
 import { useMutation, useQuery } from 'react-apollo'
 import { useSelector } from 'react-redux';
-import logo from '../../../../../images/logo-min.png'
-import logoBlank from '../../../../../images/logoBlank-min.png'
+import logo from '../../../../../images/logo-min.jpg'
+import logoBlank from '../../../../../images/logoBlank-min.jpg'
 
 const LikePost = ({postID, userID}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
