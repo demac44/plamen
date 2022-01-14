@@ -96,7 +96,7 @@ function getCookie() {
 const logout = async () => {
   await axios({
       method:'post',
-      url:'https://plamen-main.herokuapp.com/api/logout',
+      url:'/api/logout',
       withCredentials: true
   }).then(()=>{
       localStorage.clear()
