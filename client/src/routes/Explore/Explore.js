@@ -16,7 +16,7 @@ const Explore = () => {
     const {loading, data, refetch, fetchMore} = useQuery(RANDOM_POSTS, {
         variables:{
             uid,
-            limit: 20,
+            limit: 10,
             offset: 0
         }
     })
@@ -28,7 +28,7 @@ const Explore = () => {
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
-            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-window.innerHeight){
                 try {
                     await fetchMore({
                         variables:{

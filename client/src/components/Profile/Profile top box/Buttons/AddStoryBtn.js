@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import cardsIcon from '../../../../images/cards-min.png'
+import cardsIcon from '../../../../images/stories-logo.jpg'
 import StoryPreview from '../../../Stories/components/All stories container/StoryPreview'
 
 const AddStoryBtn = ({refetch}) => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import logoTube from '../../images/logo-red-min.png'
-import logoStream from '../../images/logo-green-min.png'
+import logoTube from '../../images/logo-red-min.jpg'
+import logoStream from '../../images/logo-green-min.jpg'
 
 const AlternativeNavbar = ({chat}) => {
     return (

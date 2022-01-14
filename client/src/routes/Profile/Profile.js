@@ -32,7 +32,7 @@ const Profile = () => {
     const {loading, error, data, refetch, fetchMore} = useQuery(FETCH_INFO, {
         variables: {
             username: username===usernm ? usernm : username,
-            limit:20,
+            limit:10,
             offset:0,
             userID: uid
         }
@@ -76,7 +76,7 @@ const Profile = () => {
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
-            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-window.innerHeight){
                 try {
                    await fetchMore({
                         variables:{

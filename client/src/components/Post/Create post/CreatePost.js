@@ -40,10 +40,10 @@ const CreatePost = ({refetch}) => {
             if (image){
                 const data = new FormData()
                 data.append("file", image)
-                data.append("upload_preset", "z8oybloj")
+                data.append("upload_preset", "image_post_r")
                 setLoading(true)  
                 data.append("folder", "Posts")
-                axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
+                axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/`, data)
                 .then(res => {
                     new_post({
                         variables: {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 const EmojisRecent = ({emojiCB, setRecentEmojis}) => {
     const lsEmojis = JSON.parse(localStorage.getItem('recent-emojis'))
     let i = 0;
@@ -15,4 +15,4 @@ const EmojisRecent = ({emojiCB, setRecentEmojis}) => {
     )
 }
 
-export default EmojisRecent
+export default memo(EmojisRecent)

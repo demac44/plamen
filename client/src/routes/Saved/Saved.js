@@ -17,7 +17,7 @@ const Saved = () => {
         variables: {
             userID: uid,
             offset:0,
-            limit:15
+            limit:10
         },
     })
     
@@ -28,7 +28,7 @@ const Saved = () => {
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
-            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-window.innerHeight){
                 try {
                     await fetchMore({
                         variables:{

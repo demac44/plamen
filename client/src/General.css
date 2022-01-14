@@ -115,7 +115,6 @@ i{
     position: relative;
     width: 100%;
     padding:10px;
-    box-shadow: 5px 5px 10px black;
     border-radius: 5px;
     color: white;
     margin-top: 15px;
@@ -135,7 +134,6 @@ i{
 .section-title{
     width: 100%;
     padding: 15px;
-    box-shadow: 3px 3px 10px black;
     border-radius: 5px;
     color: white;
     border: 1px solid #2f2f2f;

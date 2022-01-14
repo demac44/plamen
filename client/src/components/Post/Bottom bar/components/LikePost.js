@@ -48,7 +48,7 @@ const LikePost = ({postID, userID}) => {
     return (
         <>
             <img 
-                src={liked ? logo : logoBlank} 
+                src={liked ? logo : logoBlank}
                 onClick={() => liked ? handleRemove() : handleLike()}
                 className='like-post-btn'
                 alt=''

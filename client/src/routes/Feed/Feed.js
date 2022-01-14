@@ -22,7 +22,7 @@ const Feed = () => {
     const {loading, data, error, refetch, fetchMore} = useQuery(FEED_POSTS, {
         variables: {
             userID: uid,
-            limit:20,
+            limit:10,
             offset:0
         }
     })
@@ -42,7 +42,7 @@ const Feed = () => {
 
     const scrollPagination = () => {
         window.onscroll = async ()=>{
-            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-100){
+            if(Math.round(window.scrollY+window.innerHeight) >= document.body.scrollHeight-window.innerHeight){
                 try {
                     await fetchMore({
                         variables:{
