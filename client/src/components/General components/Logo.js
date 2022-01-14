@@ -6,7 +6,7 @@ const Logo = () => {
     return (
         <Link to='/' className='logo flex-ctr'>
             <img src={logoImg} alt=''/>
-            <h1  className='logo-text'>plamen</h1>
+            <h1 className='logo-text'>plamen</h1>
         </Link>
     )
 }

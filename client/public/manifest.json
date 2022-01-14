@@ -2,6 +2,5 @@
   "short_name": "plamen",
   "name": "plamen",
   "start_url": ".",
-  "display": "standalone",
-  "icons":[]
+  "display": "standalone"
 }
