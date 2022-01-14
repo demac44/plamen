@@ -64,7 +64,7 @@ import fake_data from './FakeData.js'
     app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
-        origin: "http://localhost:3000",
+        origin: "https://plamen-main.herokuapp.com",
         credentials: true
     }));
 
