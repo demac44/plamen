@@ -28,7 +28,7 @@ const httpLink = new HttpLink({
 })
 
 const wsLink = new WebSocketLink({
-  uri:`ws://plamen-main.herokuapp.com/`,
+  uri:`ws://plamen-main.herokuapp.com/graphql`,
   options: {
     reconnect: true,
   }

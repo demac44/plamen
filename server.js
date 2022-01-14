@@ -26,7 +26,6 @@ import login from './controllers/login.js'
 import register from './controllers/register.js'
 import logout from './controllers/logout.js'
 import reset_password from './controllers/Retrieve password/reset_password.js'
-import fake_data from './FakeData.js'
 
 
 (async function () {
@@ -64,7 +63,7 @@ import fake_data from './FakeData.js'
     app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
-        origin: "https://plamen-main.herokuapp.com",
+        origin: "http://localhost:3000/",
         credentials: true
     }));
 
@@ -83,7 +82,6 @@ import fake_data from './FakeData.js'
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
-    app.use('/api/fake_data', fake_data)
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))
@@ -93,7 +91,7 @@ import fake_data from './FakeData.js'
     server.applyMiddleware({app})
     
     const PORT = process.env.PORT || 8000
-    httpServer.listen(PORT, ()=> console.log('Server is running')) 
+    httpServer.listen(PORT, () => console.log('Server is running')) 
     
 })()
 
