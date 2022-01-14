@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "env-cmd -f .env react-scripts --openssl-legacy-provider start",
-    "build": "env-cmd -f .env react-scripts --openssl-legacy-provider build",
+    "build": "GENERATE_SOURCEMAP=false env-cmd -f .env react-scripts --openssl-legacy-provider build",
     "postbuild": "gzip build/static/js/*.js && gzip build/static/css/*.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -49,6 +49,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8000"
+  }
 }
