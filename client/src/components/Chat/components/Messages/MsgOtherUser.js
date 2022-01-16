@@ -23,7 +23,7 @@ const MsgOtherUser = ({setOpenMedia, storyUrl, msg}) => {
                     {msg.type==='image' && <img className='message-image' onClick={()=>setOpenMedia(true)} src={msg.url} alt=''/>}
                     {msg.type==='video' && <video className='message-video' onClick={()=>setOpenMedia(true)} src={msg.url} controls/>}
 
-                    <p><Link className='msg_username' to={'/profile/'+msg.username}>{msg?.username+' '}</Link><Linkify>{msg.msg_text}</Linkify></p>
+                    <p><Link className='msg_username' to={'/profile/'+msg.sender}>{msg?.sender+' '}</Link><Linkify>{msg.msg_text}</Linkify></p>
 
                     <span><SetTime timestamp={msg.time_sent} fontSize='12px'/></span>
                 </div>

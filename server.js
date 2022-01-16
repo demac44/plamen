@@ -26,6 +26,7 @@ import login from './controllers/login.js'
 import register from './controllers/register.js'
 import logout from './controllers/logout.js'
 import reset_password from './controllers/Retrieve password/reset_password.js'
+import test from './controllers/test.js'
 
 
 (async function () {
@@ -63,7 +64,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:8081", "http://localhost:3000"],
         credentials: true
     }));
 
@@ -82,6 +83,7 @@ import reset_password from './controllers/Retrieve password/reset_password.js'
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
+    app.use('/api/test', test)
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))

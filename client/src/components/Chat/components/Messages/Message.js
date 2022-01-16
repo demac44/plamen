@@ -8,6 +8,7 @@ import OpenMedia from '../Chat media/OpenMedia'
 
 const Message = ({msg}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [openMedia, setOpenMedia] = useState(false)
     const {data, loading} = useQuery(GET_STORY, {
         skip: !msg.storyID,
@@ -22,7 +23,7 @@ const Message = ({msg}) => {
     
     return (
         <>
-            {!loading && ((msg.userID===uid)
+            {!loading && ((msg.sender===usernm)
             ? <MsgCurrentUser
                 msg={msg} 
                 storyUrl={data?.get_story_msg_url?.url} // if message is story reply

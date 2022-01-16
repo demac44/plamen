@@ -12,12 +12,12 @@ import NotficationsMenu from './Notifications/NotficationsMenu'
 
 const Navbar = () => {
     const ls = JSON.parse(localStorage.getItem('user')) 
-    const uid = useSelector(state => state?.isAuth?.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
     // count all unread messages
     const count = useQuery(COUNT_MSGS, {
-        variables:{rid: uid}
+        variables:{receiver: usernm}
     })
 
     const handleDropdown = () => {
@@ -77,20 +77,19 @@ const Navbar = () => {
 
 export default memo(Navbar)
 
-// const NEW_MESSAGE = gql`
-//     subscription {
-//         newMsgNotification {
-//             chatID
-//             sender_id
-//             receiver_id
-//             Nid
-//         }
-//     }
-// `
+const NEW_MESSAGE = gql`
+    subscription {
+        newMsgNotification {
+            sender
+            receiver
+            Nid
+        }
+    }
+`
 
 const COUNT_MSGS = gql`
-    query($rid:Int!){
-        count_newMsgs(receiver_id: $rid){
+    query($receiver: String!){
+        count_newMsgs(receiver: $receiver){
             msgCount 
         }
     }

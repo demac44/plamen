@@ -40,7 +40,9 @@ function App() {
     dispatch(authenticate())
     
     if(checkUser(getCookie(isLogged), user)){
-      return logout()
+      logout()
+      setLoading(false)
+      return 
     } else {
         uid && setInterval(()=>{
           set_last_seen({variables:{userID: uid}})
@@ -54,8 +56,8 @@ function App() {
   return (
     <div>
         {loading ? <MainLoader/> :
-        (isLogged ?
-          <Switch>
+        isLogged ?
+          (<Switch>
             <Route exact path='/'><Feed/></Route>
             <Route exact path='/profile/:username'><Profile/></Route>
             <Suspense fallback={<MainLoader/>}>
@@ -76,7 +78,7 @@ function App() {
               <Communities/>
 
             </Suspense>
-          </Switch> : <Redirect to='/login'/>)}
+          </Switch>) : <Redirect to="/login" />}
       </div>
   );
 }
@@ -96,7 +98,7 @@ function getCookie() {
 const logout = async () => {
   await axios({
       method:'post',
-      url:'/api/logout',
+      url:'http://localhost:8000/api/logout',
       withCredentials: true
   }).then(()=>{
       localStorage.clear()

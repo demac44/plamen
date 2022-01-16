@@ -10,12 +10,13 @@ import './style.css'
 
 const ChatListUser = ({data}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const newMsg = useSubscription(NEW_MESSAGE)
     const [msgData, setMsgData] = useState([])
     const info = useQuery(GET_INFO, {
         variables:{
-            cid: data?.chatID,
-            rid: uid
+            receiver: usernm,
+            sender: data.username
         }
     })
 
@@ -26,7 +27,7 @@ const ChatListUser = ({data}) => {
     }, [data, info, newMsg?.data])
     
     return (
-        <Link to={{pathname:'/chat/'+data?.chatID, 
+        <Link to={{pathname:'/chat/'+usernm+'/'+data?.username, 
                 state:{
                     first_name: data?.first_name,
                     last_name: data?.last_name,
@@ -42,30 +43,29 @@ const ChatListUser = ({data}) => {
                 <p>{data?.userID===uid? 'Me' : data?.first_name+' '+data?.last_name}</p>
                 
                 {!info.loading &&
-                <p style={{fontSize:'12px', 
-                            color:info?.data?.last_message?.userID===uid ? 'gray' : 'white', 
-                            fontWeight: info?.data?.last_message?.userID===uid ? 'lighter' : 'bold'}}>
+                    <p style={{fontSize:'12px', 
+                                color:info?.data?.last_message?.receiver===usernm ? 'white' : 'gray', 
+                                fontWeight: info?.data?.last_message?.receiver===usernm ? 'bold' : 'lighter'}}>
 
-                    {/* checking if message is from db or subscription and slicing it is too long */}
-                    {(newMsg && newMsg?.data && newMsg?.data?.newMessage?.chatID===data?.chatID) ? 
-                        (newMsg?.data?.newMessage?.msg_text.length>25 ? newMsg?.data?.newMessage?.msg_text.slice(0,22)+'...' 
-                            : newMsg?.data?.newMessage?.msg_text)
-                        : (msgData?.last_message?.msg_text.length>25 ? msgData?.last_message?.msg_text.slice(0,22)+'...' 
-                            : msgData?.last_message?.msg_text)}
+                        {/* checking if message is from db or subscription and slicing it is too long */}
+                        {(newMsg && (newMsg?.data?.newMessage?.receiver===usernm && newMsg?.data?.newMessage?.sender===data.username)) ? 
+                            (newMsg?.data?.newMessage?.msg_text.length>25 ? newMsg?.data?.newMessage?.msg_text.slice(0,22)+'...' 
+                                : newMsg?.data?.newMessage?.msg_text)
+                            : (msgData?.last_message?.msg_text.length>25 ? msgData?.last_message?.msg_text.slice(0,22)+'...' 
+                        : msgData?.last_message?.msg_text)}
 
-                    {/* checking if msg type is image or video and setting corresponding message */}
-                    {(msgData?.last_message?.type==='image' && !msgData?.last_message?.msg_text) && 
-                        (info?.data.last_message?.userID===uid ? 'You sent an image' : data?.username+' sent an image')}
-                    {(msgData?.last_message?.type==='video' && !msgData?.last_message?.msg_text) && 
-                        (info?.data.last_message?.userID===uid ? 'You sent a video' : data?.username+' sent a video')}
-                </p>}
-
-            </div>  
+                        {/* checking if msg type is image or video and setting corresponding message */}
+                        {(msgData?.last_message?.type==='image' && !msgData?.last_message?.msg_text) && 
+                            (info?.data.last_message?.receiver===usernm ? 'You sent an image' : data?.username+' sent an image')}
+                        {(msgData?.last_message?.type==='video' && !msgData?.last_message?.msg_text) && 
+                            (info?.data.last_message?.receiver===usernm ? 'You sent a video' : data?.username+' sent a video')}
+                    </p>}
+           </div>
 
             {/* show dot if unread or new message */}
             {(info?.data?.check_unread_msg || (newMsg?.data?.newMessage?.userID!==uid
                 && newMsg?.data?.newMessage?.chatID===data?.chatID))
-                && <div className='unread-msg-dot'></div>}
+            && <div className='unread-msg-dot'></div>}
 
         </Link>
     )
@@ -75,26 +75,28 @@ export default memo(ChatListUser)
 
 
 const GET_INFO = gql`
-    query($cid: Int!, $rid: Int){
-        check_unread_msg(chatID: $cid, receiver_id: $rid)
-        last_message(chatID: $cid){
+    query($receiver: String!, $sender: String!){
+        check_unread_msg(receiver: $receiver)
+        last_message(receiver: $receiver, sender: $sender){
             msg_text
             type
-            userID
+            receiver
+            sender
         }
     }
-`
+    `
 
 const NEW_MESSAGE = gql`
     subscription {
         newMessage {
-            chatID
             msgID
             msg_text
             userID
             url
             type
             time_sent
+            sender
+            receiver
         }
     }
 `

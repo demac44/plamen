@@ -19,7 +19,6 @@ export const ChatMessagesType = new GraphQLObjectType({
     name:'ChatMessages',
     fields: ()=>({
         msgID: {type: GraphQLInt},
-        chatID: {type: GraphQLInt},
         userID: {type: GraphQLInt},
         time_sent: {type: GraphQLString},
         msg_text: {type: GraphQLString},
@@ -30,7 +29,9 @@ export const ChatMessagesType = new GraphQLObjectType({
         groupChatId: {type: GraphQLInt},
         username: {type: GraphQLString},
         profile_picture:{type:GraphQLString},
-        storyID: {type: GraphQLInt}
+        storyID: {type: GraphQLInt},
+        sender:{type:GraphQLString},
+        receiver:{type:GraphQLString},
     })
 })
 
@@ -59,10 +60,9 @@ export const MsgNotificationType = new GraphQLObjectType({
     name:'MsgNotification',
     fields:()=>({
         Nid: {type: GraphQLInt},
-        chatID: {type: GraphQLInt},
-        sender_id: {type: GraphQLInt},
-        receiver_id: {type: GraphQLInt},
-        msgCount:{type:GraphQLInt}
+        msgCount:{type:GraphQLInt},
+        sender:{type:GraphQLString},
+        receiver:{type:GraphQLString},
     })
 })
 

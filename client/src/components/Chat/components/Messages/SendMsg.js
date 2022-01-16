@@ -5,11 +5,11 @@ import axios from 'axios'
 import { useSelector } from 'react-redux';
 import EmojisBox from '../../../General components/Emojis/EmojisBox'
 import MsgPreviewBox from './MsgPreviewBox'
+import { useParams } from 'react-router-dom';
 
 
-const SendMsg = ({chatID, loaderCallback, info}) => {
+const SendMsg = ({loaderCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
-    const uid = useSelector(state => state.isAuth.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
     const [msg_notification] = useMutation(MSG_NOTIFICATION)
@@ -18,6 +18,7 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
     const [msgText, setMsgText] = useState('')
     const [emojis, setEmojis] = useState(false)
     const [lengthErr, setLengthErr] = useState(false)
+    const {user} = useParams()
     
     useEffect(()=>{
         document.querySelector('.chat-messages').addEventListener('click', ()=>setEmojis(false))
@@ -43,10 +44,9 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
             .then(res => {
                     send_msg({
                         variables: {
-                            userID: uid,
-                            username: usernm,
+                            sender: usernm,
+                            receiver: user,
                             profile_picture: ls.profile_picture,
-                            chatID: chatID, 
                             msg_text: msgText,
                             type: media.type.slice(0,5),
                             url: res.data.url
@@ -54,12 +54,11 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                     }).then(()=>{
                         msg_notification({
                             variables:{
-                                    sid: uid,
-                                    rid: info.userID,
-                                    chatID: chatID
-                                }
-                            })
-                        }).then(()=>{
+                                sender: usernm,
+                                receiver:user
+                            }
+                        })
+                    }).then(()=>{
                             setMedia(null)
                             loaderCallback(false)
                             setMsgText('')
@@ -68,22 +67,20 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
                 } else {
                     send_msg({
                         variables: {
-                            userID: uid,
-                            username: usernm,
+                            sender: usernm,
+                            receiver: user,
                             profile_picture: ls.profile_picture,
-                            chatID: chatID, 
                             msg_text: msgText,
                             type:'text',
                             url: 'null'
                         }
+                    
                     }).then(()=>{
                         msg_notification({
                             variables:{
-                                sid: uid,
-                                rid: info.userID,
-                                chatID: chatID
-                            },
-                            
+                                sender: usernm,
+                                receiver:user
+                            }
                         })
                     }).then(()=>{
                         setMsgText('')
@@ -138,17 +135,17 @@ const SendMsg = ({chatID, loaderCallback, info}) => {
 export default SendMsg
 
 const SEND_MSG = gql`
-    mutation ($chatID: Int!, $userID: Int!, $msg_text: String!, $url: String, $type: String!){
-        send_message (chatID: $chatID, userID: $userID, msg_text: $msg_text, url: $url, type: $type){
+    mutation ($sender: String!, $receiver: String!, $msg_text: String!, $url: String, $type: String!){
+        send_message (sender: $sender, receiver: $receiver, msg_text: $msg_text, url: $url, type: $type){
             msgID
         }
     }
 `
 
 const MSG_NOTIFICATION = gql`
-    mutation ($sid: Int!, $rid:Int!, $chatID: Int!){
-        msg_notification (sender_id: $sid, receiver_id: $rid, chatID: $chatID){ 
-            chatID
+    mutation ($sender: String!, $receiver: String!){
+        msg_notification (sender: $sender, receiver: $receiver){ 
+            receiver
         }
     }
 `

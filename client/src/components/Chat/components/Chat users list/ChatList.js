@@ -10,9 +10,12 @@ import ChatListGroup from '../Group chat/ChatListGroup'
 
 const ChatList = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
 
+    console.log(usernm);
     const {data, loading} = useQuery(GET_CHATS_LIST, {
-        variables:{userID: uid}
+        variables:{userID: uid,
+        username: usernm}
     }) 
 
     return (
@@ -22,7 +25,7 @@ const ChatList = ({isLogged}) => {
             </div>
             <ChatsOptions/>
             {!loading ? data?.get_chats?.map(chat => 
-                    <ChatListUser data={chat} key={chat.chatID}/>)
+                    <ChatListUser data={chat} key={chat.userID}/>)
                 : <p className='flex-ctr empty-inbox'>Loading...</p>}
 
             {!loading && (data.get_chats.length === 0 && <p className='empty-inbox flex-ctr'>Empty inbox</p>)}
@@ -37,9 +40,8 @@ const ChatList = ({isLogged}) => {
 export default memo(ChatList)
 
 const GET_CHATS_LIST = gql`
-    query ($userID: Int!){
-        get_chats(user1_ID: $userID){
-            chatID
+    query ($userID: Int!, $username: String!){
+        get_chats(username: $username){
             first_name
             last_name
             username

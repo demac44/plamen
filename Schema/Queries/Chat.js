@@ -1,4 +1,4 @@
-import { GraphQLInt, GraphQLList, GraphQLBoolean } from 'graphql';
+import { GraphQLInt, GraphQLList, GraphQLBoolean, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
 import { ChatListType, ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
@@ -28,68 +28,34 @@ export const CHAT_EXISTS = {
     }    
 }
 
-export const GET_ALL_USER_CHATS = {
-    type: new GraphQLList(ChatListType),
-    args:{
-        user1_ID: {type: GraphQLInt}
-    },
-    async resolve(_, args){
-        const {user1_ID} = args
-        const sql = `SELECT chatID, 
-                        IF(user1_ID=${user1_ID}, user2_ID, user1_ID) AS userID 
-                        FROM chats 
-                        WHERE (user1_ID=${user1_ID} OR user2_ID=${user1_ID})
-                        AND NOT EXISTS (
-                            (SELECT 1
-                            FROM blocked_users
-                            WHERE
-                                (blockerId = ${user1_ID} AND blockedId = user2_ID)
-                                    OR
-                                (blockerId = user2_ID AND blockedId = ${user1_ID})
-                            )
-                        )`
-        return await connection.promise().query(sql).then((res)=>{return res[0]})
-    } 
-}
 
 export const GET_CHAT_LIST = {
     type: new GraphQLList(ChatListType),
     args:{
-        user1_ID: {type: GraphQLInt}
+        username: {type: GraphQLString}
     },
     async resolve(_, args){
-        const {user1_ID} = args
-        const sql = `
-        SELECT first_name, last_name, username, profile_picture, chats.chatID, users.userID, MAX(msgID), last_seen
-        FROM users
-        JOIN chats ON IF (chats.user1_ID=${user1_ID}, chats.user2_ID=users.userID, chats.user1_ID=users.userID)
-        JOIN messages ON chats.chatID=messages.chatID
-        WHERE disabled=false 
-        AND (chats.user1_ID=${user1_ID} OR chats.user2_ID=${user1_ID})
-        AND NOT EXISTS (
-            (SELECT 1
-            FROM blocked_users
-            WHERE
-                (blockerId = ${user1_ID} AND blockedId = users.userID)
-                    OR
-                (blockerId = users.userID AND blockedId = ${user1_ID})
-            )
-        ) 
-        GROUP BY chats.chatID
-        ORDER BY MAX(msgID) DESC`
+        const {username} = args
+        const sql = `SELECT DISTINCT userID,first_name,last_name,username,profile_picture,last_seen FROM messages
+                     JOIN users ON receiver=users.username
+                     WHERE receiver="${username}" OR sender="${username}"`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }  
-    
-}
+ }
+
 
 export const LAST_MESSAGE = {
     type: ChatMessagesType,
     args:{
-        chatID:{type:GraphQLInt}
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString}
     },
     async resolve(_, args){
-        const {chatID} = args
-        const sql = `SELECT msg_text, type, userID FROM messages WHERE chatID=${chatID} ORDER BY msgID DESC LIMIT 1`
+        const {receiver, sender} = args
+        const sql = `SELECT msg_text, type, receiver, sender FROM messages 
+                    WHERE (sender="${sender}" AND receiver="${receiver}")
+                    OR (sender="${receiver}" AND receiver="${sender}")
+                    ORDER BY msgID DESC LIMIT 1`
         return await connection.promise().query(sql).then(response => {
             if(response[0][0]?.msg_text){
                 const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
@@ -104,16 +70,17 @@ export const LAST_MESSAGE = {
 export const GET_MESSAGES = {
     type: new GraphQLList(ChatMessagesType),
     args: {
-        chatID: {type: GraphQLInt},
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString},
         limit: {type: GraphQLInt},
         offset: {type: GraphQLInt},
     },
     async resolve(_, args) {
-        const {chatID, limit, offset} = args
-        const sql = `SELECT msgID, msg_text, time_sent, chatID, username, type, url, users.userID, profile_picture, storyID  
+        const {sender, receiver, limit, offset} = args
+        const sql = `SELECT msgID, msg_text, time_sent, sender, receiver, type, url, storyID  
                      FROM messages 
-                     JOIN users ON messages.userID=users.userID
-                     WHERE chatID=${chatID} 
+                     WHERE (sender="${sender}" AND receiver="${receiver}")
+                     OR (sender="${receiver}" AND receiver="${sender}")
                      ORDER BY msgID DESC 
                      LIMIT ${limit} OFFSET ${offset}`  
         const result = await connection.promise().query(sql).then((res)=>{return res[0]})
@@ -128,11 +95,15 @@ export const GET_MESSAGES = {
 export const GET_CHAT_MEDIA = {
     type: new GraphQLList(ChatMessagesType),
     args:{
-        chatID:{type:GraphQLInt}
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString},
     },
     async resolve(_, args){
-        const {chatID} = args
-        const sql = `SELECT msgID, userID, url, type FROM messages WHERE chatID=${chatID} AND type="image" OR type="video"`
+        const {receiver, sender} = args
+        const sql = `SELECT msgID, userID, url, type FROM messages 
+                     WHERE (sender="${sender}" AND receiver="${receiver}")
+                     OR (sender="${receiver}" AND receiver="${sender}") 
+                     AND (type="image" OR type="video")`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }
 }
@@ -141,13 +112,13 @@ export const GET_CHAT_MEDIA = {
 export const COUNT_ALL_MSGS = {
     type: MsgNotificationType,
     args:{
-        receiver_id:{type:GraphQLInt}
+        receiver:{type:GraphQLString}
     },
     async resolve(_, args){
-        const {receiver_id} = args
+        const {receiver} = args
         const sql = `SELECT COUNT(1) AS msgCount 
                      FROM msg_notifications 
-                        WHERE receiver_id=${receiver_id}`
+                        WHERE receiver="${receiver}"`
         return await connection.promise().query(sql).then((res)=>{return res[0][0]})
     }
 }
@@ -156,12 +127,11 @@ export const COUNT_ALL_MSGS = {
 export const CHECK_UNREAD_MSG = {
     type: GraphQLBoolean,
     args: {
-        chatID:{type:GraphQLInt},
-        receiver_id:{type:GraphQLInt}
+        receiver:{type:GraphQLString}
     },
     async resolve(_, args){
-        const {chatID, receiver_id} = args
-        const sql = `SELECT EXISTS(SELECT 1 FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id} LIMIT 1) as ifUnreadMsg`
+        const {receiver} = args
+        const sql = `SELECT EXISTS(SELECT 1 FROM msg_notifications WHERE receiver="${receiver}" LIMIT 1) as ifUnreadMsg`
         return await connection.promise().query(sql).then((res)=>{return res[0][0]?.ifUnreadMsg===1 ? true : false})
     }
 }

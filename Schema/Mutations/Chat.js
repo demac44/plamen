@@ -14,8 +14,8 @@ export const CREATE_CHAT = {
     },
     async resolve(_, args) {
         const {user1_ID, user2_ID} = args
-        const sql = `INSERT INTO chats (chatID, user1_ID, user2_ID, date_created)
-        VALUES (null, ${user1_ID}, ${user2_ID}, null)`
+        const sql = `INSERT INTO chats (user1_ID, user2_ID)
+        VALUES (${user1_ID}, ${user2_ID})`
         const result = await connection.promise().query(sql).then(res=>{return res[0]})
         Object.assign(args, {chatID: result.insertId})
         return args
@@ -37,31 +37,29 @@ export const DELETE_CHAT = {
 export const SEND_MESSAGE = {
     type: ChatMessagesType,
     args: {
-        chatID: {type: GraphQLInt},
-        userID: {type: GraphQLInt},
         msg_text: {type: GraphQLString},
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString},
         url: {type: GraphQLString},
         type: {type:GraphQLString},
-        username: {type: GraphQLString},
         profile_picture: {type: GraphQLString}
     },
     async resolve(_, args){
-        const {chatID, userID, msg_text, url, type, username, profile_picture} = args
+        const {sender, receiver, msg_text, url, type, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO messages (chatID, userID, msg_text, url, type)
-                     VALUES (${chatID}, ${userID}, "${encrypted}", "${url}", "${type}")`
+        const sql = `INSERT INTO messages (sender, receiver, msg_text, url, type)
+                     VALUES ("${sender}", "${receiver}", "${encrypted}", "${url}", "${type}")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {
-                                        chatID, 
                                         msg_text, 
-                                        userID, 
                                         url, 
                                         type, 
                                         msgID: msg.insertId, 
                                         time_sent: new Date().getTime(),
-                                        username,
                                         profile_picture,
-                                        storyID: null
+                                        storyID: null,
+                                        sender,
+                                        receiver
                                         }})
         return args
     }
@@ -82,18 +80,18 @@ export const DELETE_MESSAGE = {
 }
 
 export const MSG_NOTIFICATION = {
-    type:MsgNotificationType,
+    type: MsgNotificationType,
     args:{
-        sender_id: {type:GraphQLInt},
-        receiver_id: {type:GraphQLInt},
-        chatID: {type:GraphQLInt}      
+        sender: {type:GraphQLString},
+        receiver: {type:GraphQLString},
     },
     async resolve(_, args){ 
-        const {sender_id, receiver_id, chatID} = args
-        const sql = `INSERT INTO msg_notifications (Nid, sender_id, receiver_id, chatID)
-                        VALUES (null, ${sender_id}, ${receiver_id}, ${chatID})`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender_id, receiver_id, chatID, Nid:result.insertId}})
+        const {sender, receiver, chatID} = args
+        const sql = `INSERT INTO msg_notifications (sender, receiver)
+                        VALUES (${sender}, ${receiver})`
+        await connection.promise().query(sql).then(res=>{
+            pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender, receiver}})
+        })
         return args
     }
 }
@@ -101,12 +99,12 @@ export const MSG_NOTIFICATION = {
 export const SEEN = {
     type:ChatMessagesType,
     args: {
-        chatID:{type:GraphQLInt},
-        receiver_id:{type:GraphQLInt}
+        sender:{type:GraphQLString},
+        receiver:{type:GraphQLString}
     },
     resolve(_, args){
-        const {chatID, receiver_id} = args
-        const sql = `DELETE FROM msg_notifications WHERE chatID=${chatID} AND receiver_id=${receiver_id}` 
+        const {receiver, sender} = args
+        const sql = `DELETE FROM msg_notifications WHERE AND receiver="${receiver}" AND sender="${sender}"` 
         connection.query(sql)
         return args
     }
