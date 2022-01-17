@@ -4,7 +4,7 @@ import {gql} from 'graphql-tag'
 import { useQuery } from 'react-apollo'
 import OpenMedia from './OpenMedia'
 
-const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
+const AllChatMedia = ({closeAllMediaCallback, sender, receiver}) => {
     const [url, setUrl] = useState(null)
 
     const closeMediaCallback = useCallback(()=>{
@@ -13,7 +13,8 @@ const AllChatMedia = ({chatID, closeAllMediaCallback}) => {
 
     const {data, loading} = useQuery(GET_CHAT_MEDIA, {
         variables:{
-            chatID: parseInt(chatID)
+            sender,
+            receiver
         }
     })
 
@@ -49,10 +50,9 @@ export default memo(AllChatMedia)
 
 
 const GET_CHAT_MEDIA = gql`
-    query($chatID: Int!){
-        get_chat_media(chatID: $chatID){
+    query($sender: String!, $receiver: String!){
+        get_chat_media(sender: $sender, receiver: $receiver){
             url
-            userID
             msgID
             type
         }

@@ -56,15 +56,14 @@ const ChatListUser = ({data}) => {
 
                         {/* checking if msg type is image or video and setting corresponding message */}
                         {(msgData?.last_message?.type==='image' && !msgData?.last_message?.msg_text) && 
-                            (info?.data.last_message?.receiver===usernm ? 'You sent an image' : data?.username+' sent an image')}
+                            (info?.data.last_message?.sender===usernm ? 'You sent an image' : data?.username+' sent an image')}
                         {(msgData?.last_message?.type==='video' && !msgData?.last_message?.msg_text) && 
-                            (info?.data.last_message?.receiver===usernm ? 'You sent a video' : data?.username+' sent a video')}
+                            (info?.data.last_message?.sender===usernm ? 'You sent a video' : data?.username+' sent a video')}
                     </p>}
            </div>
 
             {/* show dot if unread or new message */}
-            {(info?.data?.check_unread_msg || (newMsg?.data?.newMessage?.userID!==uid
-                && newMsg?.data?.newMessage?.chatID===data?.chatID))
+            {(info?.data?.check_unread_msg || info?.data?.last_message?.receiver===usernm)
             && <div className='unread-msg-dot'></div>}
 
         </Link>

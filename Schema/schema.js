@@ -5,8 +5,8 @@ import {
 
 import { pubsub } from "../server.js";
 
-import { ADD_GROUP_CHAT_USER, CREATE_CHAT, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, 
-        DELETE_MESSAGE, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, REMOVE_GROUP_CHAT_MEMBER, SEEN, 
+import { ADD_GROUP_CHAT_USER, CREATE_GROUP_CHAT, DELETE_CHAT, DELETE_GROUP_CHAT, DELETE_GROUP_CHAT_MESSAGE, 
+        DELETE_MESSAGE, DELETE_MSG_NOTIFICATIONS, LEAVE_GROUP_CHAT_ADMIN, LEAVE_GROUP_CHAT_MEMBER, MSG_NOTIFICATION, REMOVE_GROUP_CHAT_MEMBER,
         SEND_GROUP_MESSAGE, SEND_MESSAGE } from "./Mutations/Chat.js";
         
 import { ADD_COMMENT, REMOVE_COMMENT } from "./Mutations/Comments.js";
@@ -31,7 +31,7 @@ import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY, SEEN_STORY } from "./Mutati
 import { BLOCK_USER, CHANGE_ACTIVITY_STATUS, DELETE_ACCOUNT, DISABLE_ACCOUNT, EDIT_BDATE, 
         EDIT_GENDER, EDIT_INTERESTS, EDIT_USER_INFO, PROFILE_VISIT, SEND_NEW_CODE, SET_LAST_SEEN, UNBLOCK_USER, UNDISABLE_ACCOUNT, VERIFY_EMAIL } from "./Mutations/Users.js";
 
-import { CHAT_EXISTS, COUNT_ALL_MSGS, CHECK_UNREAD_MSG, GET_GROUP_CHATS, GET_CHAT_LIST, 
+import { COUNT_ALL_MSGS, CHECK_UNREAD_MSG, GET_GROUP_CHATS, GET_CHAT_LIST, 
         GET_CHAT_MEDIA, GET_MESSAGES, LAST_MESSAGE, GET_ALL_GROUP_CHATS, GET_GROUP_MESSAGES, LAST_MESSAGE_GROUP, 
         GET_GROUP_CHAT_MEMBERS, GET_GROUP_CHAT_MEMBER } from "./Queries/Chat.js";
 
@@ -76,7 +76,6 @@ const RootQuery = new GraphQLObjectType({
         if_saved: IF_SAVED,
         get_saved_posts: GET_SAVED_POSTS,
         // chats
-        chat_exists: CHAT_EXISTS,
         get_chats: GET_CHAT_LIST,
         get_messages: GET_MESSAGES,
         get_chat_media: GET_CHAT_MEDIA,
@@ -157,14 +156,13 @@ const RootMutation = new GraphQLObjectType({
         delete_story: DELETE_STORY,
         seen_story: SEEN_STORY,
         // chats
-        create_chat: CREATE_CHAT,
         send_message: SEND_MESSAGE,
         delete_chat: DELETE_CHAT,
         delete_message: DELETE_MESSAGE,
         post_report: POST_REPORT,
         msg_notification: MSG_NOTIFICATION,
         reply_to_story: REPLY_TO_STORY,
-        seen: SEEN,
+        delete_msg_notifications: DELETE_MSG_NOTIFICATIONS,
         // group chat
         create_group_chat:CREATE_GROUP_CHAT,
         delete_group_chat: DELETE_GROUP_CHAT,

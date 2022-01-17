@@ -1,32 +1,8 @@
 import { GraphQLInt, GraphQLList, GraphQLBoolean, GraphQLString } from 'graphql';
 import connection from '../../middleware/db.js'
-import { ChatListType, ChatMessagesType, ChatType, GroupChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
+import { ChatListType, ChatMessagesType, GroupChatType, MsgNotificationType } from '../TypeDefs/Chat.js';
 
 import CryptoJS from 'crypto-js'
-
-export const CHAT_EXISTS = {
-    type: ChatType,
-    args: {
-        user1_ID: {type: GraphQLInt},
-        user2_ID: {type: GraphQLInt}
-    },    
-    async resolve(_, args) {
-        const {user1_ID, user2_ID} = args
-        const sql = `SELECT * FROM chats 
-                     WHERE (user1_ID=${user1_ID} AND user2_ID=${user2_ID}) 
-                     OR (user1_ID=${user2_ID} AND user2_ID=${user1_ID})
-                     AND NOT EXISTS (
-                        (SELECT 1
-                        FROM blocked_users
-                        WHERE
-                            (blockerId = ${user1_ID} AND blockedId = user2_ID)
-                                OR
-                            (blockerId = user2_ID AND blockedId = ${user1_ID})
-                        )
-                    )` 
-        return await connection.promise().query(sql).then((res)=>{return res[0][0]})
-    }    
-}
 
 
 export const GET_CHAT_LIST = {
@@ -37,7 +13,7 @@ export const GET_CHAT_LIST = {
     async resolve(_, args){
         const {username} = args
         const sql = `SELECT DISTINCT userID,first_name,last_name,username,profile_picture,last_seen FROM messages
-                     JOIN users ON receiver=users.username
+                     JOIN users ON (receiver=users.username OR sender=users.username)
                      WHERE receiver="${username}" OR sender="${username}"`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }  
@@ -57,7 +33,7 @@ export const LAST_MESSAGE = {
                     OR (sender="${receiver}" AND receiver="${sender}")
                     ORDER BY msgID DESC LIMIT 1`
         return await connection.promise().query(sql).then(response => {
-            if(response[0][0]?.msg_text){
+            if(response[0][0]?.msg_text){     
                 const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
                 const res = {...response[0][0], msg_text: decrypted}
                 return res

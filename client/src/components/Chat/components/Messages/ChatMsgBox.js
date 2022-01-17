@@ -7,13 +7,13 @@ import Message from './Message';
 import ChatBar from '../ChatBar';
 import { useParams } from 'react-router-dom';
 
-const ChatMsgBox = ({chat}) => {
-    const uid = useSelector(state => state.isAuth.user?.userID)
+const ChatMsgBox = () => {
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const {user} = useParams()
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
-    const {data, loading, subscribeToMore, fetchMore, refetch} = useQuery(GET_MESSAGES, {
+    const [del_msg_notif] = useMutation(DELETE_MSG_NOTIFICATIONS)
+    const {data, loading, subscribeToMore, fetchMore} = useQuery(GET_MESSAGES, {
         skip: user ? false : true,
         variables: {
             limit:50,
@@ -22,6 +22,7 @@ const ChatMsgBox = ({chat}) => {
             receiver: user
         },
     })
+
 
     const loaderCallback = useCallback(val => {
         setLoader(val)
@@ -48,12 +49,18 @@ const ChatMsgBox = ({chat}) => {
             }});
         }
         return subscribeNewMessage()
-    }, [chat, loading])        
+    }, [loading])        
     
     
     useEffect(()=>{
         data?.get_messages?.length>=50 && setFetchBtn(true)
-    }, [data, chat, uid, loading])
+        del_msg_notif({
+            variables:{
+                receiver: usernm,
+                sender: user
+            }
+        })
+    }, [data, usernm, user, loading])
 
 
     const handleFetchMore = () => {
@@ -80,7 +87,7 @@ const ChatMsgBox = ({chat}) => {
         <div className='chat-msg-box'> 
         {user &&
             <>
-            <ChatBar chatID={12} info={{}}/>
+            <ChatBar/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
                 {!loading && data?.get_messages?.map(msg => <Message msg={msg} key={msg.msgID} loader={loader}/>)}
@@ -121,6 +128,14 @@ const NEW_MESSAGE = gql`
             profile_picture
             storyID
             sender
+            receiver
+        }
+    }
+`
+
+const DELETE_MSG_NOTIFICATIONS = gql`
+    mutation($sender: String!, $receiver: String!){
+        delete_msg_notifications(sender: $sender, receiver: $receiver){
             receiver
         }
     }

@@ -2,19 +2,23 @@ import React, { useCallback, useState } from 'react'
 import { gql } from 'graphql-tag'
 import { useMutation } from 'react-apollo'
 import AllChatMedia from './Chat media/AllChatMedia'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const DELETE_CHAT = gql`
-    mutation ($chatID:Int!){
-        delete_chat(chatID: $chatID){
-            chatID
+    mutation ($sender: String!, $receiver: String!){
+        delete_chat(sender: $sender, receiver: $receiver){
+            receiver
         }
     }
 `
  
-const ChatMenu = ({chatID}) => {
+const ChatMenu = () => {
+    const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [chatMedia, setChatMedia] = useState(false)
     const [delete_chat] = useMutation(DELETE_CHAT)
     const [confirmDelete, setConfirmDelete] = useState(false)
+    const {user} = useParams()
 
 
     const closeAllMediaCallback = useCallback(()=>{
@@ -24,7 +28,8 @@ const ChatMenu = ({chatID}) => {
     const handleChatDelete = () => {
         delete_chat({
             variables:{
-                chatID: chatID
+                sender: usernm,
+                receiver: user
             }
         }).then(()=>window.location.href='/chats')
           
@@ -50,7 +55,7 @@ const ChatMenu = ({chatID}) => {
 
                 </ul>
             </div>
-            {chatMedia && <AllChatMedia chatID={chatID} closeAllMediaCallback={closeAllMediaCallback}/>}
+            {chatMedia && <AllChatMedia sender={user} receiver={usernm} closeAllMediaCallback={closeAllMediaCallback}/>}
         </>
     )
 }

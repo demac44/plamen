@@ -12,7 +12,6 @@ const SendMsg = ({loaderCallback}) => {
     const ls = JSON.parse(localStorage.getItem('user'))
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [send_msg] = useMutation(SEND_MSG)
-    const [msg_notification] = useMutation(MSG_NOTIFICATION)
     const [media, setMedia] = useState(null)
     const [preview, setPreview] = useState(null)
     const [msgText, setMsgText] = useState('')
@@ -52,13 +51,6 @@ const SendMsg = ({loaderCallback}) => {
                             url: res.data.url
                         }
                     }).then(()=>{
-                        msg_notification({
-                            variables:{
-                                sender: usernm,
-                                receiver:user
-                            }
-                        })
-                    }).then(()=>{
                             setMedia(null)
                             loaderCallback(false)
                             setMsgText('')
@@ -75,13 +67,6 @@ const SendMsg = ({loaderCallback}) => {
                             url: 'null'
                         }
                     
-                    }).then(()=>{
-                        msg_notification({
-                            variables:{
-                                sender: usernm,
-                                receiver:user
-                            }
-                        })
                     }).then(()=>{
                         setMsgText('')
                     })
@@ -139,11 +124,6 @@ const SEND_MSG = gql`
         send_message (sender: $sender, receiver: $receiver, msg_text: $msg_text, url: $url, type: $type){
             msgID
         }
-    }
-`
-
-const MSG_NOTIFICATION = gql`
-    mutation ($sender: String!, $receiver: String!){
         msg_notification (sender: $sender, receiver: $receiver){ 
             receiver
         }

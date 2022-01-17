@@ -4,17 +4,6 @@ import {
     GraphQLString,
  } from "graphql";
 
-
-export const ChatType = new GraphQLObjectType({
-    name: 'ChatType',
-    fields: () => ({
-        chatID: {type: GraphQLInt},
-        user1_ID: {type: GraphQLInt},
-        user2_ID: {type: GraphQLInt},
-        date_created: {type: GraphQLString},
-    })
-})
-
 export const ChatMessagesType = new GraphQLObjectType({
     name:'ChatMessages',
     fields: ()=>({

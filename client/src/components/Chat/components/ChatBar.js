@@ -4,7 +4,7 @@ import ChatMenu from './ChatMenu'
 import Avatar from '../../General components/Avatar'
 import ActivityStatus from '../../General components/ActivityStatus'
 
-const ChatBar = ({chatID}) => {
+const ChatBar = () => {
     const [showMenu, setShowMenu] = useState(false)
 
     // passing user info from chat list user
@@ -15,7 +15,7 @@ const ChatBar = ({chatID}) => {
         document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
         setShowMenu(false)
         return
-    }, [chatID])
+    }, [])
 
     return (
         <>
@@ -39,7 +39,7 @@ const ChatBar = ({chatID}) => {
                         onClick={()=>setShowMenu(!showMenu)}
                     />
                 </span>
-                {showMenu && <ChatMenu chatID={chatID}/>}
+                {showMenu && <ChatMenu/>}
             </div>
         </>
     )

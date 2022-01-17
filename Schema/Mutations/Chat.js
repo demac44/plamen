@@ -1,39 +1,25 @@
 import { GraphQLString, GraphQLInt } from "graphql"
 import connection from "../../middleware/db.js"
-import { ChatMessagesType, ChatType, GroupChatType, MsgNotificationType, ChatListType } from "../TypeDefs/Chat.js"
+import { ChatMessagesType, GroupChatType, MsgNotificationType, ChatListType } from "../TypeDefs/Chat.js"
 
 import { pubsub } from '../../server.js'
 
 import CryptoJS from 'crypto-js'
 
-export const CREATE_CHAT = {
-    type: ChatType,
-    args: {
-        user1_ID: {type: GraphQLInt},
-        user2_ID: {type: GraphQLInt},
-    },
-    async resolve(_, args) {
-        const {user1_ID, user2_ID} = args
-        const sql = `INSERT INTO chats (user1_ID, user2_ID)
-        VALUES (${user1_ID}, ${user2_ID})`
-        const result = await connection.promise().query(sql).then(res=>{return res[0]})
-        Object.assign(args, {chatID: result.insertId})
-        return args
-    }
-}
-
 export const DELETE_CHAT = {
-    type: ChatType,
+    type: ChatMessagesType,
     args:{
-        chatID:{type:GraphQLInt}
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString}
     },
     resolve(_ , args){
-        const {chatID} = args
-        const sql = `DELETE FROM chats WHERE chatID=${chatID}`    
+        const {sender, receiver} = args
+        const sql = `DELETE FROM messages WHERE (sender="${sender}" AND receiver="${receiver}") OR (sender="${receiver}" AND receiver="${sender}")`    
         connection.query(sql)
         return args
     }
 }
+
 export const SEND_MESSAGE = {
     type: ChatMessagesType,
     args: {
@@ -88,15 +74,15 @@ export const MSG_NOTIFICATION = {
     async resolve(_, args){ 
         const {sender, receiver, chatID} = args
         const sql = `INSERT INTO msg_notifications (sender, receiver)
-                        VALUES (${sender}, ${receiver})`
-        await connection.promise().query(sql).then(res=>{
+                        VALUES ("${sender}", "${receiver}")`
+        await connection.promise().query(sql).then(()=>{
             pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender, receiver}})
         })
         return args
     }
 }
 
-export const SEEN = {
+export const DELETE_MSG_NOTIFICATIONS= {
     type:ChatMessagesType,
     args: {
         sender:{type:GraphQLString},
@@ -104,7 +90,7 @@ export const SEEN = {
     },
     resolve(_, args){
         const {receiver, sender} = args
-        const sql = `DELETE FROM msg_notifications WHERE AND receiver="${receiver}" AND sender="${sender}"` 
+        const sql = `DELETE FROM msg_notifications WHERE receiver="${receiver}" AND sender="${sender}"` 
         connection.query(sql)
         return args
     }
