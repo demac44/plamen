@@ -12,7 +12,6 @@ const ChatList = ({isLogged}) => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const usernm = useSelector(state => state?.isAuth?.user?.username)
 
-    console.log(usernm);
     const {data, loading} = useQuery(GET_CHATS_LIST, {
         variables:{userID: uid,
         username: usernm}

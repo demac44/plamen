@@ -2,7 +2,7 @@ import React, { useState, useEffect, memo, useCallback } from 'react'
 import './Navbar.css'
 import { useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
-import { useQuery } from 'react-apollo'
+import { useQuery, useSubscription } from 'react-apollo'
 import { gql } from 'graphql-tag'
 import Logo from '../General components/Logo'
 import Dropdown from './Dropdown'
@@ -15,6 +15,9 @@ const Navbar = () => {
     const usernm = useSelector(state => state?.isAuth?.user?.username)
     const [dropdown, setDropdown] = useState(false)
     const [notifications, setNotificiations] = useState(false)
+    const newMsg = useSubscription(NEW_MESSAGE)
+    const newMsgNotif = useSubscription(NEW_MESSAGE_NOTIF)
+    const [msgNotifCount, setMsgNotifCount] = useState(null)
     // count all unread messages
     const count = useQuery(COUNT_MSGS, {
         variables:{receiver: usernm}
@@ -26,8 +29,12 @@ const Navbar = () => {
     }
 
     useEffect(()=>{
+        setMsgNotifCount(count?.data?.count_newMsgs?.msgCount)
         closeDropdown()
-    }, []) 
+        if(newMsgNotif?.data?.newMsgNotification){
+            newMsgNotif?.data?.newMsgNotification?.receiver===usernm && setMsgNotifCount(count?.data?.count_newMsgs?.msgCount+1)
+        }
+    }, [newMsgNotif, count, newMsg?.data?.newMessage?.msg_text]) 
 
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => {
@@ -57,8 +64,8 @@ const Navbar = () => {
                         onClick={()=>{setNotificiations(!notifications);setDropdown(false)}}/>
 
                     <Link to='/chats' style={{position:'relative'}}>
-                        {count?.data?.count_newMsgs?.msgCount > 0 && 
-                        <div className='flex-ctr tn-msgs-count'>{count?.data?.count_newMsgs?.msgCount}</div>}
+                        {msgNotifCount > 0 && 
+                        <div className='flex-ctr tn-msgs-count'>{msgNotifCount}</div>}
                         <i className='fas fa-inbox tn-icons'/>
                     </Link>
 
@@ -69,6 +76,15 @@ const Navbar = () => {
                     {dropdown && <Dropdown closeDropd={closeDropd}/>}
                     
                     <NotficationsMenu visible={notifications ? 'visible' : 'hidden'}/>
+
+                    {/* {(newMsg?.data?.newMessage) && 
+                    <div className='drop-down-msg flex-ctr' >
+                        <Avatar size="50px" image={newMsg?.data?.newMessage?.profile_picture}/>
+                        <span className='flex-col'>
+                            <p><strong>{newMsg?.data?.newMessage?.sender}</strong></p>
+                            <p>{newMsg?.data?.newMessage?.msg_text}</p>
+                        </span>
+                    </div>} */}
                 </div>
             </div>
         </>
@@ -77,7 +93,7 @@ const Navbar = () => {
 
 export default memo(Navbar)
 
-const NEW_MESSAGE = gql`
+const NEW_MESSAGE_NOTIF = gql`
     subscription {
         newMsgNotification {
             sender
@@ -86,6 +102,22 @@ const NEW_MESSAGE = gql`
         }
     }
 `
+const NEW_MESSAGE = gql`
+subscription{
+    newMessage {
+        msgID
+        msg_text
+        url
+        type
+        time_sent
+        profile_picture
+        storyID
+        sender
+        receiver
+    }
+}
+`
+
 
 const COUNT_MSGS = gql`
     query($receiver: String!){

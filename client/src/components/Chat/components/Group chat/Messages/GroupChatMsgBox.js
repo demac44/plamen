@@ -5,14 +5,16 @@ import { useQuery } from 'react-apollo'
 import SendGroupMsg from './SendGroupMsg';
 import GroupMessage from './GroupMessage';
 import GroupChatBar from '../GroupChatBar';
+import { useParams } from 'react-router-dom';
 
-const GroupChatMsgBox = ({chat}) => {
+const GroupChatMsgBox = () => {
     const uid = useSelector(state => state.isAuth.user?.userID)
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
+    const {chatid} = useParams()
     const messages = useQuery(GET_GROUP_MESSAGES, {
         variables: {
-            groupChatId: chat.groupChatId,
+            groupChatId: parseInt(chatid),
             limit:50,
             offset:0,
             uid        
@@ -32,7 +34,7 @@ const GroupChatMsgBox = ({chat}) => {
                     if (!subscriptionData?.data) return prev;
                     const newMsg = subscriptionData?.data?.newGroupMessage;
 
-                    if (newMsg?.groupChatId === chat.groupChatId){
+                    if (newMsg?.groupChatId === parseInt(chatid)){
                     return Object.assign({}, prev, {
                         get_group_messages: [newMsg, ...prev.get_group_messages],
                         scroll: ()=>{
@@ -44,12 +46,12 @@ const GroupChatMsgBox = ({chat}) => {
             }});
         }
         return subscribeNewMessage()
-    }, [chat, messages])        
+    }, [messages])        
     
     
     useEffect(()=>{
         messages?.data?.get_group_messages?.length>=50 && setFetchBtn(true)
-    }, [messages?.data, chat, uid])
+    }, [messages?.data, uid])
 
 
     const handleFetchMore = () => {
@@ -77,13 +79,13 @@ const GroupChatMsgBox = ({chat}) => {
     return (
         <div className='chat-msg-box'> 
         <>
-            <GroupChatBar chatID={chat.groupChatId} admin={chat.admin}/>
+            <GroupChatBar chatID={parseInt(chatid)}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
                 {!messages.loading && messages?.data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
                 {fetchBtn && <div className='msg-load-more' onClick={handleFetchMore}>Load more</div>}
             </div>
-            <SendGroupMsg chatID={chat.groupChatId} info={chat} loaderCallback={loaderCallback}/> 
+            <SendGroupMsg chatID={parseInt(chatid)} loaderCallback={loaderCallback}/> 
         </>
         </div>
     )

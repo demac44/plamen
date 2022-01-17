@@ -10,20 +10,18 @@ const Chat = ({isGroupChat}) => {
     const {curr_user} = useParams()
     const usernm = useSelector(state => state?.isAuth?.user?.username)
 
-
     return (
         <>
             <ChatList/>
-            {
-                curr_user===usernm ?
-                <>
-                {isGroupChat ?
-                <GroupChatMsgBox/> :
-                <ChatMsgBox/>}
-                </> : <Redirect to='/chats'/>
-            }
+            <>
+            {curr_user===usernm ?
+            <ChatMsgBox/>
+            : <Redirect to='/chats'/>}
+            </> 
         </>
     )
 }
 
 export default Chat
+
+

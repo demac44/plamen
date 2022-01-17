@@ -49,7 +49,7 @@ const ChatMsgBox = () => {
             }});
         }
         return subscribeNewMessage()
-    }, [loading])        
+    }, [loading, subscribeToMore, user, usernm])        
     
     
     useEffect(()=>{
@@ -60,7 +60,7 @@ const ChatMsgBox = () => {
                 sender: user
             }
         })
-    }, [data, usernm, user, loading])
+    }, [data, usernm, user, loading, del_msg_notif])
 
 
     const handleFetchMore = () => {

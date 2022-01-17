@@ -5,6 +5,22 @@ import { ChatListType, ChatMessagesType, GroupChatType, MsgNotificationType } fr
 import CryptoJS from 'crypto-js'
 
 
+// export const GET_CHAT_LIST = {
+//     type: new GraphQLList(ChatListType),
+//     args:{
+//         username: {type: GraphQLString}
+//     },
+//     async resolve(_, args){
+//         const {username} = args
+//         const sql = `SELECT DISTINCT userID,first_name,last_name,username,profile_picture,last_seen FROM messages
+//                      JOIN users ON (receiver=users.username OR sender=users.username)
+//                      WHERE receiver="${username}" OR sender="${username}"
+//                      ORDER BY msgID DESC`
+//         return await connection.promise().query(sql).then((res)=>{return res[0]})
+//     }  
+//  }
+
+
 export const GET_CHAT_LIST = {
     type: new GraphQLList(ChatListType),
     args:{
@@ -12,9 +28,11 @@ export const GET_CHAT_LIST = {
     },
     async resolve(_, args){
         const {username} = args
-        const sql = `SELECT DISTINCT userID,first_name,last_name,username,profile_picture,last_seen FROM messages
+        const sql = `SELECT userID,first_name,last_name,username,profile_picture,last_seen,MAX(time_sent) FROM messages
                      JOIN users ON (receiver=users.username OR sender=users.username)
-                     WHERE receiver="${username}" OR sender="${username}"`
+                     WHERE receiver="${username}" OR sender="${username}"
+                     GROUP BY users.username
+                     ORDER BY MAX(time_sent) DESC`
         return await connection.promise().query(sql).then((res)=>{return res[0]})
     }  
  }
