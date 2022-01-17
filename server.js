@@ -64,7 +64,7 @@ import test from './controllers/test.js'
     app.use(express.static(join(__dirname, "client", "build")))
     
     app.use(cors({    
-        origin: ["http://localhost:8081", "http://localhost:3000"],
+        origin: ["http://localhost:8081", "http://localhost:3000", "https://plamen-main.herokuapp.com"],
         credentials: true
     }));
 
