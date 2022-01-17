@@ -1,6 +1,6 @@
 .all-chats-box{
     position: sticky;
-    top: 60px;
+    top: 0;
     left: 0;
     min-width: 350px;
     overflow:auto;
@@ -9,12 +9,15 @@
     background-color: #1b1b1b;
     padding-top: 5px;
     align-items: center !important;
-    padding: 5px;
+    padding: 40px 5px;
 }
 .chat-search{
     height: 50px;
     width: 100%;
     padding: 0 5px;
+    position: absolute;
+    top: 0;
+    min-height: 40px;
 }
 .chat-search .tn-center{
     width: 100%;

@@ -11,8 +11,8 @@ export const ADD_COMMENT = {
     },
     resolve(_, args) {
         const {userID, postID, comment_text} = args
-        let sql = `INSERT INTO comments (commentID ,postID, userID, comment_text, date_commented)
-                    VALUES (null,${postID} ,${userID}, "${comment_text}", null)`
+        let sql = `INSERT INTO comments (postID, userID, comment_text)
+                    VALUES (${postID} ,${userID}, "${comment_text}")`
         connection.query(sql)
         return args
     }

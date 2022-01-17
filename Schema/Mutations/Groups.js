@@ -21,13 +21,13 @@ export const CREATE_GROUP = {
     },
     async resolve(_, args) {
         const {group_name, group_creator_id, closed, group_description, group_tags} = args
-        const sql = `INSERT INTO communities (groupID, group_name, group_creator_id, date_created, closed) 
-                    VALUES (null, "${group_name}", ${group_creator_id}, null, ${closed})`
+        const sql = `INSERT INTO communities (group_name, group_creator_id, closed) 
+                    VALUES ("${group_name}", ${group_creator_id}, ${closed})`
         const res = await connection.promise().query(sql).then(res=>{return res[0]})
         const sql2 = `INSERT INTO community_info (groupID, group_description, group_tags)
                         VALUES (${res.insertId}, "${group_description}", "${group_tags}")`
-        const sql3 = `INSERT INTO community_users (groupID, userID, roleID, date_joined)
-                        VALUES (${res.insertId}, ${group_creator_id}, 1, null)`
+        const sql3 = `INSERT INTO community_users (groupID, userID, roleID)
+                        VALUES (${res.insertId}, ${group_creator_id}, 1)`
         connection.query(sql2)
         connection.query(sql3)
         return args
@@ -45,8 +45,8 @@ export const CREATE_GROUP_POST = {
     },
     resolve (_, args){
         const {userID, post_text, url, groupID, type} = args
-        const sql = `INSERT INTO community_posts (postID, groupID, userID, post_text, date_posted, url, type)
-                    VALUES (null, ${groupID}, ${userID}, "${post_text}", null, "${url}", "${type}")`
+        const sql = `INSERT INTO community_posts (groupID, userID, post_text, url, type)
+                    VALUES (${groupID}, ${userID}, "${post_text}", "${url}", "${type}")`
         connection.query(sql)
         return args
     }
@@ -73,8 +73,8 @@ export const ADD_GP_COMMENT = {
     },
     resolve(_, args) {
         const {userID, postID, comment_text} = args
-        const sql = `INSERT INTO community_posts_comments (commentID ,postID, userID, comment_text, date_commented)
-                    VALUES (null, ${postID} ,${userID}, "${comment_text}", null)`
+        const sql = `INSERT INTO community_posts_comments (postID, userID, comment_text)
+                    VALUES (${postID} ,${userID}, "${comment_text}")`
         connection.query(sql)
         return args
     }
@@ -161,8 +161,8 @@ export const JOIN_GROUP = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `INSERT INTO community_members (groupID, userID, roleID, date_joined)
-                    VALUES (${groupID}, ${userID}, 4, null)`
+        const sql = `INSERT INTO community_members (groupID, userID, roleID)
+                    VALUES (${groupID}, ${userID}, 4)`
         connection.query(sql)
         return args
     }

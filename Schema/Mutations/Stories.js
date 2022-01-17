@@ -14,8 +14,8 @@ export const CREATE_STORY = {
     },
     resolve (_, args){
         const {userID, url, type} = args
-        const sql = `INSERT INTO stories (storyID, userID, url, date_posted, type)
-                    VALUES (null, ${userID}, "${url}", null, "${type}")`
+        const sql = `INSERT INTO stories (userID, url, type)
+                    VALUES (${userID}, "${url}", "${type}")`
         connection.query(sql)
         return args
     }

@@ -23,7 +23,8 @@ const CommSendMsg = ({groupID, loaderCallback}) => {
         document?.querySelector('.comm-chat-bar')?.addEventListener('click', ()=>setEmojis(false))
     }, [])
 
-    const sendMessage = () => {
+    const sendMessage = (e) => {
+        e.preventDefault()
         setEmojis(false)
         if(msgText.trim().length < 1 && !media){
             return

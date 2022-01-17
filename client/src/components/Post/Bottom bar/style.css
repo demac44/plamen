@@ -120,6 +120,11 @@
 .post-bottom-bar .emojis-sub-box p{
     font-size: 20px;
 }
+@media screen and (max-width:991px){
+    .cmt-emojis-btn{
+        display: none;
+    }
+}
 @media screen and (max-width:447px){
     .comment{
         padding:5px;

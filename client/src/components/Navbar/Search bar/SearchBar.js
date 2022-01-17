@@ -32,15 +32,15 @@ const SearchBar = ({chat, handleOpen}) => {
     return (
         <>
             <form className="tn-center flex-ctr" onSubmit={(e)=>{e.preventDefault(); window.location.href='/search/'+query}}>
-                <div className="search-icon"><i className='fas fa-search' style={{color:"#aaa"}}/></div>
+                <div className="search-icon flex-ctr"><i className='fas fa-search' style={{color:"#aaa"}}/></div>
                 <input 
                     type="text" 
                     className="tn-search-input" 
                     onChange={(e)=>setQuery(e.target.value)} 
                     placeholder='Search'
                     value={query}
-                    style={{borderRadius: query.length < 1 ? '0 50px 50px 0' : '0', 
-                            borderRight: query.length < 1 ? '1px solid #3f3f3f' : 'none'}} 
+                    style={{borderRadius: dropdown < 1 ? '0 50px 50px 0' : '0', 
+                            borderRight: dropdown < 1 ? '1px solid #3f3f3f' : 'none'}} 
                     onFocus={()=>{
                         handleOpen()
                         setDropdown(true)
@@ -53,9 +53,9 @@ const SearchBar = ({chat, handleOpen}) => {
                             }
                         })
                     }}/>
-                {query.length>0 && 
+                {(dropdown) &&
                 <div className='flex-ctr clear-search-query'>
-                    <i className='fas fa-times' onClick={()=>setQuery('')} style={{color:"#aaa", fontSize:'20px'}}/>
+                    <i className='fas fa-times' onClick={()=>{setQuery('');setDropdown(false)}} style={{color:"#aaa", fontSize:'20px'}}/>
                 </div>}
                 {(!loading && dropdown) && <SearchDrop 
                                 dropdownCallback={dropdownCallback} 
