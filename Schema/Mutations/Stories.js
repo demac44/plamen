@@ -32,11 +32,12 @@ export const DELETE_STORY = {
         return args
     }
 }
+
 export const REPLY_TO_STORY = {
     type: ChatMessagesType,
-    args: {
-        chatID: {type: GraphQLInt},
-        userID: {type: GraphQLInt},
+    args:{
+        sender: {type: GraphQLString},
+        receiver: {type: GraphQLString},
         msg_text: {type: GraphQLString},
         username: {type: GraphQLString},
         profile_picture: {type: GraphQLString},
@@ -44,21 +45,20 @@ export const REPLY_TO_STORY = {
         type: {type: GraphQLString}
     },
     async resolve(_, args){
-        const {chatID, userID, msg_text,username, profile_picture, storyID, type} = args
+        const {sender, receiver, msg_text, profile_picture, storyID, type} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO messages (chatID, userID, msg_text, storyID, type, url)
-                     VALUES (${chatID}, ${userID}, "${encrypted}", ${storyID}, "${'story-'+type}", "")`
+        const sql = `INSERT INTO messages (sender, receiver, msg_text, storyID, type, url)
+                     VALUES ("${sender}", "${receiver}", "${encrypted}", ${storyID}, "${'story-'+type}", "")`
         const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {
-                                               chatID, 
                                                msg_text, 
-                                               userID, 
                                                type, 
                                                msgID: msg.insertId, 
                                                time_sent: new Date().getTime(),
-                                               username,
                                                profile_picture,
-                                               storyID
+                                               storyID,
+                                               sender,
+                                               receiver
                                            }})
                                            return args
     }

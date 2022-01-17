@@ -51,7 +51,7 @@ export const CHECK_EMAIL_CONFIRMED = {
     async resolve(_, args){
         const {userID} = args
         const sql = `SELECT email_confirmed FROM users WHERE userID=${userID}`
-        return await connection.promise().query(sql).then(res => {return res[0][0].email_confirmed===1 ? true : false})
+        return await connection.promise().query(sql).then(res => {return res[0][0]?.email_confirmed==1 ? true : false})
     }
 }
 

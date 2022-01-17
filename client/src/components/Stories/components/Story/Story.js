@@ -73,6 +73,7 @@ const Story = ({i, closeStoryCallback, isProfile, allData}) => {
                     userID={isProfile ? storyData?.stories[innerIndex]?.userID : storyData?.userID}
                     storyID={storyData?.stories[innerIndex]?.storyID}
                     type={storyData?.stories[innerIndex]?.type}
+                    receiver={storyData?.username}
                 /> }
 
             </div>
