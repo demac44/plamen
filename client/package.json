@@ -27,7 +27,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts --openssl-legacy-provider build",
-    "postbuild": "zip build/static/js/*.js && zip build/static/css/*.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
