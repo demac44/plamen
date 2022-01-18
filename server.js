@@ -73,10 +73,10 @@ import test from './controllers/test.js'
     app.use(express.json());
     
 
-    app.use('/graphiql', auth, graphqlHTTP({
-        schema,
-        graphiql:true
-    }))
+    // app.use('/graphiql', auth, graphqlHTTP({
+    //     schema,
+    //     graphiql:true
+    // }))
     
     
     app.use('/api/login', login)
