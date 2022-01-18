@@ -14,7 +14,6 @@ const ChatBar = () => {
         document.querySelector('.chat-messages').addEventListener('click', ()=>setShowMenu(false))
         document.querySelector('.msg-input-box').addEventListener('click', ()=>setShowMenu(false))
         setShowMenu(false)
-        return
     }, [])
 
     return (

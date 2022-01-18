@@ -29,8 +29,8 @@ const LoginForm = ({popup}) => {
         try {
             axios({
                 method: 'POST',
-                // url: 'http://localhost:8000/api/login',
-                url: '/api/login',
+                url: 'http://localhost:8000/api/login',
+                // url: '/api/login',
                 data: {
                     username: username,
                     password: password
