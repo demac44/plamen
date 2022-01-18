@@ -84,12 +84,6 @@ import test from './controllers/test.js'
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
     app.use('/api/test', test)
-
-    app.get('*.js', function (req, res, next) {
-        req.url = req.url + '.gz';
-        res.set('Content-Encoding', 'gzip');
-        next();
-      });
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))

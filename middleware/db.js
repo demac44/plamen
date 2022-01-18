@@ -16,5 +16,14 @@ const connection = createConnection({
     database: process.env.DB_NAME,
 })
 
+// const connection = createConnection({
+//     host: "db4free.net",
+//     port:3306,
+//     user: "demac22",
+//     password: "Windowjesubak2000",
+//     database: "plamen_main",
+// })
+
+
 
 export default connection 
