@@ -275,6 +275,10 @@
     .users-list-box{
         width: 75%;
     }
+    .alternative-navbar{
+        position: fixed;
+        top: 0;
+    }
 }
 
 @media screen and (max-width: 447px){

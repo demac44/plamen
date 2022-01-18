@@ -6,13 +6,13 @@ import ChatMsgBox from '../../components/Chat/components/Messages/ChatMsgBox'
 import GroupChatMsgBox from '../../components/Chat/components/Group chat/Messages/GroupChatMsgBox'
 import { useSelector } from 'react-redux'
 
-const Chat = ({isGroupChat}) => {
+const Chat = ({isGroupChat, chatMsgBox}) => {
     const {curr_user} = useParams()
     const usernm = useSelector(state => state?.isAuth?.user?.username)
 
     return (
         <>
-            <ChatList/>
+            {((window.innerWidth<768 &&  window.location.pathname==='/chats') || window.innerWidth>768) && <ChatList/>}
             <>
             {curr_user===usernm ?
             <ChatMsgBox/>

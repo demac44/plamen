@@ -7,7 +7,7 @@ import {gql} from 'graphql-tag'
 import { useMutation } from 'react-apollo';
 import { useSelector } from 'react-redux'
  
-const ChatCont = ({isGroupChat}) => {
+const ChatCont = ({isGroupChat, chatMsgBox}) => {
     const uid = useSelector(state => state?.isAuth?.user?.userID)
     const [set_last_seen] = useMutation(SET_LAST_SEEN)
 
@@ -21,7 +21,7 @@ const ChatCont = ({isGroupChat}) => {
             <AlternativeNavbar chat={true}/>
             <div className='wrapper'>
                 <div className='container-chat'>
-                    <Chat isGroupChat={isGroupChat}/>
+                    <Chat isGroupChat={isGroupChat} chatMsgBox={chatMsgBox}/>
                 </div>
             </div>
         </div>

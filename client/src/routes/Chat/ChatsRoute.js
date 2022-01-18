@@ -7,8 +7,8 @@ const ChatsRoute = () => {
 
     return (
         <>
-            <Route exact path='/chats'><Chats isGroupChat={false}/></Route>
-            <Route exact path='/chat/:curr_user/:user'><Chats isGroupChat={false}/></Route>
+            <Route exact path='/chats'><Chats/></Route>
+            <Route exact path='/chat/:curr_user/:user'><Chats chatMsgBox={true}/></Route>
             <Route exact path='/chat/group/:chatid'><Chats isGroupChat={true}/></Route>
         </>
     )
