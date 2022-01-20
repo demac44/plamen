@@ -80,10 +80,10 @@ import emojis from './controllers/Lists/emojis.cjs'
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
     app.use('/api/test', test)
-    app.use('/api/cities', cities)
-    app.use('/api/universities', universities)
-    app.use('/api/interests', interests)
-    app.use('/api/emojis', emojis)
+    app.use('/api/cities', auth, cities)
+    app.use('/api/universities', auth, universities)
+    app.use('/api/interests', auth, interests)
+    app.use('/api/emojis', auth, emojis)
 
 
     

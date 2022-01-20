@@ -6,7 +6,8 @@ const SearchUniversity = ({setUniCB}) => {
     const [universities, setUniversities] = useState([])
 
     const func = async () => {
-        axios.get("http://localhost:8000/api/universities").then(res => setUniversities(res?.data))
+        // axios.get("http://localhost:8000/api/universities").then(res => setUniversities(res?.data))
+        axios.get("/api/universities").then(res => setUniversities(res?.data))
     }
     useEffect(()=>{
         func()

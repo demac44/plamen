@@ -6,7 +6,8 @@ const SearchInterests = ({setInterest}) => {
     const [interests, setInterests] = useState([])
 
     const func = async () => {
-        await axios.get("http://localhost:8000/api/interests").then(res=>setInterests(res?.data))
+        // await axios.get("http://localhost:8000/api/interests").then(res=>setInterests(res?.data))
+        await axios.get("/api/interests").then(res=>setInterests(res?.data))
     }
 
     useEffect(()=>{

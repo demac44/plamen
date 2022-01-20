@@ -9,7 +9,8 @@ const CitiesSelect = ({country, setCityCB}) => {
     const [list, setList] = useState([])
 
     const func = async () => {
-        await axios.get('http://localhost:8000/api/cities').then(res => setFullList(res?.data[0]))
+        // await axios.get('http://localhost:8000/api/cities').then(res => setFullList(res?.data[0]))
+        await axios.get('/api/cities').then(res => setFullList(res?.data[0]))
     }
     
     useEffect(()=>{
