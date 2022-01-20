@@ -19,8 +19,8 @@ const checkUsername = async (username) => {
 }
 
 const insertInfo = async (id, gender, bdate) => {
-    const userInfo = `INSERT INTO user_info (userID, gender, bDate, date_joined)
-                      VALUES (${id} ,"${gender}", STR_TO_DATE("${bdate}", '%Y-%m-%d'), null)`
+    const userInfo = `INSERT INTO user_info (userID, gender, bDate)
+                      VALUES (${id} ,"${gender}", STR_TO_DATE("${bdate}", '%Y-%m-%d'))`
 
    return await connection.promise().query(userInfo).then(()=>{return true}) 
 }
