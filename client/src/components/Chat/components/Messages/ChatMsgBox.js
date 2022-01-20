@@ -5,10 +5,11 @@ import { useQuery, useMutation } from 'react-apollo'
 import SendMsg from './SendMsg';
 import Message from './Message';
 import ChatBar from '../ChatBar';
-import { useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 
 const ChatMsgBox = () => {
     const usernm = useSelector(state => state?.isAuth?.user?.username)
+    const {state} = useLocation()
     const {user} = useParams()
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
@@ -22,7 +23,6 @@ const ChatMsgBox = () => {
             receiver: user
         },
     })
-
 
     const loaderCallback = useCallback(val => {
         setLoader(val)
@@ -81,7 +81,8 @@ const ChatMsgBox = () => {
         })
         return
     }
-      
+    
+    if(!state) return <Redirect to='/chats'/>  
 
     return (
         <div className='chat-msg-box'> 
@@ -134,7 +135,7 @@ const NEW_MESSAGE = gql`
 `
 
 const DELETE_MSG_NOTIFICATIONS = gql`
-    mutation($sender: String!, $receiver: String!){
+    mutation($sender: String, $receiver: String){
         delete_msg_notifications(sender: $sender, receiver: $receiver){
             receiver
         }

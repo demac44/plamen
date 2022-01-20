@@ -26,11 +26,10 @@ const ChatListGroup = ({data}) => {
 
 
     return (
-        <Link to={{pathname:'/chat/group/'+data?.groupChatId, 
+        <Link to={{pathname:'/group_chat/'+data?.groupChatId, 
                 state:{
                     name: data?.name,
                     group_image: data?.group_image,
-                    isGroupChat: true
                 }}}     
                 className='chat-user-box flex-ac'>
 

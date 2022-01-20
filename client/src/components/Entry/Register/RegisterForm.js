@@ -3,12 +3,14 @@ import { NavLink } from 'react-router-dom'
 import ErrorMsg from '../ErrorMsg'
 import axios from 'axios'
 import logo from '../../../images/logo-min.jpg'
-    
+import {useHistory}from 'react-router-dom'
+
 const RegisterForm = () => {    
     const [selectYear, setSelectYear] = useState([])
     const [selectDay, setSelectDay] = useState([])
     const [loading, setLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState('')
+    const history = useHistory()
 
     useEffect(()=>{
         let years = []
@@ -93,8 +95,7 @@ const RegisterForm = () => {
                         setErrorMsg(res.data.error)
                         return
                     } else {
-                        window.location.href='/login'
-                        return
+                        history.replace('/login')
                     }
                 })
             } catch (error) {

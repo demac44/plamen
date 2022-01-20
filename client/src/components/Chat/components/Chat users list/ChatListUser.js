@@ -74,7 +74,7 @@ export default memo(ChatListUser)
 
 
 const GET_INFO = gql`
-    query($receiver: String!, $sender: String!){
+    query($receiver: String, $sender: String){
         check_unread_msg(receiver: $receiver)
         last_message(receiver: $receiver, sender: $sender){
             msg_text

@@ -46,7 +46,7 @@ const GroupChatMsgBox = () => {
             }});
         }
         return subscribeNewMessage()
-    }, [messages])        
+    }, [messages, chatid])        
     
     
     useEffect(()=>{

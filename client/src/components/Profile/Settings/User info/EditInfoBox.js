@@ -62,41 +62,53 @@ const EditInfoBox = ({data}) => {
 
             <div className='flex-ctr'>
                 <h5>Country</h5>
-                <i className='fas fa-times clear-info' onClick={()=>setCountry('')}/>
-                <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={()=>setCountry('')}/>
+                    <input type='text' className='input' id='country' placeholder='Add country' value={country} readOnly={true}/>
+                </span>
                 <CountriesSelect setCountryCB={setCountryCB}/>     
             </div>  
 
             <div className='flex-ctr'>
                 <h5>City</h5>
-                <i className='fas fa-times clear-info' onClick={()=>setCity('')}/>
-                <input type='text' id='city' className='input' placeholder='Add city' value={city} readOnly={true}/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={()=>setCity('')}/>
+                    <input type='text' id='city' className='input' placeholder='Add city' value={city} readOnly={true}/>
+                </span>
                 <CitiesSelect country={country} setCityCB={setCityCB}/>
             </div>
 
             <div className='flex-ctr'>
                 <h5>Job</h5>
-                <i className='fas fa-times clear-info' onClick={()=>setJob('')}/>
-                <input type='text' className='input' id='job' placeholder='Add job' value={job} onChange={(e)=>setJob(e.target.value)}/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={()=>setJob('')}/>
+                    <input type='text' className='input' id='job' placeholder='Add job' value={job} onChange={(e)=>setJob(e.target.value)}/>
+                </span>
             </div>
 
             <div className='flex-ctr'>
                 <h5>University</h5>
-                <i className='fas fa-times clear-info' onClick={()=>setUni('')}/>
-                <input type='text' className='input' id='uni' placeholder='Add university' value={uni} readOnly/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={()=>setUni('')}/>
+                    <input type='text' className='input' id='uni' placeholder='Add university' value={uni} readOnly/>
+                </span>
                 <SearchUniversity setUniCB={setUniCB}/>
             </div>            
 
             <div className='flex-ctr'>
                 <h5>High school</h5>
-                <i className='fas fa-times clear-info' onClick={(e)=>setHS('')}/>
-                <input type='text' className='input' id='hs' placeholder='Add high school' value={hs} onChange={(e)=>setHS(e.target.value)}/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={(e)=>setHS('')}/>
+                    <input type='text' className='input' id='hs' placeholder='Add high school' value={hs} onChange={(e)=>setHS(e.target.value)}/>
+                </span>
             </div>    
 
             <div className='flex-ctr'>
                 <h5>Phone</h5>
-                <i className='fas fa-times clear-info' onClick={()=>setPNum('')}/>
-                <input type='text' className='input' id='num' placeholder='Add phone number' value={pnum} onChange={(e)=>setPNum(e.target.value)}/>
+                <span className='flex-ac wh-100'>
+                    <i className='fas fa-times clear-info' onClick={()=>setPNum('')}/>
+                    <input type='text' className='input' id='num' placeholder='Add phone number' value={pnum} onChange={(e)=>setPNum(e.target.value)}/>
+                </span>
             </div>  
 
             <button type='submit' className='btn save-btn'>SAVE</button>

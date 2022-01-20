@@ -19,7 +19,7 @@ const CitiesSelect = ({country, setCityCB}) => {
 
     useEffect(()=>{
         setList(filterRes(fullList[`${country}`], str)?.filter(onlyUnique))
-    }, [country, str])
+    }, [country, str, fullList])
 
     return (
         <span className='search-cities-box flex-ctr'>

@@ -34,7 +34,7 @@ const Navbar = () => {
         if(newMsgNotif?.data?.newMsgNotification){
             newMsgNotif?.data?.newMsgNotification?.receiver===usernm && setMsgNotifCount(count?.data?.count_newMsgs?.msgCount+1)
         }
-    }, [newMsgNotif, count, newMsg?.data?.newMessage?.msg_text]) 
+    }, [newMsgNotif, count, newMsg?.data?.newMessage?.msg_text, usernm]) 
 
     const closeDropdown = () => {
         document.querySelector('.wrapper').addEventListener('click', () => {

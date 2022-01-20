@@ -53,7 +53,7 @@ const Profile = () => {
         }
         return
     }
-
+    
     useEffect(()=>{
         setIsLoading(true)
         if(!loading && (username===usernm)) {
@@ -62,9 +62,8 @@ const Profile = () => {
             setMyProfile(false)
         }
         window.scrollTo(0,0)
-        profileVisit()
         setIsLoading(false)
-        return null
+        profileVisit()
     }, [username, usernm, refetch, history, myprofile, data, loading])
 
 

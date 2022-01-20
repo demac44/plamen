@@ -119,6 +119,12 @@
     min-width: 20px;
     color: rgb(175, 44, 44);
 }
+@media screen and (max-width: 768px){
+    .bDate-form select{
+        width: 100%;
+        margin-top: 10px;
+    }
+}
  
 @media screen and (max-width: 447px){
     .edit-user-info-box div{
@@ -131,10 +137,6 @@
     }
     .edit-user-info-box select{
         margin-top: 5px;
-    }
-    .bDate-form select{
-        width: 100%;
-        margin-top: 10px;
     }
     .search-cities-box{
         padding: 0;
