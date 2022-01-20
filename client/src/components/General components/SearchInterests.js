@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
-
-import {interests} from '../../Assets/interests.js'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const SearchInterests = ({setInterest}) => {
     const [query, setQuery] = useState('')
+    const [interests, setInterests] = useState([])
+
+    const func = async () => {
+        await axios.get("http://localhost:8000/api/interests").then(res=>setInterests(res?.data))
+    }
+
+    useEffect(()=>{
+        func()
+    }, [])
 
     return (
         <div className='flex-ctr search-interests-box'>
@@ -15,7 +23,7 @@ const SearchInterests = ({setInterest}) => {
                 onChange={(e)=>setQuery(e.target.value)}
             />
             {query.length > 0 && <div className='search-interests-drop'>
-                {filterInterests(interests, query).map(i => <p onClick={()=>{setInterest(i.title);setQuery('')}} key={i.title}>{i.title}</p>)}
+                {filterInterests(interests, query)?.map(i => <p onClick={()=>{setInterest(i.title);setQuery('')}} key={i.title}>{i.title}</p>)}
             </div>}
         </div>
     )

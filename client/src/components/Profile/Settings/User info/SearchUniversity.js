@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
-import {universities} from '../../../../Assets/universities.js'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 const SearchUniversity = ({setUniCB}) => {
     const [query, setQuery] = useState('')
+    const [universities, setUniversities] = useState([])
+
+    const func = async () => {
+        axios.get("http://localhost:8000/api/universities").then(res => setUniversities(res?.data))
+    }
+    useEffect(()=>{
+        func()
+    }, [])
 
     return (
         <span className='search-uni-box flex-ctr'>
