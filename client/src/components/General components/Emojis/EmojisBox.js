@@ -17,7 +17,8 @@ const EmojisBox = ({emojiCB, visible}) => {
     }, [])
 
     const func = async () => {
-        await axios.get("http://localhost:8000/api/emojis").then(res=>setEmojis(res?.data?.data)).catch(err => console.log(err))
+        // await axios.get("http://localhost:8000/api/emojis").then(res=>setEmojis(res?.data?.data)).catch(err => console.log(err))
+        await axios.get("/api/emojis").then(res=>setEmojis(res?.data?.data)).catch(err => console.log(err))
     }
 
     useEffect(()=>{
