@@ -1,15 +1,12 @@
-import React, { memo, useCallback } from 'react'
-import emojis from '../../../Assets/emojis'
-import EmojiAnimals from './EmojiAnimals'
-import EmojisActivities from './EmojisActivities'
-import EmojisFood from './EmojisFood'
-import EmojisPeople from './EmojisPeople'
-import EmojisPlaces from './EmojisPlaces'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import EmojisRecent from './EmojisRecent'
-import EmojisSymbols from './EmojisSymbols'
 import './style.css'
 
+import axios from 'axios'
+
 const EmojisBox = ({emojiCB, visible}) => {
+    const [emojis, setEmojis] = useState([])
+
     const setRecentEmojis = useCallback(val => {
         const lsEmojis = JSON.parse(localStorage.getItem('recent-emojis'))
         if(!lsEmojis?.emojis){
@@ -19,15 +16,21 @@ const EmojisBox = ({emojiCB, visible}) => {
         }
     }, [])
 
+    const func = async () => {
+        await axios.get("http://localhost:8000/api/emojis").then(res=>setEmojis(res?.data?.data)).catch(err => console.log(err))
+    }
+
+    useEffect(()=>{
+        func()
+    }, [])
+
     return (
         <div className='emojis-box' style={{visibility: visible ? 'visible' : 'hidden'}}>
             <EmojisRecent emojiCB={emojiCB} setRecentEmojis={setRecentEmojis}/>
-            <EmojisPeople emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisPeople}/>
-            <EmojiAnimals emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisAnimals}/>
-            <EmojisFood emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisFood}/>
-            <EmojisActivities emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisActivities}/>
-            <EmojisPlaces emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisPlaces}/>
-            <EmojisSymbols emojiCB={emojiCB} setRecentEmojis={setRecentEmojis} emojis={emojis.emojisSymbols}/>
+            <p className='emojis-title'>Emojis</p>
+            <div className='emojis-sub-box'> 
+                {emojis.map(emoji => <p key={emoji.e} onClick={()=>{emojiCB(emoji.e);setRecentEmojis(emoji.e)}}>{emoji.e}</p>)}
+            </div>
         </div>
     )
 }

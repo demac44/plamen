@@ -1,7 +1,7 @@
 {
-  "name": "socialmediaapp",
+  "name": "plamen",
   "version": "1.0.0",
-  "description": "Social media app",
+  "description": "plamen",
   "main": "server.js",
   "engines": {
     "node": "17.2.0",
@@ -12,7 +12,7 @@
     "server": "nodemon server.js client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "build": "npm run build",
     "bld": "cd client && npm run build"
   },

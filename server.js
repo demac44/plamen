@@ -5,7 +5,6 @@ if (process.env.SESSION_SECRET !== 'production') {
 import express from 'express';
 import cors from 'cors'
 import {join, resolve} from 'path'
-import { graphqlHTTP } from 'express-graphql';
 import {schema} from './Schema/schema.js';
 import cookieParser from 'cookie-parser'
 import { SubscriptionServer } from 'subscriptions-transport-ws';
@@ -27,6 +26,10 @@ import register from './controllers/register.js'
 import logout from './controllers/logout.js'
 import reset_password from './controllers/Retrieve password/reset_password.js'
 import test from './controllers/test.js'
+import cities from './controllers/Lists/cities.cjs'
+import universities from './controllers/Lists/universities.cjs'
+import interests from './controllers/Lists/interests.cjs'
+import emojis from './controllers/Lists/emojis.cjs'
 
 
 (async function () {
@@ -72,18 +75,17 @@ import test from './controllers/test.js'
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     
-
-    // app.use('/graphiql', auth, graphqlHTTP({
-    //     schema,
-    //     graphiql:true
-    // }))
-    
-    
     app.use('/api/login', login)
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)
     app.use('/api/reset_password', reset_password)
     app.use('/api/test', test)
+    app.use('/api/cities', cities)
+    app.use('/api/universities', universities)
+    app.use('/api/interests', interests)
+    app.use('/api/emojis', emojis)
+
+
     
     app.get('*', (req,res)=>{
         res.sendFile(join(__dirname, "client", "build", "index.html"))
