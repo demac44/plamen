@@ -277,7 +277,7 @@
     }
     .alternative-navbar{
         position: fixed;
-        top: 0;
+        top: 60px;
     }
 }
 

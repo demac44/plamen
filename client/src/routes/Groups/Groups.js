@@ -18,25 +18,19 @@ query ($uid: Int!){
     `
     
 const Groups = () => {
-    const [leftnav, setLeftnav] = useState(false)
     const uid = useSelector(state => state.isAuth.user?.userID)
-
     const {data, loading} = useQuery(GET_GROUPS, {
         variables:{
             uid
         }
     })
 
-    const leftNavCallback = useCallback(val =>{
-        setLeftnav(val)
-    }, [setLeftnav])
-
     return (
         <>
-            <Navbar callback={leftNavCallback}/>
+            <Navbar/>
             <AlternativeNavbar/>
             <div className='wrapper'>
-                <Sidebar show={leftnav}/>
+                <Sidebar/>
                 <div className='container-main'>
                     {!loading && <GroupsGrid groups={data?.get_groups}/>}
                 </div>

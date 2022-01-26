@@ -154,7 +154,6 @@
     top: 8px;
     right: 10px;
 }
-
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1200px){
@@ -191,6 +190,9 @@
     }
     .create-group-form{
         width: 70%;
+    }
+    .groups-grid{
+        padding-top: 60px;
     }
 }   
 

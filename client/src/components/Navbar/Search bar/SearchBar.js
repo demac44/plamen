@@ -39,7 +39,7 @@ const SearchBar = ({chat, handleOpen}) => {
                     onChange={(e)=>setQuery(e.target.value)} 
                     placeholder='Search'
                     value={query}
-                    style={{borderRadius: dropdown < 1 ? '0 50px 50px 0' : '0', 
+                    style={{borderRadius: dropdown < 1 ? '0 10px 10px 0' : '0', 
                             borderRight: dropdown < 1 ? '1px solid #3f3f3f' : 'none'}} 
                     onFocus={()=>{
                         handleOpen()

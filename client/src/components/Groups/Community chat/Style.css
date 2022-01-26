@@ -155,6 +155,13 @@
     }
 }
 
+@media screen and (max-width: 768px){
+    .community-chat-container{
+        padding-top: 60px;
+        height: calc(100vh - 60px);
+    }
+}
+
 @media screen and (max-width:447px){
     .comm_msg_text{
         font-size: 14px;
