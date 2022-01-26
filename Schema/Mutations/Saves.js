@@ -11,9 +11,10 @@ export const SAVE_POST = {
     },
     resolve(_, args) {
         const {postID, userID} = args
-        const sql = `INSERT INTO saves (userID, postID) 
-                    VALUES (${userID}, ${postID})`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO saves (userID, postID) 
+            VALUES (${userID}, ${postID})
+        `)
         return args
     }
 }
@@ -26,8 +27,7 @@ export const REMOVE_SAVED = {
     }, 
     resolve(_, args){
         const {postID, userID} = args
-        const sql = `DELETE FROM saves WHERE postID=${postID} AND userID=${userID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM saves WHERE postID=${postID} AND userID=${userID}`)
         return args
     }
 }

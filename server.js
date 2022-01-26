@@ -30,6 +30,7 @@ import cities from './controllers/Lists/cities.cjs'
 import universities from './controllers/Lists/universities.cjs'
 import interests from './controllers/Lists/interests.cjs'
 import emojis from './controllers/Lists/emojis.cjs'
+import verify_token from './controllers/verify_token.js'
 
 
 (async function () {
@@ -84,6 +85,7 @@ import emojis from './controllers/Lists/emojis.cjs'
     app.use('/api/universities', auth, universities)
     app.use('/api/interests', auth, interests)
     app.use('/api/emojis', auth, emojis)
+    app.use('/api/verify_token', verify_token)
 
 
     

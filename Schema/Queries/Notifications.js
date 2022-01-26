@@ -8,14 +8,15 @@ export const GET_NOTIFICATIONS = {
     args:{
         receiver_id: {type:GraphQLInt}
     },
-    resolve(_, args){
+    async resolve(_, args){
         const {receiver_id} = args
-        const sql = `SELECT username, profile_picture, time_sent, postID, type, Nid, sender_id
-                    FROM notifications 
-                    JOIN users ON sender_id=users.userID 
-                    WHERE disabled=false 
-                    AND receiver_id=${receiver_id}
-                    ORDER BY Nid DESC`
-        return connection.promise().query(sql).then((res)=>{return res[0]})
+        return await connection.promise().query(`
+            SELECT username, profile_picture, time_sent, postID, type, Nid, sender_id
+            FROM notifications 
+            JOIN users ON sender_id=users.userID 
+            WHERE disabled=false 
+            AND receiver_id=${receiver_id}
+            ORDER BY Nid DESC
+        `).then((res)=>{return res[0]})
     }
 }  

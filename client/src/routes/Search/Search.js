@@ -54,7 +54,7 @@ const Search = () => {
             })
         }
 
-    const loadMoreComm = () => {
+    const loadMoreCommunities = () => {
         fetchMore({
             variables:{
                 offset:data?.get_all_groups?.length,
@@ -79,7 +79,7 @@ const Search = () => {
             <div className='wrapper'>
                 <Sidebar/>
                 <div className='container-main'>
-                    <div className='container-left flex-col-ctr'>
+                    <div className='container-left flex-col'>
                         <h3 className='section-title flex-ctr'>Search results</h3>
 
                         {(users?.length>0) && <h4 className='search-res-section-title flex-ctr'>Users</h4>}
@@ -108,7 +108,7 @@ const Search = () => {
                                                                     />)}
 
                         {(!loading && fetchComm && communities?.length>=15) && 
-                            <div className='search-res-load-more' onClick={loadMoreComm}>Load more</div>}
+                            <div className='search-res-load-more' onClick={loadMoreCommunities}>Load more</div>}
 
                     </div>
                     <div className='container-right'>

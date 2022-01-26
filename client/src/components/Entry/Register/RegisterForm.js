@@ -78,8 +78,8 @@ const RegisterForm = () => {
             try {
                 axios({
                     method:'POST',
-                    // url: 'http://localhost:8000/api/register',
-                    url: '/api/register',
+                    url: 'http://localhost:8000/api/register',
+                    // url: '/api/register',
                     data: {
                         username,
                         fname, 

@@ -21,15 +21,18 @@ export const CREATE_GROUP = {
     },
     async resolve(_, args) {
         const {group_name, group_creator_id, closed, group_description, group_tags} = args
-        const sql = `INSERT INTO communities (group_name, group_creator_id, closed) 
-                    VALUES ("${group_name}", ${group_creator_id}, ${closed})`
-        const res = await connection.promise().query(sql).then(res=>{return res[0]})
-        const sql2 = `INSERT INTO community_info (groupID, group_description, group_tags)
-                        VALUES (${res.insertId}, "${group_description}", "${group_tags}")`
-        const sql3 = `INSERT INTO community_users (groupID, userID, roleID)
-                        VALUES (${res.insertId}, ${group_creator_id}, 1)`
-        connection.query(sql2)
-        connection.query(sql3)
+        const res = await connection.promise().query(`
+            INSERT INTO communities (group_name, group_creator_id, closed) 
+            VALUES ("${group_name}", ${group_creator_id}, ${closed})
+        `).then(res=>{return res[0]})
+        connection.query(`
+            INSERT INTO community_info (groupID, group_description, group_tags)
+            VALUES (${res.insertId}, "${group_description}", "${group_tags}")
+        `)
+        connection.query(`
+            INSERT INTO community_users (groupID, userID, roleID)
+            VALUES (${res.insertId}, ${group_creator_id}, 1)
+        `)
         return args
     }
 }
@@ -45,9 +48,10 @@ export const CREATE_GROUP_POST = {
     },
     resolve (_, args){
         const {userID, post_text, url, groupID, type} = args
-        const sql = `INSERT INTO community_posts (groupID, userID, post_text, url, type)
-                    VALUES (${groupID}, ${userID}, "${post_text}", "${url}", "${type}")`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_posts (groupID, userID, post_text, url, type)
+            VALUES (${groupID}, ${userID}, "${post_text}", "${url}", "${type}")
+        `)
         return args
     }
 }
@@ -58,8 +62,7 @@ export const DELETE_GROUP_POST = {
     },
     resolve(_, args){
         const {postID} = args
-        const sql = `DELETE FROM community_posts WHERE postID=${postID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_posts WHERE postID=${postID}`)
         return args
     } 
 }
@@ -73,9 +76,10 @@ export const ADD_GP_COMMENT = {
     },
     resolve(_, args) {
         const {userID, postID, comment_text} = args
-        const sql = `INSERT INTO community_posts_comments (postID, userID, comment_text)
-                    VALUES (${postID} ,${userID}, "${comment_text}")`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_posts_comments (postID, userID, comment_text)
+            VALUES (${postID} ,${userID}, "${comment_text}")
+        `)
         return args
     }
 }
@@ -88,8 +92,7 @@ export const REMOVE_GP_COMMENT = {
     },
     resolve(_, args){
         const {commentID} = args
-        const sql = `DELETE FROM community_posts_comments WHERE commentID=${commentID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_posts_comments WHERE commentID=${commentID}`)
         return args
     } 
 }
@@ -102,9 +105,10 @@ export const LIKE_GP_POST = {
     },
     resolve(_, args) {
         const {postID, userID} = args
-        const sql = `INSERT INTO community_posts_likes (userID, postID) 
-                    VALUES (${userID}, ${postID})`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_posts_likes (userID, postID) 
+            VALUES (${userID}, ${postID})
+        `)
         return args
     }
 }
@@ -117,8 +121,7 @@ export const REMOVE_GP_LIKE = {
     }, 
     resolve(_, args){
         const {postID, userID} = args
-        const sql = `DELETE FROM community_posts_likes WHERE postID=${postID} AND userID=${userID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_posts_likes WHERE postID=${postID} AND userID=${userID}`)
         return args
     }
 }
@@ -132,9 +135,10 @@ export const SAVE_GP = {
     },
     resolve(_, args) {
         const {postID, userID, groupID} = args
-        const sql = `INSERT INTO community_posts_saved (userID, postID, groupID) 
-                    VALUES (${userID}, ${postID}, ${groupID})`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_posts_saved (userID, postID, groupID) 
+            VALUES (${userID}, ${postID}, ${groupID})
+        `)
         return args
     }
 }
@@ -147,8 +151,7 @@ export const REMOVE_SAVED_GP = {
     }, 
     resolve(_, args){
         const {postID, userID} = args
-        const sql = `DELETE FROM community_posts_saved WHERE postID=${postID} AND userID=${userID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_posts_saved WHERE postID=${postID} AND userID=${userID}`)
         return args
     }
 }
@@ -161,9 +164,10 @@ export const JOIN_GROUP = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `INSERT INTO community_members (groupID, userID, roleID)
-                    VALUES (${groupID}, ${userID}, 4)`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_members (groupID, userID, roleID)
+            VALUES (${groupID}, ${userID}, 4)
+        `)
         return args
     }
 }
@@ -176,8 +180,7 @@ export const LEAVE_GROUP = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`)
         return args
     }
 }
@@ -190,9 +193,10 @@ export const JOIN_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `INSERT INTO community_join_requests (userID, groupID)
-                     VALUES (${userID}, ${groupID})`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_join_requests (userID, groupID)
+            VALUES (${userID}, ${groupID})
+        `)
         return args
     }
 }
@@ -205,8 +209,7 @@ export const REMOVE_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`)
         return args
     }
 }
@@ -219,11 +222,11 @@ export const ACCEPT_REQUEST = {
     },
     async resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        const sql2 = `INSERT INTO community_members (groupID, userID, roleID)
-                        VALUES (${groupID}, ${userID}, 4)`
-        await connection.promise().query(sql2).then(()=>{
-            connection.query(sql)
+        await connection.promise().query(`
+            INSERT INTO community_members (groupID, userID, roleID)
+            VALUES (${groupID}, ${userID}, 4)
+        `).then(()=>{
+            connection.query(`DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`)
             return
         })
         return args
@@ -238,8 +241,7 @@ export const DENY_REQUEST = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_join_requests WHERE userID=${userID} AND groupID=${groupID}`)
         return args
     }
 }
@@ -252,10 +254,8 @@ export const CHANGE_VISIBILITY = {
     },
     async resolve(_, args){
         const {groupID, closed} = args
-        const sql = `UPDATE communities SET closed=${!closed} WHERE groupID=${groupID}`
-        const get_req = `SELECT userID FROM community_join_requests WHERE groupID=${groupID}`
         if(closed){
-            await connection.promise().query(get_req).then(res=>{
+            await connection.promise().query(`SELECT userID FROM community_join_requests WHERE groupID=${groupID}`).then(res=>{
                 let ids = '('
                 let ins = `INSERT INTO community_members (userID, groupID, roleID) 
                 VALUES `
@@ -269,7 +269,7 @@ export const CHANGE_VISIBILITY = {
                 connection.query(ins.slice(0,-1))
                 connection.query(q)
             })
-            .then(()=>{connection.query(sql);return})
+            .then(()=>{connection.query(`UPDATE communities SET closed=${!closed} WHERE groupID=${groupID}`);return})
             return args
         } else {
             connection.query(sql)
@@ -287,12 +287,13 @@ export const CHANGE_GROUP_INFO = {
     },
     resolve(_, args){
         const {groupID, group_description, group_rules} = args
-        const sql = `UPDATE community_info 
-                     SET
-                        group_description="${group_description}",
-                        group_rules="${group_rules}"
-                     WHERE groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE community_info 
+            SET
+            group_description="${group_description}",
+            group_rules="${group_rules}"
+            WHERE groupID=${groupID}
+        `)
         return args
     }
 }
@@ -304,8 +305,7 @@ export const CHANGE_COMMUNITY_BANNER = {
     },
     resolve(_, args){
         const {groupID, banner_image} = args
-        const sql = `UPDATE community_info SET banner_image="${banner_image}" WHERE groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`UPDATE community_info SET banner_image="${banner_image}" WHERE groupID=${groupID}`)
         return args
     }
 }
@@ -318,10 +318,11 @@ export const CHANGE_GROUP_NAME = {
     },
     resolve(_, args){
         const {groupID, group_name} = args
-        const sql = `UPDATE communities
-                     SET group_name="${group_name}"
-                     WHERE groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE communities
+            SET group_name="${group_name}"
+            WHERE groupID=${groupID}
+        `)
         return args
     }
 }
@@ -333,11 +334,12 @@ export const CHANGE_GROUP_BANNER_IMG = {
     },
     resolve(_, args){
         const {groupID, banner_image} = args
-        const sql = `UPDATE community_info 
-                     SET
-                        banner_image="${banner_image}"
-                     WHERE groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE community_info 
+            SET
+            banner_image="${banner_image}"
+            WHERE groupID=${groupID}
+        `)
         return args
     }
 }
@@ -349,11 +351,12 @@ export const CHANGE_GROUP_TAGS= {
     },
     resolve(_, args){
         const {groupID, group_tags} = args
-        const sql = `UPDATE community_info 
-                     SET
-                        group_tags="${group_tags}"
-                     WHERE groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE community_info 
+            SET
+            group_tags="${group_tags}"
+            WHERE groupID=${groupID}
+        `)
         return args
     }
 }
@@ -368,9 +371,10 @@ export const REPORT_GROUP_POST = {
     },
     resolve(_, args){
         const {postID, reporterId, groupID, reasons} = args
-        const sql = `INSERT INTO community_posts_reports (postID, reporterId, groupID, reasons)
-                        VALUES (${postID}, ${reporterId}, ${groupID}, "${reasons}")`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO community_posts_reports (postID, reporterId, groupID, reasons)
+            VALUES (${postID}, ${reporterId}, ${groupID}, "${reasons}")
+        `)
         return args
     }
 }
@@ -383,8 +387,7 @@ export const ALLOW_REPORTED_POST = {
     },
     resolve(_, args){
         const {reportID} = args
-        const sql = `DELETE FROM community_posts_reports WHERE reportID=${reportID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_posts_reports WHERE reportID=${reportID}`)
         return args
     }
 }
@@ -398,10 +401,8 @@ export const REMOVE_REPORTED_POST = {
     },
     async resolve(_, args){
         const {postID, reportID} = args
-        const sql = `DELETE FROM community_posts WHERE postID=${postID}`
-        const sql2 = `DELETE FROM community_posts_reports WHERE reportID=${reportID}`
-        await connection.promise().query(sql).then(()=>{
-            connection.query(sql2)
+        await connection.promise().query(`DELETE FROM community_posts WHERE postID=${postID}`).then(()=>{
+            connection.query(`DELETE FROM community_posts_reports WHERE reportID=${reportID}`)
             return
         })
         return args
@@ -416,8 +417,7 @@ export const REMOVE_GROUP_USER = {
     },
     resolve(_, args){
         const {userID, groupID} = args
-        const sql = `DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_members WHERE userID=${userID} AND groupID=${groupID}`)
         return args
     }
 }
@@ -431,11 +431,12 @@ export const CHANGE_MEMBER_ROLE = {
     },
     resolve(_, args){
         const {userID, groupID, roleID} = args
-        const sql = `UPDATE community_members 
-                     SET roleID=${roleID} 
-                     WHERE groupID=${groupID} 
-                     AND userID=${userID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE community_members 
+            SET roleID=${roleID} 
+            WHERE groupID=${groupID} 
+            AND userID=${userID}
+        `)
         return args
     }
 }
@@ -455,10 +456,11 @@ export const SEND_COMMUNITY_MESSAGE = {
         const {groupID, userID, msg_text, url, type, username, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
 
-        const sql = `INSERT INTO community_chat_messages (groupID, userID, msg_text, url, type)
-                     VALUES (${groupID}, ${userID}, "${encrypted}", "${url}", "${type}")`
+        const msg = await connection.promise().query(`
+            INSERT INTO community_chat_messages (groupID, userID, msg_text, url, type)
+            VALUES (${groupID}, ${userID}, "${encrypted}", "${url}", "${type}")
+        `).then(res=>{return res[0]})
 
-        const msg = await connection.promise().query(sql).then(res=>{return res[0]})
         pubsub.publish('NEW_COMMUNITY_MESSAGE', {newCommunityMessage: {
                                         groupID, 
                                         msg_text, 
@@ -482,8 +484,7 @@ export const DELETE_COMMUNITY_MESSAGE = {
     },
     resolve(_, args){
         const {msgID} = args
-        const sql = `DELETE FROM community_chat_messages WHERE msgID=${msgID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM community_chat_messages WHERE msgID=${msgID}`)
         return args
     }
 }

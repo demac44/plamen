@@ -12,7 +12,7 @@ const GroupChatMsgBox = () => {
     const [loader, setLoader] = useState(false)
     const [fetchBtn, setFetchBtn] = useState(false)
     const {chatid} = useParams()
-    const messages = useQuery(GET_GROUP_MESSAGES, {
+    const {data, subscribeToMore, loading, fetchMore} = useQuery(GET_GROUP_MESSAGES, {
         variables: {
             groupChatId: parseInt(chatid),
             limit:50,
@@ -28,7 +28,7 @@ const GroupChatMsgBox = () => {
     
     useLayoutEffect(()=>{ 
         const subscribeNewMessage = () => {
-            return messages?.subscribeToMore({
+            return subscribeToMore({
                 document: NEW_MESSAGE,
                 updateQuery: (prev, { subscriptionData }) => {
                     if (!subscriptionData?.data) return prev;
@@ -46,18 +46,18 @@ const GroupChatMsgBox = () => {
             }});
         }
         return subscribeNewMessage()
-    }, [messages, chatid])        
+    }, [data, chatid])        
     
     
     useEffect(()=>{
-        messages?.data?.get_group_messages?.length>=50 && setFetchBtn(true)
-    }, [messages?.data, uid])
+        data?.get_group_messages?.length>=50 && setFetchBtn(true)
+    }, [data, uid])
 
 
     const handleFetchMore = () => {
-        messages?.fetchMore({
+        fetchMore({
             variables:{
-                offset: messages?.data?.get_group_messages?.length,
+                offset: data?.get_group_messages?.length,
             },
             updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
@@ -66,23 +66,21 @@ const GroupChatMsgBox = () => {
                     return
                 }
                 return Object.assign({}, prev, {
-                  get_group_messages: [...messages?.data?.get_group_messages, ...fetchMoreResult?.get_group_messages]
+                  get_group_messages: [...data?.get_group_messages, ...fetchMoreResult?.get_group_messages]
                 });
             }
         })
         return
     }
-      
-    if(messages.error) console.log(messages.error); 
-
+    
 
     return (
         <div className='chat-msg-box'> 
         <>
-            <GroupChatBar chatID={parseInt(chatid)}/>
+            <GroupChatBar chatID={parseInt(chatid)} admin={data?.get_group_chat?.admin}/>
             <div className='chat-messages'>
                 {loader && <div className='flex-ctr msg-loader'><div className='small-spinner'></div></div>}
-                {!messages.loading && messages?.data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
+                {!loading && data?.get_group_messages?.map(msg => <GroupMessage msg={msg} key={msg.time_sent} loader={loader}/>)}
                 {fetchBtn && <div className='msg-load-more' onClick={handleFetchMore}>Load more</div>}
             </div>
             <SendGroupMsg chatID={parseInt(chatid)} loaderCallback={loaderCallback}/> 
@@ -96,6 +94,10 @@ export default memo(GroupChatMsgBox)
 
 const GET_GROUP_MESSAGES = gql`
     query ($groupChatId: Int!, $limit: Int, $offset: Int, $uid: Int!){
+        get_group_chat(groupChatId: $groupChatId){
+            admin
+            name
+        }
         get_group_messages (groupChatId: $groupChatId, limit: $limit, offset: $offset, userID: $uid){
             groupChatId
             msg_text

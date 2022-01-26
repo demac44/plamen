@@ -12,8 +12,7 @@ export const EDIT_PFP = {
     },
     resolve(_, args) {
         const {userID, profile_picture} = args
-        const sql = `UPDATE users SET profile_picture="${profile_picture}" WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`UPDATE users SET profile_picture="${profile_picture}" WHERE userID=${userID}`)
         return args
     }
 }
@@ -28,12 +27,13 @@ export const EDIT_INFO = {
     },  
     resolve(_, args) {
         const {userID, first_name, last_name, username} = args
-        const sql = `UPDATE users SET 
-                        first_name="${first_name}", 
-                        last_name="${last_name}", 
-                        username="${username}"
-                        WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE users SET 
+            first_name="${first_name}", 
+            last_name="${last_name}", 
+            username="${username}"
+            WHERE userID=${userID}
+        `)
         return userID
     }
 }
@@ -50,8 +50,7 @@ export const CHANGE_PASSWORD = {
     },
     async resolve(_, args){
         const {oldPassword, newPassword, userID} = args
-        const getOldPass = `SELECT pass FROM users WHERE userID=${userID}`
-        const oldPass = await connection.promise().query(getOldPass).then(res=>{return res[0][0]})
+        const oldPass = await connection.promise().query(`SELECT pass FROM users WHERE userID=${userID}`).then(res=>{return res[0][0]})
         const validPassword = await bcrypt.compare(oldPassword, oldPass.pass)
         if(!validPassword) {
             error = 'Invalid password'
@@ -61,8 +60,7 @@ export const CHANGE_PASSWORD = {
                 bcrypt.genSalt(10, (_, salt) => {
                     bcrypt.hash(newPassword, salt, (err, hash) => {
                         if(err) return err;
-                        const newPass = `UPDATE users SET pass="${hash}" WHERE userID=${userID}`
-                        connection.query(newPass)
+                        connection.query(`UPDATE users SET pass="${hash}" WHERE userID=${userID}`)
                         changed = true
                         return
                     })

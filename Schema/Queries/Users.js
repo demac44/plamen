@@ -11,15 +11,16 @@ export const GET_ALL_USERS = {
     },
     async resolve(_, args){
         const {limit, offset, userID} = args
-        const sql = `SELECT * FROM users 
-                     WHERE disabled=false 
-                     AND NOT EXISTS (
-                        (SELECT 1
-                        FROM blocked_users
-                        WHERE (blockedId = ${userID} AND blockerId =userID)
-                     ))
-                     LIMIT ${limit} OFFSET ${offset}`
-        return await connection.promise().query(sql).then((res)=>{return res[0]})
+        return await connection.promise().query(`
+            SELECT * FROM users 
+            WHERE disabled=false 
+            AND NOT EXISTS (
+            (SELECT 1
+            FROM blocked_users
+            WHERE (blockedId = ${userID} AND blockerId =userID)
+            ))
+            LIMIT ${limit} OFFSET ${offset}
+        `).then((res)=>{return res[0]})
     }    
 }    
 export const GET_USER = {
@@ -30,16 +31,16 @@ export const GET_USER = {
     },    
     async resolve(_, args) {
         const {userID, username} = args
-        const sql = `SELECT username,first_name, last_name, profile_picture, userID, last_seen, show_status FROM users 
-                     WHERE disabled=false
-                     AND username="${username}"
-                     AND NOT EXISTS (
-                        (SELECT 1
-                        FROM blocked_users
-                        WHERE (blockedId = ${userID} AND blockerId =userID)
-                        )
-                    ) `
-        return await connection.promise().query(sql).then((res)=>{return res[0][0]})
+        return await connection.promise().query(`
+            SELECT username,first_name, last_name, profile_picture, userID, last_seen, show_status FROM users 
+            WHERE disabled=false
+            AND username="${username}"
+            AND NOT EXISTS (
+            (SELECT 1
+            FROM blocked_users
+            WHERE (blockedId = ${userID} AND blockerId =userID)
+            )) 
+       `).then((res)=>{return res[0][0]})
     }    
 }
 
@@ -50,8 +51,9 @@ export const CHECK_EMAIL_CONFIRMED = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT email_confirmed FROM users WHERE userID=${userID}`
-        return await connection.promise().query(sql).then(res => {return res[0][0]?.email_confirmed==1 ? true : false})
+        return await connection.promise().query(`
+            SELECT email_confirmed FROM users WHERE userID=${userID}
+        `).then(res => {return res[0][0]?.email_confirmed==1 ? true : false})
     }
 }
 
@@ -62,8 +64,9 @@ export const GET_USER_INFO = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT * FROM user_info WHERE userID=${userID}`
-        return await connection.promise().query(sql).then(res=>{return res[0][0]})
+        return await connection.promise().query(`
+            SELECT * FROM user_info WHERE userID=${userID}
+        `).then(res=>{return res[0][0]})
     }
 }
 
@@ -74,8 +77,9 @@ export const GET_USER_INTERESTS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT interest FROM user_interests WHERE userID=${userID}`
-        return await connection.promise().query(sql).then(res=>{return res[0]})
+        return await connection.promise().query(`
+            SELECT interest FROM user_interests WHERE userID=${userID}
+        `).then(res=>{return res[0]})
     }
 }
 
@@ -87,8 +91,9 @@ export const IF_USER_BLOCKED = {
     },
     async resolve (_, args){
         const {blockedId, blockerId} = args
-        const sql = `SELECT EXISTS(SELECT 1 FROM blocked_users WHERE blockerId=${blockerId} AND blockedId=${blockedId} LIMIT 1) AS isBlocked`
-        return await connection.promise().query(sql).then(res=>{return res[0][0].isBlocked===1 ? true : false})
+        return await connection.promise().query(`
+            SELECT EXISTS(SELECT 1 FROM blocked_users WHERE blockerId=${blockerId} AND blockedId=${blockedId} LIMIT 1) AS isBlocked
+        `).then(res=>{return res[0][0].isBlocked===1 ? true : false})
     }
 }
 
@@ -99,10 +104,11 @@ export const GET_BLOCKED_USERS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT first_name,last_name,username,profile_picture,blockedId as userID FROM blocked_users
-                     JOIN users ON blockedId=users.userID 
-                     WHERE blockerId=${userID} AND disabled=false`
-        return await connection.promise().query(sql).then(res=>{return res[0]})
+        return await connection.promise().query(`
+            SELECT first_name,last_name,username,profile_picture,blockedId as userID FROM blocked_users
+            JOIN users ON blockedId=users.userID 
+            WHERE blockerId=${userID} AND disabled=false
+        `).then(res=>{return res[0]})
     }
 }
 export const COUNT_POSTS = {
@@ -112,7 +118,8 @@ export const COUNT_POSTS = {
     },
     async resolve(_, args){
         const {userID} = args
-        const sql = `SELECT COUNT(1) as noOfPosts FROM posts WHERE userID=${userID}`
-        return await connection.promise().query(sql).then(res=>{return res[0][0]?.noOfPosts})
+        return await connection.promise().query(`
+            SELECT COUNT(1) as noOfPosts FROM posts WHERE userID=${userID}
+        `).then(res=>{return res[0][0]?.noOfPosts})
     }
 }

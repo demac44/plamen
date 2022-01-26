@@ -12,8 +12,7 @@ export const SET_LAST_SEEN = {
     },
     resolve (_, args){
         const {userID} = args
-        const sql = `UPDATE users SET last_seen=NOW() WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`UPDATE users SET last_seen=NOW() WHERE userID=${userID}`)
         return args
     }
 }
@@ -26,8 +25,7 @@ export const PROFILE_VISIT = {
     },
     resolve(_, args){
         const {visitedId, visitorId} = args
-        const sql = `INSERT INTO profile_visits (visitorId, visitedId) VALUES (${visitorId}, ${visitedId})`
-        connection.query(sql)
+        connection.query(`INSERT INTO profile_visits (visitorId, visitedId) VALUES (${visitorId}, ${visitedId})`)
         return args
     }
 }
@@ -42,13 +40,11 @@ export const VERIFY_EMAIL = {
     },
     async resolve(_, args){
         const {email, code} = args
-        const checkCode = `SELECT * FROM email_verification_codes WHERE email="${email}" LIMIT 1`
-        const delCodes = `DELETE FROM email_verification_codes WHERE email="${email}"`
-        const res = await connection.promise().query(checkCode).then(res=>{return res[0][0]})
+        const res = await connection.promise().query(`SELECT * FROM email_verification_codes WHERE email="${email}" LIMIT 1`).then(res=>{return res[0][0]})
         if(res?.email && res?.email===email && res?.verification_code===code){
             const updateVerified = `UPDATE users SET email_confirmed=true WHERE email="${email}"`
             return await connection.promise().query(updateVerified).then(()=>{
-                connection.query(delCodes)
+                connection.query(`DELETE FROM email_verification_codes WHERE email="${email}"`)
                 return {error:false}
             })
         } else {
@@ -108,8 +104,7 @@ const sendCode = async (email) => {
         text: "Enter this code on plamen app to verify your email: 812R91",
         html: createHTML(code)
     }).then(()=>{
-        const sql = `INSERT INTO email_verification_codes (email, verification_code) VALUES ("${email}", "${code}")`
-        connection.query(sql)
+        connection.query(`INSERT INTO email_verification_codes (email, verification_code) VALUES ("${email}", "${code}")`)
     })
 }
 
@@ -135,12 +130,10 @@ export const DISABLE_ACCOUNT = {
     },
     async resolve(_, args){
         const {userID, password} = args
-        const getPass = `SELECT pass FROM users WHERE userID=${userID}`
-        const pass = await connection.promise().query(getPass).then(res=>{return res[0][0]})
+        const pass = await connection.promise().query(`SELECT pass FROM users WHERE userID=${userID}`).then(res=>{return res[0][0]})
         const validPassword = await bcrypt.compare(password, pass.pass)
         if(validPassword){
-            const sql = `UPDATE users SET disabled=true WHERE userID=${userID}`
-            connection.query(sql)
+            connection.query(`UPDATE users SET disabled=true WHERE userID=${userID}`)
             return {error: null}
         }
         else {
@@ -156,12 +149,10 @@ export const DELETE_ACCOUNT = {
     },
     async resolve(_, args){
         const {userID, password} = args
-        const getPass = `SELECT pass FROM users WHERE userID=${userID}`
-        const pass = await connection.promise().query(getPass).then(res=>{return res[0][0]})
+        const pass = await connection.promise().query(`SELECT pass FROM users WHERE userID=${userID}`).then(res=>{return res[0][0]})
         const validPassword = await bcrypt.compare(password, pass.pass)
         if(validPassword){
-            const sql = `DELETE FROM users WHERE userID=${userID}`
-            connection.query(sql)
+            connection.query(`DELETE FROM users WHERE userID=${userID}`)
             return {error: null}
         }
         else {
@@ -177,8 +168,7 @@ export const UNDISABLE_ACCOUNT = {
     },
     resolve(_, args){
         const {userID} = args
-        const sql = `UPDATE users SET disabled=false WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`UPDATE users SET disabled=false WHERE userID=${userID}`)
         return args
     }
 }
@@ -194,12 +184,10 @@ export const EDIT_INTERESTS = {
     },
     async resolve(_, args){
         const {userID, interests} = args
-        const clear = `DELETE FROM user_interests WHERE userID=${userID}`
-        connection.query(clear)
+        connection.query(`DELETE FROM user_interests WHERE userID=${userID}`)
         const arr = interests.split(',')
         await arr.forEach(async i => {
-            const insert = `INSERT INTO user_interests (userID, interest) VALUES (${userID}, "${i}")`
-            connection.query(insert)
+            connection.query(`INSERT INTO user_interests (userID, interest) VALUES (${userID}, "${i}")`)
         })
         return args
     }
@@ -218,15 +206,16 @@ export const EDIT_USER_INFO = {
     },
     resolve(_, args){
         const {userID, job, university, high_school, phone_number, country, city} = args
-        const sql = `UPDATE user_info 
-                        SET job="${job}",
-                            university="${university}",
-                            high_school="${high_school}",
-                            phone_number="${phone_number}",
-                            country="${country}",
-                            city="${city}"
-                        WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`
+            UPDATE user_info 
+            SET job="${job}",
+                university="${university}",
+                high_school="${high_school}",
+                phone_number="${phone_number}",
+                country="${country}",
+                city="${city}"
+            WHERE userID=${userID}
+        `)
         return args
     }
 }
@@ -239,15 +228,15 @@ export const EDIT_BDATE= {
     },
     async resolve(_, args){
         const {userID, bDate} = args
-        const ifChanged = `SELECT bDate_changed, bDate FROM user_info WHERE userID=${userID}`
-        const sql = `UPDATE user_info 
-                        SET 
-                            bDate=STR_TO_DATE("${bDate}", "%Y-%m-%d"),
-                            bDate_changed=true 
-                        WHERE userID=${userID}`
-        const result = await connection.promise().query(ifChanged).then(res=>{return res[0][0]})
+        const result = await connection.promise().query(`SELECT bDate_changed, bDate FROM user_info WHERE userID=${userID}`).then(res=>{return res[0][0]})
         if(result.bDate_changed===0){
-            connection.query(sql)
+            connection.query(`
+                UPDATE user_info 
+                SET 
+                    bDate=STR_TO_DATE("${bDate}", "%Y-%m-%d"),
+                    bDate_changed=true 
+                WHERE userID=${userID}
+            `)
             return {error: null}
         } else if (result.bDate_changed===1) return {error: "You already changed you birth date once!"}
     }
@@ -261,17 +250,17 @@ export const EDIT_GENDER= {
     },
     async resolve(_, args){
         const {userID, gender} = args
-        const ifChanged = `SELECT gender_changed, gender FROM user_info WHERE userID=${userID}`
-        const sql = `UPDATE user_info 
-                        SET 
-                            gender="${gender}",
-                            gender_changed=true 
-                        WHERE userID=${userID}`
-        const result = await connection.promise().query(ifChanged).then(res=>{return res[0][0]})
+        const result = await connection.promise().query(`SELECT gender_changed, gender FROM user_info WHERE userID=${userID}`).then(res=>{return res[0][0]})
         if(result.gender_changed===0){
             if(result.gender===gender) return {error: `Your gender is already set as ${gender}`}
             else {
-                connection.query(sql)
+                connection.query(`
+                    UPDATE user_info 
+                    SET 
+                        gender="${gender}",
+                        gender_changed=true 
+                    WHERE userID=${userID}
+                `)
                 return {error: null}
             }
         } else if (result.gender_changed===1) return {error: "You already changed you gender once!"}
@@ -286,21 +275,25 @@ export const BLOCK_USER = {
     },
     resolve(_, args){
         const {blockedId, blockerId} = args
-        const sql = `INSERT INTO blocked_users (blockerId, blockedId) 
-                     VALUES (${blockerId}, ${blockedId});`
-        const del1 = `DELETE FROM notifications 
-                        WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
-                        OR (sender_id=${blockerId} AND receiver_id=${blockedId});`
-        const del2 = `DELETE FROM msg_notifications 
-                    WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
-                    OR (sender_id=${blockerId} AND receiver_id=${blockedId});`
-        const del3 = `DELETE FROM followings
-                        WHERE (followerID=${blockedId} AND followedID=${blockerId})
-                        OR (followerID=${blockerId} AND followedID=${blockedId});`
-        connection.query(sql)
-        connection.query(del1)
-        connection.query(del2)
-        connection.query(del3)
+        connection.query(`
+            INSERT INTO blocked_users (blockerId, blockedId) 
+            VALUES (${blockerId}, ${blockedId});
+        `)
+        connection.query(`
+            DELETE FROM notifications 
+            WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
+            OR (sender_id=${blockerId} AND receiver_id=${blockedId});
+        `)
+        connection.query(`
+            DELETE FROM msg_notifications 
+            WHERE (sender_id=${blockedId} AND receiver_id=${blockerId})
+            OR (sender_id=${blockerId} AND receiver_id=${blockedId});
+        `)
+        connection.query(`
+            DELETE FROM followings
+            WHERE (followerID=${blockedId} AND followedID=${blockerId})
+            OR (followerID=${blockerId} AND followedID=${blockedId});
+        `)
         return args
     }
 }
@@ -313,8 +306,7 @@ export const UNBLOCK_USER = {
     },
     resolve(_, args){
         const {blockedId, blockerId} = args
-        const sql = `DELETE FROM blocked_users WHERE ${blockerId} AND ${blockedId}`
-        connection.query(sql)
+        connection.query(`DELETE FROM blocked_users WHERE ${blockerId} AND ${blockedId}`)
         return args
     }
 }
@@ -327,8 +319,7 @@ export const CHANGE_ACTIVITY_STATUS = {
     },
     resolve(_, args){
         const {userID, show_status} = args
-        const sql = `UPDATE users SET show_status=${show_status} WHERE userID=${userID}`
-        connection.query(sql)
+        connection.query(`UPDATE users SET show_status=${show_status} WHERE userID=${userID}`)
         return args
     }
 }

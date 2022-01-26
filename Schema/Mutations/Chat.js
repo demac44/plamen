@@ -14,8 +14,7 @@ export const DELETE_CHAT = {
     },
     resolve(_ , args){
         const {sender, receiver} = args
-        const sql = `DELETE FROM messages WHERE (sender="${sender}" AND receiver="${receiver}") OR (sender="${receiver}" AND receiver="${sender}")`    
-        connection.query(sql)
+        connection.query(`DELETE FROM messages WHERE (sender="${sender}" AND receiver="${receiver}") OR (sender="${receiver}" AND receiver="${sender}")`)
         return args
     }
 }
@@ -33,9 +32,11 @@ export const SEND_MESSAGE = {
     async resolve(_, args){
         const {sender, receiver, msg_text, url, type, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO messages (sender, receiver, msg_text, url, type)
-                     VALUES ("${sender}", "${receiver}", "${encrypted}", "${url}", "${type}")`
-        const msg = await connection.promise().query(sql).then(res=>{return res[0]})
+        const msg = await connection.promise().query(`
+            INSERT INTO messages (sender, receiver, msg_text, url, type)
+            VALUES ("${sender}", "${receiver}", "${encrypted}", "${url}", "${type}")
+        `).then(res=>{return res[0]})
+
         pubsub.publish('NEW_MESSAGE', {newMessage: {
                                         msg_text, 
                                         url, 
@@ -59,8 +60,7 @@ export const DELETE_MESSAGE = {
     },
     resolve(_, args){
         const {msgID} = args
-        const sql = `DELETE FROM messages WHERE msgID=${msgID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM messages WHERE msgID=${msgID}`)
         return args
     }
 }
@@ -73,9 +73,10 @@ export const MSG_NOTIFICATION = {
     },
     async resolve(_, args){ 
         const {sender, receiver, chatID} = args
-        const sql = `INSERT INTO msg_notifications (sender, receiver)
-                        VALUES ("${sender}", "${receiver}")`
-        await connection.promise().query(sql).then(()=>{
+        await connection.promise().query(`
+            INSERT INTO msg_notifications (sender, receiver)
+            VALUES ("${sender}", "${receiver}")
+        `).then(()=>{
             pubsub.publish('MSG_NOTIFICATION', {newMsgNotification: {sender, receiver}})
         })
         return args
@@ -90,8 +91,7 @@ export const DELETE_MSG_NOTIFICATIONS= {
     },
     resolve(_, args){
         const {receiver, sender} = args
-        const sql = `DELETE FROM msg_notifications WHERE receiver="${receiver}" AND sender="${sender}"` 
-        connection.query(sql)
+        connection.query(`DELETE FROM msg_notifications WHERE receiver="${receiver}" AND sender="${sender}"`)
         return args
     }
 }
@@ -108,15 +108,17 @@ export const CREATE_GROUP_CHAT = {
     },
     async resolve(_, args) {
         const {userID, name} = args
-        const sql = `INSERT INTO group_chats (admin, name) VALUES (${userID}, "${name}")`
-        const result = await connection.promise().query(sql).then(res=>{
-            const sql2 = `INSERT INTO group_chats_members (groupChatId, userID) 
-                            VALUES (${res[0].insertId}, ${userID})`
-            connection.query(sql2)
+        const result = await connection.promise().query(`
+            INSERT INTO group_chats (admin, name) VALUES (${userID}, "${name}")
+        `).then(res=>{
+            connection.query(`
+                INSERT INTO group_chats_members (groupChatId, userID) 
+                VALUES (${res[0].insertId}, ${userID})
+            `)
             return res[0]
         })
-        Object.assign(args, {groupChatId: result.insertId})
-        return args
+    Object.assign(args, {groupChatId: result.insertId})
+    return args
     }
 }
 
@@ -127,8 +129,7 @@ export const DELETE_GROUP_CHAT = {
     },
     resolve(_ , args){
         const {groupChatId} = args
-        const sql = `DELETE FROM group_chats WHERE groupChatId=${groupChatId}`    
-        connection.query(sql)
+        connection.query(`DELETE FROM group_chats WHERE groupChatId=${groupChatId}`)
         return args
     }
 }
@@ -147,9 +148,10 @@ export const SEND_GROUP_MESSAGE = {
     async resolve(_, args){
         const {groupChatId, userID, msg_text, url, type, username, profile_picture} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO group_chats_messages (groupChatId, userID, msg_text, url, type)
-                     VALUES (${groupChatId}, ${userID}, "${encrypted}", "${url}", "${type}")`
-        const res = await connection.promise().query(sql).then(res=>{return res[0]})
+        const res = await connection.promise().query(`
+            INSERT INTO group_chats_messages (groupChatId, userID, msg_text, url, type)
+            VALUES (${groupChatId}, ${userID}, "${encrypted}", "${url}", "${type}")
+        `).then(res=>{return res[0]})
         pubsub.publish('NEW_GROUP_MESSAGE', 
                     {newGroupMessage: {
                                        msgID: res.insertId,
@@ -173,8 +175,7 @@ export const DELETE_GROUP_CHAT_MESSAGE = {
     },
     resolve(_, args){
         const {msgID} = args
-        const sql = `DELETE FROM group_chats_messages WHERE msgID=${msgID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM group_chats_messages WHERE msgID=${msgID}`)
         return args
     }
 }
@@ -187,9 +188,7 @@ export const LEAVE_GROUP_CHAT_MEMBER = {
     },
     resolve(_, args){
         const {groupChatId, userID} = args
-        const sql = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
-        const sql2 = `SELECT `
-        connection.query(sql)
+        connection.query(`DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`)
         return args
     }
 }
@@ -201,13 +200,13 @@ export const LEAVE_GROUP_CHAT_ADMIN = {
     },
     async resolve(_, args){
         const {groupChatId, userID} = args
-        const removeUser = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
-        const sql = `UPDATE group_chats AS T1,
-                     (SELECT userID FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID<>${userID} LIMIT 1) AS T2
-                     SET T1.admin=T2.userID
-                     WHERE groupChatId=${groupChatId}`
-        await connection.promise().query(sql).then(()=>{
-            connection.query(removeUser)
+        await connection.promise().query(`
+            UPDATE group_chats AS T1,
+            (SELECT userID FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID<>${userID} LIMIT 1) AS T2
+            SET T1.admin=T2.userID
+            WHERE groupChatId=${groupChatId}
+        `).then(()=>{
+            connection.query(`DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`)
             return 0
         })
         return args
@@ -225,14 +224,16 @@ export const ADD_GROUP_CHAT_USER = {
     async resolve(_, args){
         error = null
         const {groupChatId, username} = args
-        const sql = `SELECT userID FROM users WHERE username="${username}"`
-        return await connection.promise().query(sql).then(res=>{
+        return await connection.promise().query(`
+            SELECT userID FROM users WHERE username="${username}"
+        `).then(res=>{
             if(!res[0][0]?.userID) {
                 return {error: "User not found"}
             } else {
-                const addUser = `INSERT INTO group_chats_members (groupChatId, userID)
-                                    VALUES (${groupChatId}, ${res[0][0].userID})`
-                connection.query(addUser)
+                connection.query(`
+                    INSERT INTO group_chats_members (groupChatId, userID)
+                    VALUES (${groupChatId}, ${res[0][0].userID})
+                `)
                 return {error: null}
             }
         })
@@ -247,8 +248,7 @@ export const REMOVE_GROUP_CHAT_MEMBER = {
     },
     resolve(_, args){
         const {groupChatId, userID} = args
-        const sql = `DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM group_chats_members WHERE groupChatId=${groupChatId} AND userID=${userID}`)
         return args
     }
 }

@@ -98,8 +98,8 @@ function getCookie() {
 const logout = async () => {
   await axios({
       method:'post',
-      // url:'http://localhost:8000/api/logout',
-      url:'/api/logout',
+      url:'http://localhost:8000/api/logout',
+      // url:'/api/logout',
       withCredentials: true
   }).then(()=>{
       localStorage.clear()
@@ -114,5 +114,4 @@ const SET_LAST_SEEN = gql`
       userID
     }
   }
-
 `

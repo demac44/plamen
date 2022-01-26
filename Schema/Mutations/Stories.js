@@ -47,9 +47,10 @@ export const REPLY_TO_STORY = {
     async resolve(_, args){
         const {sender, receiver, msg_text, profile_picture, storyID, type} = args
         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
-        const sql = `INSERT INTO messages (sender, receiver, msg_text, storyID, type, url)
-                     VALUES ("${sender}", "${receiver}", "${encrypted}", ${storyID}, "${'story-'+type}", "")`
-        const msg = await connection.promise().query(sql).then(res=>{return res[0]})
+        const msg = await connection.promise().query(`
+            INSERT INTO messages (sender, receiver, msg_text, storyID, type, url)
+            VALUES ("${sender}", "${receiver}", "${encrypted}", ${storyID}, "${'story-'+type}", "")
+        `).then(res=>{return res[0]})
         pubsub.publish('NEW_MESSAGE', {newMessage: {
                                                msg_text, 
                                                type, 
@@ -72,12 +73,10 @@ export const SEEN_STORY = {
     },
     async resolve(_, args){
         const {userID, storyID} = args
-        const checkExists = `SELECT * FROM seen_stories WHERE userID=${userID} AND storyID=${storyID} LIMIT 1`
-        await connection.promise().query(checkExists).then(res=>{
+        await connection.promise().query(`SELECT * FROM seen_stories WHERE userID=${userID} AND storyID=${storyID} LIMIT 1`).then(res=>{
             if(res[0][0]?.storyID) return null
             else {
-                const sql = `INSERT INTO seen_stories (userID, storyID) VALUES (${userID}, ${storyID})`
-                connection.query(sql)
+                connection.query(`INSERT INTO seen_stories (userID, storyID) VALUES (${userID}, ${storyID})`)
                 return
             }
         })

@@ -10,9 +10,10 @@ export const FOLLOW_USER = {
     },
     resolve(_, args) {
         const {followerID, followedID} = args
-        const sql = `INSERT INTO followings (followerID, followedID)
-                    VALUES (${followerID}, ${followedID})`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO followings (followerID, followedID)
+            VALUES (${followerID}, ${followedID})
+        `)
         return args
     }
 }
@@ -25,8 +26,7 @@ export const UNFOLLOW_USER = {
     },
     resolve(_, args) {
         const {followerID, followedID} = args
-        const sql = `DELETE FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`)
         return args
     }
 }

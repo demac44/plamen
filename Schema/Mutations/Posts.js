@@ -12,9 +12,10 @@ export const CREATE_POST = {
     },
     async resolve (_, args){
         const {userID, post_text, url, type} = args
-        const sql = `INSERT INTO posts (userID, post_text, url, type)
-                    VALUES (${userID}, "${post_text}", "${url}", "${type}")`
-        const result = connection.promise().query(sql).then(res=>{return res[0].insertId})
+        const result = connection.promise().query(`
+            INSERT INTO posts (userID, post_text, url, type)
+            VALUES (${userID}, "${post_text}", "${url}", "${type}")
+        `).then(res=>{return res[0].insertId})
         return {postID: result}
     }
 }
@@ -25,8 +26,7 @@ export const DELETE_POST = {
     },
     resolve(_, args){
         const {postID} = args
-        const sql = `DELETE FROM posts WHERE postID=${postID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM posts WHERE postID=${postID}`)
         return args
     } 
 }

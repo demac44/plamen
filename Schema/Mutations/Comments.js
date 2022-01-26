@@ -11,9 +11,10 @@ export const ADD_COMMENT = {
     },
     resolve(_, args) {
         const {userID, postID, comment_text} = args
-        let sql = `INSERT INTO comments (postID, userID, comment_text)
-                    VALUES (${postID} ,${userID}, "${comment_text}")`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO comments (postID, userID, comment_text)
+            VALUES (${postID} ,${userID}, "${comment_text}")
+        `)
         return args
     }
 }
@@ -26,8 +27,7 @@ export const REMOVE_COMMENT = {
     },
     resolve(_, args){
         const {commentID} = args
-        const sql = `DELETE FROM comments WHERE commentID=${commentID}`
-        connection.query(sql)
+        connection.query(`DELETE FROM comments WHERE commentID=${commentID}`)
         return args
     } 
 }

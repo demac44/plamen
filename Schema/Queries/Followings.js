@@ -11,8 +11,9 @@ export const IF_FOLLOWING = {
     },    
     async resolve(_, args) {
         const {followerID, followedID} = args
-        const sql = `SELECT COUNT(1) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}`
-        return await connection.promise().query(sql).then((res)=>{return res[0][0].ifFollowing})
+        return await connection.promise().query(`
+            SELECT COUNT(1) as ifFollowing FROM followings WHERE followerID=${followerID} AND followedID=${followedID}
+        `).then((res)=>{return res[0][0].ifFollowing})
     }   
 }
 export const GET_FOLLOWERS = {
@@ -22,21 +23,22 @@ export const GET_FOLLOWERS = {
     },
     async resolve(_, args){
         const {followedID} = args
-        const sql = `SELECT
-                        userID,
-                        username,
-                        first_name,
-                        last_name,
-                        profile_picture
-                    FROM
-                        users
-                    WHERE
-                        disabled = FALSE
-                    AND EXISTS(
-                            SELECT 1 
-                            FROM followings 
-                            WHERE followedID=${followedID} AND followerID=userID);`
-        return await connection.promise().query(sql).then((res)=>{return res[0]})
+        return await connection.promise().query(`
+        SELECT
+            userID,
+            username,
+            first_name,
+            last_name,
+            profile_picture
+        FROM
+            users
+        WHERE
+            disabled = FALSE
+        AND EXISTS(
+                SELECT 1 
+                FROM followings 
+                WHERE followedID=${followedID} AND followerID=userID);
+        `).then((res)=>{return res[0]})
     }
 }
 export const GET_FOLLOWING = {
@@ -46,13 +48,14 @@ export const GET_FOLLOWING = {
     },
     async resolve(_, args){
         const {followerID} = args
-        const sql = `SELECT userID,username,first_name,last_name,profile_picture 
-                     FROM users 
-                     WHERE disabled=false 
-                     AND EXISTS(
-                        SELECT 1 
-                        FROM followings 
-                        WHERE followerID=${followerID} AND followedID=userID);`
-        return await connection.promise().query(sql).then((res)=>{return res[0]})
+        return await connection.promise().query(`
+            SELECT userID,username,first_name,last_name,profile_picture 
+            FROM users 
+            WHERE disabled=false 
+            AND EXISTS(
+            SELECT 1 
+            FROM followings 
+            WHERE followerID=${followerID} AND followedID=userID);
+        `).then((res)=>{return res[0]})
     }
 }

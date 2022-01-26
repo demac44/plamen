@@ -12,9 +12,10 @@ export const POST_REPORT = {
     },
     resolve(_, args) {
         const {userPostedID, userReportedID, postID, reasons} = args
-        const sql = `INSERT INTO reports (userPostedID, userReportedID, postID, reasons)
-                    VALUES (${userPostedID}, ${userReportedID}, ${postID}, "${reasons}")`
-        connection.query(sql)
+        connection.query(`
+            INSERT INTO reports (userPostedID, userReportedID, postID, reasons)
+            VALUES (${userPostedID}, ${userReportedID}, ${postID}, "${reasons}")
+        `)
         return args
     }
 }
