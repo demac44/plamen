@@ -31,6 +31,7 @@ import universities from './controllers/Lists/universities.cjs'
 import interests from './controllers/Lists/interests.cjs'
 import emojis from './controllers/Lists/emojis.cjs'
 import verify_token from './controllers/verify_token.js'
+import { graphqlHTTP } from 'express-graphql';
 
 
 (async function () {
@@ -72,10 +73,16 @@ import verify_token from './controllers/verify_token.js'
         credentials: true
     }));
 
+
         
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     
+    app.use('/graphiql', graphqlHTTP({
+        schema,
+        graphiql:true
+    }))
+
     app.use('/api/login', login)
     app.use('/api/register', register)
     app.use('/api/logout', auth, logout)

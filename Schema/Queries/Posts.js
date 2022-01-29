@@ -16,7 +16,7 @@ export const GET_PROFILE_POSTS = {
     async resolve(_, args) {
         const {limit, offset, username} = args
         return await connection.promise().query(`
-            SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID
+            SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID, width, height
             FROM posts
             JOIN users ON posts.userID IN (SELECT userID FROM users WHERE username="${username}")
             WHERE username="${username}"
@@ -35,7 +35,7 @@ export const GET_FEED_POSTS = {
     async resolve(_, args){
         const {userID, limit, offset} = args
         return await connection.promise().query(`
-            SELECT postID,users.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type
+            SELECT postID,users.userID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type, width, height
             FROM posts 
             JOIN users ON posts.userID=users.userID 
             WHERE users.userID=${userID} OR
@@ -66,8 +66,10 @@ export const GET_SAVED_POSTS    = {
                 first_name,
                 last_name,
                 profile_picture,
-                TYPE,
-                posts.userID
+                type,
+                posts.userID,
+ 		width, 
+		height
             FROM
                 saves
             JOIN posts ON posts.postID = saves.postID
@@ -113,7 +115,8 @@ export const RANDOM_POSTS = {
     async resolve(_, args){
         const {userID, limit, offset} = args
         return await connection.promise().query(`
-            SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID FROM posts
+            SELECT postID,post_text,date_posted,url,username,first_name,last_name,profile_picture,type,posts.userID, width, height 
+	    FROM posts
             JOIN users ON users.userID=posts.userID
             WHERE disabled=false
             AND NOT EXISTS (

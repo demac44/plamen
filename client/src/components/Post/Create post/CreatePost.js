@@ -45,12 +45,15 @@ const CreatePost = ({refetch}) => {
                 data.append("folder", "Posts")
                 axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/`, data)
                 .then(res => {
+                    console.log(res);
                     new_post({
                         variables: {
                             userID: uid,
                             text: cleanText(postText),
                             url: res.data.url,
-                            type:'image'
+                            type:'image',
+                            height: res.data.height,
+                            width: res.data.width
                         }
                     })   
                     .then(res=>{
@@ -88,7 +91,9 @@ const CreatePost = ({refetch}) => {
                             userID: uid,
                             text: cleanText(postText),
                             url: res.data.url,
-                            type:'video'
+                            type:'video',
+                            height: res.data.height,
+                            width: res.data.width
                         }
                     })      
                     .then(res=>{
@@ -119,7 +124,9 @@ const CreatePost = ({refetch}) => {
                         userID: uid,
                         text: cleanText(postText),
                         url: '',
-                        type:'text'
+                        type:'text',
+                        height: 0,
+                        width: 0
                     }
                 })
                 .then(res=>{
@@ -130,7 +137,7 @@ const CreatePost = ({refetch}) => {
                                 postID: res.data?.new_post?.postID,
                                 username: usernm,
                                 pfp: ls.profile_picture || '',
-                                rusername: tag
+                                rusername: tag,
                             }
                         })
                     })
@@ -218,8 +225,8 @@ const CreatePost = ({refetch}) => {
 export default CreatePost
 
 const NEW_POST = gql`
-    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!){
-        new_post(userID: $userID, post_text: $text, url: $url, type: $type){
+    mutation ($userID: Int!, $text: String!, $url: String!, $type: String!, $width: Int, $height: Int){
+        new_post(userID: $userID, post_text: $text, url: $url, type: $type, width: $width, height: $height){
             postID
         }
     }

@@ -8,13 +8,15 @@ export const CREATE_POST = {
         userID: {type: GraphQLInt},
         post_text: {type: GraphQLString},
         url: {type: GraphQLString},
-        type:{type:GraphQLString}
+        type:{type:GraphQLString},
+        height:{type:GraphQLInt},
+        width:{type:GraphQLInt}
     },
     async resolve (_, args){
-        const {userID, post_text, url, type} = args
+        const {userID, post_text, url, type, height, width} = args
         const result = connection.promise().query(`
-            INSERT INTO posts (userID, post_text, url, type)
-            VALUES (${userID}, "${post_text}", "${url}", "${type}")
+            INSERT INTO posts (userID, post_text, url, type, width, height)
+            VALUES (${userID}, "${post_text}", "${url}", "${type}", ${width}, ${height})
         `).then(res=>{return res[0].insertId})
         return {postID: result}
     }

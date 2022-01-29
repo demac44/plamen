@@ -52,7 +52,7 @@ import { GET_NOTIFICATIONS } from "./Queries/Notifications.js";
 
 // stories
 import { CREATE_STORY, DELETE_STORY, REPLY_TO_STORY, SEEN_STORY } from "./Mutations/Stories.js";
-import { GET_SEEN_STORIES, GET_STORIES, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
+import { GET_SEEN_STORIES, GET_STORIES, GET_STORIES_ALT, GET_STORY, GET_STORY_MSG, GET_USER_STORIES } from "./Queries/Stories.js";
 
 // typedefs
 import { ChatMessagesType, MsgNotificationType } from "./TypeDefs/Chat.js";
@@ -104,6 +104,8 @@ const RootQuery = new GraphQLObjectType({
         get_stories: GET_STORIES,
         get_user_stories: GET_USER_STORIES,
         get_seen_stories: GET_SEEN_STORIES,
+        get_story: GET_STORY,
+        get_stories_alt: GET_STORIES_ALT,
         // notifications
         get_notifications: GET_NOTIFICATIONS,
         //communities

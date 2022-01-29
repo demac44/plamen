@@ -86,3 +86,85 @@ export const GET_SEEN_STORIES = {
         `).then(res=>{return res[0]})
     }
 }
+
+export const GET_STORY = {
+    type: StoryType,
+    args:{
+        storyID: {type: GraphQLInt},
+    },
+    async resolve(_, args){
+        const {storyID} = args
+        return await connection.promise().query(`
+            SELECT username,type,profile_picture,date_posted,storyID,url FROM stories 
+	    JOIN users ON stories.userID=users.userID
+	    WHERE storyID=${storyID}
+        `).then(res=>{return res[0][0]})
+    }
+}
+
+
+export const GET_STORIES_ALT= {
+    type: new GraphQLList(StoryType),
+    args: {
+        userID: {type:GraphQLInt}
+    },
+    async resolve(_, args){
+        const {userID} = args
+
+        const users = await connection.promise().query(`
+            SELECT DISTINCT stories.userID, username, profile_picture
+            FROM stories 
+            JOIN users ON stories.userID=users.userID 
+            WHERE disabled=false 
+            AND (users.userID=${userID} 
+                OR EXISTS (SELECT 1 FROM followings WHERE followerID=${userID} AND followedID=users.userID))
+            AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+            ORDER BY storyID ASC;
+        `).then((res)=>{return res[0]})
+
+
+        let uids = "("
+
+        users.forEach(u => uids+=u.userID+',')
+        uids = uids.slice(0,-1)
+        uids+=")"
+        
+        const storiesByUsers = await connection.promise().query(`
+            SELECT storyID,userID FROM stories WHERE userID IN ${uids} AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+        `).then((res)=>{return res[0]})
+
+
+        const seen = await connection.promise().query(`
+            SELECT storyID FROM seen_stories WHERE userID=${userID} AND storyID IN ${uids}
+        `).then(res=>{return res[0]})
+
+
+        let unseen = storiesByUsers.filter(s => { return seen.indexOf(s.storyID) == -1; });
+
+
+        let finalList = []
+
+        for(let i=0;i<users.length;i++){
+            let last = {}
+            let usr = users[i].userID
+            for(let j=unseen.length-1;j>=0;j--){
+                if(unseen[j].userID===usr){
+                    last = {...users[i], storyID: unseen[j].storyID}
+                    break
+                }
+            }
+            if(last==={}){
+                for(let k=0;k<storiesByUsers.length;i++){
+                    if(s.userID===usr) {
+                        finalList.push(storiesByUsers[k]) // need to get username and profile picture
+                        break
+                    }
+                }
+            }
+            else finalList.push(last)
+        }
+        
+                
+        return finalList
+    }
+}

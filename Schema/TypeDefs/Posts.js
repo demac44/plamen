@@ -20,5 +20,7 @@ export const PostType = new GraphQLObjectType({
         limit: {type:GraphQLInt},
         offset: {type:GraphQLInt},
         type:{type:GraphQLString},
+        height:{type:GraphQLInt},
+        width:{type:GraphQLInt},
     })
 })
