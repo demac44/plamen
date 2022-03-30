@@ -1,64 +1,58 @@
-# socialmediapp
+# plamen
 Social media web application
 
 
-Features:
-
 LOGIN AND REGISTER:
-- JWT token authentication and authorization
+- JWT authentication and authorization
 
 POSTS:
-- image video and text posts
-- like, comment, share and save posts
-- posts scroll pagination
-
-EXPLORE:
-- posts based on user interests
+- image, video and text posts
+- like, comment, save, share and report posts
 
 STORIES:
 - image and video stories
 - reply to story
 
+NOTIFICATIONS:
+- real-time like, comment, follow and mention notifications
+
 CHAT:
-- text, image, video and emoji messages
+- real-time text, image, video and emoji messages
 - unread messages notifications
 - delete messages
 - see all chat media
-- messages pagination
 
 COMMUNITIES
 - join,leave and request to join
-- creator,admin,moderator and member roles
+- roles: creator, admin, moderator and member
 
 EDIT PROFILE:
 - account settings
     - change profile picture
     - change name and username
     - change password
-    - temporarily disable account (password verification)
-    - delete account (password verification)
+    - temporarily disable account
+    - delete account
 
 - user info settings
     - change user info
     - changing birthday and gender allowed only once
 
-SEARCH USERS:
-- based on name and username
-- search results pagination
-
-FOLLOW SUGGESTIONS:
-- based on users info and interests 
-
-USER ACTIONS:
-- follow and unfollow user
+USERS:
+- mention users in posts and comments
+- searching users
+- follow/unfollow
 - block user
 
 
 TECHNOLOGIES USED:
 - React
-- Nodejs and express
+- Nodejs and Express
 - MySQL
 - GraphQL and Apollo
 - REST API
-- JWT tokens
-- websockets
+- JWT
+
+
+
+Made by Demir Umejr.
