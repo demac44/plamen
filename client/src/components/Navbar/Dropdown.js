@@ -10,7 +10,6 @@ const Dropdown = ({closeDropd}) => {
     const logout = async () => {
         await axios({
             method:'post',
-            // url:'http://localhost:8000/api/logout',
             url:'/api/logout',
             withCredentials: true
         }).then(()=>{

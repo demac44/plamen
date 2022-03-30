@@ -31,7 +31,7 @@ const Profile = () => {
     
     const {loading, error, data, refetch, fetchMore} = useQuery(FETCH_INFO, {
         variables: {
-            username: username===usernm ? usernm : username,
+            username: username,
             limit:10,
             offset:0,
             userID: uid

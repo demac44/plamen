@@ -18,6 +18,9 @@ export const StoryType = new GraphQLObjectType({
         last_name: {type: GraphQLString},
         username: {type: GraphQLString},
         profile_picture: {type:GraphQLString},
-        stories:{type: new GraphQLList(StoryType)}
+        stories:{type: new GraphQLList(StoryType)},
+        storyHeads:{type:new GraphQLList(StoryType)},
+        allStories:{type:new GraphQLList(StoryType)},
+        userIDs: {type: new GraphQLList(StoryType)}
     })
 })

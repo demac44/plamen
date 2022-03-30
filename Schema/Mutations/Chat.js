@@ -19,6 +19,42 @@ export const DELETE_CHAT = {
     }
 }
 
+
+// ENCRYPTED MESSAGE
+// export const SEND_MESSAGE = {
+//     type: ChatMessagesType,
+//     args: {
+//         msg_text: {type: GraphQLString},
+//         sender: {type: GraphQLString},
+//         receiver: {type: GraphQLString},
+//         url: {type: GraphQLString},
+//         type: {type:GraphQLString},
+//         profile_picture: {type: GraphQLString}
+//     },
+//     async resolve(_, args){
+//         const {sender, receiver, msg_text, url, type, profile_picture} = args
+//         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
+//         const msg = await connection.promise().query(`
+//             INSERT INTO messages (sender, receiver, msg_text, url, type)
+//             VALUES ("${sender}", "${receiver}", "${encrypted}", "${url}", "${type}")
+//         `).then(res=>{return res[0]})
+
+//         pubsub.publish('NEW_MESSAGE', {newMessage: {
+//                                         msg_text, 
+//                                         url, 
+//                                         type, 
+//                                         msgID: msg.insertId, 
+//                                         time_sent: new Date().getTime(),
+//                                         profile_picture,
+//                                         storyID: null,
+//                                         sender,
+//                                         receiver
+//                                         }})
+//         return args
+//     }
+// }
+
+
 export const SEND_MESSAGE = {
     type: ChatMessagesType,
     args: {
@@ -31,12 +67,10 @@ export const SEND_MESSAGE = {
     },
     async resolve(_, args){
         const {sender, receiver, msg_text, url, type, profile_picture} = args
-        const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const msg = await connection.promise().query(`
             INSERT INTO messages (sender, receiver, msg_text, url, type)
-            VALUES ("${sender}", "${receiver}", "${encrypted}", "${url}", "${type}")
+            VALUES ("${sender}", "${receiver}", "${msg_text}", "${url}", "${type}")
         `).then(res=>{return res[0]})
-
         pubsub.publish('NEW_MESSAGE', {newMessage: {
                                         msg_text, 
                                         url, 
@@ -51,6 +85,7 @@ export const SEND_MESSAGE = {
         return args
     }
 }
+
 
 
 export const DELETE_MESSAGE = {
@@ -134,6 +169,38 @@ export const DELETE_GROUP_CHAT = {
     }
 }
 
+// export const SEND_GROUP_MESSAGE = {
+//     type: ChatMessagesType,
+//     args: {
+//         groupChatId: {type: GraphQLInt},
+//         userID: {type: GraphQLInt},
+//         msg_text: {type: GraphQLString},
+//         url: {type: GraphQLString},
+//         type: {type:GraphQLString},
+//         username: {type: GraphQLString},
+//         profile_picture: {type: GraphQLString}
+//     },
+//     async resolve(_, args){
+//         const {groupChatId, userID, msg_text, url, type, username, profile_picture} = args
+//         const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
+//         const res = await connection.promise().query(`
+//             INSERT INTO group_chats_messages (groupChatId, userID, msg_text, url, type)
+//             VALUES (${groupChatId}, ${userID}, "${encrypted}", "${url}", "${type}")
+//         `).then(res=>{return res[0]})
+//         pubsub.publish('NEW_GROUP_MESSAGE', 
+//                     {newGroupMessage: {
+//                                        msgID: res.insertId,
+//                                        groupChatId, 
+//                                        username, 
+//                                        msg_text, 
+//                                        userID, 
+//                                        url, 
+//                                        type, 
+//                                        time_sent: new Date().getTime()}},
+//                                        profile_picture)  
+//         return args
+//     }
+// }
 export const SEND_GROUP_MESSAGE = {
     type: ChatMessagesType,
     args: {
@@ -147,11 +214,11 @@ export const SEND_GROUP_MESSAGE = {
     },
     async resolve(_, args){
         const {groupChatId, userID, msg_text, url, type, username, profile_picture} = args
-        const encrypted = CryptoJS.AES.encrypt(msg_text, process.env.MESSAGE_ENCRYPTION_KEY)
         const res = await connection.promise().query(`
             INSERT INTO group_chats_messages (groupChatId, userID, msg_text, url, type)
-            VALUES (${groupChatId}, ${userID}, "${encrypted}", "${url}", "${type}")
+            VALUES (${groupChatId}, ${userID}, "${msg_text}", "${url}", "${type}")
         `).then(res=>{return res[0]})
+
         pubsub.publish('NEW_GROUP_MESSAGE', 
                     {newGroupMessage: {
                                        msgID: res.insertId,

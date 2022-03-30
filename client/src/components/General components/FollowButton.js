@@ -72,7 +72,7 @@ const UNFOLLOW = gql`
         }
     }
 `
-const IF_FOLLOWING = gql`
+const IF_FOLLOWING = gql`y
     query ($followerID: Int!, $followedID: Int!){
         ifFollowing(followerID: $followerID, followedID: $followedID)
     }

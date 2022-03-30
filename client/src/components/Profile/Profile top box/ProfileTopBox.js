@@ -22,7 +22,7 @@ const ProfileTopBox = ({myprofile, user, isBlockedCB}) => {
     const [blockBtn, setBlockBtn] = useState(false)
     const {loading, error, data, refetch} = useQuery(FETCH_INFO, {
         variables: {
-            userID: myprofile ? uid : user.userID,
+            userID: user.userID,
             blockerId: uid
         }
     })

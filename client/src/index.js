@@ -24,13 +24,11 @@ import ResetPassword from './routes/Password retrieve/ResetPassword';
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const httpLink = new HttpLink({
-  // uri:'/graphql'
-  uri:'http://localhost:8000/graphql'
+  uri:'/graphql'
 })
 
 const wsLink = new WebSocketLink({
-  // uri:`wss://plamen-main.herokuapp.com/graphql`,
-  uri:`ws://localhost:8000/graphql`,
+  uri:`wss://plamen-main.herokuapp.com/graphql`,
   options: {
     reconnect: true,
   }

@@ -37,6 +37,29 @@ export const GET_GROUP_CHAT = {
 }
 
 
+// export const LAST_MESSAGE = {
+//     type: ChatMessagesType,
+//     args:{
+//         sender: {type: GraphQLString},
+//         receiver: {type: GraphQLString}
+//     },
+//     async resolve(_, args){
+//         const {receiver, sender} = args
+//         return await connection.promise().query(`
+//             SELECT msg_text, type, receiver, sender FROM messages 
+//             WHERE (sender="${sender}" AND receiver="${receiver}")
+//             OR (sender="${receiver}" AND receiver="${sender}")
+//             ORDER BY msgID DESC LIMIT 1`
+//         ).then(response => {
+//             if(response[0][0]?.msg_text){     
+//                 const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+//                 const res = {...response[0][0], msg_text: decrypted}
+//                 return res
+//             }
+//             return
+//         })
+//     }
+// }
 export const LAST_MESSAGE = {
     type: ChatMessagesType,
     args:{
@@ -52,15 +75,39 @@ export const LAST_MESSAGE = {
             ORDER BY msgID DESC LIMIT 1`
         ).then(response => {
             if(response[0][0]?.msg_text){     
-                const decrypted = CryptoJS.AES.decrypt(response[0][0]?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
-                const res = {...response[0][0], msg_text: decrypted}
-                return res
+                return response
             }
             return
         })
     }
 }
  
+ 
+// export const GET_MESSAGES = {
+//     type: new GraphQLList(ChatMessagesType),
+//     args: {
+//         sender: {type: GraphQLString},
+//         receiver: {type: GraphQLString},
+//         limit: {type: GraphQLInt},
+//         offset: {type: GraphQLInt},
+//     },
+//     async resolve(_, args) {
+//         const {sender, receiver, limit, offset} = args
+//         const result = await connection.promise().query(`
+//             SELECT msgID, msg_text, time_sent, sender, receiver, type, url, storyID  
+//             FROM messages 
+//             WHERE (sender="${sender}" AND receiver="${receiver}")
+//             OR (sender="${receiver}" AND receiver="${sender}")
+//             ORDER BY msgID DESC 
+//             LIMIT ${limit} OFFSET ${offset}
+//         `).then((res)=>{return res[0]})
+//         await result.map(msg => {
+//             const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+//             Object.assign(msg, {msg_text: decrypted})
+//         })
+//         return result
+//     }
+// }
 export const GET_MESSAGES = {
     type: new GraphQLList(ChatMessagesType),
     args: {
@@ -71,7 +118,7 @@ export const GET_MESSAGES = {
     },
     async resolve(_, args) {
         const {sender, receiver, limit, offset} = args
-        const result = await connection.promise().query(`
+        return await connection.promise().query(`
             SELECT msgID, msg_text, time_sent, sender, receiver, type, url, storyID  
             FROM messages 
             WHERE (sender="${sender}" AND receiver="${receiver}")
@@ -79,11 +126,6 @@ export const GET_MESSAGES = {
             ORDER BY msgID DESC 
             LIMIT ${limit} OFFSET ${offset}
         `).then((res)=>{return res[0]})
-        await result.map(msg => {
-            const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
-            Object.assign(msg, {msg_text: decrypted})
-        })
-        return result
     }
 }
 
@@ -153,6 +195,40 @@ export const GET_GROUP_CHATS = {
     } 
 }
 
+// export const GET_GROUP_MESSAGES = {
+//     type: new GraphQLList(ChatMessagesType),
+//     args: {
+//         groupChatId: {type: GraphQLInt},
+//         limit: {type: GraphQLInt},
+//         offset: {type: GraphQLInt},
+//         userID: {type: GraphQLInt}
+//     },
+//     async resolve(_, args) {
+//         const {groupChatId, limit, offset, userID} = args
+//         const result = await connection.promise().query(`
+//             SELECT msg_text, time_sent, groupChatId, username, type, url, users.userID, profile_picture, msgID 
+//             FROM group_chats_messages 
+//             JOIN users ON group_chats_messages.userID=users.userID
+//             WHERE groupChatId=${groupChatId}
+//             AND NOT EXISTS (
+//             (SELECT 1
+//             FROM blocked_users
+//             WHERE
+//                 (blockerId = ${userID} AND blockedId = users.userID)
+//                     OR
+//                 (blockerId = users.userID AND blockedId = ${userID})
+//             )
+//             ) 
+//             ORDER BY msgID DESC 
+//             LIMIT ${limit} OFFSET ${offset}
+//         `).then((res)=>{return res[0]})
+//         await result.map(msg => {
+//             const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
+//             Object.assign(msg, {msg_text: decrypted})
+//         })
+//         return result
+//     }
+// }
 export const GET_GROUP_MESSAGES = {
     type: new GraphQLList(ChatMessagesType),
     args: {
@@ -180,10 +256,6 @@ export const GET_GROUP_MESSAGES = {
             ORDER BY msgID DESC 
             LIMIT ${limit} OFFSET ${offset}
         `).then((res)=>{return res[0]})
-        await result.map(msg => {
-            const decrypted = CryptoJS.AES.decrypt(msg?.msg_text, process.env.MESSAGE_ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8)
-            Object.assign(msg, {msg_text: decrypted})
-        })
         return result
     }
 }

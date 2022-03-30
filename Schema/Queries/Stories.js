@@ -95,9 +95,9 @@ export const GET_STORY = {
     async resolve(_, args){
         const {storyID} = args
         return await connection.promise().query(`
-            SELECT username,type,profile_picture,date_posted,storyID,url FROM stories 
-	    JOIN users ON stories.userID=users.userID
-	    WHERE storyID=${storyID}
+            SELECT username,type,profile_picture,date_posted,storyID,url, stories.userID FROM stories 
+            JOIN users ON stories.userID=users.userID
+            WHERE storyID=${storyID}
         `).then(res=>{return res[0][0]})
     }
 }
@@ -112,7 +112,7 @@ export const GET_STORIES_ALT= {
         const {userID} = args
 
         const users = await connection.promise().query(`
-            SELECT DISTINCT stories.userID, username, profile_picture
+            SELECT stories.userID, username, profile_picture, storyID
             FROM stories 
             JOIN users ON stories.userID=users.userID 
             WHERE disabled=false 
@@ -122,49 +122,52 @@ export const GET_STORIES_ALT= {
             ORDER BY storyID ASC;
         `).then((res)=>{return res[0]})
 
+        if(users.length>0){
+            let uidsSQL = "("
+            let userIDs = []
+            const uniqueUids = [...new Set(users.map(item => item.userID))]
+            users.map(u => userIDs.push({userID: u.userID, storyID: u.storyID}))
 
-        let uids = "("
-
-        users.forEach(u => uids+=u.userID+',')
-        uids = uids.slice(0,-1)
-        uids+=")"
-        
-        const storiesByUsers = await connection.promise().query(`
-            SELECT storyID,userID FROM stories WHERE userID IN ${uids} AND stories.date_posted >= DATE_SUB(NOW(), INTERVAL 1 DAY)
-        `).then((res)=>{return res[0]})
-
-
-        const seen = await connection.promise().query(`
-            SELECT storyID FROM seen_stories WHERE userID=${userID} AND storyID IN ${uids}
-        `).then(res=>{return res[0]})
-
-
-        let unseen = storiesByUsers.filter(s => { return seen.indexOf(s.storyID) == -1; });
-
-
-        let finalList = []
-
-        for(let i=0;i<users.length;i++){
-            let last = {}
-            let usr = users[i].userID
-            for(let j=unseen.length-1;j>=0;j--){
-                if(unseen[j].userID===usr){
-                    last = {...users[i], storyID: unseen[j].storyID}
-                    break
-                }
-            }
-            if(last==={}){
-                for(let k=0;k<storiesByUsers.length;i++){
-                    if(s.userID===usr) {
-                        finalList.push(storiesByUsers[k]) // need to get username and profile picture
-                        break
+            uniqueUids.forEach(uid => uidsSQL+=`${uid},`)
+            uidsSQL = uidsSQL.slice(0,-1)
+            uidsSQL+=')'
+            
+    
+            const seen = await connection.promise().query(`
+                SELECT storyID FROM seen_stories WHERE userID=${userID} AND storyID IN ${uidsSQL}
+            `).then(res=>{return res[0]})
+    
+    
+            let unseen = users.filter(s => { return seen.indexOf(s.storyID) == -1; });
+    
+    
+            let storyHeads = []
+    
+            for(let i=0;i<uniqueUids.length;i++){
+                let lastStory = {}
+                let usrID = uniqueUids[i]
+                for(let j=unseen.length-1;j>=0;j--){
+                    if(unseen[j].userID===usrID){
+                        let story = users.filter(s => {return s.storyID===unseen[j].storyID})
+                        lastStory = {...story[0], storyID: unseen[j].storyID}
                     }
                 }
+                storyHeads.push(lastStory)
             }
-            else finalList.push(last)
+                                
+            return [{storyHeads, allStories: sort(users), userIDs}]
         }
-        
-                
-        return finalList
+        return [{storyHeads: [], allStories: []}]
     }
+}
+
+const sort = (objectList) => {
+    let sorted = []
+    for(let i=0;i<objectList.length;i++){
+        let curr = objectList[i].userID
+        for(let j=i;j<objectList.length;j++){
+            if(objectList[j].userID===curr){sorted.push(objectList[j]);break}
+        }
+    }
+    return sorted
 }
