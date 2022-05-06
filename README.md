@@ -54,5 +54,3 @@ TECHNOLOGIES USED:
 - JWT
 
 
-
-Made by Demir Umejr.
