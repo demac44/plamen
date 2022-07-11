@@ -1,58 +1,35 @@
 # plamen
 Social media web application
 
+Profiles
+![alt text][img1]
 
-LOGIN AND REGISTER:
-- JWT authentication and authorization
+![alt text][img2]
 
-POSTS:
-- image, video and text posts
-- like, comment, save, share and report posts
+Feed
+![alt text][img3]
 
-STORIES:
-- image and video stories
-- reply to story
+Story
+![alt text][img4]
 
-NOTIFICATIONS:
-- real-time like, comment, follow and mention notifications
+Chats
+![alt text][img5]
 
-CHAT:
-- real-time text, image, video and emoji messages
-- unread messages notifications
-- delete messages
-- see all chat media
+Notifications
+![alt text][img6]
 
-COMMUNITIES
-- join,leave and request to join
-- roles: creator, admin, moderator and member
+Communities
+![alt text][img7]
 
-EDIT PROFILE:
-- account settings
-    - change profile picture
-    - change name and username
-    - change password
-    - temporarily disable account
-    - delete account
-
-- user info settings
-    - change user info
-    - changing birthday and gender allowed only once
-
-USERS:
-- mention users in posts and comments
-- searching users
-- follow/unfollow
-- block user
+Settings
+![alt text][img8]
 
 
-TECHNOLOGIES USED:
-- React
-- Nodejs and Express
-- MySQL
-- GraphQL and Apollo
-- REST API
-- JWT
-
-
-
-Made by Demir Umejr.
+[img1]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/profile.png
+[img2]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/profile2.png
+[img3]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/feed.png
+[img4]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/story.png
+[img5]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/chat.png
+[img6]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/notification.png
+[img7]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/community.png
+[img8]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/settings.png

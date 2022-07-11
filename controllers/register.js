@@ -73,7 +73,7 @@ const sendCode = async (email) => {
         secure:false,
         auth:{
             user: "plamen.manage@gmail.com",
-            pass:"Windowjesubak2000"
+            pass: process.env.SMTP_PASS
         }
     })
 
@@ -101,7 +101,8 @@ router.post('/', async (req, res) => {
             bcrypt.hash(password, salt, async (err, hash) => {
                 await insertUser(username, fname, lname, email, hash).then(async response=>{
                     await insertInfo(response[0].insertId, gender, birth_date).then(()=>{
-                        sendCode(email).then(()=>res.sendStatus(200))
+                        // sendCode(email).then(()=>res.sendStatus(200))
+                        res.sendStatus(200)
                     })
                 })
             })

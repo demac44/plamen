@@ -25,6 +25,8 @@ const ChatListUser = ({data}) => {
         info?.refetch()
         return
     }, [data, info, newMsg?.data])
+
+    console.log(msgData);
     
     return (
         <Link to={{pathname:'/chat/'+usernm+'/'+data?.username, 
@@ -47,11 +49,11 @@ const ChatListUser = ({data}) => {
                                 color:info?.data?.last_message?.receiver===usernm ? 'white' : 'gray', 
                                 fontWeight: info?.data?.last_message?.receiver===usernm ? 'bold' : 'lighter'}}>
 
-                        {/* checking if message is from db or subscription and slicing it is too long */}
+                        {/* checking if message is from db or subscription and slicing if it is too long */}
                         {(newMsg && (newMsg?.data?.newMessage?.receiver===usernm && newMsg?.data?.newMessage?.sender===data.username)) ? 
-                            (newMsg?.data?.newMessage?.msg_text.length>25 ? newMsg?.data?.newMessage?.msg_text.slice(0,22)+'...' 
+                            (newMsg?.data?.newMessage?.msg_text?.length>25 ? newMsg?.data?.newMessage?.msg_text?.slice(0,22)+'...' 
                                 : newMsg?.data?.newMessage?.msg_text)
-                            : (msgData?.last_message?.msg_text.length>25 ? msgData?.last_message?.msg_text.slice(0,22)+'...' 
+                            : (msgData?.last_message?.msg_text?.length>25 ? msgData?.last_message?.msg_text?.slice(0,22)+'...' 
                         : msgData?.last_message?.msg_text)}
 
                         {/* checking if msg type is image or video and setting corresponding message */}
