@@ -1,27 +1,34 @@
 # plamen
-Social media web application
+## Social media web application
 
-Profiles
+## Profiles
+
 ![alt text][img1]
 
 ![alt text][img2]
 
-Feed
+## Feed
+
 ![alt text][img3]
 
-Story
+## Story
+
 ![alt text][img4]
 
-Chats
+## Chats
+
 ![alt text][img5]
 
-Notifications
+## Notifications
+
 ![alt text][img6]
 
-Communities
+## Communities
+
 ![alt text][img7]
 
-Settings
+## Settings
+
 ![alt text][img8]
 
 
@@ -30,6 +37,6 @@ Settings
 [img3]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/feed.png
 [img4]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/story.png
 [img5]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/chat.png
-[img6]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/notification.png
+[img6]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/notifications.png
 [img7]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/community.png
 [img8]: https://github.com/demac44/plamen/blob/master/client/src/images/Screens/settings.png
